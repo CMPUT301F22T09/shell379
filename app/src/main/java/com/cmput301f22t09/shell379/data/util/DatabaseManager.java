@@ -2,11 +2,14 @@ package com.cmput301f22t09.shell379.data.util;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
 
 import androidx.annotation.Nullable;
 
 import com.cmput301f22t09.shell379.data.vm.Environment;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -22,6 +25,17 @@ public class DatabaseManager {
 
     @SuppressLint("HardwareIds")
     public DatabaseManager(Context context) {
+        // SharedPreferences resource used:
+        // https://guides.codepath.com/android/Storing-and-Accessing-SharedPreferences
+        SharedPreferences pref = context.getSharedPreferences("prefs", context.MODE_PRIVATE);
+        Boolean initialized = pref.getBoolean("db_init", false);
+
+        if (!initialized) {
+            FirebaseApp.initializeApp(context);
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putBoolean("db_init", true);
+        }
+
         db = FirebaseFirestore.getInstance();
         // unique device identifier:
         // https://stackoverflow.com/questions/2785485/is-there-a-unique-android-device-id
