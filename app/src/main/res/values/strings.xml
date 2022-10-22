@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">shell379</string>
+    <string-array name="Sort_by">
+    <item>description</item>
+    <item>best before date</item>
+    <item>ingredient category</item>
+    <item>location</item>
+</string-array>
 </resources>
