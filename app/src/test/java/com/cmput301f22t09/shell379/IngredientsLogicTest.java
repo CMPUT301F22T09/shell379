@@ -230,18 +230,14 @@ public class IngredientsLogicTest {
     public void testGetDescription_001() {
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
         Ingredient ing;
-        try {
-            ing = new Ingredient("Descr",
-                    sdf.parse("12/31/2001"),
-                    "Pantry",
-                    10,
-                    "750g",
-                    "Food");
-        } catch (Exception e) {
-            Log.e("testGetDescription:001", "date parse failure");
-            assertEquals(1, 0);
-            return;
-        }
+
+        ing = new Ingredient("Descr",
+                template_date,
+                template_loc,
+                template_amount,
+                template_unit,
+                template_cat);
+
         assertEquals(ing.getDescription(), "Descr");
     }
 }
