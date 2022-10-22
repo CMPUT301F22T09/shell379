@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.util.Log;
 
 import androidx.annotation.Nullable;
 
@@ -23,7 +24,6 @@ public class DatabaseManager {
     private DocumentReference doc;
     private Environment instance;
 
-    @SuppressLint("HardwareIds")
     public DatabaseManager(Context context) {
         // SharedPreferences resource used:
         // https://guides.codepath.com/android/Storing-and-Accessing-SharedPreferences
@@ -35,6 +35,8 @@ public class DatabaseManager {
             SharedPreferences.Editor editor = pref.edit();
             editor.putBoolean("db_init", true);
         }
+
+        Log.e("SHELL379", initialized.toString());
 
         db = FirebaseFirestore.getInstance();
         // unique device identifier:
@@ -48,7 +50,7 @@ public class DatabaseManager {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
 //                this = value.getData().get();
-                if (value != null && value.getData() != null) {
+                if (value != null && value.getData() != null && value.getData().get("bytes") != null) {
                     byte[] bytes = (byte[]) value.getData().get("bytes");
                     instance = (Environment) SerializeUtil.deserialize(bytes);
                 }
