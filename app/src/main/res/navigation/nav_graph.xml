@@ -3,12 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainMenuFragment">
+    app:startDestination="@id/viewIngredientFragment">
     <fragment
         android:id="@+id/ingredientListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.IngredientListFragment"
         android:label="fragment_ingredient_list"
-        tools:layout="@layout/fragment_ingredient_list" />
+        tools:layout="@layout/fragment_ingredient_list" >
+        <action
+            android:id="@+id/action_ingredientListFragment_to_viewIngredientFragment"
+            app:destination="@id/viewIngredientFragment" />
+    </fragment>
     <fragment
         android:id="@+id/recipeListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.RecipeListFragment"
@@ -34,12 +38,17 @@
     </fragment>
     <fragment
         android:id="@+id/shoppingListFragment"
-        android:name="com.cmput301f22t09.shell379.ShoppingListFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.ShoppingListFragment"
         android:label="fragment_shopping_list"
         tools:layout="@layout/fragment_shopping_list" />
     <fragment
         android:id="@+id/mealPlanListFragment"
-        android:name="com.cmput301f22t09.shell379.MealPlanListFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.MealPlanListFragment"
         android:label="fragment_meal_plan_list"
         tools:layout="@layout/fragment_meal_plan_list" />
+    <fragment
+        android:id="@+id/viewIngredientFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.ViewIngredientFragment"
+        android:label="fragment_view_ingredient"
+        tools:layout="@layout/fragment_view_ingredient" />
 </navigation>
