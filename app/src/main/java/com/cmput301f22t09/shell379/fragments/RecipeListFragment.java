@@ -82,6 +82,7 @@ public class RecipeListFragment extends Fragment {
         testList = new ArrayList<Recipe>();
         testList.add(new Recipe("Pizza", 36000L, 5, "Italian", "This is a Pizza"));
         testList.add(new Recipe("Fried Rice", 26000L, 3, "Asian", "This is fried rice"));
+        testList.add(new Recipe("Soup", 26000L, 1, "Yes", "This is soup"));
 
         layoutManager = new LinearLayoutManager(this.getActivity());
         recipe_recyclerView = (RecyclerView) rootView.findViewById(R.id.recipe_list_recyclerView);
