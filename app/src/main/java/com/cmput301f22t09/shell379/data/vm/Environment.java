@@ -1,24 +1,44 @@
 package com.cmput301f22t09.shell379.data.vm;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.provider.Settings;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStoreOwner;
 
+import com.cmput301f22t09.shell379.data.util.DatabaseManager;
+import com.cmput301f22t09.shell379.data.util.SerializeUtil;
 import com.cmput301f22t09.shell379.data.vm.collections.IngredientCollection;
 import com.cmput301f22t09.shell379.data.vm.collections.RecipeCollection;
 import com.cmput301f22t09.shell379.data.vm.infrastructure.Commitable;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 
-public class Environment extends ViewModel {
+import java.io.Serializable;
+import java.util.HashMap;
+
+public class Environment extends ViewModel implements Serializable {
     private IngredientCollection ingredients;
     private RecipeCollection recipes;
     private LiveCart cart;
-    private Boolean commitNeeded;
+
+    public static Environment of(AppCompatActivity owner, Environment envPulled) {
+        Environment env = new ViewModelProvider(owner).get(Environment.class);
+        env.ingredients = envPulled.ingredients;
+        env.cart = envPulled.cart;
+        env.recipes = envPulled.recipes;
+
+        setupObservers(owner, env);
+        return env;
+    }
 
     public static Environment of(AppCompatActivity owner) {
         Environment env = new ViewModelProvider(owner).get(Environment.class);
@@ -27,16 +47,18 @@ public class Environment extends ViewModel {
     }
 
     private static void setupObservers(AppCompatActivity owner, Environment env) {
-        observeForCommits(owner, env.getIngredients());
-        observeForCommits(owner, env.getRecipes());
-        observeForCommits(owner, env.getCart());
+        observeForCommits(owner, env, env.getIngredients());
+        observeForCommits(owner, env, env.getRecipes());
+        observeForCommits(owner, env, env.getCart());
     }
 
-    private static void observeForCommits(AppCompatActivity owner, Commitable commitable) {
+    private static void observeForCommits(AppCompatActivity owner, Environment env, Commitable commitable) {
         commitable.isCommitNeeded().observe(owner, new Observer<Boolean>() {
             @Override
             public void onChanged(Boolean commitNeeded) {
-                if (commitNeeded==true) commitNeeded = true;
+                if (commitNeeded==true) {
+                    new DatabaseManager(owner).push(env);
+                };
             }
         });
     }
