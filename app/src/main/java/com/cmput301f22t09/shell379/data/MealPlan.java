@@ -8,5 +8,4 @@ public class MealPlan {
     private ArrayList<Recipe> recipes = new ArrayList<>();
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
     private Integer activeDays;
-
 }
