@@ -5,8 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <LinearLayout
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="409dp"
         android:layout_height="729dp"
         android:orientation="vertical"
@@ -16,7 +19,6 @@
         android:paddingRight="16dp"
         android:paddingTop="5dp"
         android:layout_gravity="center_horizontal">
-
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/floatingActionButton4"
@@ -65,7 +67,6 @@
             android:layout_margin="3dp"
             android:text="Gallery"
             android:layout_gravity="center_horizontal"/>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -155,6 +156,10 @@
 
 
         </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="372dp"
+            android:layout_height="66dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
