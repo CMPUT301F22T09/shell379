@@ -62,21 +62,7 @@ public class MainMenuFragment extends Fragment {
 
         navController = NavHostFragment.findNavController(this);
 
-        // navigation snippet from https://developer.android.com/guide/navigation/navigation-navigate#groovy
-        ((Button)getActivity().findViewById(R.id.ingredients_list_button)).setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        navController.navigate(MainMenuFragmentDirections.actionMainMenuFragmentToIngredientListFragment());
-                    }
-                }
-        );
-        ((Button)getActivity().findViewById(R.id.recipes_list_button)).setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        navController.navigate(MainMenuFragmentDirections.actionMainMenuFragmentToRecipeListFragment());
-                    }
-                }
-        );
+
 
     }
 
@@ -84,6 +70,23 @@ public class MainMenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_menu_fragment, container, false);
+
+        View rootView = inflater.inflate(R.layout.fragment_main_menu_fragment, container, false);
+        // navigation snippet from https://developer.android.com/guide/navigation/navigation-navigate#groovy
+        ((Button)rootView.findViewById(R.id.ingredients_list_button)).setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        navController.navigate(MainMenuFragmentDirections.actionMainMenuFragmentToIngredientListFragment());
+                    }
+                }
+        );
+        ((Button)rootView.findViewById(R.id.recipes_list_button)).setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        navController.navigate(MainMenuFragmentDirections.actionMainMenuFragmentToRecipeListFragment());
+                    }
+                }
+        );
+        return rootView;
     }
 }
