@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/food_name_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="Food Name" />
+
+    <TextView
+        android:id="@+id/food_unit_cost_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:minWidth="80dp"
+        android:maxWidth="80dp"
+        android:text="Servings" />
+
+    <TextView
+        android:id="@+id/food_count_text"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:maxWidth="60dp"
+        android:minWidth="60dp"
+        android:text="Best Before" />
+
+</LinearLayout>
