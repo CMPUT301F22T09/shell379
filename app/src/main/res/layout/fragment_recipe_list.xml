@@ -7,7 +7,7 @@
     tools:context=".fragments.RecipeListFragment">
 
     <TextView
-        android:id="@+id/recipeListTitle"
+        android:id="@+id/recipe_list_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="25dp"
@@ -27,16 +27,17 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipeListTitle">
+        app:layout_constraintTop_toBottomOf="@+id/recipe_list_title">
 
         <Spinner
-            android:id="@+id/spinner"
+            android:id="@+id/recipe_list_spinner"
             android:layout_width="276dp"
             android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            tools:ignore="SpeakableTextPresentCheck" />
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/recipe_list_newButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -44,6 +45,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recipe_list_recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="25dp"
