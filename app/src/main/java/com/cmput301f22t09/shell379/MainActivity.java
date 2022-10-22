@@ -1,7 +1,7 @@
 package com.cmput301f22t09.shell379;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.navigation.Navigation;
+//import androidx.navigation.Navigation;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -40,9 +40,12 @@ public class MainActivity extends AppCompatActivity {
         MealPlan mp = new MealPlan();
         ShoppingCart sc = new ShoppingCart();
 
+        env.getIngredients().add(ing);
+        env.getRecipes().add(rec);
+
+
         env.getIngredients().commit();
         env.getRecipes().commit();
-        env.getCart().commit();
 
         DatabaseManager dbm = new DatabaseManager(this);
 
