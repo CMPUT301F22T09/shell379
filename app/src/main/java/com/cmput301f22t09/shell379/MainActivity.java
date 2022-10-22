@@ -40,9 +40,9 @@ public class MainActivity extends AppCompatActivity {
         MealPlan mp = new MealPlan();
         ShoppingCart sc = new ShoppingCart();
 
-        env.getIngredients().commit(new ArrayList<Ingredient>(ing));
-        env.getRecipes().commit(rec);
-        env.getCart().commit(sc);
+        env.getIngredients().commit();
+        env.getRecipes().commit();
+        env.getCart().commit();
 
         DatabaseManager dbm = new DatabaseManager(this);
 
