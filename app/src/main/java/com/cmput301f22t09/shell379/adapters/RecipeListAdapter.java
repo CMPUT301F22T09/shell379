@@ -15,6 +15,9 @@ import java.util.ArrayList;
 
 /**
  * This class is a custom RecyclerView adapter which helps display Recipe data in the RecyclerView
+ * TODO: Cite these sources since they were referenced while working on this adapter:
+ * TODO:    - https://www.digitalocean.com/community/tutorials/android-recyclerview-android-cardview-example-tutorial
+ * TODO:    -
  */
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.RecipeViewHolder>{
 

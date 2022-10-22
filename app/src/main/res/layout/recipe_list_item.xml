@@ -20,6 +20,7 @@
             android:elevation="8dp"
             android:text="Name"
             android:textSize="23sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -31,6 +32,7 @@
             android:layout_marginTop="20dp"
             android:text="Preparation time"
             android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rli_name" />
 
@@ -42,6 +44,7 @@
             android:layout_marginTop="18dp"
             android:text="Number of servings"
             android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rli_prep_time_label" />
 
@@ -54,6 +57,7 @@
             android:layout_marginBottom="20dp"
             android:text="Category"
             android:textSize="18sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/rli_servings_label" />

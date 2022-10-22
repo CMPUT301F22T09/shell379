@@ -24,7 +24,7 @@ import java.util.ArrayList;
  */
 public class RecipeListFragment extends Fragment {
 
-    // Testing content
+    // TODO: Temporary! Testing content
     ArrayList<Recipe> testList;
     RecyclerView recipe_recyclerView;
     RecyclerView.LayoutManager layoutManager;
@@ -68,8 +68,6 @@ public class RecipeListFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
     }
 
     @Override
@@ -78,7 +76,7 @@ public class RecipeListFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_recipe_list, container, false);
 
-        // TODO: This is temporary! Replace this with viewmodel stuff later
+        // TODO: This is temporary! Most likely replace this with data from ViewModel later...
         testList = new ArrayList<Recipe>();
         testList.add(new Recipe("Pizza", 36000L, 5, "Italian", "This is a Pizza"));
         testList.add(new Recipe("Fried Rice", 26000L, 3, "Asian", "This is fried rice"));
