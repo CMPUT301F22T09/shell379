@@ -17,16 +17,28 @@ import java.util.Date;
 public class IngredientsLogicTest {
 
     SimpleDateFormat sdf;
+
+    String template_desc;
     Date template_date;
+    String template_loc;
+    Integer template_amount;
+    String template_unit;
+    String template_cat;
 
     public IngredientsLogicTest() {
 
+        template_desc = "Description";
         try  {
             sdf = new SimpleDateFormat("MM/dd/yyyy");
-            template_date = sdf.parse("12/31/2001");
+            template_date = sdf.parse("12/31/2031");
         } catch(Exception e) {
             Log.e("template date fail", "Template Date Failure");
         }
+
+        template_loc = "Pantry";
+        template_amount = 1;
+        template_unit = "1g";
+        template_cat = "Food";
 
     }
 
@@ -40,54 +52,147 @@ public class IngredientsLogicTest {
     public void testConstructor_000() {
         assertThrows(IllegalArgumentException.class, () -> {
             Ingredient ing = new Ingredient(
-                    "testConstructor_000",
-                    template_date, "pantry",
+                    template_desc,
+                    template_date,
+                    template_loc,
                     -1,
-                    "670g",
-                    "Food");
-        });
+                    template_unit,
+                    template_cat);
+        }, "Did not throw IllegalArgumentException!");
     }
 
 
     /**
      * Tests Constructor with amount = 0
      * Input: amount = 0
-     * Output: None
+     * Output: No Exception
      */
     @Test
     public void testConstructor_001() {
         try {
-            Ingredient ing = new Ingredient("testConstructor_001",
+            Ingredient ing = new Ingredient(
+                    template_desc,
                     template_date,
-                    "pantry",
+                    template_loc,
                     0,
-                    "670g",
-                    "Food");
+                    template_unit,
+                    template_cat);
         } catch (Exception e){
             fail("No exception should have been thrown.");
         }
 
     }
 
+
+    /**
+     * Tests Constructor with amount > 0
+     * Input: amount = 2
+     * Output: No Exception
+     */
     @Test
     public void testConstructor_002() {
-
+        try {
+            Ingredient ing = new Ingredient(
+                    template_desc,
+                    template_date,
+                    template_loc,
+                    2,
+                    template_unit,
+                    template_cat);
+        } catch (Exception e){
+            fail("No exception should have been thrown.");
+        }
     }
 
+
+    /**
+     * Tests Constructor with unit containing no numerals.
+     * unit should have numerals!
+     *
+     * Input: unit = "kg"
+     * Output: IllegalArgumentException
+     */
     @Test
     public void testConstructor_003() {
-
+        assertThrows(IllegalArgumentException.class, () -> {
+            Ingredient ing = new Ingredient(template_desc,
+                    template_date,
+                    template_loc,
+                    template_amount,
+                    "kg",
+                    template_cat);
+        }, "Did not throw IllegalArgumentException!");
     }
 
+
+    /**
+     * Tests Constructor with unit containing numeral values
+     * that evaluates to an float of 0. unit should not have
+     * value of 0 (doesn't make sense of having 4 fish of
+     * unit mass of 0 grams each...)
+     *
+     * Input: unit = "00g"
+     * Output: IllegalArgumentException
+     */
     @Test
     public void testConstructor_004() {
-
+        assertThrows(IllegalArgumentException.class, () -> {
+            Ingredient ing = new Ingredient(template_desc,
+                    template_date,
+                    template_loc,
+                    template_amount,
+                    "00g",
+                    template_cat);
+        }, "Did not throw IllegalArgumentException!");
     }
 
+    /**
+     * Tests Constructor with unit containing numeral values
+     * that evaluates to a float greater than 0.
+     *
+     * Input: unit = "670g"
+     * Output: No Exception
+     */
     @Test
     public void testConstructor_005() {
+        try {
+            Ingredient ing = new Ingredient(template_desc,
+                    template_date,
+                    template_loc,
+                    template_amount,
+                    "670g",
+                    template_cat);
+        } catch (Exception e) {
+            fail("Exception should not have been thrown!");
+        }
 
     }
+
+
+    /**
+     * Tests Constructor with unit containing numeral values
+     * that evaluates to a float greater than 0, as well as
+     * no unit type. Having no unit type should evaluate to unit-less,
+     * and should not throw exception.
+     *
+     * Input: unit = "1"
+     * Output: No Exception
+     */
+    @Test
+    public void testConstructor_006() {
+        try {
+            Ingredient ing = new Ingredient(template_desc,
+                    template_date,
+                    template_loc,
+                    template_amount,
+                    "1",
+                    template_cat);
+        } catch (Exception e) {
+            fail("Exception should not have been thrown!");
+        }
+
+    }
+
 
 
     /**
