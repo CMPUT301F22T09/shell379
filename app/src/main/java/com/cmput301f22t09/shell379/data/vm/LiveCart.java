@@ -19,8 +19,7 @@ public class LiveCart extends Commitable {
         return cart;
     }
 
-    public void commit(ShoppingCart cart) {
+    public void setCart(ShoppingCart cart) {
         this.cart.setValue(cart);
-        readyForCommit();
     }
 }
