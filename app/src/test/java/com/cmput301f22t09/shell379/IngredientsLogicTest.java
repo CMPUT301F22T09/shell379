@@ -194,6 +194,32 @@ public class IngredientsLogicTest {
     }
 
 
+    /**
+     * Testing Constructor with Best Before dates that are
+     * Earlier than Date.now(). Should throw exception
+     *
+     * Input: bestBefore = Date object with date as 12/31/2001
+     * Output: IllegalArgumentException
+     */
+    @Test
+    public void testConstructor_007() {
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+            Date bb = formatter.parse("12/31/2001");
+
+            Ingredient ing = new Ingredient(template_desc,
+                    bb,
+                    template_loc,
+                    template_amount,
+                    template_unit,
+                    template_cat);
+        }, "Best Before date is in the past");
+
+
+
+    }
+
 
     /**
      * Tests getDescription
