@@ -22,8 +22,19 @@ public class IngredientCollection extends Commitable {
         return ingredients.getValue();
     }
 
-    public void commit(ArrayList<Ingredient> newIngredients) {
-        ingredients.setValue(newIngredients);
-        readyForCommit();
+    public void add(Ingredient ingredient) {
+        ingredients.getValue().add(ingredient);
+    }
+
+    public void add(ArrayList<Ingredient> ingredients) {
+        this.ingredients.getValue().addAll(ingredients);
+    }
+
+    public void removeAtIdx(int i) {
+        this.ingredients.getValue().remove(i);
+    }
+
+    public void setIngredients(ArrayList<Ingredient> ingredients) {
+        this.ingredients.setValue(ingredients);
     }
 }
