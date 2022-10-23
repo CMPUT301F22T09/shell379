@@ -3,12 +3,19 @@ package com.cmput301f22t09.shell379.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.cmput301f22t09.shell379.R;
+import com.cmput301f22t09.shell379.adapters.RecipeListAdapter;
+import com.cmput301f22t09.shell379.data.Recipe;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +23,12 @@ import com.cmput301f22t09.shell379.R;
  * create an instance of this fragment.
  */
 public class RecipeListFragment extends Fragment {
+
+    // TODO: Temporary! Testing content
+    ArrayList<Recipe> testList;
+    RecyclerView recipe_recyclerView;
+    RecyclerView.LayoutManager layoutManager;
+    RecipeListAdapter recipeListAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,6 +74,22 @@ public class RecipeListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recipe_list, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_recipe_list, container, false);
+
+        // TODO: This is temporary! Most likely replace this with data from ViewModel later...
+        testList = new ArrayList<Recipe>();
+        testList.add(new Recipe("Pizza", 36000L, 5, "Italian", "This is a Pizza"));
+        testList.add(new Recipe("Fried Rice", 26000L, 3, "Asian", "This is fried rice"));
+        testList.add(new Recipe("Soup", 26000L, 1, "Yes", "This is soup"));
+
+        layoutManager = new LinearLayoutManager(this.getActivity());
+        recipe_recyclerView = (RecyclerView) rootView.findViewById(R.id.recipe_list_recyclerView);
+        recipe_recyclerView.setLayoutManager(layoutManager);
+
+        recipeListAdapter = new RecipeListAdapter(testList);
+        recipe_recyclerView.setAdapter(recipeListAdapter);
+        recipe_recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        return rootView;
     }
 }
