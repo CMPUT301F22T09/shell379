@@ -21,6 +21,7 @@ public class SerializeEnvUtil {
     public static HashMap<String, String> serialize(Environment env) {
         HashMap<String, String> data = new HashMap<String, String>();
         data.put("ingredients", SerializeUtil.serialize(env.getIngredients().getIngredients()));
+        data.put("recipes", SerializeUtil.serialize(env.getRecipes().getRecipes()));
         data.put("cart", SerializeUtil.serialize(env.getCart().getCart()));
         return data;
     }
