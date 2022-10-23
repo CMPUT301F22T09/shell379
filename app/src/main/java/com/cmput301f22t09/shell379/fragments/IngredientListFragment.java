@@ -3,10 +3,13 @@ package com.cmput301f22t09.shell379.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.cmput301f22t09.shell379.R;
 
@@ -16,6 +19,8 @@ import com.cmput301f22t09.shell379.R;
  * create an instance of this fragment.
  */
 public class IngredientListFragment extends Fragment {
+
+    private NavController navController;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -51,6 +56,7 @@ public class IngredientListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        navController = NavHostFragment.findNavController(this);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -61,6 +67,16 @@ public class IngredientListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_ingredient_list, container, false);
+        View rootView =  inflater.inflate(R.layout.fragment_ingredient_list, container, false);
+
+        ((Button)rootView.findViewById(R.id.new_button)).setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        navController.navigate(IngredientListFragmentDirections.actionIngredientListFragmentToViewIngredientFragment());
+                    }
+                }
+        );
+
+        return rootView;
     }
 }

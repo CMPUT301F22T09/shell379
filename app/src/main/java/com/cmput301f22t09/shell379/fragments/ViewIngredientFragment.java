@@ -34,7 +34,7 @@ public class ViewIngredientFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ingredient = new Ingredient("test", new Date(1666479235),"test",2,"test sadasdadsdsadsadsadsadsadsadsadsadsadadsaadadsdadsadadaddadasdsadsadsadsadaddsadsdadsdadasd","test");
+        ingredient = new Ingredient("test", new Date(2023,12,12),"test",2,"2 test sadasdadsdsadsadsadsadsadsadsadsadsadadsaadadsdadsadadaddadasdsadsadsadsadaddsadsdadsdadasd","test");
         index = 0;
         navController = NavHostFragment.findNavController(this);
     }
