@@ -10,6 +10,7 @@ import android.util.Log;
 import androidx.annotation.Nullable;
 
 import com.cmput301f22t09.shell379.data.vm.Environment;
+import com.cmput301f22t09.shell379.data.vm.infrastructure.SerializeEnvUtil;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -49,19 +50,19 @@ public class DatabaseManager {
         this.doc.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-//                this = value.getData().get();
-                if (value != null && value.getData() != null && value.getData().get("bytes") != null) {
-                    byte[] bytes = (byte[]) value.getData().get("bytes");
-                    instance = (Environment) SerializeUtil.deserialize(bytes);
+                if (value != null && value.getData() != null) {
+                    HashMap<String, byte[]> data = new HashMap<>();
+                    data.put("ingredients", (byte[]) value.get("ingredients"));
+                    data.put("recipes", (byte[]) value.get("recipes"));
+                    data.put("cart", (byte[]) value.get("cart"));
+                    instance = SerializeEnvUtil.deserialize(data);
                 }
             }
         });
     }
 
     public void push(Environment env) {
-        HashMap<String, byte[]> data = new HashMap<>();
-        data.put("bytes", SerializeUtil.serialize(env));
-        doc.set(data);
+        doc.set(SerializeEnvUtil.serialize(env));
     }
 
     public Environment getInstance() {
