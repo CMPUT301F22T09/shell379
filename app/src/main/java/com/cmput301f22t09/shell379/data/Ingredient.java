@@ -1,8 +1,9 @@
 package com.cmput301f22t09.shell379.data;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Ingredient {
+public class Ingredient implements Serializable {
     private String description;
     private Date bestBefore;
     private String location;
