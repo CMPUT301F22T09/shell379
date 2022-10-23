@@ -19,6 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class DatabaseManager {
     private FirebaseFirestore db;
@@ -51,10 +52,10 @@ public class DatabaseManager {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (value != null && value.getData() != null) {
-                    HashMap<String, byte[]> data = new HashMap<>();
-                    data.put("ingredients", (byte[]) value.get("ingredients"));
-                    data.put("recipes", (byte[]) value.get("recipes"));
-                    data.put("cart", (byte[]) value.get("cart"));
+                    HashMap<String, List<Byte>> data = new HashMap<>();
+                    data.put("ingredients", (List<Byte>) value.get("ingredients"));
+                    data.put("recipes", (List<Byte>) value.get("recipes"));
+                    data.put("cart", (List<Byte>) value.get("cart"));
                     instance = SerializeEnvUtil.deserialize(data);
                 }
             }
