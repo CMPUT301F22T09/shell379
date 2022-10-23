@@ -13,19 +13,20 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class SerializeEnvUtil {
     //serialize/deserialize
     //https://stackoverflow.com/questions/2836646/java-serializable-object-to-byte-array
-    public static HashMap<String, byte[]> serialize(Environment env) {
-        HashMap<String, byte[]> data = new HashMap<String, byte[]>();
+    public static HashMap<String, List<Byte>> serialize(Environment env) {
+        HashMap<String, List<Byte>> data = new HashMap<String, List<Byte>>();
         data.put("ingredients", SerializeUtil.serialize(env.getIngredients().getIngredients()));
         data.put("recipes", SerializeUtil.serialize(env.getRecipes().getRecipes()));
         data.put("cart", SerializeUtil.serialize(env.getCart().getCart()));
         return data;
     }
 
-    public static Environment deserialize(HashMap<String, byte[]> data) {
+    public static Environment deserialize(HashMap<String, List<Byte>> data) {
         Environment env = new Environment();
         env.getIngredients().setIngredients((ArrayList<Ingredient>) SerializeUtil.deserialize(data.get("ingredients")));
         env.getRecipes().setRecipes((ArrayList<Recipe>) SerializeUtil.deserialize(data.get("recipes")));
