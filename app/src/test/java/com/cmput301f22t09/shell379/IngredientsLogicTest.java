@@ -12,7 +12,9 @@ import com.cmput301f22t09.shell379.data.Ingredient;
 import org.junit.jupiter.api.Test;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class IngredientsLogicTest {
 
@@ -221,6 +223,11 @@ public class IngredientsLogicTest {
     }
 
 
+
+
+
+
+
     /**
      * Tests getDescription
      * Input: Instantiate Ingredient class with description="Descr"
@@ -240,4 +247,112 @@ public class IngredientsLogicTest {
 
         assertEquals(ing.getDescription(), "Descr");
     }
+
+
+    @Test
+    public void testSetDescription_000() {
+        Ingredient ing = new Ingredient(template_desc,
+                template_date,
+                template_loc,
+                template_amount,
+                template_unit,
+                template_cat);
+        try {
+            ing.setDescription("");
+            assertEquals(ing.getDescription(), "");
+        } catch (Exception e) {
+            fail("Exception should not be thrown.");
+        }
+    }
+
+
+    @Test
+    public void testSetDescription_001() {
+        Ingredient ing = new Ingredient(template_desc,
+                template_date,
+                template_loc,
+                template_amount,
+                template_unit,
+                template_cat);
+        try {
+            ing.setDescription("description");
+            assertEquals(ing.getDescription(), "description");
+        } catch (Exception e) {
+            fail("Exception should not be thrown.");
+        }
+    }
+
+    @Test
+    public void testSetBestBefore_000() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(2001, 12, 31, 0, 0, 0);
+        Date d = calendar.getTime();
+
+        assertThrows(IllegalArgumentException.class, ()->{
+            Ingredient ing = new Ingredient(
+                    template_desc,
+                    template_date,
+                    template_loc,
+                    template_amount,
+                    template_unit,
+                    template_cat);
+            ing.setBestBefore(d);
+        });
+    }
+
+    @Test
+    public void testSetBestBefore_001() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(3001, 12, 31, 0, 0, 0);
+        Date d = calendar.getTime();
+
+        try {
+            Ingredient ing = new Ingredient(
+                    template_desc,
+                    template_date,
+                    template_loc,
+                    template_amount,
+                    template_unit,
+                    template_cat);
+            ing.setBestBefore(d);
+        } catch (Exception e) {
+            fail("Exception should not have been thrown");
+        }
+    }
+
+
+    @Test
+    public void testSetLocation_000() {
+
+        assertThrows(IllegalArgumentException.class, ()->{
+            Ingredient ing = new Ingredient(
+                    template_desc,
+                    template_date,
+                    template_loc,
+                    template_amount,
+                    template_unit,
+                    template_cat);
+            ing.setLocation("");
+        });
+
+    }
+
+    @Test
+    public void testSetLocation_001() {
+
+        try {
+            Ingredient ing = new Ingredient(
+                    template_desc,
+                    template_date,
+                    template_loc,
+                    template_amount,
+                    template_unit,
+                    template_cat);
+            ing.setLocation("pantry");
+        } catch (Exception e) {
+            fail("Exception should not be thrown.");
+        }
+    }
+
+
 }
