@@ -5,184 +5,190 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_width="409dp"
-        android:layout_height="729dp"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="5dp"
-        android:layout_gravity="center_horizontal">
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:layout_margin="3dp"
-            app:srcCompat="@drawable/ic_baseline_arrow_back_24"
-            app:backgroundTint="@android:color/white"/>
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Recipe"
-            android:textSize="25dp"/>
-
-        <EditText
-            android:id="@+id/textView1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:background="@drawable/customborder"
-            android:hint="Category"
-            android:minHeight="48dp" />
-
-        <EditText
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:background="@drawable/customborder"
-            android:hint="Preparation Time (mins)"
-            android:minHeight="48dp" />
-
-        <ImageView
-            android:layout_width="369dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:src="@drawable/_206_sheeshers" />
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="143dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="3dp"
-            android:text="Gallery"
-            android:layout_gravity="center_horizontal"/>
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:layout_width="409dp"
+            android:layout_height="729dp"
+            android:orientation="vertical"
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="1dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="5dp"
+            android:layout_gravity="center_horizontal">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionButton2"
-                android:layout_width="wrap_content"
+                android:id="@+id/floatingActionButton4"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:clickable="true"
-                app:backgroundTint="@android:color/darker_gray"
-                app:srcCompat="@drawable/ic_minus_svgrepo_com"
-                app:tint="@android:color/white" />
-
-            <EditText
-                android:id="@+id/textView8"
-                android:layout_width="229dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@drawable/customborder"
-                android:gravity="center"
-                android:hint="Number of Servings"
-                android:minHeight="48dp" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/floatingActionButton3"
-                android:layout_width="77dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:clickable="true"
-                app:backgroundTint="@android:color/darker_gray"
-                app:srcCompat="@android:drawable/ic_input_add"
-                app:tint="@android:color/white" />
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textView10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Comment"
-            android:textSize="20dp"
-            android:layout_margin="3dp" />
-
-        <EditText
-            android:id="@+id/textView3"
-            android:layout_width="367dp"
-            android:layout_height="90dp"
-            android:layout_margin="3dp"
-            android:background="@drawable/customborder"
-            android:minHeight="48dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:orientation="horizontal">
+                android:layout_margin="3dp"
+                app:srcCompat="@drawable/ic_baseline_arrow_back_24"
+                app:backgroundTint="@android:color/white"/>
 
             <TextView
-                android:id="@+id/textView11"
-                android:layout_width="156dp"
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
+                android:text="Recipe"
+                android:textSize="25dp"/>
+
+            <EditText
+                android:id="@+id/textView1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:background="@drawable/customborder"
+                android:hint="Category"
+                android:minHeight="48dp" />
+
+            <EditText
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:background="@drawable/customborder"
+                android:hint="Preparation Time (mins)"
+                android:minHeight="48dp" />
+
+            <ImageView
+                android:layout_width="369dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:src="@drawable/_206_sheeshers" />
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="143dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:text="Gallery"
+                android:layout_gravity="center_horizontal"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/floatingActionButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    app:backgroundTint="@android:color/darker_gray"
+                    app:srcCompat="@drawable/ic_minus_svgrepo_com"
+                    app:tint="@android:color/white" />
+
+                <EditText
+                    android:id="@+id/textView8"
+                    android:layout_width="229dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:background="@drawable/customborder"
+                    android:gravity="center"
+                    android:hint="Number of Servings"
+                    android:minHeight="48dp" />
+
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/floatingActionButton3"
+                    android:layout_width="77dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    app:backgroundTint="@android:color/darker_gray"
+                    app:srcCompat="@android:drawable/ic_input_add"
+                    app:tint="@android:color/white" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Comment"
                 android:textSize="20dp"
-                android:text="Ingredients" />
+                android:layout_margin="3dp" />
 
-            <Button
-                android:id="@+id/button2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:minHeight="48dp"
-                android:text="Delete" />
+            <EditText
+                android:id="@+id/textView3"
+                android:layout_width="367dp"
+                android:layout_height="90dp"
+                android:layout_margin="3dp"
+                android:background="@drawable/customborder"
+                android:minHeight="48dp" />
 
-            <Button
-                android:id="@+id/button3"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="156dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:textSize="20dp"
+                    android:text="Ingredients" />
+
+                <Button
+                    android:id="@+id/button2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:minHeight="48dp"
+                    android:text="Delete" />
+
+                <Button
+                    android:id="@+id/button3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:minHeight="48dp"
+                    android:text="Add" />
+
+
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
-                android:minHeight="48dp"
-                android:text="Add" />
+                android:id="@+id/ingredientsInRep"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="58dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    android:text="Save Recipe" />
+
+                <Button
+                    android:id="@+id/button5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_margin="5dp"
+                    android:text="Delete Recipe" />
+            </LinearLayout>
 
 
         </LinearLayout>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="372dp"
-            android:layout_height="66dp" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="58dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/button4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="5dp"
-                android:text="Save Recipe" />
-
-            <Button
-                android:id="@+id/button5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_margin="5dp"
-                android:text="Delete Recipe" />
-        </LinearLayout>
-
-
-    </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>
