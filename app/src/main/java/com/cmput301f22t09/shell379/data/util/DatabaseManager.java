@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.infrastructure.SerializeEnvUtil;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -63,7 +64,12 @@ public class DatabaseManager {
     }
 
     public void push(Environment env) {
-        doc.set(SerializeEnvUtil.serialize(env));
+        doc.set(SerializeEnvUtil.serialize(env)).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void unused) {
+
+            }
+        });
     }
 
     public Environment getInstance() {

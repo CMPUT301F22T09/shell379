@@ -7,6 +7,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
@@ -25,7 +26,7 @@ public class SerializeUtil {
             oos.writeObject(obj);
             oos.flush();
             bytes = baos.toByteArray();
-            serialized = new String(bytes);
+            serialized = new String(bytes, StandardCharsets.UTF_8);
             baos.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -34,7 +35,7 @@ public class SerializeUtil {
     }
 
     public static Object deserialize(String serialized) {
-        byte[] bytes = serialized.getBytes();
+        byte[] bytes = serialized.getBytes(StandardCharsets.UTF_8);
         ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
         Object obj = null;
         try {
