@@ -52,10 +52,10 @@ public class DatabaseManager {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (value != null && value.getData() != null) {
-                    HashMap<String, List<Byte>> data = new HashMap<>();
-                    data.put("ingredients", (List<Byte>) value.get("ingredients"));
-                    data.put("recipes", (List<Byte>) value.get("recipes"));
-                    data.put("cart", (List<Byte>) value.get("cart"));
+                    HashMap<String, String> data = new HashMap<>();
+                    data.put("ingredients", (String) value.get("ingredients"));
+                    data.put("recipes", (String) value.get("recipes"));
+                    data.put("cart", (String) value.get("cart"));
                     instance = SerializeEnvUtil.deserialize(data);
                 }
             }
