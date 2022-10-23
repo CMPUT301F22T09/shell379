@@ -59,10 +59,7 @@ public class MainMenuFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
         navController = NavHostFragment.findNavController(this);
-
-
 
     }
 
@@ -71,7 +68,7 @@ public class MainMenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View rootView = inflater.inflate(R.layout.fragment_main_menu_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_main_menu, container, false);
         // navigation snippet from https://developer.android.com/guide/navigation/navigation-navigate#groovy
         ((Button)rootView.findViewById(R.id.ingredients_list_button)).setOnClickListener(
                 new View.OnClickListener() {
@@ -84,6 +81,20 @@ public class MainMenuFragment extends Fragment {
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         navController.navigate(MainMenuFragmentDirections.actionMainMenuFragmentToRecipeListFragment());
+                    }
+                }
+        );
+        ((Button)rootView.findViewById(R.id.meal_plans_list_button)).setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        navController.navigate(MainMenuFragmentDirections.actionMainMenuFragmentToMealPlanListFragment());
+                    }
+                }
+        );
+        ((Button)rootView.findViewById(R.id.shopping_list_button)).setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        navController.navigate(MainMenuFragmentDirections.actionMainMenuFragmentToShoppingListFragment());
                     }
                 }
         );
