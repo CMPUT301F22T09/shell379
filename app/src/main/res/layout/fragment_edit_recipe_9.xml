@@ -168,7 +168,7 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="match_parent"
-                    android:layout_height="70dp"
+                    android:layout_height="wrap_content"
                     android:overScrollMode="never"
                     android:nestedScrollingEnabled="true"
                     android:id="@+id/ingredientsInRep"/>

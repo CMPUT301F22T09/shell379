@@ -12,6 +12,7 @@ import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder>{
@@ -50,8 +51,9 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         TextView serving = holder.serving;
         TextView bestBefore = holder.bestBefore;
 
+        SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
         ingredientName.setText(ingredients.get(position).getDescription());
-        bestBefore.setText(ingredients.get(position).getBestBefore().toString());
+        bestBefore.setText(ingredients.get(position).getBestBeforeFormatted());
         serving.setText(ingredients.get(position).getAmount().toString());
     }
 
