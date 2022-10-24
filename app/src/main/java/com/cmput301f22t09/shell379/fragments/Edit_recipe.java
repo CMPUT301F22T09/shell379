@@ -85,6 +85,7 @@ public class Edit_recipe extends Fragment {
 
         layoutManager = new LinearLayoutManager(this.getActivity());
         recipe_recyclerView = (RecyclerView) rootView.findViewById(R.id.ingredientsInRep);
+//        recipe_recyclerView.setHasFixedSize(true);
         recipe_recyclerView.setLayoutManager(layoutManager);
 
         recipeListAdapter = new IngredientAdapter(myRecipe.getIngredients());
