@@ -1,5 +1,6 @@
 package com.cmput301f22t09.shell379.data;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Ingredient {
@@ -59,6 +60,10 @@ public class Ingredient {
         this.bestBefore = bestBefore;
     }
 
+    public String getBestBeforeFormatted() {
+        SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
+        return simpleDate.format(getBestBefore());
+    }
     public String getLocation() {
         return location;
     }
