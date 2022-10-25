@@ -44,18 +44,26 @@ public class RecipeLogicTest {
             Recipe rec = new Recipe("", template_prep, template_servings, template_cat, template_com);
         }, "Title should not be empty.");
     }
+
+
+
     @Test
     public void testConstructor_002() {
         assertThrows(IllegalArgumentException.class, () -> {
-            Recipe rec = new Recipe(template_title, -1L, template_servings, template_cat, template_com);
+            Recipe rec = new Recipe(template_title, 0L, template_servings, template_cat, template_com);
         }, "Preparation time cannot be negative.");
     }
     @Test
     public void testConstructor_003() {
         assertThrows(IllegalArgumentException.class, () -> {
-            Recipe rec = new Recipe(template_title, 0L, template_servings, template_cat, template_com);
+            Recipe rec = new Recipe(template_title, -1L, template_servings, template_cat, template_com);
         }, "Preparation time must be greater than 0.");
     }
+
+
+
+
+
     @Test
     public void testConstructor_004() {
         assertThrows(IllegalArgumentException.class, () -> {
@@ -70,12 +78,18 @@ public class RecipeLogicTest {
     }
 
 
+
+
+
     @Test
     public void testConstructor_006() {
         assertThrows(IllegalArgumentException.class, () -> {
             Recipe rec = new Recipe(template_title, template_prep, template_servings, "", template_com);
         }, "Category must be defined and non-empty");
     }
+
+
+
 
     @Test
     public void testConstructor_007() {
