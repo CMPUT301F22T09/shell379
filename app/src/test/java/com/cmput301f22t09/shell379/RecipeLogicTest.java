@@ -117,15 +117,92 @@ public class RecipeLogicTest {
     }
 
 
+
+
+
     /**
      * Title must be non-empty and non-null
+     * Input: ""
+     * Expected result: IllegalArgumentException
      */
     @Test
-    public void testSetTitle() {
+    public void testSetTitle_000() {
         Recipe recipe = new Recipe(template_title, template_prep, template_servings, template_cat, template_com);
         assertThrows(IllegalArgumentException.class, () -> {
             recipe.setTitle("");
         });
+    }
+
+    /**
+     * Title must be non-empty and non-null
+     * Input: null
+     * Expected result: IllegalArgumentException
+     */
+    @Test
+    public void testSetTitle_001() {
+        Recipe recipe = new Recipe(template_title, template_prep, template_servings, template_cat, template_com);
+        assertThrows(IllegalArgumentException.class, () -> {
+            recipe.setTitle(null);
+        });
+    }
+
+    /**
+     * Set title valid case
+     * Input: "valid title"
+     * Expected result: No Action
+     */
+    @Test
+    public void testSetTitle_002() {
+        Recipe recipe = new Recipe(template_title, template_prep, template_servings, template_cat, template_com);
+        try {
+            recipe.setTitle("valid title");
+        } catch (Exception e) {
+            fail("No exception should have been thrown");
+        }
+    }
+
+
+    /**
+     * Testing setPreparationTime with valid value
+     * Input: 1L
+     * Expected Behaviour: No Action
+     */
+    @Test
+    public void testSetPreparationTime_000() {
+        Recipe recipe = new Recipe(template_title, template_prep, template_servings, template_cat, template_com);
+        try{
+            recipe.setPreparationTime(1L);
+        } catch(Exception e) {
+            fail("Exception should not have been thrown.");
+        }
+
+    }
+
+    /**
+     * Testing setPreparationTime with valid value
+     * Input: 0L
+     * Expected Behaviour: IllegalArgumentException
+     */
+    @Test
+    public void testSetPreparationTime_001() {
+        Recipe recipe = new Recipe(template_title, template_prep, template_servings, template_cat, template_com);
+        assertThrows(IllegalArgumentException.class, ()->{
+            recipe.setPreparationTime(0L);
+        });
+
+    }
+    /**
+     * Testing setPreparationTime with valid value
+     * Input: -1L
+     * Expected Behaviour: No Action
+     */
+    @Test
+    public void testSetPreparationTime_002() {
+        Recipe recipe = new Recipe(template_title, template_prep, template_servings, template_cat, template_com);
+        assertThrows(IllegalArgumentException.class, ()->{
+            recipe.setPreparationTime(-1L);
+        });
+
     }
 
 }
