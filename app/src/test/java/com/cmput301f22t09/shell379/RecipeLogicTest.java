@@ -179,7 +179,7 @@ public class RecipeLogicTest {
     }
 
     /**
-     * Testing setPreparationTime with valid value
+     * Testing setPreparationTime with zero value
      * Input: 0L
      * Expected Behaviour: IllegalArgumentException
      */
@@ -192,9 +192,9 @@ public class RecipeLogicTest {
 
     }
     /**
-     * Testing setPreparationTime with valid value
+     * Testing setPreparationTime with negative value
      * Input: -1L
-     * Expected Behaviour: No Action
+     * Expected Behaviour: IllegalArgumentException
      */
     @Test
     public void testSetPreparationTime_002() {
@@ -204,5 +204,88 @@ public class RecipeLogicTest {
         });
 
     }
+
+
+    /**
+     * Testing setServings method with valid value
+     * Input: 1
+     * Expected Behaviour: No Action
+     */
+    @Test
+    public void testSetServings_000() {
+        Recipe recipe = new Recipe(template_title, template_prep, template_servings, template_cat, template_com);
+        try {
+            recipe.setServings(1);
+        } catch (Exception e) {
+            fail("Exception should not have been thrown!");
+        }
+    }
+
+
+    /**
+     * Testing setServings method with zero value
+     * Input: 0
+     * Expected Behaviour: IllegalArgumentException
+     */
+    @Test
+    public void testSetServings_001() {
+        Recipe recipe = new Recipe(template_title, template_prep, template_servings, template_cat, template_com);
+        assertThrows(IllegalArgumentException.class, ()->{
+            recipe.setServings(0);
+        });
+    }
+    /**
+     * Testing setServings method with negative value
+     * Input: 0
+     * Expected Behaviour: IllegalArgumentException
+     */
+    @Test
+    public void testSetServings_002() {
+        Recipe recipe = new Recipe(template_title, template_prep, template_servings, template_cat, template_com);
+        assertThrows(IllegalArgumentException.class, ()->{
+            recipe.setServings(-1);
+        });
+    }
+
+
+    /**
+     * Testing setCategory method with valid string
+     * Input: "valid cat"
+     * Expected Behaviour: No Action
+     */
+    @Test
+    public void testSetCategory_000() {
+        Recipe recipe = new Recipe(template_title, template_prep, template_servings, template_cat, template_com);
+        try {
+            recipe.setCategory("valid cat");
+        } catch (Exception e) {
+            fail("No exception should have been thrown.");
+        }
+    }
+    /**
+     * Testing setCategory method with empty string
+     * Input: ""
+     * Expected Behaviour: IllegalArgumentException
+     */
+    @Test
+    public void testSetCategory_001() {
+        Recipe recipe = new Recipe(template_title, template_prep, template_servings, template_cat, template_com);
+        assertThrows(IllegalArgumentException.class, ()->{
+            recipe.setCategory("");
+        });
+    }
+    /**
+     * Testing setCategory method with null
+     * Input: null
+     * Expected Behaviour: IllegalArgumentException
+     */
+    @Test
+    public void testSetCategory_002() {
+        Recipe recipe = new Recipe(template_title, template_prep, template_servings, template_cat, template_com);
+        assertThrows(IllegalArgumentException.class, ()->{
+            recipe.setCategory(null);
+        });
+    }
+
 
 }
