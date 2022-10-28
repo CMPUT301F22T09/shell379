@@ -45,7 +45,7 @@ public class DatabaseManager {
         // unique device identifier:
         // https://stackoverflow.com/questions/2785485/is-there-a-unique-android-device-id
         String id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
-        doc = db.collection("env").document(id);
+        doc = db.collection(id).document("ENV");
     }
 
     public void pull() {
