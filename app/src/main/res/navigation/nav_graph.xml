@@ -50,5 +50,14 @@
         android:id="@+id/edit_recipe"
         android:name="com.cmput301f22t09.shell379.fragments.Edit_recipe"
         android:label="fragment_edit_recipe"
-        tools:layout="@layout/fragment_edit_recipe_9" />
+        tools:layout="@layout/fragment_edit_recipe_9" >
+        <action
+            android:id="@+id/action_edit_recipe_to_recipeSelectIngredientFragment"
+            app:destination="@id/recipeSelectIngredientFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeSelectIngredientFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.RecipeSelectIngredientFragment"
+        android:label="fragment_recipe_select_ingredient"
+        tools:layout="@layout/recipe_select_ingredients" />
 </navigation>
