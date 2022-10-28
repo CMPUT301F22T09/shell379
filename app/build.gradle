@@ -35,6 +35,8 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.navigation:navigation-runtime:2.3.5'
+
     // Navigation Dependencies from https://developer.android.com/guide/navigation/navigation-getting-started
     def nav_version = "2.5.2"
 

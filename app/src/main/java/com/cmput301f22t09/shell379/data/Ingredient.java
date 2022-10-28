@@ -1,6 +1,7 @@
 package com.cmput301f22t09.shell379.data;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Ingredient implements Serializable {
@@ -60,6 +61,10 @@ public class Ingredient implements Serializable {
         this.bestBefore = bestBefore;
     }
 
+    public String getBestBeforeFormatted() {
+        SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
+        return simpleDate.format(getBestBefore());
+    }
     public String getLocation() {
         return location;
     }

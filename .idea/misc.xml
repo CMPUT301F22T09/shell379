@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/CMPUT 301/shell379/app/src/main/res/layout/fragment_recipe_list.xml" value="0.25416666666666665" />
+        <entry key="..\:/CMPUT 301/shell379/app/src/main/res/layout/recipe_list_item.xml" value="0.264" />
+        <entry key="..\:/CMPUT 301/shell379/app/src/main/res/layout/recipe_select_ingredients.xml" value="0.264" />
+        <entry key="..\:/CMPUT 301/shell379/app/src/main/res/layout/recipe_select_ingredients_content.xml" value="0.253125" />
+      </map>
+    </option>
+  </component>
   <component name="ExternalStorageConfigurationManager" enabled="true" />
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
