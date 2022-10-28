@@ -26,16 +26,12 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
     public class RecipeSelectIngredientsViewHolder extends RecyclerView.ViewHolder {
 
         TextView description;
-        TextView bestBefore;
-        TextView location;
         TextView unit;
         TextView category;
 
         public RecipeSelectIngredientsViewHolder(@NonNull View itemView) {
             super(itemView);
             this.description = (TextView) itemView.findViewById(R.id.rsi_description);
-            this.bestBefore = (TextView) itemView.findViewById(R.id.rsi_bestBefore);
-            this.location = (TextView) itemView.findViewById(R.id.rsi_location);
             this.unit = (TextView) itemView.findViewById(R.id.rsi_unit);
             this.category = (TextView) itemView.findViewById(R.id.rsi_category);
         }
@@ -57,22 +53,10 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
     @Override
     public void onBindViewHolder(@NonNull RecipeSelectIngredientsViewHolder holder, int position) {
         TextView description = holder.description;
-        TextView bestBefore = holder.bestBefore;
-        TextView location = holder.location;
         TextView unit = holder.unit;
         TextView category = holder.category;
 
         description.setText(ingredients.get(position).getDescription());
-
-        // TODO: cite https://stackoverflow.com/questions/14039062/how-to-convert-date-in-to-yyyy-mm-dd-format
-        // used to learn how to format a date to year-month-date
-//        Date date = ingredients.get(position).getBestBefore().get();
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//        String formattedDate = formatter.format(date);
-//        bestBefore.setText(formattedDate);
-        bestBefore.setText(ingredients.get(position).getBestBeforeFormatted());
-
-        location.setText(ingredients.get(position).getLocation());
         category.setText(ingredients.get(position).getCategory());
         unit.setText(ingredients.get(position).getUnit());
     }
