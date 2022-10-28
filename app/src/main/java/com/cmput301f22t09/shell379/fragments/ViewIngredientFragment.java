@@ -110,7 +110,7 @@ public class ViewIngredientFragment extends Fragment {
     }
 
     private void navigateToEditIngredient(){
-
+        navController.navigate(ViewIngredientFragmentDirections.actionViewIngredientFragmentToSaveIngredientFragment());
     }
 
     private void deleteIngredient(){
