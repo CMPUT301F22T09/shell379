@@ -1,23 +1,35 @@
 package com.cmput301f22t09.shell379.fragments;
 
-import android.os.Bundle;
+import static android.app.Activity.RESULT_OK;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.net.Uri;
+import android.content.Context;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.IngredientAdapter;
-import com.cmput301f22t09.shell379.adapters.RecipeListAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -32,6 +44,9 @@ public class Edit_recipe extends Fragment {
     RecyclerView recipe_recyclerView;
     RecyclerView.LayoutManager layoutManager;
     IngredientAdapter recipeListAdapter;
+    Button choosePhoto;
+    ImageView previewPhoto;
+    int SELECT_PICTURE = 200;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -70,6 +85,7 @@ public class Edit_recipe extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
@@ -77,6 +93,15 @@ public class Edit_recipe extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_edit_recipe_9, container, false);
+        choosePhoto = rootView.findViewById(R.id.chooseButton);
+        previewPhoto = rootView.findViewById(R.id.photo);
+
+        choosePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                imageChooser();
+            }
+        });
         myRecipe = new Recipe("kongpaochicken",100L,3,"chinese","spicy");
         myRecipe.addIngredient(new Ingredient("apple",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
         myRecipe.addIngredient(new Ingredient("chicken",new Date(2023,9,07),"fridge",2,"1lbs","meat"));
@@ -92,5 +117,40 @@ public class Edit_recipe extends Fragment {
         recipe_recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         return rootView;
+    }
+
+    // this function is triggered when
+    // the Select Image Button is clicked
+    public void imageChooser() {
+
+        // create an instance of the
+        // intent of the type image
+        Intent i = new Intent();
+        i.setType("image/*");
+        i.setAction(Intent.ACTION_GET_CONTENT);
+
+        // pass the constant to compare it
+        // with the returned requestCode
+        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+    }
+
+    // this function is triggered when user
+    // selects the image from the imageChooser
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == RESULT_OK) {
+
+            // compare the resultCode with the
+            // SELECT_PICTURE constant
+            if (requestCode == SELECT_PICTURE) {
+                // Get the url of the image from data
+                Uri selectedImageUri = data.getData();
+                if (null != selectedImageUri) {
+                    // update the preview image in the layout
+                    previewPhoto.setImageURI(selectedImageUri);
+                }
+            }
+        }
     }
 }
