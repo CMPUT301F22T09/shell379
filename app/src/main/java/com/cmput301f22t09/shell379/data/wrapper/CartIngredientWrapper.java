@@ -2,7 +2,9 @@ package com.cmput301f22t09.shell379.data.wrapper;
 
 import com.cmput301f22t09.shell379.data.Ingredient;
 
-public class CartIngredientWrapper {
+import java.io.Serializable;
+
+public class CartIngredientWrapper implements Serializable {
     private Ingredient ingredient;
     private Boolean isPickedUp;
     private Boolean areDetailsFilled;

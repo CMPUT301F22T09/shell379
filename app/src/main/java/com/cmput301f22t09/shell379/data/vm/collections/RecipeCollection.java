@@ -6,9 +6,10 @@ import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.infrastructure.Commitable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class RecipeCollection extends Commitable {
+public class RecipeCollection extends Commitable implements Serializable {
     private final MutableLiveData<ArrayList<Recipe>> recipes = new MutableLiveData<>();
     private final MutableLiveData<Boolean> changed = new MutableLiveData<>();
 

@@ -1,14 +1,13 @@
 package com.cmput301f22t09.shell379.data;
 
 import android.os.Build;
-
 import androidx.annotation.RequiresApi;
-
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 
-public class Ingredient {
+public class Ingredient implements Serializable {
     private String description;
     private Optional<Date> bestBefore;
     private String location;

@@ -2,9 +2,10 @@ package com.cmput301f22t09.shell379.data;
 
 import android.media.Image;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Recipe {
+public class Recipe implements Serializable {
     private String title;
     private Long preparationTime; //in milliseconds
     private Integer servings;
