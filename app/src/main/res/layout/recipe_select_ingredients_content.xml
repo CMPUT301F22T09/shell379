@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
 
         <CheckBox
-            android:id="@+id/checkBox"
+            android:id="@+id/rsi_checkBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -70,18 +70,6 @@
             app:layout_constraintTop_toBottomOf="@+id/rsi_bestBefore_label" />
 
         <TextView
-            android:id="@+id/rsi_amount_label"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="15dp"
-            android:text="Amount"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rsi_location_label" />
-
-        <TextView
             android:id="@+id/rsi_category_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -91,14 +79,14 @@
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rsi_amount_label" />
+            app:layout_constraintTop_toBottomOf="@+id/rsi_location_label" />
 
         <TextView
-            android:id="@+id/rsi_servings_label"
+            android:id="@+id/rsi_amount_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Servings"
+            android:text="Amount"
             android:textAlignment="center"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -108,6 +96,7 @@
             app:layout_constraintTop_toBottomOf="@+id/rsi_category_label" />
 
         <NumberPicker
+            android:id="@+id/rsi_amount_numberPicker"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:layout_marginTop="10dp"
@@ -116,10 +105,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rsi_servings_label" />
+            app:layout_constraintTop_toBottomOf="@+id/rsi_amount_label" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/rsi_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -133,7 +122,7 @@
             app:layout_constraintStart_toEndOf="@+id/rsi_bestBefore_label" />
 
         <TextView
-            android:id="@+id/textView7"
+            android:id="@+id/rsi_bestBefore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
@@ -146,7 +135,7 @@
             app:layout_constraintStart_toEndOf="@+id/rsi_bestBefore_label" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/rsi_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
@@ -157,18 +146,7 @@
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
-            android:id="@+id/textView9"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="40dp"
-            android:text="(Amount)"
-            android:textAlignment="textEnd"
-            android:textSize="16sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/rsi_amount_label"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-        <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/rsi_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
