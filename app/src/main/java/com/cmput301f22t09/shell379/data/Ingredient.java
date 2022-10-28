@@ -1,11 +1,16 @@
 package com.cmput301f22t09.shell379.data;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 public class Ingredient {
     private String description;
-    private Date bestBefore;
+    private Optional<Date> bestBefore;
     private String location;
     private Integer amount;
     private String unit;
@@ -20,10 +25,11 @@ public class Ingredient {
 //        this.category = category;
 //    }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public Ingredient(String description, Date bestBefore, String location, Integer amount, String unit, String category) throws IllegalArgumentException {
         this.description = description;
 
-        this.bestBefore = bestBefore;
+        this.bestBefore = Optional.ofNullable(bestBefore);
         if (bestBefore.before(new Date())) {
             throw new IllegalArgumentException("Best Before Date shall not be before today upon construction!");
         }
@@ -44,6 +50,16 @@ public class Ingredient {
         this.category = category;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public Ingredient(String description, String location, Integer amount, String unit, String category) {
+        this.description = description;
+        this.bestBefore = Optional.empty();
+        this.location = location;
+        this.amount = amount;
+        this.unit = unit;
+        this.category = category;
+    }
+
     public String getDescription() {
         return description;
     }
@@ -52,12 +68,13 @@ public class Ingredient {
         this.description = description;
     }
 
-    public Date getBestBefore() {
+    public Optional<Date> getBestBefore() {
         return bestBefore;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void setBestBefore(Date bestBefore) {
-        this.bestBefore = bestBefore;
+        this.bestBefore = Optional.ofNullable(bestBefore);
     }
 
     public String getBestBeforeFormatted() {
