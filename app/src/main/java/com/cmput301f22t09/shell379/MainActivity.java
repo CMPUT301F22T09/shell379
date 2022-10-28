@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
 
         }
-        dbm.push(env);
+//        dbm.push(env);
 
 
 
