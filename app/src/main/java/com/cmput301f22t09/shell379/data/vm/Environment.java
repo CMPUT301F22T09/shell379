@@ -11,11 +11,14 @@ import com.cmput301f22t09.shell379.data.vm.collections.RecipeCollection;
 import com.cmput301f22t09.shell379.data.vm.infrastructure.Commitable;
 
 import java.io.Serializable;
+import java.util.HashSet;
 
 public class Environment extends ViewModel implements Serializable {
     private IngredientCollection ingredients;
     private RecipeCollection recipes;
     private LiveCart cart;
+    private HashSet<String> ingredCategories;
+    private HashSet<String> recipeCategories;
 
     public Environment() {
         ingredients = new IngredientCollection();
@@ -66,5 +69,21 @@ public class Environment extends ViewModel implements Serializable {
 
     public LiveCart getCart() {
         return cart;
+    }
+
+    public HashSet<String> getIngredCategories() {
+        return ingredCategories;
+    }
+
+    public void setIngredCategories(HashSet<String> ingredCategories) {
+        this.ingredCategories = ingredCategories;
+    }
+
+    public HashSet<String> getRecipeCategories() {
+        return recipeCategories;
+    }
+
+    public void setRecipeCategories(HashSet<String> recipeCategories) {
+        this.recipeCategories = recipeCategories;
     }
 }

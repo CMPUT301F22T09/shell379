@@ -76,9 +76,11 @@ public class Ingredient implements Serializable {
         this.bestBefore = Optional.ofNullable(bestBefore);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public String getBestBeforeFormatted() {
         SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
-        return simpleDate.format(getBestBefore());
+        if (!getBestBefore().isPresent()) return "";
+        else return simpleDate.format(getBestBefore().get());
     }
     public String getLocation() {
         return location;
