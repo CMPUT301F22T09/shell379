@@ -5,9 +5,10 @@ import androidx.lifecycle.MutableLiveData;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.vm.infrastructure.Commitable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class IngredientCollection extends Commitable {
+public class IngredientCollection extends Commitable implements Serializable {
     private final MutableLiveData<ArrayList<Ingredient>> ingredients = new MutableLiveData<>();
 
     public IngredientCollection() {
