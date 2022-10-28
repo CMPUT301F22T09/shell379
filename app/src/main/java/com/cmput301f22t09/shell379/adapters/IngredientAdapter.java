@@ -51,7 +51,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         TextView serving = holder.serving;
         TextView bestBefore = holder.bestBefore;
 
-        SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
         ingredientName.setText(ingredients.get(position).getDescription());
         bestBefore.setText(ingredients.get(position).getBestBeforeFormatted());
         serving.setText(ingredients.get(position).getAmount().toString());
