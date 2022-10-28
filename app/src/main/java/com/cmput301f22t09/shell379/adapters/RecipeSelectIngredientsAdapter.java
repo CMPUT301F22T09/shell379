@@ -15,7 +15,9 @@ import com.cmput301f22t09.shell379.data.Ingredient;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeSelectIngredientsAdapter.RecipeSelectIngredientsViewHolder> {
 
@@ -26,7 +28,7 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
         TextView description;
         TextView bestBefore;
         TextView location;
-        NumberPicker amount;
+        TextView unit;
         TextView category;
 
         public RecipeSelectIngredientsViewHolder(@NonNull View itemView) {
@@ -34,7 +36,7 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
             this.description = (TextView) itemView.findViewById(R.id.rsi_description);
             this.bestBefore = (TextView) itemView.findViewById(R.id.rsi_bestBefore);
             this.location = (TextView) itemView.findViewById(R.id.rsi_location);
-            this.amount = (NumberPicker) itemView.findViewById(R.id.rsi_amount_numberPicker);
+            this.unit = (TextView) itemView.findViewById(R.id.rsi_unit);
             this.category = (TextView) itemView.findViewById(R.id.rsi_category);
         }
     }
@@ -57,14 +59,21 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
         TextView description = holder.description;
         TextView bestBefore = holder.bestBefore;
         TextView location = holder.location;
-        NumberPicker amount = holder.amount;
+        TextView unit = holder.unit;
         TextView category = holder.category;
 
         description.setText(ingredients.get(position).getDescription());
-        bestBefore.setText(ingredients.get(position).getBestBefore().toString());
+
+        // TODO: cite https://stackoverflow.com/questions/14039062/how-to-convert-date-in-to-yyyy-mm-dd-format
+        // used to learn how to format a date to year-month-date
+        Date date = ingredients.get(position).getBestBefore();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = formatter.format(date);
+        bestBefore.setText(formattedDate);
+
         location.setText(ingredients.get(position).getLocation());
-        amount.setValue(ingredients.get(position).getAmount());
         category.setText(ingredients.get(position).getCategory());
+        unit.setText(ingredients.get(position).getUnit());
     }
 
     @Override
