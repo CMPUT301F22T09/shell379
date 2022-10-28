@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/viewIngredientFragment">
+    app:startDestination="@id/edit_recipe">
     <fragment
         android:id="@+id/ingredientListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.IngredientListFragment"
@@ -20,7 +20,11 @@
         android:id="@+id/recipeListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.RecipeListFragment"
         android:label="fragment_recipe_list"
-        tools:layout="@layout/fragment_recipe_list" />
+        tools:layout="@layout/fragment_recipe_list" >
+        <action
+            android:id="@+id/action_recipeListFragment_to_edit_recipe"
+            app:destination="@id/edit_recipe" />
+    </fragment>
     <fragment
         android:id="@+id/mainMenuFragment"
         android:name="com.cmput301f22t09.shell379.fragments.MainMenuFragment"
@@ -50,17 +54,8 @@
         android:label="fragment_meal_plan_list"
         tools:layout="@layout/fragment_meal_plan_list" />
     <fragment
-        android:id="@+id/viewIngredientFragment"
-        android:name="com.cmput301f22t09.shell379.fragments.ViewIngredientFragment"
-        android:label="fragment_view_ingredient"
-        tools:layout="@layout/fragment_view_ingredient" >
-        <action
-            android:id="@+id/action_viewIngredientFragment_to_saveIngredientFragment"
-            app:destination="@id/saveIngredientFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/saveIngredientFragment"
-        android:name="com.cmput301f22t09.shell379.fragments.SaveIngredientFragment"
-        android:label="fragment_save_ingredient"
-        tools:layout="@layout/fragment_save_ingredient" />
+        android:id="@+id/edit_recipe"
+        android:name="com.cmput301f22t09.shell379.fragments.Edit_recipe"
+        android:label="fragment_edit_recipe"
+        tools:layout="@layout/fragment_edit_recipe_9" />
 </navigation>

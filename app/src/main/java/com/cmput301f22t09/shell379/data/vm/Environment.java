@@ -18,6 +18,12 @@ public class Environment extends ViewModel implements Serializable {
     private RecipeCollection recipes;
     private LiveCart cart;
 
+    public Environment() {
+        ingredients = new IngredientCollection();
+        recipes = new RecipeCollection();
+        cart = new LiveCart();
+    }
+
     public static Environment of(AppCompatActivity owner, Environment envPulled) {
         Environment env = new ViewModelProvider(owner).get(Environment.class);
         env.ingredients = envPulled.ingredients;
