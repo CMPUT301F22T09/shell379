@@ -66,10 +66,11 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
 
         // TODO: cite https://stackoverflow.com/questions/14039062/how-to-convert-date-in-to-yyyy-mm-dd-format
         // used to learn how to format a date to year-month-date
-        Date date = ingredients.get(position).getBestBefore();
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        String formattedDate = formatter.format(date);
-        bestBefore.setText(formattedDate);
+//        Date date = ingredients.get(position).getBestBefore().get();
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+//        String formattedDate = formatter.format(date);
+//        bestBefore.setText(formattedDate);
+        bestBefore.setText(ingredients.get(position).getBestBeforeFormatted());
 
         location.setText(ingredients.get(position).getLocation());
         category.setText(ingredients.get(position).getCategory());
