@@ -1,13 +1,7 @@
 package com.cmput301f22t09.shell379.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,32 +10,35 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SaveIngredientFragment#newInstance} factory method to
+ * Use the {@link EditIngredientFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public abstract class SaveIngredientFragment extends Fragment {
+public class EditIngredientFragment extends Fragment {
     private View rootView;
     private NavController navController;
     private Ingredient ingredient;
     private Environment envViewModel;
 
-    public SaveIngredientFragment() {
+    public EditIngredientFragment() {
         // Required empty public constructor
     }
 
@@ -102,6 +99,7 @@ public abstract class SaveIngredientFragment extends Fragment {
         navController.popBackStack();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void save(){
         try{
             // Load data from Views
@@ -130,6 +128,9 @@ public abstract class SaveIngredientFragment extends Fragment {
         error.setVisibility(View.VISIBLE);
     }
 
-  protected abstract void writeToViewModel(Ingredient ing);
+    protected void writeToViewModel(Ingredient ing){
+        envViewModel.getIngredients().add(ing);
+        envViewModel.getIngredients().commit();
+    }
 
 }
