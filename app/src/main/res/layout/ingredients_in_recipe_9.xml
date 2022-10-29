@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/food_name_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:text="Food Name" />
+
+    <TextView
+        android:id="@+id/serving_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:minWidth="80dp"
+        android:maxWidth="80dp"
+        android:text="Servings" />
+
+    <TextView
+        android:id="@+id/best_before_text"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:maxWidth="30dp"
+        android:minWidth="30dp"
+        android:text="Best Before" />
+
+    <TextView
+        android:id="@+id/category"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:maxWidth="60dp"
+        android:minWidth="60dp"
+        android:text="Category" />
+
+    <TextView
+        android:id="@+id/unit"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:maxWidth="60dp"
+        android:minWidth="60dp"
+        android:text="Unit" />
+
+
+    <TextView
+        android:id="@+id/amount"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:maxWidth="60dp"
+        android:minWidth="60dp"
+        android:text="Amount" />
+
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:maxWidth="60dp"
+        android:minWidth="60dp"
+        android:text="Location" />
+</LinearLayout>
