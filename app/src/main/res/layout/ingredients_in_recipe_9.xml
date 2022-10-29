@@ -25,8 +25,45 @@
         android:layout_width="96dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
-        android:maxWidth="60dp"
-        android:minWidth="60dp"
+        android:maxWidth="30dp"
+        android:minWidth="30dp"
         android:text="Best Before" />
 
+    <TextView
+        android:id="@+id/category"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:maxWidth="60dp"
+        android:minWidth="60dp"
+        android:text="Category" />
+
+    <TextView
+        android:id="@+id/unit"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:maxWidth="60dp"
+        android:minWidth="60dp"
+        android:text="Unit" />
+
+
+    <TextView
+        android:id="@+id/amount"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:maxWidth="60dp"
+        android:minWidth="60dp"
+        android:text="Amount" />
+
+
+    <TextView
+        android:id="@+id/location"
+        android:layout_width="96dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:maxWidth="60dp"
+        android:minWidth="60dp"
+        android:text="Location" />
 </LinearLayout>
