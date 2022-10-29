@@ -3,20 +3,12 @@ package com.cmput301f22t09.shell379.fragments;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.DefaultItemAnimator;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.cmput301f22t09.shell379.R;
-import com.cmput301f22t09.shell379.adapters.IngredientAdapter;
-import com.cmput301f22t09.shell379.data.Ingredient;
-
-import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,10 +16,6 @@ import java.util.Date;
  * create an instance of this fragment.
  */
 public class IngredientListFragment extends Fragment {
-    ArrayList<Ingredient> testList;
-    RecyclerView ingredient_recyclerView;
-    RecyclerView.LayoutManager layoutManager;
-    IngredientAdapter ingredientListAdapter;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -73,24 +61,6 @@ public class IngredientListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-//        return inflater.inflate(R.layout.fragment_ingredient_list, container, false);
-        View rootView = inflater.inflate(R.layout.fragment_ingredient_list, container, false);
-
-        testList = new ArrayList<Ingredient>();
-        testList.add(new Ingredient("Milk", new Date(2023,9,10), "Fridge",222,"1L","Diary"));
-        testList.add(new Ingredient("Water", new Date(2023,9,11),"Counter",22,"2L","Liquid"));
-
-        layoutManager = new LinearLayoutManager(this.getActivity());
-        ingredient_recyclerView = (RecyclerView) rootView.findViewById(R.id.ingredient_list_recyclerView);
-        ingredient_recyclerView.setLayoutManager(layoutManager);
-
-
-        ingredientListAdapter = new IngredientAdapter(testList);
-        ingredient_recyclerView.setAdapter(ingredientListAdapter);
-        ingredient_recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        return rootView;
-
-
+        return inflater.inflate(R.layout.fragment_ingredient_list, container, false);
     }
 }
