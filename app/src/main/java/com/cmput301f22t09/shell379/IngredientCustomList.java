@@ -38,10 +38,10 @@ public class IngredientCustomList extends ArrayAdapter<Ingredient> {
 
         Ingredient ingredient = ingredients.get(position);
 
-        TextView description = view.findViewById(R.id.textView2);
-        TextView best_before_date = view.findViewById(R.id.textView3);
-        TextView location = view.findViewById(R.id.textView4);
-        TextView category = view.findViewById(R.id.textView5);
+        TextView description = view.findViewById(R.id.ingredient_name);
+        TextView best_before_date = view.findViewById(R.id.best_before_date);
+        TextView location = view.findViewById(R.id.location);
+        TextView category = view.findViewById(R.id.category);
 
         description.setText(ingredient.getDescription());
         //date to string
