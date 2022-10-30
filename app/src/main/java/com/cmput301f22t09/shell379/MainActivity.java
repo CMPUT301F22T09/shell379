@@ -4,6 +4,8 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 //import androidx.navigation.Navigation;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,7 +42,8 @@ public class MainActivity extends AppCompatActivity {
         }
         Ingredient ing = new Ingredient("description", d, "location", 1, "100kg", "Foodstuffs");
         Ingredient ing1 = new Ingredient("description1", d, "location", 1, "100kg", "Foodstuffs");
-        Recipe rec = new Recipe("title", 20L, 10, "category", "Lorem Ipsum Dolor Sit Amet");
+//        Recipe rec = new Recipe("title", 20L, 10, "category", "Lorem Ipsum Dolor Sit Amet");
+        Recipe rec = new Recipe("title", 20L, 10, "category", "Lorem Ipsum Dolor Sit Amet", BitmapFactory.decodeResource(getResources(), R.drawable.arrow_back_48px));
         MealPlan mp = new MealPlan();
         ShoppingCart sc = new ShoppingCart();
 
