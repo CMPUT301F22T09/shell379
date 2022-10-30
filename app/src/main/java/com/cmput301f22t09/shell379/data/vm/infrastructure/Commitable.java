@@ -10,7 +10,7 @@ public class Commitable extends ViewModel {
         changed.setValue(false);
     }
 
-    protected void readyForCommit() {
+    public void commit() {
         changed.setValue(true);
     }
 

@@ -1,4 +1,4 @@
-package com.cmput301f22t09.shell379;
+package com.cmput301f22t09.shell379.fragments;
 
 import android.os.Bundle;
 
@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.cmput301f22t09.shell379.R;
 
 /**
  * A simple {@link Fragment} subclass.

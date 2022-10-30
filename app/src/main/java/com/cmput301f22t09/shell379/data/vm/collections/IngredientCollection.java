@@ -5,9 +5,10 @@ import androidx.lifecycle.MutableLiveData;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.vm.infrastructure.Commitable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class IngredientCollection extends Commitable {
+public class IngredientCollection extends Commitable implements Serializable {
     private final MutableLiveData<ArrayList<Ingredient>> ingredients = new MutableLiveData<>();
 
     public IngredientCollection() {
@@ -22,8 +23,22 @@ public class IngredientCollection extends Commitable {
         return ingredients.getValue();
     }
 
-    public void commit(ArrayList<Ingredient> newIngredients) {
-        ingredients.setValue(newIngredients);
-        readyForCommit();
+    public void add(Ingredient ingredient) {
+        ingredients.getValue().add(ingredient);
+        setIngredients(ingredients.getValue());
+    }
+
+    public void add(ArrayList<Ingredient> ingredients) {
+        this.ingredients.getValue().addAll(ingredients);
+        setIngredients(this.ingredients.getValue());
+    }
+
+    public void removeAtIdx(int i) {
+        this.ingredients.getValue().remove(i);
+        setIngredients(ingredients.getValue());
+    }
+
+    public void setIngredients(ArrayList<Ingredient> ingredients) {
+        this.ingredients.setValue(ingredients);
     }
 }
