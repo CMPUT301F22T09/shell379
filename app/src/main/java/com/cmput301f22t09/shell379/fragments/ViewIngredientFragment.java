@@ -1,7 +1,9 @@
 package com.cmput301f22t09.shell379.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -31,6 +33,7 @@ public class ViewIngredientFragment extends Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -110,7 +113,7 @@ public class ViewIngredientFragment extends Fragment {
     }
 
     private void navigateToEditIngredient(){
-        navController.navigate(ViewIngredientFragmentDirections.actionViewIngredientFragmentToSaveIngredientFragment());
+        navController.navigate(ViewIngredientFragmentDirections.actionViewIngredientFragmentToEditIngredientFragment());
     }
 
     private void deleteIngredient(){

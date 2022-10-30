@@ -13,8 +13,8 @@
             android:id="@+id/action_ingredientListFragment_to_viewIngredientFragment"
             app:destination="@id/viewIngredientFragment" />
         <action
-            android:id="@+id/action_ingredientListFragment_to_saveIngredientFragment"
-            app:destination="@id/saveIngredientFragment" />
+            android:id="@+id/action_ingredientListFragment_to_createIngredientFragment"
+            app:destination="@id/createIngredientFragment" />
     </fragment>
     <fragment
         android:id="@+id/recipeListFragment"
@@ -59,8 +59,8 @@
         android:label="fragment_edit_recipe"
         tools:layout="@layout/fragment_edit_recipe_9" />
     <fragment
-        android:id="@+id/saveIngredientFragment"
-        android:name="com.cmput301f22t09.shell379.fragments.SaveIngredientFragment"
+        android:id="@+id/createIngredientFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.CreateIngredientFragment"
         android:label="fragment_save_ingredient"
         tools:layout="@layout/fragment_save_ingredient" />
     <fragment
@@ -69,7 +69,11 @@
         android:label="entity_detail_row"
         tools:layout="@layout/fragment_view_ingredient" >
         <action
-            android:id="@+id/action_viewIngredientFragment_to_saveIngredientFragment"
-            app:destination="@id/saveIngredientFragment" />
+            android:id="@+id/action_viewIngredientFragment_to_editIngredientFragment"
+            app:destination="@id/editIngredientFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/editIngredientFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.EditIngredientFragment"
+        android:label="EditIngredientFragment" />
 </navigation>

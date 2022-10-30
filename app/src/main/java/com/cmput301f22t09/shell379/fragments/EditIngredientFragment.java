@@ -24,19 +24,12 @@ import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link EditIngredientFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class EditIngredientFragment extends Fragment {
-    private View rootView;
-    private NavController navController;
-    private Ingredient ingredient;
-    private Environment envViewModel;
+public class EditIngredientFragment extends SaveIngredientFragment {
 
     public EditIngredientFragment() {
         // Required empty public constructor
@@ -45,89 +38,39 @@ public class EditIngredientFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        navController = NavHostFragment.findNavController(this);
     }
 
     // TO DO
     // Connect units, category and location to sets
     // connect dialog
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_save_ingredient, container, false);
+        super.onCreateView(inflater,container,savedInstanceState);
 
-        envViewModel = Environment.of((AppCompatActivity) requireActivity());
+        Ingredient ingredient = new Ingredient("test", new Date(2023,12,12),"test",2,"2 test sadasdadsdsadsadsadsadsadsadsadsadsadadsaadadsdadsadadaddadasdsadsadsadsadaddsadsdadsdadasd","test");
+        // Populate fields
 
-        // Populate spinner options.
-        // Spinner template code from https://developer.android.com/develop/ui/views/components/spinner
-        Spinner spinner = (Spinner) rootView.findViewById(R.id.editUnit);
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
-                getActivity(),
-                android.R.layout.simple_spinner_item,
-                Arrays.asList("testUnit","testUnit") // NEEDS TO BE CHANGED
-        );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        ((EditText)rootView.findViewById(R.id.editDescription)).setText(ingredient.getDescription());
+        // date extraction from https://stackoverflow.com/questions/9474121/i-want-to-get-year-month-day-etc-from-java-date-to-compare-with-gregorian-cal
+        Calendar cal = Calendar.getInstance(TimeZone.getDefault());
+        cal.setTime(ingredient.getBestBefore().get());
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        ((DatePicker)rootView.findViewById(R.id.editBestBeforeDate)).updateDate(
+                year,
+                month - 1,
+                day);
+        ((EditText)rootView.findViewById(R.id.editLocation)).setText(String.valueOf(ingredient.getLocation()));
+        ((EditText)rootView.findViewById(R.id.editAmount)).setText(String.valueOf(ingredient.getAmount()));
+//        ((Spinner)rootView.findViewById(R.id.editUnit)).setSelection(ingredient.getUnit());
+        ((EditText)rootView.findViewById(R.id.editCategory)).setText(String.valueOf(ingredient.getCategory()));
 
-        ((ImageView)rootView.findViewById(R.id.back)).setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        back();
-                    }
-                }
-        );
-        ((Button)rootView.findViewById(R.id.cancel_button)).setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        back();
-                    }
-                }
-        );
-        ((Button)rootView.findViewById(R.id.save_button)).setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        save();
-                    }
-                }
-        );
         return rootView;
     }
-
-    private void back(){
-        navController.popBackStack();
-    }
-
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    private void save(){
-        try{
-            // Load data from Views
-            String description = ((EditText)rootView.findViewById(R.id.editDescription)).getText().toString();
-            DatePicker bestBeforeDatePicker = rootView.findViewById(R.id.editBestBeforeDate);
-            Date bestBeforeDate = new GregorianCalendar(
-                    bestBeforeDatePicker.getYear(),
-                    bestBeforeDatePicker.getMonth() + 1,
-                    bestBeforeDatePicker.getDayOfMonth()).getTime();
-            String location = ((EditText)rootView.findViewById(R.id.editLocation)).getText().toString();
-            int amount = Integer.parseInt(((EditText)rootView.findViewById(R.id.editAmount)).getText().toString());
-            String category = ((EditText)rootView.findViewById(R.id.editLocation)).getText().toString();
-            String unit = ((Spinner)rootView.findViewById(R.id.editUnit)).getSelectedItem().toString();
-
-            // validate
-            writeToViewModel(new Ingredient(description,bestBeforeDate,location,amount,unit,category));
-            navController.popBackStack();
-
-        }catch (Exception e){
-            showError();
-        }
-    }
-
-    private void showError(){
-        TextView error = rootView.findViewById(R.id.errorText);
-        error.setVisibility(View.VISIBLE);
-    }
-
     protected void writeToViewModel(Ingredient ing){
         envViewModel.getIngredients().add(ing);
         envViewModel.getIngredients().commit();
