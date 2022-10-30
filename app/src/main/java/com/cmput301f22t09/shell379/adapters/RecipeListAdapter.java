@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.fragments.RecipeListFragment;
+import com.cmput301f22t09.shell379.fragments.RecipeListFragmentDirections;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
     private ArrayList<Recipe> recipes;
     private RecipeListFragment recipeListFragment;
+    private NavController navController;
 
     public class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
@@ -35,7 +37,6 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         TextView prepTime;
         TextView servings;
         TextView category;
-        private NavController navController;
 
         public RecipeViewHolder(@NonNull View itemView, Fragment fragment) {
             super(itemView);
@@ -45,20 +46,21 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             this.category = itemView.findViewById(R.id.rli_category_textView);
             // TODO: cite https://developer.android.com/guide/navigation/navigation-getting-started
             // for how to get nav controller
-            this.navController = NavHostFragment.findNavController(fragment);
+            //this.navController = NavHostFragment.findNavController(fragment);
         }
 
         // TODO: cite this later https://stackoverflow.com/questions/24885223/why-doesnt-recyclerview-have-onitemclicklistener
         // used this to reference how to create an on click listener for recycler view items
         @Override
         public void onClick(View view) {
-
+            //navController.navigate(RecipeListFragmentDirections.actionRecipeListFragmentToEditRecipe());
         }
     }
 
     public RecipeListAdapter(ArrayList<Recipe> data, RecipeListFragment recipeListFragment) {
         this.recipes = data;
         this.recipeListFragment = recipeListFragment;
+        this.navController = NavHostFragment.findNavController(recipeListFragment);
     }
 
     @NonNull
@@ -77,10 +79,18 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         TextView servings = holder.servings;
         TextView category = holder.category;
 
-        recipeName.setText(recipes.get(position).getTitle());
-        prepTime.setText(recipes.get(position).getPreparationTime().toString());
-        servings.setText(recipes.get(position).getServings().toString());
-        category.setText(recipes.get(position).getCategory());
+        recipeName.setText(recipes.get(holder.getAdapterPosition()).getTitle());
+        prepTime.setText(recipes.get(holder.getAdapterPosition()).getPreparationTime().toString());
+        servings.setText(recipes.get(holder.getAdapterPosition()).getServings().toString());
+        category.setText(recipes.get(holder.getAdapterPosition()).getCategory());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int itemPosition = holder.getAdapterPosition();
+                navController.navigate(RecipeListFragmentDirections.actionRecipeListFragmentToEditRecipe());
+            }
+        });
     }
 
     @Override

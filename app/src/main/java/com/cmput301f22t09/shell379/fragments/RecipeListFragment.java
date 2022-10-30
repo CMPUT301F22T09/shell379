@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -11,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.RecipeListAdapter;
@@ -31,6 +34,8 @@ public class RecipeListFragment extends Fragment {
     RecyclerView recipe_recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecipeListAdapter recipeListAdapter;
+    Button addNewRecipe;
+    private NavController navController;
     Environment env;
 
     public RecipeListFragment() {
@@ -53,9 +58,7 @@ public class RecipeListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
+        this.navController = NavHostFragment.findNavController(this);
     }
 
     @Override
@@ -63,6 +66,8 @@ public class RecipeListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_recipe_list, container, false);
+
+        addNewRecipe = rootView.findViewById(R.id.recipe_list_newButton);
 
         env = Environment.of((AppCompatActivity) this.getActivity());
         recipeList = env.getRecipes().getRecipes();
@@ -80,6 +85,14 @@ public class RecipeListFragment extends Fragment {
         recipeListAdapter = new RecipeListAdapter(recipeList, this);
         recipe_recyclerView.setAdapter(recipeListAdapter);
         recipe_recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        addNewRecipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("New recipe button clicked!");
+                navController.navigate(RecipeListFragmentDirections.actionRecipeListFragmentToEditRecipe());
+            }
+        });
 
         return rootView;
     }
