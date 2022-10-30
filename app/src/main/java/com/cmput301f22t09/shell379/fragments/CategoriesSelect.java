@@ -1,10 +1,12 @@
 package com.cmput301f22t09.shell379.fragments;
 
+import android.app.Dialog;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,7 +25,7 @@ import java.util.HashSet;
  * Use the {@link CategoriesSelect#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class CategoriesSelect extends Fragment {
+public class CategoriesSelect extends DialogFragment {
 
     public CategoriesSelect() {
         // Required empty public constructor
