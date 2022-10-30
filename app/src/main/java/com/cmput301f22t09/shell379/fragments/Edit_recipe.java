@@ -5,6 +5,9 @@ import static android.app.Activity.RESULT_OK;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 import android.net.Uri;
 import android.content.Context;
@@ -15,19 +18,21 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.IngredientAdapter;
+import com.cmput301f22t09.shell379.adapters.RecipeListAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -46,6 +51,10 @@ public class Edit_recipe extends Fragment {
     Button saveRecipeButton;
     Button deleteIngredientButton;
     Button addIngredientButton;
+    EditText prepareTimeText;
+    EditText servingsText;
+    EditText commentText;
+    EditText nameText;
     int SELECT_PICTURE = 200;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -98,6 +107,10 @@ public class Edit_recipe extends Fragment {
         saveRecipeButton = rootView.findViewById(R.id.save_recipe);
         addIngredientButton = rootView.findViewById(R.id.add_ingredient);
         deleteIngredientButton = rootView.findViewById(R.id.delete_ingredient);
+        prepareTimeText = rootView.findViewById(R.id.prepare_text);
+        servingsText = rootView.findViewById(R.id.serving_text);
+        commentText = rootView.findViewById(R.id.comment_text);
+        nameText = rootView.findViewById(R.id.recipe_name);
 
         choosePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,19 +119,12 @@ public class Edit_recipe extends Fragment {
             }
         });
 
-//        deleteIngredientButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                deleteIngredient();
-//            }
-//        });
-
-//        saveRecipeButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                onSaveRecipeClicked();
-//            }
-//        });
+        saveRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onSaveRecipeClicked();
+            }
+        });
 
         myRecipe = new Recipe("kongpaochicken",100L,3,"chinese","spicy");
         myRecipe.addIngredient(new Ingredient("appleesdadadsdawdwadsaszdazawdas",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
@@ -132,6 +138,13 @@ public class Edit_recipe extends Fragment {
         recipeListAdapter = new IngredientAdapter(myRecipe.getIngredients());
         recipe_recyclerView.setAdapter(recipeListAdapter);
         recipe_recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        deleteIngredientButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteIngredient(recipeListAdapter.getSelectedPos());
+            }
+        });
 
         return rootView;
     }
@@ -171,8 +184,34 @@ public class Edit_recipe extends Fragment {
         }
     }
 
-//    public void deleteIngredient() {
-//
-//    }
+    public void deleteIngredient(int pos) {
+        recipeListAdapter.removeIngredient(pos);
+        recipeListAdapter.notifyDataSetChanged();
+    }
 
+    public void onSaveRecipeClicked() {
+
+        String name = nameText.getText().toString();
+        Long prepareTime = Long.parseLong(prepareTimeText.getText().toString());
+        int servings = Integer.parseInt(servingsText.getText().toString());
+        String comment = commentText.getText().toString();
+        Bitmap photo = ((BitmapDrawable)previewPhoto.getDrawable()).getBitmap();
+
+
+        Recipe newRecipe = new Recipe(name, prepareTime, servings, "category", comment, photo);
+        int size = recipeListAdapter.getIngredients().size();
+        if (size > 0) {
+            for (int i = 0; i < size; i++) {
+                newRecipe.addIngredient(recipeListAdapter.getIngredients().get(i));
+            }
+        }
+
+        for (int i = 0; i < size; i++) {
+            Log.e("debug", newRecipe.getIngredients().get(i).getDescription());
+        }
+
+        // TODO: ADD TO THE LIST OF RECIPES
+        // TODO: GO BACK TO THE PREVIOUS SCREEN AFTER CLICKING
+
+    }
 }
