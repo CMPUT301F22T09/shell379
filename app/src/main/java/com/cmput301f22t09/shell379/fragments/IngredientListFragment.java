@@ -1,7 +1,9 @@
 package com.cmput301f22t09.shell379.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -75,6 +77,7 @@ public class IngredientListFragment extends Fragment {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -88,10 +91,6 @@ public class IngredientListFragment extends Fragment {
                     }
                 }
         );
-
-        return rootView;
-//        return inflater.inflate(R.layout.fragment_ingredient_list, container, false);
-        View rootView = inflater.inflate(R.layout.fragment_ingredient_list, container, false);
 
         testList = new ArrayList<Ingredient>();
         testList.add(new Ingredient("Milk", new Date(2023,9,10), "Fridge",222,"1L","Diary"));

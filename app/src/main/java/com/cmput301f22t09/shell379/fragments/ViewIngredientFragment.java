@@ -1,7 +1,9 @@
 package com.cmput301f22t09.shell379.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -31,6 +33,7 @@ public class ViewIngredientFragment extends Fragment {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +78,7 @@ public class ViewIngredientFragment extends Fragment {
 
         ((TextView)rootView.findViewById(R.id.best_before_date).findViewById(R.id.detail_name)).setText( "Best Before");
         if(ingredient.getBestBefore() != null){
-            ((TextView)rootView.findViewById(R.id.best_before_date).findViewById(R.id.detail_value)).setText( df.format(ingredient.getBestBefore()));
+            ((TextView)rootView.findViewById(R.id.best_before_date).findViewById(R.id.detail_value)).setText( df.format(ingredient.getBestBefore().get()));
         }else{
             ((TextView)rootView.findViewById(R.id.best_before_date).findViewById(R.id.detail_value)).setText( "Tap edit below to add");
         }
