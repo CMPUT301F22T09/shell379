@@ -1,8 +1,10 @@
 package com.cmput301f22t09.shell379;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 //import androidx.navigation.Navigation;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -20,6 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,20 +39,27 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
         Ingredient ing = new Ingredient("description", d, "location", 1, "100kg", "Foodstuffs");
+        Ingredient ing1 = new Ingredient("description1", d, "location", 1, "100kg", "Foodstuffs");
         Recipe rec = new Recipe("title", 20L, 10, "category", "Lorem Ipsum Dolor Sit Amet");
         MealPlan mp = new MealPlan();
         ShoppingCart sc = new ShoppingCart();
 
         env.getIngredients().add(ing);
+        env.getIngredients().add(ing1);
         env.getRecipes().add(rec);
+
+        env.getRecipeCategories().addCategory("Italian Food");
+        env.getRecipeCategories().addCategory("Mexican Food");
+
+        env.getIngredientCategories().addCategory("Snacks");
+        env.getIngredientCategories().addCategory("Meats");
 
 
         env.getIngredients().commit();
-        env.getRecipes().commit();
 
         DatabaseManager dbm = new DatabaseManager(this);
 
-        dbm.pull();
+//        dbm.pull();
         try {
             TimeUnit.SECONDS.sleep(2);
         } catch (Exception e) {
