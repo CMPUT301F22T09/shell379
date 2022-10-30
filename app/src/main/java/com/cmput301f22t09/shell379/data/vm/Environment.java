@@ -1,5 +1,8 @@
 package com.cmput301f22t09.shell379.data.vm;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
@@ -31,12 +34,18 @@ public class Environment extends ViewModel implements Serializable {
     }
 
     public static Environment of(AppCompatActivity owner, Environment envPulled) {
-        Environment env = new ViewModelProvider(owner).get(Environment.class);
-        env.ingredients = envPulled.ingredients;
-        env.cart = envPulled.cart;
-        env.recipes = envPulled.recipes;
+        Environment env = new ViewModelProvider(owner).get(Environment.class);;
+        try {
+            env.ingredients = envPulled.ingredients;
+            env.cart = envPulled.cart;
+            env.recipes = envPulled.recipes;
+            env.ingredientCategories = envPulled.ingredientCategories;
+            env.recipeCategories = envPulled.recipeCategories;
 
-        setupObservers(owner, env);
+            setupObservers(owner, env);
+        } catch (NullPointerException e) {
+
+        }
         return env;
     }
 
@@ -56,6 +65,7 @@ public class Environment extends ViewModel implements Serializable {
 
     private static void observeForCommits(AppCompatActivity owner, Environment env, Commitable commitable) {
         commitable.isCommitNeeded().observe(owner, new Observer<Boolean>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onChanged(Boolean commitNeeded) {
                 if (commitNeeded==true) {
