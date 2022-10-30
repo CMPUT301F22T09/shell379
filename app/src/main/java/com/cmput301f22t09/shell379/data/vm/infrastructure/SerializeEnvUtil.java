@@ -20,8 +20,8 @@ public class SerializeEnvUtil {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static HashMap<String, String> serialize(Environment env) {
         HashMap<String, String> data = new HashMap<String, String>();
-        data.put("ingredients", SerializeUtil.serialize(env.getIngredients().getIngredients()));
-        data.put("recipes", SerializeUtil.serialize(env.getRecipes().getRecipes()));
+        data.put("ingredients", SerializeUtil.serialize(env.getIngredients().getList()));
+        data.put("recipes", SerializeUtil.serialize(env.getRecipes().getList()));
         data.put("cart", SerializeUtil.serialize(env.getCart().getCart()));
         data.put("ingredient_categories", SerializeUtil.serialize(env.getIngredientCategories()));
         data.put("recipes_categories", SerializeUtil.serialize(env.getRecipeCategories()));
@@ -31,8 +31,8 @@ public class SerializeEnvUtil {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static Environment deserialize(HashMap<String, String> data) {
         Environment env = new Environment();
-        env.getIngredients().setIngredients((ArrayList<Ingredient>) SerializeUtil.deserialize(data.get("ingredients")));
-        env.getRecipes().setRecipes((ArrayList<Recipe>) SerializeUtil.deserialize(data.get("recipes")));
+        env.getIngredients().setList((ArrayList<Ingredient>) SerializeUtil.deserialize(data.get("ingredients")));
+        env.getRecipes().setList((ArrayList<Recipe>) SerializeUtil.deserialize(data.get("recipes")));
         env.getCart().setCart((ShoppingCart) SerializeUtil.deserialize(data.get("cart")));
         env.getIngredientCategories().setCategories((HashSet<String>) SerializeUtil.deserialize(data.get("ingredient_categories")));
         env.getRecipeCategories().setCategories((HashSet<String>) SerializeUtil.deserialize(data.get("recipes_categories")));
