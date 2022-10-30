@@ -41,4 +41,17 @@ public class IngredientCollection extends Commitable implements Serializable {
     public void setIngredients(ArrayList<Ingredient> ingredients) {
         this.ingredients.setValue(ingredients);
     }
+
+    public int checkFullEqual(Ingredient ingredient){
+        ArrayList<Ingredient> allIngredient = ingredients.getValue();
+        for (int i=0; i< allIngredient.size(); i++) {
+            Ingredient a = allIngredient.get(i);
+            boolean fullEqual = ingredient.getFullEqual(a);
+            if (fullEqual==true){
+                return i;
+            }
+        }
+        return -1;
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.cmput301f22t09.shell379.adapters;
 
 import android.os.Build;
+//import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,22 +9,38 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
+import com.cmput301f22t09.shell379.data.vm.Environment;
+import com.cmput301f22t09.shell379.data.vm.collections.IngredientCollection;
 
 import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder>{
+public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder>  {
+    public interface AdaptorListener{
+        public void navigateToViewIngredient(int index);
+    }
+
+//    public interface HolderListener{
+//        public void ingredientOnClick(int i);
+//    }
 
     private ArrayList<Ingredient> ingredients;
+    private Environment envViewModel;
+    private AdaptorListener ingredientListener;
+
 
     public class IngredientViewHolder extends RecyclerView.ViewHolder {
+        public View getItemView(){
+            return itemView;
+        }
 
         TextView ingredientName;
         TextView serving;
@@ -32,6 +49,17 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         TextView unit;
         TextView amount;
         TextView category;
+//        private HolderListener ingredientHolderListener;
+//
+//        public void bind(int position, HolderListener ingredientHolderListener){
+//            itemView.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    ingredientHolderListener.ingredientOnClick(position);
+//                }
+//            });
+//
+//        }
 
         public IngredientViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -40,6 +68,9 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
             this.category = (TextView) itemView.findViewById(R.id.category_textView);
             this.location = (TextView) itemView.findViewById(R.id.location_textView);
 
+
+
+
 //            this.serving = (TextView) itemView.findViewById(R.id.serving_text);
 //            this.unit =  (TextView) itemView.findViewById(R.id.unit);
 //            this.amount =  (TextView) itemView.findViewById(R.id.amount);
@@ -47,8 +78,10 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         }
     }
 
-    public IngredientAdapter(ArrayList<Ingredient> data) {
+    public IngredientAdapter(ArrayList<Ingredient> data, Environment envViewModel, AdaptorListener ingredientListener){
+        this.envViewModel = envViewModel;
         this.ingredients = data;
+        this.ingredientListener = ingredientListener;
     }
 
 //    public IngredientAdapter.IngredientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -88,7 +121,14 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 //        serving.setText(ingredients.get(position).getAmount().toString());
 //        unit.setText(ingredients.get(position).getUnit());
 //        amount.setText(ingredients.get(position).getAmount().toString());
-
+//        holder.bind(position,this);
+        View itemView = holder.getItemView();
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ingredientOnClick(holder.getAdapterPosition());
+            }
+        });
     }
 
     @Override
@@ -99,6 +139,13 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     public void updateIngredient(ArrayList<Ingredient> newIngredient){
         ingredients = newIngredient;
         notifyDataSetChanged();
+    }
+
+    public void ingredientOnClick(int i) {
+       Ingredient a = ingredients.get(i);
+       IngredientCollection ingredientCollection = envViewModel.getIngredients();
+       ingredientCollection.checkFullEqual(a);
+       ingredientListener.navigateToViewIngredient(i);
     }
 }
 

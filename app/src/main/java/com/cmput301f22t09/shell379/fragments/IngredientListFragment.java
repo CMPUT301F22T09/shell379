@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 //import android.os.Environment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,8 +35,8 @@ import java.util.Date;
  * Use the {@link IngredientListFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class IngredientListFragment extends Fragment {
-    ArrayList<Ingredient> testList;
+public class IngredientListFragment extends Fragment implements IngredientAdapter.AdaptorListener{
+    ArrayList<Ingredient> ingredientList;
     RecyclerView ingredient_recyclerView;
     RecyclerView.LayoutManager layoutManager;
     IngredientAdapter ingredientListAdapter;
@@ -53,6 +54,7 @@ public class IngredientListFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
 
     public IngredientListFragment() {
         // Required empty public constructor
@@ -109,7 +111,8 @@ public class IngredientListFragment extends Fragment {
         ((Button)rootView.findViewById(R.id.new_button)).setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        navController.navigate(IngredientListFragmentDirections.actionIngredientListFragmentToViewIngredientFragment());
+                        Log.e("print",String.valueOf(ingredientList.size()));
+//                        navController.navigate(IngredientListFragmentDirections.actionIngredientListFragmentToViewIngredientFragment());
                     }
                 }
         );
@@ -118,7 +121,7 @@ public class IngredientListFragment extends Fragment {
 
 
 
-        testList = new ArrayList<Ingredient>();
+        ingredientList = new ArrayList<Ingredient>();
 //        testList.add(new Ingredient("Milk", new Date(2023,9,10), "Fridge",222,"1L","Diary"));
 //        testList.add(new Ingredient("Water", new Date(2023,9,11),"Counter",22,"2L","Liquid"));
 
@@ -129,14 +132,23 @@ public class IngredientListFragment extends Fragment {
         ingredient_recyclerView.setLayoutManager(layoutManager);
 
 
-        ingredientListAdapter = new IngredientAdapter(testList);
+        ingredientListAdapter = new IngredientAdapter(ingredientList, envViewModel,this);
         ingredient_recyclerView.setAdapter(ingredientListAdapter);
         ingredient_recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         envViewModel.getIngredients().add(i1);
         envViewModel.getIngredients().commit();
+//        Log.e("print",String.valueOf(ingredientList.size()));
         return rootView;
 
+
+    }
+
+    public void navigateToViewIngredient(int index){
+        IngredientListFragmentDirections.ActionIngredientListFragmentToViewIngredientFragment action
+                = IngredientListFragmentDirections.actionIngredientListFragmentToViewIngredientFragment(index);
+//        action.setIndex(index);
+        navController.navigate(action);
 
     }
 }

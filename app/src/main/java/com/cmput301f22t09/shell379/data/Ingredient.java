@@ -110,4 +110,21 @@ public class Ingredient implements Serializable {
     public void setCategory(String category) {
         this.category = category;
     }
+
+    public boolean getFullEqual(Ingredient a){
+        if (a.getDescription() == a.description){
+            if (a.getCategory()==a.category){
+                if (a.getLocation() == a.location){
+                    if (a.getBestBefore().equals(bestBefore)){
+                        if (a.getAmount()==a.amount){
+                            if (a.getUnit()==a.unit){
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
+    }
 }
