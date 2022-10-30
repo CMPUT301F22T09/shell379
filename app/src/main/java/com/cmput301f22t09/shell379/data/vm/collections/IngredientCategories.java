@@ -15,7 +15,7 @@ public class IngredientCategories extends Commitable {
         return ingredCategories;
     }
 
-    public void setIngredCategories(HashSet<String> ingredCategories) {
+    public void setIngredientCategories(HashSet<String> ingredCategories) {
         this.ingredCategories = ingredCategories;
     }
 
