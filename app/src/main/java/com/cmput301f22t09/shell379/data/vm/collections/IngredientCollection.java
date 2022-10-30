@@ -25,14 +25,17 @@ public class IngredientCollection extends Commitable implements Serializable {
 
     public void add(Ingredient ingredient) {
         ingredients.getValue().add(ingredient);
+        setIngredients(ingredients.getValue());
     }
 
     public void add(ArrayList<Ingredient> ingredients) {
         this.ingredients.getValue().addAll(ingredients);
+        setIngredients(this.ingredients.getValue());
     }
 
     public void removeAtIdx(int i) {
         this.ingredients.getValue().remove(i);
+        setIngredients(ingredients.getValue());
     }
 
     public void setIngredients(ArrayList<Ingredient> ingredients) {
