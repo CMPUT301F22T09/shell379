@@ -96,7 +96,7 @@ public class IngredientListFragment extends Fragment {
                 }
             }
         };
-        envViewModel.getIngredients().getIngredientsLive().observe(this, ingredientObserver);
+        envViewModel.getIngredients().getListLive().observe(this, ingredientObserver);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
