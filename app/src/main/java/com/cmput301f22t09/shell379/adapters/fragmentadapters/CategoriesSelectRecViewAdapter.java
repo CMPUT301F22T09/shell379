@@ -1,6 +1,7 @@
 package com.cmput301f22t09.shell379.adapters.fragmentadapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,14 @@ public class CategoriesSelectRecViewAdapter extends RecyclerView.Adapter<Categor
             // Define click listener for the ViewHolder's View
 
             catView = (TextView) view.findViewById(R.id.cat_name);
+            catView.setOnClickListener(new View.OnClickListener(){
+                @Override
+                public void onClick(View view) {
+                    Log.e("TESTCAT", catView.getText().toString());
+                }
+
+            });
+
         }
 
         public TextView getTextView() {
