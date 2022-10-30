@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/edit_recipe">
+    app:startDestination="@id/mainMenuFragment">
     <fragment
         android:id="@+id/ingredientListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.IngredientListFragment"
@@ -68,5 +68,14 @@
         android:id="@+id/recipeSelectIngredientFragment"
         android:name="com.cmput301f22t09.shell379.fragments.RecipeSelectIngredientFragment"
         android:label="fragment_recipe_select_ingredient"
-        tools:layout="@layout/recipe_select_ingredients" />
+        tools:layout="@layout/recipe_select_ingredients" >
+        <action
+            android:id="@+id/action_recipeSelectIngredientFragment_to_recipeNewIngredient"
+            app:destination="@id/recipeNewIngredient" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeNewIngredient"
+        android:name="com.cmput301f22t09.shell379.fragments.RecipeNewIngredient"
+        android:label="recipe_new_ingredient"
+        tools:layout="@layout/recipe_new_ingredient" />
 </navigation>
