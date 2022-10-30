@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.cmput301f22t09.shell379.data.util.DatabaseManager;
+import com.cmput301f22t09.shell379.data.vm.collections.IngredientCategories;
 import com.cmput301f22t09.shell379.data.vm.collections.IngredientCollection;
+import com.cmput301f22t09.shell379.data.vm.collections.RecipeCategories;
 import com.cmput301f22t09.shell379.data.vm.collections.RecipeCollection;
 import com.cmput301f22t09.shell379.data.vm.infrastructure.Commitable;
 
@@ -17,13 +19,15 @@ public class Environment extends ViewModel implements Serializable {
     private IngredientCollection ingredients;
     private RecipeCollection recipes;
     private LiveCart cart;
-    private HashSet<String> ingredCategories;
-    private HashSet<String> recipeCategories;
+    private IngredientCategories ingredientCategories;
+    private RecipeCategories recipeCategories;
 
     public Environment() {
         ingredients = new IngredientCollection();
         recipes = new RecipeCollection();
         cart = new LiveCart();
+        ingredientCategories = new IngredientCategories();
+        recipeCategories = new RecipeCategories();
     }
 
     public static Environment of(AppCompatActivity owner, Environment envPulled) {
@@ -46,6 +50,8 @@ public class Environment extends ViewModel implements Serializable {
         observeForCommits(owner, env, env.getIngredients());
         observeForCommits(owner, env, env.getRecipes());
         observeForCommits(owner, env, env.getCart());
+        observeForCommits(owner, env, env.getIngredientCategories());
+        observeForCommits(owner, env, env.getRecipeCategories());
     }
 
     private static void observeForCommits(AppCompatActivity owner, Environment env, Commitable commitable) {
@@ -71,19 +77,11 @@ public class Environment extends ViewModel implements Serializable {
         return cart;
     }
 
-    public HashSet<String> getIngredCategories() {
-        return ingredCategories;
+    public IngredientCategories getIngredientCategories() {
+        return ingredientCategories;
     }
 
-    public void setIngredCategories(HashSet<String> ingredCategories) {
-        this.ingredCategories = ingredCategories;
-    }
-
-    public HashSet<String> getRecipeCategories() {
+    public RecipeCategories getRecipeCategories() {
         return recipeCategories;
-    }
-
-    public void setRecipeCategories(HashSet<String> recipeCategories) {
-        this.recipeCategories = recipeCategories;
     }
 }
