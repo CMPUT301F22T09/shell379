@@ -4,12 +4,12 @@ import com.cmput301f22t09.shell379.data.Ingredient;
 
 import java.io.Serializable;
 
-public class CartIngredientWrapper implements Serializable {
-    private Ingredient ingredient;
+public class CartIngredient extends Ingredient implements Serializable {
     private Boolean isPickedUp;
     private Boolean areDetailsFilled;
 
-    public CartIngredientWrapper(Ingredient ingredient) {
+    public CartIngredient(Ingredient ingredient) {
+        super();
         this.ingredient = ingredient;
         this.isPickedUp = false;
         this.areDetailsFilled = false;
