@@ -3,14 +3,18 @@ package com.cmput301f22t09.shell379.fragments;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+//import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +23,11 @@ import android.widget.Button;
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.IngredientAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.vm.Environment;
 
 import java.util.ArrayList;
 import java.util.Date;
+//import java.util.Observer;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,7 +40,10 @@ public class IngredientListFragment extends Fragment {
     RecyclerView.LayoutManager layoutManager;
     IngredientAdapter ingredientListAdapter;
 
+
+
     private NavController navController;
+    private Environment envViewModel;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -71,10 +80,23 @@ public class IngredientListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         navController = NavHostFragment.findNavController(this);
+        envViewModel = Environment.of((AppCompatActivity) requireActivity());
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        final Observer<ArrayList<Ingredient>> ingredientObserver = new Observer<ArrayList<Ingredient>>() {
+            @Override
+            public void onChanged(@Nullable final ArrayList<Ingredient> ingredient) {
+                // Update the UI, in this case, a TextView.
+//                ingredient_recyclerView.setText(newName);
+                if (ingredientListAdapter != null){
+                    ingredientListAdapter.updateIngredient(ingredient);
+                }
+            }
+        };
+        envViewModel.getIngredients().getIngredientsLive().observe(this, ingredientObserver);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -92,9 +114,15 @@ public class IngredientListFragment extends Fragment {
                 }
         );
 
+
+
+
+
         testList = new ArrayList<Ingredient>();
-        testList.add(new Ingredient("Milk", new Date(2023,9,10), "Fridge",222,"1L","Diary"));
-        testList.add(new Ingredient("Water", new Date(2023,9,11),"Counter",22,"2L","Liquid"));
+//        testList.add(new Ingredient("Milk", new Date(2023,9,10), "Fridge",222,"1L","Diary"));
+//        testList.add(new Ingredient("Water", new Date(2023,9,11),"Counter",22,"2L","Liquid"));
+
+        Ingredient i1 = new Ingredient("Milk", new Date(2023,9,10), "Fridge",222,"1L","Diary");
 
         layoutManager = new LinearLayoutManager(this.getActivity());
         ingredient_recyclerView = (RecyclerView) rootView.findViewById(R.id.ingredient_list_recyclerView);
@@ -105,6 +133,8 @@ public class IngredientListFragment extends Fragment {
         ingredient_recyclerView.setAdapter(ingredientListAdapter);
         ingredient_recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        envViewModel.getIngredients().add(i1);
+        envViewModel.getIngredients().commit();
         return rootView;
 
 
