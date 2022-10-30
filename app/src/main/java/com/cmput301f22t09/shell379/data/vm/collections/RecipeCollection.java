@@ -27,14 +27,17 @@ public class RecipeCollection extends Commitable implements Serializable {
 
     public void add(Recipe ingredient) {
         recipes.getValue().add(ingredient);
+        setRecipes(recipes.getValue());
     }
 
     public void add(ArrayList<Recipe> recipes) {
         this.recipes.getValue().addAll(recipes);
+        setRecipes(this.recipes.getValue());
     }
 
     public void removeAtIdx(int i) {
         this.recipes.getValue().remove(i);
+        setRecipes(recipes.getValue());
     }
 
     public void setRecipes(ArrayList<Recipe> recipes) {
