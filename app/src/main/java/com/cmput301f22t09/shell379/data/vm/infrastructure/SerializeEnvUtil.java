@@ -9,6 +9,7 @@ import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.ShoppingCart;
 import com.cmput301f22t09.shell379.data.util.SerializeUtil;
 import com.cmput301f22t09.shell379.data.vm.Environment;
+import com.cmput301f22t09.shell379.data.wrapper.CartIngredientWrapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class SerializeEnvUtil {
         HashMap<String, String> data = new HashMap<String, String>();
         data.put("ingredients", SerializeUtil.serialize(env.getIngredients().getList()));
         data.put("recipes", SerializeUtil.serialize(env.getRecipes().getList()));
-        data.put("cart", SerializeUtil.serialize(env.getCart().getCart()));
+        data.put("cart", SerializeUtil.serialize(env.getCart().getList()));
         data.put("ingredient_categories", SerializeUtil.serialize(env.getIngredientCategories()));
         data.put("recipes_categories", SerializeUtil.serialize(env.getRecipeCategories()));
         return data;
@@ -33,7 +34,7 @@ public class SerializeEnvUtil {
         Environment env = new Environment();
         env.getIngredients().setList((ArrayList<Ingredient>) SerializeUtil.deserialize(data.get("ingredients")));
         env.getRecipes().setList((ArrayList<Recipe>) SerializeUtil.deserialize(data.get("recipes")));
-        env.getCart().setCart((ShoppingCart) SerializeUtil.deserialize(data.get("cart")));
+        env.getCart().setList((ArrayList<CartIngredientWrapper>) SerializeUtil.deserialize(data.get("cart")));
         env.getIngredientCategories().setCategories((HashSet<String>) SerializeUtil.deserialize(data.get("ingredient_categories")));
         env.getRecipeCategories().setCategories((HashSet<String>) SerializeUtil.deserialize(data.get("recipes_categories")));
         return env;
