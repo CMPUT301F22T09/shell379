@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,7 @@ import java.util.Date;
  * Use the {@link Edit_recipe#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Edit_recipe extends Fragment {
+public class Edit_recipe extends Fragment implements CategoriesSelect.OnFragmentInteractionListener {
 
     Recipe myRecipe;
     RecyclerView recipe_recyclerView;
@@ -93,6 +94,19 @@ public class Edit_recipe extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_edit_recipe_9, container, false);
+
+        Button catSelect = (Button) rootView.findViewById(R.id.select_category);
+        catSelect.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+
+                CategoriesSelect catselect = new CategoriesSelect();
+                Fragment frag = requireActivity().getSupportFragmentManager().findFragmentById(R.id.select_category);
+                catselect.setTargetFragment(frag, 1);
+                catselect.show(getFragmentManager().beginTransaction(), "cat");
+            }
+        });
+
         choosePhoto = rootView.findViewById(R.id.chooseButton);
         previewPhoto = rootView.findViewById(R.id.photo);
 
@@ -152,5 +166,11 @@ public class Edit_recipe extends Fragment {
                 }
             }
         }
+    }
+
+
+    @Override
+    public void onOkPressed(String cat) {
+        Log.e("EditRecipe", cat);
     }
 }
