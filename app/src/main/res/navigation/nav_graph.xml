@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainMenuFragment">
+    app:startDestination="@id/ingredientListFragment">
     <fragment
         android:id="@+id/ingredientListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.IngredientListFragment"
@@ -13,7 +13,11 @@
         android:id="@+id/recipeListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.RecipeListFragment"
         android:label="fragment_recipe_list"
-        tools:layout="@layout/fragment_recipe_list" />
+        tools:layout="@layout/fragment_recipe_list" >
+        <action
+            android:id="@+id/action_recipeListFragment_to_edit_recipe"
+            app:destination="@id/edit_recipe" />
+    </fragment>
     <fragment
         android:id="@+id/mainMenuFragment"
         android:name="com.cmput301f22t09.shell379.fragments.MainMenuFragment"
@@ -42,4 +46,18 @@
         android:name="com.cmput301f22t09.shell379.MealPlanListFragment"
         android:label="fragment_meal_plan_list"
         tools:layout="@layout/fragment_meal_plan_list" />
+    <fragment
+        android:id="@+id/edit_recipe"
+        android:name="com.cmput301f22t09.shell379.fragments.Edit_recipe"
+        android:label="fragment_edit_recipe"
+        tools:layout="@layout/fragment_edit_recipe_9" >
+        <action
+            android:id="@+id/action_edit_recipe_to_recipeSelectIngredientFragment"
+            app:destination="@id/recipeSelectIngredientFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeSelectIngredientFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.RecipeSelectIngredientFragment"
+        android:label="fragment_recipe_select_ingredient"
+        tools:layout="@layout/recipe_select_ingredients" />
 </navigation>

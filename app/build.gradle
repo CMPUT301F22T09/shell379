@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId "com.cmput301f22t09.shell379"
-        minSdk 21
+        minSdk 24
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -35,6 +35,8 @@ android {
 }
 
 dependencies {
+    implementation 'androidx.navigation:navigation-runtime:2.3.5'
+
     // Navigation Dependencies from https://developer.android.com/guide/navigation/navigation-getting-started
     def nav_version = "2.5.2"
 
