@@ -1,15 +1,11 @@
 package com.cmput301f22t09.shell379.data;
 
-import androidx.lifecycle.MutableLiveData;
-
 import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
-import com.cmput301f22t09.shell379.data.vm.infrastructure.Commitable;
-import com.cmput301f22t09.shell379.data.wrapper.CartIngredientWrapper;
+import com.cmput301f22t09.shell379.data.wrapper.CartIngredient;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
-public class ShoppingCart extends LiveCollection<CartIngredientWrapper> implements Serializable {
+public class ShoppingCart extends LiveCollection<CartIngredient> implements Serializable {
     private Integer activeDays;
 
     public ShoppingCart() {
