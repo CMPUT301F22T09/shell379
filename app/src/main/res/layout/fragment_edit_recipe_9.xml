@@ -56,6 +56,7 @@
                 android:layout_margin="3dp"
                 android:background="@drawable/customborder"
                 android:hint="Preparation Time (mins)"
+                android:inputType="numberDecimal"
                 android:minHeight="48dp" />
 
             <ImageView
@@ -68,7 +69,7 @@
                 android:src="@drawable/placeholder"/>
 
             <Button
-                android:id="@+id/chooseButton"
+                android:id="@+id/choose_button"
                 android:layout_width="143dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -81,16 +82,6 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/floatingActionButton2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    app:backgroundTint="@android:color/darker_gray"
-                    app:srcCompat="@drawable/ic_minus_svgrepo_com"
-                    app:tint="@android:color/white" />
-
                 <EditText
                     android:id="@+id/textView8"
                     android:layout_width="229dp"
@@ -98,18 +89,9 @@
                     android:layout_margin="5dp"
                     android:background="@drawable/customborder"
                     android:gravity="center"
+                    android:inputType="number"
                     android:hint="Number of Servings"
                     android:minHeight="48dp" />
-
-                <com.google.android.material.floatingactionbutton.FloatingActionButton
-                    android:id="@+id/floatingActionButton3"
-                    android:layout_width="77dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:clickable="true"
-                    app:backgroundTint="@android:color/darker_gray"
-                    app:srcCompat="@android:drawable/ic_input_add"
-                    app:tint="@android:color/white" />
 
             </LinearLayout>
 
@@ -144,7 +126,7 @@
                     android:text="Ingredients" />
 
                 <Button
-                    android:id="@+id/button2"
+                    android:id="@+id/delete_ingredient"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -153,7 +135,7 @@
                     android:text="Delete" />
 
                 <Button
-                    android:id="@+id/button3"
+                    android:id="@+id/add_ingredient"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -184,7 +166,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/button4"
+                    android:id="@+id/save_recipe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -192,7 +174,7 @@
                     android:text="Save Recipe" />
 
                 <Button
-                    android:id="@+id/button5"
+                    android:id="@+id/delete_recipe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

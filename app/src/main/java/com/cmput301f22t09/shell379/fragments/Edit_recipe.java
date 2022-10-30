@@ -9,15 +9,12 @@ import android.os.Bundle;
 import android.net.Uri;
 import android.content.Context;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,6 +43,9 @@ public class Edit_recipe extends Fragment {
     IngredientAdapter recipeListAdapter;
     Button choosePhoto;
     ImageView previewPhoto;
+    Button saveRecipeButton;
+    Button deleteIngredientButton;
+    Button addIngredientButton;
     int SELECT_PICTURE = 200;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -93,8 +93,11 @@ public class Edit_recipe extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_edit_recipe_9, container, false);
-        choosePhoto = rootView.findViewById(R.id.chooseButton);
+        choosePhoto = rootView.findViewById(R.id.choose_button);
         previewPhoto = rootView.findViewById(R.id.photo);
+        saveRecipeButton = rootView.findViewById(R.id.save_recipe);
+        addIngredientButton = rootView.findViewById(R.id.add_ingredient);
+        deleteIngredientButton = rootView.findViewById(R.id.delete_ingredient);
 
         choosePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,11 +105,25 @@ public class Edit_recipe extends Fragment {
                 imageChooser();
             }
         });
+
+//        deleteIngredientButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                deleteIngredient();
+//            }
+//        });
+
+//        saveRecipeButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                onSaveRecipeClicked();
+//            }
+//        });
+
         myRecipe = new Recipe("kongpaochicken",100L,3,"chinese","spicy");
-        myRecipe.addIngredient(new Ingredient("apple",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
+        myRecipe.addIngredient(new Ingredient("appleesdadadsdawdwadsaszdazawdas",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
         myRecipe.addIngredient(new Ingredient("chicken",new Date(2023,9,07),"fridge",2,"1lbs","meat"));
         myRecipe.addIngredient(new Ingredient("banana",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
-
 
         layoutManager = new LinearLayoutManager(this.getActivity());
         recipe_recyclerView = (RecyclerView) rootView.findViewById(R.id.ingredientsInRep);
@@ -153,4 +170,9 @@ public class Edit_recipe extends Fragment {
             }
         }
     }
+
+//    public void deleteIngredient() {
+//
+//    }
+
 }
