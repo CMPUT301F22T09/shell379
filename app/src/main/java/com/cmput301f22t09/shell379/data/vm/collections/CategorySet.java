@@ -1,4 +1,4 @@
-package com.cmput301f22t09.shell379.data.vm.collections.sets;
+package com.cmput301f22t09.shell379.data.vm.collections;
 
 import com.cmput301f22t09.shell379.data.vm.infrastructure.Commitable;
 
@@ -12,7 +12,7 @@ public class CategorySet extends Commitable {
         return set;
     }
 
-    public void setIngredientCategories(HashSet<String> set) {
+    public void setCategories(HashSet<String> set) {
         this.set = set;
     }
 

@@ -9,28 +9,27 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.cmput301f22t09.shell379.data.util.DatabaseManager;
-import com.cmput301f22t09.shell379.data.vm.collections.IngredientCategories;
+import com.cmput301f22t09.shell379.data.vm.collections.CategorySet;
 import com.cmput301f22t09.shell379.data.vm.collections.IngredientCollection;
 import com.cmput301f22t09.shell379.data.vm.collections.RecipeCategories;
 import com.cmput301f22t09.shell379.data.vm.collections.RecipeCollection;
 import com.cmput301f22t09.shell379.data.vm.infrastructure.Commitable;
 
 import java.io.Serializable;
-import java.util.HashSet;
 
 public class Environment extends ViewModel implements Serializable {
     private IngredientCollection ingredients;
     private RecipeCollection recipes;
     private LiveCart cart;
-    private IngredientCategories ingredientCategories;
-    private RecipeCategories recipeCategories;
+    private CategorySet ingredientCategories;
+    private CategorySet recipeCategories;
 
     public Environment() {
         ingredients = new IngredientCollection();
         recipes = new RecipeCollection();
         cart = new LiveCart();
-        ingredientCategories = new IngredientCategories();
-        recipeCategories = new RecipeCategories();
+        ingredientCategories = new CategorySet();
+        recipeCategories = new CategorySet();
     }
 
     public static Environment of(AppCompatActivity owner, Environment envPulled) {
@@ -87,11 +86,11 @@ public class Environment extends ViewModel implements Serializable {
         return cart;
     }
 
-    public IngredientCategories getIngredientCategories() {
+    public CategorySet getIngredientCategories() {
         return ingredientCategories;
     }
 
-    public RecipeCategories getRecipeCategories() {
+    public CategorySet getRecipeCategories() {
         return recipeCategories;
     }
 }
