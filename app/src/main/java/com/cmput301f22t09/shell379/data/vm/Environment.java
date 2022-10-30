@@ -11,7 +11,6 @@ import androidx.lifecycle.ViewModelProvider;
 import com.cmput301f22t09.shell379.data.util.DatabaseManager;
 import com.cmput301f22t09.shell379.data.vm.collections.CategorySet;
 import com.cmput301f22t09.shell379.data.vm.collections.IngredientCollection;
-import com.cmput301f22t09.shell379.data.vm.collections.RecipeCategories;
 import com.cmput301f22t09.shell379.data.vm.collections.RecipeCollection;
 import com.cmput301f22t09.shell379.data.vm.infrastructure.Commitable;
 
