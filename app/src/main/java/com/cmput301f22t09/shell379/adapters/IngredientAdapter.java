@@ -1,11 +1,13 @@
 package com.cmput301f22t09.shell379.adapters;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
@@ -66,6 +68,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull IngredientAdapter.IngredientViewHolder holder, int position) {
         TextView ingredientName = holder.ingredientName;
@@ -92,4 +95,11 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     public int getItemCount() {
         return ingredients.size();
     }
+
+    public void updateIngredient(ArrayList<Ingredient> newIngredient){
+        ingredients = newIngredient;
+        notifyDataSetChanged();
+    }
 }
+
+

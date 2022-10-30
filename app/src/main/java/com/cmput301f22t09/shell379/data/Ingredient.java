@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public class Ingredient implements Serializable {
     private String description;
-    private Optional<Date> bestBefore;
+    private Date bestBefore;
     private String location;
     private Integer amount;
     private String unit;
@@ -28,7 +28,7 @@ public class Ingredient implements Serializable {
     public Ingredient(String description, Date bestBefore, String location, Integer amount, String unit, String category) throws IllegalArgumentException {
         this.description = description;
 
-        this.bestBefore = Optional.ofNullable(bestBefore);
+        this.bestBefore = bestBefore;
         if (bestBefore.before(new Date())) {
             throw new IllegalArgumentException("Best Before Date shall not be before today upon construction!");
         }
@@ -52,7 +52,7 @@ public class Ingredient implements Serializable {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public Ingredient(String description, String location, Integer amount, String unit, String category) {
         this.description = description;
-        this.bestBefore = Optional.empty();
+        this.bestBefore = null;
         this.location = location;
         this.amount = amount;
         this.unit = unit;
@@ -67,20 +67,17 @@ public class Ingredient implements Serializable {
         this.description = description;
     }
 
-    public Optional<Date> getBestBefore() {
+    public Date getBestBefore() {
         return bestBefore;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void setBestBefore(Date bestBefore) {
-        this.bestBefore = Optional.ofNullable(bestBefore);
+        this.bestBefore = bestBefore;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public String getBestBeforeFormatted() {
         SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
-        if (!getBestBefore().isPresent()) return "";
-        else return simpleDate.format(getBestBefore().get());
+        return simpleDate.format(getBestBefore());
     }
     public String getLocation() {
         return location;
