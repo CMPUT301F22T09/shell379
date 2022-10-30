@@ -8,6 +8,10 @@ import java.util.HashSet;
 public class CategorySet extends Commitable {
     private HashSet<String> set;
 
+    public CategorySet() {
+        this.set = new HashSet<String>();
+    }
+
     public HashSet<String> getCategories() {
         return set;
     }
