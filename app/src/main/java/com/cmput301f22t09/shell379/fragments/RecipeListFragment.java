@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -70,13 +71,26 @@ public class RecipeListFragment extends Fragment {
         addNewRecipe = rootView.findViewById(R.id.recipe_list_newButton);
 
         env = Environment.of((AppCompatActivity) this.getActivity());
-        recipeList = env.getRecipes().getRecipes();
 
-        // TODO: This is temporary! Most likely replace this with data from ViewModel later...
-        //recipeList = new ArrayList<Recipe>();
-        recipeList.add(new Recipe("Pizza", 36000L, 5, "Italian", "This is a Pizza"));
-        recipeList.add(new Recipe("Fried Rice", 26000L, 3, "Asian", "This is fried rice"));
-        recipeList.add(new Recipe("Soup", 26000L, 1, "Yes", "This is soup"));
+        // TODO: add same source as ingredient observer
+        final Observer<ArrayList<Recipe>> recipeObserver = new Observer<ArrayList<Recipe>>() {
+            @Override
+            public void onChanged(ArrayList<Recipe> recipes) {
+                if (recipeListAdapter != null) {
+                    recipeListAdapter.updateRecipes(recipes);
+                }
+            }
+        };
+        env.getRecipes().getListLive().observe(getViewLifecycleOwner(), recipeObserver);
+
+//        recipeList = env.getRecipes().getRecipes();
+//
+//        // TODO: This is temporary! Most likely replace this with data from ViewModel later...
+//        recipeList = new ArrayList<Recipe>();
+//        recipeList.add(new Recipe("Pizza", 36000L, 5, "Italian", "This is a Pizza"));
+//        recipeList.add(new Recipe("Fried Rice", 26000L, 3, "Asian", "This is fried rice"));
+//        recipeList.add(new Recipe("Soup", 26000L, 1, "Yes", "This is soup"));
+
 
         layoutManager = new LinearLayoutManager(this.getActivity());
         recipe_recyclerView = (RecyclerView) rootView.findViewById(R.id.recipe_list_recyclerView);
@@ -93,6 +107,11 @@ public class RecipeListFragment extends Fragment {
                 navController.navigate(RecipeListFragmentDirections.actionRecipeListFragmentToEditRecipe());
             }
         });
+
+        // TODO: this is temporary!
+//        Recipe pizzaRecipe = new Recipe("Pizza", 36000L, 5, "Italian", "This is a Pizza");
+//        env.getRecipes().add(pizzaRecipe);
+//        env.getRecipes().commit();
 
         return rootView;
     }

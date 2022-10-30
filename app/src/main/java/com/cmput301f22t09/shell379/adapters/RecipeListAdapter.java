@@ -1,5 +1,6 @@
 package com.cmput301f22t09.shell379.adapters;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,7 +89,9 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             @Override
             public void onClick(View view) {
                 int itemPosition = holder.getAdapterPosition();
-                navController.navigate(RecipeListFragmentDirections.actionRecipeListFragmentToEditRecipe());
+                Bundle bundle = new Bundle();
+                bundle.putInt("position", itemPosition);
+                navController.navigate(RecipeListFragmentDirections.actionRecipeListFragmentToEditRecipe().getActionId(), bundle);
             }
         });
     }
@@ -98,4 +101,8 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         return recipes.size();
     }
 
+    public void updateRecipes(ArrayList<Recipe> newRecipes) {
+        recipes = newRecipes;
+        notifyDataSetChanged();
+    }
 }
