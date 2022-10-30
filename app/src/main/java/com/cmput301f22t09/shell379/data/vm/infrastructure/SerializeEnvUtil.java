@@ -31,11 +31,15 @@ public class SerializeEnvUtil {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static Environment deserialize(HashMap<String, String> data) {
         Environment env = new Environment();
-        env.getIngredients().setList((ArrayList<Ingredient>) SerializeUtil.deserialize(data.get("ingredients")));
-        env.getRecipes().setList((ArrayList<Recipe>) SerializeUtil.deserialize(data.get("recipes")));
-        env.getCart().setList((ArrayList<CartIngredient>) SerializeUtil.deserialize(data.get("cart")));
-        env.getIngredientCategories().setCategories((HashSet<String>) SerializeUtil.deserialize(data.get("ingredient_categories")));
-        env.getRecipeCategories().setCategories((HashSet<String>) SerializeUtil.deserialize(data.get("recipes_categories")));
+        try {
+            env.getIngredients().setList((ArrayList<Ingredient>) SerializeUtil.deserialize(data.get("ingredients")));
+            env.getRecipes().setList((ArrayList<Recipe>) SerializeUtil.deserialize(data.get("recipes")));
+            env.getCart().setList((ArrayList<CartIngredient>) SerializeUtil.deserialize(data.get("cart")));
+            env.getIngredientCategories().setCategories((HashSet<String>) SerializeUtil.deserialize(data.get("ingredient_categories")));
+            env.getRecipeCategories().setCategories((HashSet<String>) SerializeUtil.deserialize(data.get("recipes_categories")));
+        }
+        catch (NullPointerException e) {
+        }
         return env;
     }
 }

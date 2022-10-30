@@ -64,6 +64,9 @@ public class DatabaseManager {
                     data.put("recipes_categories", (String) value.get("recipes_categories"));
                     instance = SerializeEnvUtil.deserialize(data);
                 }
+                else {
+                    instance = new Environment();
+                }
             }
         });
     }
