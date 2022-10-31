@@ -14,6 +14,8 @@ import android.content.Context;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +31,7 @@ import android.widget.TextView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.IngredientAdapter;
+import com.cmput301f22t09.shell379.adapters.IngredientInRecipeAdapter;
 import com.cmput301f22t09.shell379.adapters.RecipeListAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
@@ -45,7 +48,7 @@ public class Edit_recipe extends Fragment {
     Recipe myRecipe;
     RecyclerView recipe_recyclerView;
     RecyclerView.LayoutManager layoutManager;
-    IngredientAdapter recipeListAdapter;
+    IngredientInRecipeAdapter recipeListAdapter;
     Button choosePhoto;
     ImageView previewPhoto;
     Button saveRecipeButton;
@@ -55,6 +58,7 @@ public class Edit_recipe extends Fragment {
     EditText servingsText;
     EditText commentText;
     EditText nameText;
+    private NavController navController;
     int SELECT_PICTURE = 200;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -94,6 +98,7 @@ public class Edit_recipe extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        this.navController = NavHostFragment.findNavController(this);
 
     }
 
@@ -135,7 +140,7 @@ public class Edit_recipe extends Fragment {
         recipe_recyclerView = (RecyclerView) rootView.findViewById(R.id.ingredientsInRep);
         recipe_recyclerView.setLayoutManager(layoutManager);
 
-        recipeListAdapter = new IngredientAdapter(myRecipe.getIngredients());
+        recipeListAdapter = new IngredientInRecipeAdapter(myRecipe.getIngredients());
         recipe_recyclerView.setAdapter(recipeListAdapter);
         recipe_recyclerView.setItemAnimator(new DefaultItemAnimator());
 
@@ -143,6 +148,14 @@ public class Edit_recipe extends Fragment {
             @Override
             public void onClick(View view) {
                 deleteIngredient(recipeListAdapter.getSelectedPos());
+            }
+        });
+
+        addIngredientButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                System.out.println("Add button clicked!");
+                navController.navigate(Edit_recipeDirections.actionEditRecipeToRecipeSelectIngredientFragment());
             }
         });
 
@@ -197,7 +210,6 @@ public class Edit_recipe extends Fragment {
         String comment = commentText.getText().toString();
         Bitmap photo = ((BitmapDrawable)previewPhoto.getDrawable()).getBitmap();
 
-
         Recipe newRecipe = new Recipe(name, prepareTime, servings, "category", comment, photo);
         int size = recipeListAdapter.getIngredients().size();
         if (size > 0) {
@@ -206,9 +218,10 @@ public class Edit_recipe extends Fragment {
             }
         }
 
-        for (int i = 0; i < size; i++) {
-            Log.e("debug", newRecipe.getIngredients().get(i).getDescription());
-        }
+//        for (int i = 0; i < size; i++) {
+//            Log.e("debug", newRecipe.getIngredients().get(i).getDescription());
+//        }
+
 
         // TODO: ADD TO THE LIST OF RECIPES
         // TODO: GO BACK TO THE PREVIOUS SCREEN AFTER CLICKING
