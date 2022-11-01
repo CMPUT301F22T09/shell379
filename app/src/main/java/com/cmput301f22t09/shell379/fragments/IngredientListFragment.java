@@ -111,8 +111,7 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
         ((Button)rootView.findViewById(R.id.new_button)).setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        Log.e("print",String.valueOf(ingredientList.size()));
-//                        navController.navigate(IngredientListFragmentDirections.actionIngredientListFragmentToViewIngredientFragment());
+                        navController.navigate(IngredientListFragmentDirections.actionIngredientListFragmentToCreateIngredientFragment());
                     }
                 }
         );

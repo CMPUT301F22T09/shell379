@@ -92,11 +92,20 @@ public abstract class SaveIngredientFragment extends Fragment {
         );
         ((Button)rootView.findViewById(R.id.save_button)).setOnClickListener(
                 new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
                     public void onClick(View v) {
                         save();
                     }
                 }
         );
+//        ((EditText)rootView.findViewById(R.id.editLocation)).setOnClickListener(
+//                new View.OnClickListener() {
+//
+//                    public void onClick(View v) {
+//
+//                    }
+//                }
+//        );
         return rootView;
     }
 

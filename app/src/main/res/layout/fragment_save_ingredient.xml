@@ -41,7 +41,7 @@
             android:orientation="vertical"
             android:paddingHorizontal="25dp"
             android:paddingVertical="20dp"
-            android:background="@drawable/view_ingredient_border_drawable">
+          >
 
             <TextView
                 android:id="@+id/errorText"
