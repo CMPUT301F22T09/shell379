@@ -1,7 +1,9 @@
 package com.cmput301f22t09.shell379.fragments;
 
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -102,6 +104,7 @@ public abstract class SaveIngredientFragment extends Fragment {
         navController.popBackStack();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private void save(){
         try{
             // Load data from Views
