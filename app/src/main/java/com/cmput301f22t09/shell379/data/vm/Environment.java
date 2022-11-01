@@ -8,26 +8,27 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.Recipe;
+import com.cmput301f22t09.shell379.data.ShoppingCart;
 import com.cmput301f22t09.shell379.data.util.DatabaseManager;
 import com.cmput301f22t09.shell379.data.vm.collections.CategorySet;
-import com.cmput301f22t09.shell379.data.vm.collections.IngredientCollection;
-import com.cmput301f22t09.shell379.data.vm.collections.RecipeCategories;
-import com.cmput301f22t09.shell379.data.vm.collections.RecipeCollection;
+import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
 import com.cmput301f22t09.shell379.data.vm.infrastructure.Commitable;
 
 import java.io.Serializable;
 
 public class Environment extends ViewModel implements Serializable {
-    private IngredientCollection ingredients;
-    private RecipeCollection recipes;
-    private LiveCart cart;
+    private LiveCollection<Ingredient> ingredients;
+    private LiveCollection<Recipe> recipes;
+    private ShoppingCart cart;
     private CategorySet ingredientCategories;
     private CategorySet recipeCategories;
 
     public Environment() {
-        ingredients = new IngredientCollection();
-        recipes = new RecipeCollection();
-        cart = new LiveCart();
+        ingredients = new LiveCollection<Ingredient>();
+        recipes = new LiveCollection<Recipe>();
+        cart = new ShoppingCart();
         ingredientCategories = new CategorySet();
         recipeCategories = new CategorySet();
     }
@@ -74,15 +75,15 @@ public class Environment extends ViewModel implements Serializable {
         });
     }
 
-    public IngredientCollection getIngredients() {
+    public LiveCollection<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public RecipeCollection getRecipes() {
+    public LiveCollection<Recipe> getRecipes() {
         return recipes;
     }
 
-    public LiveCart getCart() {
+    public ShoppingCart getCart() {
         return cart;
     }
 

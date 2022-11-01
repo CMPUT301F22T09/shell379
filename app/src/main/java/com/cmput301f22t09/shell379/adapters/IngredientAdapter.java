@@ -1,5 +1,6 @@
 package com.cmput301f22t09.shell379.adapters;
 
+import android.graphics.Color;
 import android.os.Build;
 //import android.os.Environment;
 import android.view.LayoutInflater;
@@ -28,10 +29,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         public void navigateToViewIngredient(int index);
     }
 
-//    public interface HolderListener{
-//        public void ingredientOnClick(int i);
-//    }
-
     private ArrayList<Ingredient> ingredients;
     private Environment envViewModel;
     private AdaptorListener ingredientListener;
@@ -49,17 +46,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         TextView unit;
         TextView amount;
         TextView category;
-//        private HolderListener ingredientHolderListener;
-//
-//        public void bind(int position, HolderListener ingredientHolderListener){
-//            itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    ingredientHolderListener.ingredientOnClick(position);
-//                }
-//            });
-//
-//        }
 
         public IngredientViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -67,13 +53,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
             this.bestBefore = (TextView) itemView.findViewById(R.id.best_before_date_textView);
             this.category = (TextView) itemView.findViewById(R.id.category_textView);
             this.location = (TextView) itemView.findViewById(R.id.location_textView);
-
-
-
-
-//            this.serving = (TextView) itemView.findViewById(R.id.serving_text);
-//            this.unit =  (TextView) itemView.findViewById(R.id.unit);
-//            this.amount =  (TextView) itemView.findViewById(R.id.amount);
 
         }
     }
@@ -122,6 +101,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 //        unit.setText(ingredients.get(position).getUnit());
 //        amount.setText(ingredients.get(position).getAmount().toString());
 //        holder.bind(position,this);
+
         View itemView = holder.getItemView();
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
