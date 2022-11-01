@@ -17,7 +17,7 @@ import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.Environment;
-import com.cmput301f22t09.shell379.data.vm.collections.IngredientCollection;
+import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
 
 import org.w3c.dom.Text;
 
@@ -123,8 +123,8 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 
     public void ingredientOnClick(int i) {
        Ingredient a = ingredients.get(i);
-       IngredientCollection ingredientCollection = envViewModel.getIngredients();
-       ingredientCollection.checkFullEqual(a);
+       LiveCollection<Ingredient> ingredientCollection = envViewModel.getIngredients();
+       ingredientCollection.getIndexByFullEquals(a);
        ingredientListener.navigateToViewIngredient(i);
     }
 }

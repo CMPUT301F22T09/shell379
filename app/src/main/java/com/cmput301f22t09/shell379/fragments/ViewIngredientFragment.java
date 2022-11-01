@@ -50,7 +50,7 @@ public class ViewIngredientFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         ingredientIndex = getArguments().getInt("index");
-        ingredient = Environment.of((AppCompatActivity) getActivity()).getIngredients().getIngredients().get(ingredientIndex);
+        ingredient = Environment.of((AppCompatActivity) getActivity()).getIngredients().getList().get(ingredientIndex);
 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_view_ingredient, container, false);
