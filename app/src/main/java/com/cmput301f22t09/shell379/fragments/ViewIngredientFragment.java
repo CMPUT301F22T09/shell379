@@ -22,14 +22,13 @@ import com.cmput301f22t09.shell379.data.vm.Environment;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ViewIngredientFragment extends Fragment {
     private NavController navController;
     private Ingredient ingredient;
     private int ingredientIndex;
-
-    private int index;
 
     public ViewIngredientFragment() {
         // Required empty public constructor
@@ -123,6 +122,8 @@ public class ViewIngredientFragment extends Fragment {
     }
 
     private void deleteIngredient(){
-
+        Environment.of((AppCompatActivity) getActivity()).getIngredients().removeAtIdx(ingredientIndex);
+        Environment.of((AppCompatActivity) getActivity()).getIngredients().commit();
+        back();
     }
 }
