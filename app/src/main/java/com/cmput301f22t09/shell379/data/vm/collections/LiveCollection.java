@@ -2,11 +2,9 @@ package com.cmput301f22t09.shell379.data.vm.collections;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.vm.infrastructure.Commitable;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 
 public class LiveCollection<T> extends Commitable {
     private final MutableLiveData<ArrayList<T>> lst = new MutableLiveData<>();
@@ -40,5 +38,21 @@ public class LiveCollection<T> extends Commitable {
 
     public void setList(ArrayList<T> lst) {
         this.lst.setValue(lst);
+    }
+
+    public int getIndexByFullEquals(T target){
+        if(!(target instanceof FullyEquable)){
+            return -1;
+        }
+        FullyEquable FETarget = (FullyEquable)target;
+        ArrayList<T> lstValue = lst.getValue();
+        for (int i=0; i< lstValue.size(); i++) {
+            FullyEquable a = (FullyEquable) lstValue.get(i);
+            boolean fullEqual = FETarget.fullEquals(a);
+            if (fullEqual==true){
+                return i;
+            }
+        }
+        return -1;
     }
 }

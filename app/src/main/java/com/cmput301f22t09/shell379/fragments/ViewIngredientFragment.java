@@ -4,6 +4,7 @@ import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -17,16 +18,17 @@ import android.widget.TextView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.vm.Environment;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class ViewIngredientFragment extends Fragment {
     private NavController navController;
     private Ingredient ingredient;
-
-    private int index;
+    private int ingredientIndex;
 
     public ViewIngredientFragment() {
         // Required empty public constructor
@@ -37,8 +39,7 @@ public class ViewIngredientFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ingredient = new Ingredient("test", new Date(2023,12,12),"test",2,"2 test sadasdadsdsadsadsadsadsadsadsadsadsadadsaadadsdadsadadaddadasdsadsadsadsadaddsadsdadsdadasd","test");
-        index = 0;
+//        ingredient = new Ingredient("Place Ho", new Date(2023,12,12),"test",2,"2 test sadasdadsdsadsadsadsadsadsadsadsadsadadsaadadsdadsadadaddadasdsadsadsadsadaddsadsdadsdadasd","test");
         navController = NavHostFragment.findNavController(this);
     }
 
@@ -46,6 +47,10 @@ public class ViewIngredientFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        ingredientIndex = getArguments().getInt("index");
+        ingredient = Environment.of((AppCompatActivity) getActivity()).getIngredients().getList().get(ingredientIndex);
+
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_view_ingredient, container, false);
         ((Button)rootView.findViewById(R.id.delete_ingredient_button)).setOnClickListener(
@@ -117,6 +122,8 @@ public class ViewIngredientFragment extends Fragment {
     }
 
     private void deleteIngredient(){
-
+        Environment.of((AppCompatActivity) getActivity()).getIngredients().removeAtIdx(ingredientIndex);
+        Environment.of((AppCompatActivity) getActivity()).getIngredients().commit();
+        back();
     }
 }
