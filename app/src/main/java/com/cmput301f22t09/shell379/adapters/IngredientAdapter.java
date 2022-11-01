@@ -1,27 +1,43 @@
 package com.cmput301f22t09.shell379.adapters;
 
+import android.graphics.Color;
+import android.os.Build;
+//import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
+import com.cmput301f22t09.shell379.data.vm.Environment;
+import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
 
 import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
-public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder>{
+public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder>  {
+    public interface AdaptorListener{
+        public void navigateToViewIngredient(int index);
+    }
 
     private ArrayList<Ingredient> ingredients;
+    private Environment envViewModel;
+    private AdaptorListener ingredientListener;
+
 
     public class IngredientViewHolder extends RecyclerView.ViewHolder {
+        public View getItemView(){
+            return itemView;
+        }
 
         TextView ingredientName;
         TextView serving;
@@ -38,15 +54,13 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
             this.category = (TextView) itemView.findViewById(R.id.category_textView);
             this.location = (TextView) itemView.findViewById(R.id.location_textView);
 
-//            this.serving = (TextView) itemView.findViewById(R.id.serving_text);
-//            this.unit =  (TextView) itemView.findViewById(R.id.unit);
-//            this.amount =  (TextView) itemView.findViewById(R.id.amount);
-
         }
     }
 
-    public IngredientAdapter(ArrayList<Ingredient> data) {
+    public IngredientAdapter(ArrayList<Ingredient> data, Environment envViewModel, AdaptorListener ingredientListener){
+        this.envViewModel = envViewModel;
         this.ingredients = data;
+        this.ingredientListener = ingredientListener;
     }
 
 //    public IngredientAdapter.IngredientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -66,6 +80,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull IngredientAdapter.IngredientViewHolder holder, int position) {
         TextView ingredientName = holder.ingredientName;
@@ -85,11 +100,33 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 //        serving.setText(ingredients.get(position).getAmount().toString());
 //        unit.setText(ingredients.get(position).getUnit());
 //        amount.setText(ingredients.get(position).getAmount().toString());
+//        holder.bind(position,this);
 
+        View itemView = holder.getItemView();
+        itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ingredientOnClick(holder.getAdapterPosition());
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return ingredients.size();
     }
+
+    public void updateIngredient(ArrayList<Ingredient> newIngredient){
+        ingredients = newIngredient;
+        notifyDataSetChanged();
+    }
+
+    public void ingredientOnClick(int i) {
+       Ingredient a = ingredients.get(i);
+       LiveCollection<Ingredient> ingredientCollection = envViewModel.getIngredients();
+       ingredientCollection.getIndexByFullEquals(a);
+       ingredientListener.navigateToViewIngredient(i);
+    }
 }
+
+

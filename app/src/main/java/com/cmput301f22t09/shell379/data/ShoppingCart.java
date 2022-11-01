@@ -1,24 +1,20 @@
 package com.cmput301f22t09.shell379.data;
 
-import com.cmput301f22t09.shell379.data.wrapper.CartIngredientWrapper;
+import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
+import com.cmput301f22t09.shell379.data.wrapper.CartIngredient;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
-public class ShoppingCart implements Serializable {
-    private ArrayList<CartIngredientWrapper> ingredients = new ArrayList<>();
+public class ShoppingCart extends LiveCollection<CartIngredient> implements Serializable {
     private Integer activeDays;
 
-    public void setIngredients(ArrayList<CartIngredientWrapper> ingredients) {
-        this.ingredients = ingredients;
+    public ShoppingCart() {
+        super();
+        activeDays = 0;
     }
 
     public void setActiveDays(Integer activeDays) {
         this.activeDays = activeDays;
-    }
-
-    public ArrayList<CartIngredientWrapper> getIngredients() {
-        return ingredients;
     }
 
     public Integer getActiveDays() {

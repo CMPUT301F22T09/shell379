@@ -1,43 +1,52 @@
 package com.cmput301f22t09.shell379.data.vm;
 
+import android.os.Build;
+
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.Recipe;
+import com.cmput301f22t09.shell379.data.ShoppingCart;
 import com.cmput301f22t09.shell379.data.util.DatabaseManager;
-import com.cmput301f22t09.shell379.data.vm.collections.IngredientCategories;
-import com.cmput301f22t09.shell379.data.vm.collections.IngredientCollection;
-import com.cmput301f22t09.shell379.data.vm.collections.RecipeCategories;
-import com.cmput301f22t09.shell379.data.vm.collections.RecipeCollection;
+import com.cmput301f22t09.shell379.data.vm.collections.CategorySet;
+import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
 import com.cmput301f22t09.shell379.data.vm.infrastructure.Commitable;
 
 import java.io.Serializable;
-import java.util.HashSet;
 
 public class Environment extends ViewModel implements Serializable {
-    private IngredientCollection ingredients;
-    private RecipeCollection recipes;
-    private LiveCart cart;
-    private IngredientCategories ingredientCategories;
-    private RecipeCategories recipeCategories;
+    private LiveCollection<Ingredient> ingredients;
+    private LiveCollection<Recipe> recipes;
+    private ShoppingCart cart;
+    private CategorySet ingredientCategories;
+    private CategorySet recipeCategories;
 
     public Environment() {
-        ingredients = new IngredientCollection();
-        recipes = new RecipeCollection();
-        cart = new LiveCart();
-        ingredientCategories = new IngredientCategories();
-        recipeCategories = new RecipeCategories();
+        ingredients = new LiveCollection<Ingredient>();
+        recipes = new LiveCollection<Recipe>();
+        cart = new ShoppingCart();
+        ingredientCategories = new CategorySet();
+        recipeCategories = new CategorySet();
     }
 
     public static Environment of(AppCompatActivity owner, Environment envPulled) {
-        Environment env = new ViewModelProvider(owner).get(Environment.class);
-        env.ingredients = envPulled.ingredients;
-        env.cart = envPulled.cart;
-        env.recipes = envPulled.recipes;
+        Environment env = new ViewModelProvider(owner).get(Environment.class);;
+        try {
+            env.ingredients = envPulled.ingredients;
+            env.cart = envPulled.cart;
+            env.recipes = envPulled.recipes;
+            env.ingredientCategories = envPulled.ingredientCategories;
+            env.recipeCategories = envPulled.recipeCategories;
 
-        setupObservers(owner, env);
+            setupObservers(owner, env);
+        } catch (NullPointerException e) {
+
+        }
         return env;
     }
 
@@ -57,6 +66,7 @@ public class Environment extends ViewModel implements Serializable {
 
     private static void observeForCommits(AppCompatActivity owner, Environment env, Commitable commitable) {
         commitable.isCommitNeeded().observe(owner, new Observer<Boolean>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onChanged(Boolean commitNeeded) {
                 if (commitNeeded==true) {
@@ -66,23 +76,23 @@ public class Environment extends ViewModel implements Serializable {
         });
     }
 
-    public IngredientCollection getIngredients() {
+    public LiveCollection<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public RecipeCollection getRecipes() {
+    public LiveCollection<Recipe> getRecipes() {
         return recipes;
     }
 
-    public LiveCart getCart() {
+    public ShoppingCart getCart() {
         return cart;
     }
 
-    public IngredientCategories getIngredientCategories() {
+    public CategorySet getIngredientCategories() {
         return ingredientCategories;
     }
 
-    public RecipeCategories getRecipeCategories() {
+    public CategorySet getRecipeCategories() {
         return recipeCategories;
     }
 }
