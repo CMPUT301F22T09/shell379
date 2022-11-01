@@ -224,7 +224,6 @@ public class Edit_recipe extends Fragment {
 
 
         // TODO: ADD TO THE LIST OF RECIPES
-        // TODO: GO BACK TO THE PREVIOUS SCREEN AFTER CLICKING
 
     }
 }
