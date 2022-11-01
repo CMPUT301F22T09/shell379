@@ -116,15 +116,11 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
                 }
         );
 
-
-
-
-
-        ingredientList = new ArrayList<Ingredient>();
+        ingredientList = envViewModel.getIngredients().getList();
 //        testList.add(new Ingredient("Milk", new Date(2023,9,10), "Fridge",222,"1L","Diary"));
 //        testList.add(new Ingredient("Water", new Date(2023,9,11),"Counter",22,"2L","Liquid"));
 
-        Ingredient i1 = new Ingredient("Milk", new Date(2023,9,10), "Fridge",222,"1L","Diary");
+//        Ingredient i1 = new Ingredient("Milk", new Date(2023,9,10), "Fridge",222,"1L","Diary");
 
         layoutManager = new LinearLayoutManager(this.getActivity());
         ingredient_recyclerView = (RecyclerView) rootView.findViewById(R.id.ingredient_list_recyclerView);
@@ -135,8 +131,8 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
         ingredient_recyclerView.setAdapter(ingredientListAdapter);
         ingredient_recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        envViewModel.getIngredients().add(i1);
-        envViewModel.getIngredients().commit();
+//        envViewModel.getIngredients().add(i1);
+//        envViewModel.getIngredients().commit();
 //        Log.e("print",String.valueOf(ingredientList.size()));
         return rootView;
 
