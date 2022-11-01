@@ -73,6 +73,9 @@
         <action
             android:id="@+id/action_edit_recipe_to_recipeSelectIngredientFragment"
             app:destination="@id/recipeSelectIngredientFragment" />
+        <action
+            android:id="@+id/action_edit_recipe_to_recipeListFragment"
+            app:destination="@id/recipeListFragment" />
     </fragment>
     <fragment
         android:id="@+id/createIngredientFragment"
