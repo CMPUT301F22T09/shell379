@@ -1,5 +1,6 @@
 package com.cmput301f22t09.shell379.data;
 
+import android.graphics.Bitmap;
 import android.media.Image;
 
 import java.io.Serializable;
@@ -11,7 +12,7 @@ public class Recipe implements Serializable {
     private Integer servings;
     private String category;
     private String comments;
-    private Image photograph;
+    private Bitmap photograph;
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
 
     public Recipe(String title, Long preparationTime, Integer servings, String category, String comments) {
@@ -22,7 +23,7 @@ public class Recipe implements Serializable {
         this.comments = comments;
     }
 
-    public Recipe(String title, Long preparationTime, Integer servings, String category, String comments, Image photograph) {
+    public Recipe(String title, Long preparationTime, Integer servings, String category, String comments, Bitmap photograph) {
         this.title = title;
         this.preparationTime = preparationTime;
         this.servings = servings;
@@ -71,11 +72,11 @@ public class Recipe implements Serializable {
         this.comments = comments;
     }
 
-    public Image getPhotograph() {
+    public Bitmap getPhotograph() {
         return photograph;
     }
 
-    public void setPhotograph(Image photograph) {
+    public void setPhotograph(Bitmap photograph) {
         this.photograph = photograph;
     }
 
