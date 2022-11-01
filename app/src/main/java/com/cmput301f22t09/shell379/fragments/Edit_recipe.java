@@ -43,7 +43,7 @@ import java.util.Date;
  * Use the {@link Edit_recipe#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Edit_recipe extends Fragment {
+public class Edit_recipe extends Fragment implements CategoriesSelect.CatSelectListener {
 
     Recipe myRecipe;
     RecyclerView recipe_recyclerView;
@@ -107,6 +107,19 @@ public class Edit_recipe extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_edit_recipe_9, container, false);
+
+        Button catSelect = (Button) rootView.findViewById(R.id.select_category);
+        catSelect.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View view) {
+                CategoriesSelect selection = new CategoriesSelect();
+                selection.show(getFragmentManager(), "");
+                selection.setTargetFragment(Edit_recipe.this, 1);
+
+            }
+        });
+
         choosePhoto = rootView.findViewById(R.id.choose_button);
         previewPhoto = rootView.findViewById(R.id.photo);
         saveRecipeButton = rootView.findViewById(R.id.save_recipe);
@@ -197,6 +210,7 @@ public class Edit_recipe extends Fragment {
         }
     }
 
+
     public void deleteIngredient(int pos) {
         recipeListAdapter.removeIngredient(pos);
         recipeListAdapter.notifyDataSetChanged();
@@ -226,5 +240,11 @@ public class Edit_recipe extends Fragment {
         // TODO: ADD TO THE LIST OF RECIPES
         // TODO: GO BACK TO THE PREVIOUS SCREEN AFTER CLICKING
 
+
+    }
+
+    @Override
+    public void onAddClicked(String cat) {
+        Log.e("EditRecipe", cat);
     }
 }
