@@ -83,7 +83,7 @@ public class ViewIngredientFragment extends Fragment {
 
         ((TextView)rootView.findViewById(R.id.best_before_date).findViewById(R.id.detail_name)).setText( "Best Before");
         if(ingredient.getBestBefore() != null){
-            ((TextView)rootView.findViewById(R.id.best_before_date).findViewById(R.id.detail_value)).setText( df.format(ingredient.getBestBefore()));
+            ((TextView)rootView.findViewById(R.id.best_before_date).findViewById(R.id.detail_value)).setText( (ingredient.getBestBeforeFormatted()));
         }else{
             ((TextView)rootView.findViewById(R.id.best_before_date).findViewById(R.id.detail_value)).setText( "Tap edit below to add");
         }
@@ -118,7 +118,7 @@ public class ViewIngredientFragment extends Fragment {
     }
 
     private void navigateToEditIngredient(){
-
+        navController.navigate(ViewIngredientFragmentDirections.actionViewIngredientFragmentToEditIngredientFragment(ingredientIndex));
     }
 
     private void deleteIngredient(){
