@@ -30,6 +30,7 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 public class EditIngredientFragment extends SaveIngredientFragment {
+    private int ingredientIndex;
 
     public EditIngredientFragment() {
         // Required empty public constructor
@@ -49,14 +50,14 @@ public class EditIngredientFragment extends SaveIngredientFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         super.onCreateView(inflater,container,savedInstanceState);
-
-        Ingredient ingredient = new Ingredient("test", new Date(2023,12,12),"test",2,"2 test sadasdadsdsadsadsadsadsadsadsadsadsadadsaadadsdadsadadaddadasdsadsadsadsadaddsadsdadsdadasd","test");
-        // Populate fields
+        ingredientIndex = getArguments().getInt("ingredientIndex");
+        Ingredient ingredient = Environment.of((AppCompatActivity) getActivity())
+                .getIngredients().getList().get(ingredientIndex);
 
         ((EditText)rootView.findViewById(R.id.editDescription)).setText(ingredient.getDescription());
         // date extraction from https://stackoverflow.com/questions/9474121/i-want-to-get-year-month-day-etc-from-java-date-to-compare-with-gregorian-cal
         Calendar cal = Calendar.getInstance(TimeZone.getDefault());
-        cal.setTime(ingredient.getBestBefore().get());
+        cal.setTime(ingredient.getBestBefore());
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
@@ -72,7 +73,7 @@ public class EditIngredientFragment extends SaveIngredientFragment {
         return rootView;
     }
     protected void writeToViewModel(Ingredient ing){
-        envViewModel.getIngredients().add(ing);
+        envViewModel.getIngredients().getList().set(ingredientIndex,ing);
         envViewModel.getIngredients().commit();
     }
 
