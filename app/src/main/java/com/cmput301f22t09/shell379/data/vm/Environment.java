@@ -1,9 +1,11 @@
 package com.cmput301f22t09.shell379.data.vm;
 
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
@@ -44,7 +46,7 @@ public class Environment extends ViewModel implements Serializable {
 
             setupObservers(owner, env);
         } catch (NullPointerException e) {
-
+            Log.e("Env","env failed to update data from pull" + e.getMessage());
         }
         return env;
     }

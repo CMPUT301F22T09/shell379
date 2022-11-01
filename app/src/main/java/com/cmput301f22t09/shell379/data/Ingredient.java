@@ -40,12 +40,12 @@ public class Ingredient implements Serializable {
             throw new IllegalArgumentException("Amount cannot be negative.");
         }
         this.unit = unit;
-        if (unit.replaceAll("[^0-9]", "").equals("")) {
-            throw new IllegalArgumentException("Unit must contain numeric values.");
-        }
-        if (Integer.parseInt(unit.replaceAll("[^0-9]", "")) <= 1e-10)  {
-            throw new IllegalArgumentException("Unit must be non-zero");
-        }
+//        if (unit.replaceAll("[^0-9]", "").equals("")) {
+//            throw new IllegalArgumentException("Unit must contain numeric values.");
+//        }
+//        if (Integer.parseInt(unit.replaceAll("[^0-9]", "")) <= 1e-10)  {
+//            throw new IllegalArgumentException("Unit must be non-zero");
+//        }
         this.category = category;
     }
 
@@ -109,5 +109,22 @@ public class Ingredient implements Serializable {
 
     public void setCategory(String category) {
         this.category = category;
+    }
+
+    public boolean getFullEqual(Ingredient a){
+        if (a.getDescription() == a.description){
+            if (a.getCategory()==a.category){
+                if (a.getLocation() == a.location){
+                    if (a.getBestBefore().equals(bestBefore)){
+                        if (a.getAmount()==a.amount){
+                            if (a.getUnit()==a.unit){
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
