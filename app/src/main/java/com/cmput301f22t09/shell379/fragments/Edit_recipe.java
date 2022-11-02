@@ -5,6 +5,7 @@ import static android.app.Activity.RESULT_OK;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
@@ -21,6 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,6 +51,7 @@ public class Edit_recipe extends Fragment implements CategoriesSelect.CatSelectL
     RecyclerView recipe_recyclerView;
     RecyclerView.LayoutManager layoutManager;
     IngredientInRecipeAdapter recipeListAdapter;
+    Button catSelect;
     Button choosePhoto;
     ImageView previewPhoto;
     Button saveRecipeButton;
@@ -108,7 +111,7 @@ public class Edit_recipe extends Fragment implements CategoriesSelect.CatSelectL
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_edit_recipe_9, container, false);
 
-        Button catSelect = (Button) rootView.findViewById(R.id.select_category);
+        catSelect = (Button) rootView.findViewById(R.id.select_category);
         catSelect.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -244,7 +247,12 @@ public class Edit_recipe extends Fragment implements CategoriesSelect.CatSelectL
     }
 
     @Override
-    public void onAddClicked(String cat) {
+    public void send(String cat) {
         Log.e("EditRecipe", cat);
+        catSelect.setAllCaps(false);
+        catSelect.setText(cat);
+        catSelect.setGravity(Gravity.LEFT);
+        catSelect.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
+        catSelect.setTypeface(Typeface.SANS_SERIF);
     }
 }
