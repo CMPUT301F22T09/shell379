@@ -31,6 +31,7 @@ import java.util.TimeZone;
 
 public class EditIngredientFragment extends SaveIngredientFragment {
     private int ingredientIndex;
+    private Ingredient ingredient;
 
     public EditIngredientFragment() {
         // Required empty public constructor
@@ -51,7 +52,7 @@ public class EditIngredientFragment extends SaveIngredientFragment {
                              Bundle savedInstanceState) {
         super.onCreateView(inflater,container,savedInstanceState);
         ingredientIndex = getArguments().getInt("ingredientIndex");
-        Ingredient ingredient = Environment.of((AppCompatActivity) getActivity())
+        ingredient = Environment.of((AppCompatActivity) getActivity())
                 .getIngredients().getList().get(ingredientIndex);
 
         ((EditText)rootView.findViewById(R.id.editDescription)).setText(ingredient.getDescription());
