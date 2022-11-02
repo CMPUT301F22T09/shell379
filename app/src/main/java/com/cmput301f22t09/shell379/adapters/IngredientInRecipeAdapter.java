@@ -22,16 +22,13 @@ public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientIn
 
     public class IngredientInRecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView name;
-        TextView amount;
-        TextView bestBefore;
+        private TextView name;
+        private TextView amount;
 
         public IngredientInRecipeViewHolder(@NonNull View itemView) {
             super(itemView);
             this.name = (TextView) itemView.findViewById(R.id.food_name_text);
             this.amount =  (TextView) itemView.findViewById(R.id.amount_text);
-            this.bestBefore =  (TextView) itemView.findViewById(R.id.best_before_text);
-
             itemView.setOnClickListener(this);
 
         }
@@ -65,14 +62,12 @@ public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientIn
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void onBindViewHolder(@NonNull IngredientInRecipeAdapter.IngredientInRecipeViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull IngredientInRecipeViewHolder holder, int position) {
         TextView name = holder.name;
         TextView amount = holder.amount;
-        TextView bestBefore = holder.bestBefore;
 
         name.setText(ingredients.get(position).getDescription());
         amount.setText(ingredients.get(position).getAmount().toString());
-        bestBefore.setText(ingredients.get(position).getBestBeforeFormatted());
         holder.itemView.setSelected(selectedPos == position);
         holder.itemView.setBackgroundColor(selectedPos == position ? Color.GRAY : Color.TRANSPARENT);
 
@@ -81,11 +76,6 @@ public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientIn
     @Override
     public int getItemCount() {
         return ingredients.size();
-    }
-
-    public void updateIngredient(ArrayList<Ingredient> newIngredient){
-        ingredients = newIngredient;
-        notifyDataSetChanged();
     }
 
     public int getSelectedPos() {

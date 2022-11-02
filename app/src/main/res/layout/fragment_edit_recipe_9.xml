@@ -184,14 +184,6 @@
                     android:textSize="18dp"
                     android:text="Amount" />
 
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="156dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_weight="1"
-                    android:textSize="18dp"
-                    android:text="BestBefore" />
             </LinearLayout>
 
             <LinearLayout

@@ -18,57 +18,10 @@
         android:id="@+id/amount_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:minWidth="40dp"
-        android:maxWidth="40dp"
-        android:textSize="16dp"
-        android:text="Servings" />
+        android:layout_marginLeft="100dp"
+        android:maxWidth="50dp"
+        android:minWidth="50dp"
+        android:text="Servings"
+        android:textSize="16dp" />
 
-    <TextView
-        android:id="@+id/best_before_text"
-        android:layout_width="96dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:maxWidth="30dp"
-        android:minWidth="30dp"
-        android:textSize="16dp"
-        android:text="Best Before" />
-
-<!--    <TextView-->
-<!--        android:id="@+id/category"-->
-<!--        android:layout_width="96dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginLeft="50dp"-->
-<!--        android:maxWidth="60dp"-->
-<!--        android:minWidth="60dp"-->
-<!--        android:text="Category" />-->
-
-<!--    <TextView-->
-<!--        android:id="@+id/unit"-->
-<!--        android:layout_width="96dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginLeft="50dp"-->
-<!--        android:maxWidth="60dp"-->
-<!--        android:minWidth="60dp"-->
-<!--        android:text="Unit" />-->
-
-
-<!--    <TextView-->
-<!--        android:id="@+id/amount"-->
-<!--        android:layout_width="96dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginLeft="50dp"-->
-<!--        android:maxWidth="60dp"-->
-<!--        android:minWidth="60dp"-->
-<!--        android:text="Amount" />-->
-
-
-<!--    <TextView-->
-<!--        android:id="@+id/location"-->
-<!--        android:layout_width="96dp"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginLeft="50dp"-->
-<!--        android:maxWidth="60dp"-->
-<!--        android:minWidth="60dp"-->
-<!--        android:text="Location" />-->
 </LinearLayout>
