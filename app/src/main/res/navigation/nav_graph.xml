@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/ingredientListFragment">
+    app:startDestination="@id/mainMenuFragment">
     <fragment
         android:id="@+id/ingredientListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.IngredientListFragment"
@@ -12,6 +12,9 @@
         <action
             android:id="@+id/action_ingredientListFragment_to_viewIngredientFragment"
             app:destination="@id/viewIngredientFragment" />
+        <action
+            android:id="@+id/action_ingredientListFragment_to_createIngredientFragment"
+            app:destination="@id/createIngredientFragment" />
     </fragment>
     <fragment
         android:id="@+id/recipeListFragment"
@@ -54,7 +57,14 @@
         android:id="@+id/viewIngredientFragment"
         android:name="com.cmput301f22t09.shell379.fragments.ViewIngredientFragment"
         android:label="fragment_view_ingredient"
-        tools:layout="@layout/fragment_view_ingredient" />
+        tools:layout="@layout/fragment_view_ingredient" >
+        <argument
+            android:name="index"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_viewIngredientFragment_to_editIngredientFragment"
+            app:destination="@id/editIngredientFragment" />
+    </fragment>
     <fragment
         android:id="@+id/edit_recipe"
         android:name="com.cmput301f22t09.shell379.fragments.Edit_recipe"
@@ -65,8 +75,31 @@
             app:destination="@id/recipeSelectIngredientFragment" />
     </fragment>
     <fragment
+        android:id="@+id/createIngredientFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.CreateIngredientFragment"
+        android:label="fragment_save_ingredient"
+        tools:layout="@layout/fragment_save_ingredient" />
+    <fragment
+        android:id="@+id/editIngredientFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.EditIngredientFragment"
+        android:label="EditIngredientFragment" >
+        <argument
+            android:name="ingredientIndex"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
         android:id="@+id/recipeSelectIngredientFragment"
         android:name="com.cmput301f22t09.shell379.fragments.RecipeSelectIngredientFragment"
         android:label="fragment_recipe_select_ingredient"
-        tools:layout="@layout/recipe_select_ingredients" />
+        tools:layout="@layout/recipe_select_ingredients" >
+        <action
+            android:id="@+id/action_recipeSelectIngredientFragment_to_recipeNewIngredient"
+            app:destination="@id/recipeNewIngredient" />
+    </fragment>
+    <fragment
+        android:id="@+id/recipeNewIngredient"
+        android:name="com.cmput301f22t09.shell379.fragments.RecipeNewIngredient"
+        android:label="recipe_new_ingredient"
+        tools:layout="@layout/recipe_new_ingredient" />
 </navigation>

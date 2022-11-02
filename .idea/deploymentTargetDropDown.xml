@@ -7,11 +7,19 @@
         <deviceKey>
           <Key>
             <type value="SERIAL_NUMBER" />
+<<<<<<< HEAD
             <value value="3047375647593098" />
+=======
+            <value value="ZY22BX4VJ6" />
+>>>>>>> dev
           </Key>
         </deviceKey>
       </Target>
     </runningDeviceTargetSelectedWithDropDown>
+<<<<<<< HEAD
     <timeTargetWasSelectedWithDropDown value="2022-11-02T00:38:25.588755300Z" />
+=======
+    <timeTargetWasSelectedWithDropDown value="2022-11-01T20:01:35.830438300Z" />
+>>>>>>> dev
   </component>
 </project>
