@@ -3,11 +3,13 @@ package com.cmput301f22t09.shell379.data.util;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.util.Log;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.infrastructure.SerializeEnvUtil;
@@ -50,6 +52,7 @@ public class DatabaseManager {
 
     public void pull() {
         this.doc.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                 if (value != null && value.getData() != null) {
@@ -57,12 +60,18 @@ public class DatabaseManager {
                     data.put("ingredients", (String) value.get("ingredients"));
                     data.put("recipes", (String) value.get("recipes"));
                     data.put("cart", (String) value.get("cart"));
+                    data.put("ingredient_categories", (String) value.get("ingredient_categories"));
+                    data.put("recipes_categories", (String) value.get("recipes_categories"));
                     instance = SerializeEnvUtil.deserialize(data);
+                }
+                else {
+                    instance = new Environment();
                 }
             }
         });
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void push(Environment env) {
         doc.set(SerializeEnvUtil.serialize(env)).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
