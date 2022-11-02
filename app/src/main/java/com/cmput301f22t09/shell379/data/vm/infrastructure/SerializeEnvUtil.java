@@ -33,6 +33,11 @@ public class SerializeEnvUtil {
     public static Environment deserialize(HashMap<String, String> data) {
         Environment env = new Environment();
         try {
+            Log.d("FB_BYTES", String.valueOf(data.get("ingredients").length()));
+            Log.d("FB_BYTES", String.valueOf(data.get("recipes").length()));
+            Log.d("FB_BYTES", String.valueOf(data.get("cart").length()));
+            Log.d("FB_BYTES", String.valueOf(data.get("ingredient_categories").length()));
+            Log.d("FB_BYTES", String.valueOf(data.get("recipes_categories").length()));
             if (data.get("ingredients").length()>0)
                 env.getIngredients().setList((ArrayList<Ingredient>) SerializeUtil.deserialize(data.get("ingredients")));
             if (data.get("recipes").length()>0)
@@ -46,6 +51,7 @@ public class SerializeEnvUtil {
         }
         catch (NullPointerException e) {
         }
+        Log.d("FB_OBJ_CNT", String.valueOf(env.getIngredients().getList().size()));
         return env;
     }
 }

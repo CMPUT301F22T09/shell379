@@ -10,6 +10,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.infrastructure.SerializeEnvUtil;
@@ -50,7 +51,7 @@ public class DatabaseManager {
         doc = db.collection(id).document("ENV");
     }
 
-    public void pull() {
+    public void pull(AppCompatActivity owner) {
         this.doc.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
@@ -63,6 +64,7 @@ public class DatabaseManager {
                     data.put("ingredient_categories", (String) value.get("ingredient_categories"));
                     data.put("recipes_categories", (String) value.get("recipes_categories"));
                     instance = SerializeEnvUtil.deserialize(data);
+                    Environment.of(owner, instance);
                 }
                 else {
                     instance = new Environment();
