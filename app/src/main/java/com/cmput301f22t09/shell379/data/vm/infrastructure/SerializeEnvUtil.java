@@ -33,9 +33,12 @@ public class SerializeEnvUtil {
     public static Environment deserialize(HashMap<String, String> data) {
         Environment env = new Environment();
         try {
-            env.getIngredients().setList((ArrayList<Ingredient>) SerializeUtil.deserialize(data.get("ingredients")));
-            env.getRecipes().setList((ArrayList<Recipe>) SerializeUtil.deserialize(data.get("recipes")));
-            env.getCart().setList((ArrayList<CartIngredient>) SerializeUtil.deserialize(data.get("cart")));
+            if (data.get("ingredients").length()>0)
+                env.getIngredients().setList((ArrayList<Ingredient>) SerializeUtil.deserialize(data.get("ingredients")));
+            if (data.get("recipes").length()>0)
+                env.getRecipes().setList((ArrayList<Recipe>) SerializeUtil.deserialize(data.get("recipes")));
+            if (data.get("cart").length()>0)
+                env.getCart().setList((ArrayList<CartIngredient>) SerializeUtil.deserialize(data.get("cart")));
             if (data.get("ingredient_categories").length()>0)
                 env.getIngredientCategories().setCategories((HashSet<String>) SerializeUtil.deserialize(data.get("ingredient_categories")));
             if (data.get("recipes_categories").length()>0)
