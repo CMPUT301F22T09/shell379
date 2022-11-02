@@ -38,7 +38,7 @@ public class SerializeEnvUtil {
             if (data.get("recipes").length()>0)
                 env.getRecipes().setList((ArrayList<Recipe>) SerializeUtil.deserialize(data.get("recipes")));
             if (data.get("cart").length()>0)
-                env.getCart().setList((ArrayList<CartIngredientWrapper>) SerializeUtil.deserialize(data.get("cart")));
+                env.getCart().setList((ArrayList<CartIngredient>) SerializeUtil.deserialize(data.get("cart")));
             if (data.get("ingredient_categories").length()>0)
                 env.getIngredientCategories().setCategories((HashSet<String>) SerializeUtil.deserialize(data.get("ingredient_categories")));
             if (data.get("recipes_categories").length()>0)
