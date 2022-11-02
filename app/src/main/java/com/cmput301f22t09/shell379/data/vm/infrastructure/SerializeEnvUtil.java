@@ -7,10 +7,9 @@ import androidx.annotation.RequiresApi;
 
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
-import com.cmput301f22t09.shell379.data.ShoppingCart;
 import com.cmput301f22t09.shell379.data.util.SerializeUtil;
 import com.cmput301f22t09.shell379.data.vm.Environment;
-import com.cmput301f22t09.shell379.data.wrapper.CartIngredientWrapper;
+import com.cmput301f22t09.shell379.data.wrapper.CartIngredient;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,9 +33,12 @@ public class SerializeEnvUtil {
     public static Environment deserialize(HashMap<String, String> data) {
         Environment env = new Environment();
         try {
-            env.getIngredients().setList((ArrayList<Ingredient>) SerializeUtil.deserialize(data.get("ingredients")));
-            env.getRecipes().setList((ArrayList<Recipe>) SerializeUtil.deserialize(data.get("recipes")));
-            env.getCart().setList((ArrayList<CartIngredientWrapper>) SerializeUtil.deserialize(data.get("cart")));
+            if (data.get("ingredients").length()>0)
+                env.getIngredients().setList((ArrayList<Ingredient>) SerializeUtil.deserialize(data.get("ingredients")));
+            if (data.get("recipes").length()>0)
+                env.getRecipes().setList((ArrayList<Recipe>) SerializeUtil.deserialize(data.get("recipes")));
+            if (data.get("cart").length()>0)
+                env.getCart().setList((ArrayList<CartIngredientWrapper>) SerializeUtil.deserialize(data.get("cart")));
             if (data.get("ingredient_categories").length()>0)
                 env.getIngredientCategories().setCategories((HashSet<String>) SerializeUtil.deserialize(data.get("ingredient_categories")));
             if (data.get("recipes_categories").length()>0)
