@@ -34,7 +34,7 @@ public class Environment extends ViewModel implements Serializable {
     }
 
     public static Environment of(AppCompatActivity owner, Environment envPulled) {
-        Environment env = new ViewModelProvider(owner).get(Environment.class);;
+        Environment env = new ViewModelProvider(owner).get(Environment.class);
         try {
             env.ingredients = envPulled.ingredients;
             env.cart = envPulled.cart;
