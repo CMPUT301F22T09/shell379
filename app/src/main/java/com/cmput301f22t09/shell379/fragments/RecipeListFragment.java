@@ -64,7 +64,7 @@ public class RecipeListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         Recipe newRecipe = createRecipe();
         env = Environment.of((AppCompatActivity) this.getActivity());
-        env.getRecipes().add(newRecipe);
+//        env.getRecipes().add(newRecipe);
         this.navController = NavHostFragment.findNavController(this);
     }
 
