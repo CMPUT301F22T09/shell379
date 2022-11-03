@@ -64,7 +64,7 @@ public class EditIngredientFragment extends SaveIngredientFragment {
         int day = cal.get(Calendar.DAY_OF_MONTH);
         ((DatePicker)rootView.findViewById(R.id.editBestBeforeDate)).updateDate(
                 year,
-                month - 1,
+                month,
                 day);
         ((EditText)rootView.findViewById(R.id.editLocation)).setText(String.valueOf(ingredient.getLocation()));
         ((EditText)rootView.findViewById(R.id.editAmount)).setText(String.valueOf(ingredient.getAmount()));

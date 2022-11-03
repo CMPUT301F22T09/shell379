@@ -82,6 +82,10 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
         return fragment;
     }
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,8 +109,12 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
         envViewModel.getIngredients().getListLive().observe(this, ingredientObserver);
     }
 
+    /**
+     *
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment

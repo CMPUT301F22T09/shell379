@@ -34,7 +34,7 @@ import java.util.GregorianCalendar;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SaveIngredientFragment#newInstance} factory method to
+ * Use the  factory method to
  * create an instance of this fragment.
  */
 public abstract class SaveIngredientFragment extends Fragment {
@@ -120,7 +120,8 @@ public abstract class SaveIngredientFragment extends Fragment {
             DatePicker bestBeforeDatePicker = rootView.findViewById(R.id.editBestBeforeDate);
             Date bestBeforeDate = new GregorianCalendar(
                     bestBeforeDatePicker.getYear(),
-                    bestBeforeDatePicker.getMonth() + 1,
+//                    bestBeforeDatePicker.getMonth() + 1,
+                    bestBeforeDatePicker.getMonth(),
                     bestBeforeDatePicker.getDayOfMonth()).getTime();
             String location = ((EditText)rootView.findViewById(R.id.editLocation)).getText().toString();
             int amount = Integer.parseInt(((EditText)rootView.findViewById(R.id.editAmount)).getText().toString());
