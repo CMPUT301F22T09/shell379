@@ -117,11 +117,12 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
                 getActivity(),
                 android.R.layout.simple_spinner_item,
-                Arrays.asList("testUnit","testUnit") // NEEDS TO BE CHANGED
+                Arrays.asList("Description","Best Before Date", "Location", "Category")
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
+        // Implement the button to back to previous page
         ((ImageView)rootView.findViewById(R.id.floatingActionButton5)).setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
