@@ -97,12 +97,20 @@ public class Recipe implements Serializable {
         ingredients.addAll(newIngredients);
     }
 
-//    public boolean fullEquals(Recipe R) {
-//        if (R.getTitle() == title && R.getPreparationTime() == preparationTime && R.getCategory() == category && R.getComments() == comments
-//                && R.getPhotograph() == photograph && R.getServings() == servings) {
-//            return true;
-//        }
-//        return false;
-//    }
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Recipe)) {
+            return false;
+        }
+
+        Recipe r = (Recipe) o;
+
+        return r.getTitle().equals(title) && r.getPreparationTime().equals(preparationTime) && r.getServings().equals(servings)
+                && r.getCategory().equals(category) && r.getComments().equals(comments) && r.getPhotograph().equals(photograph);
+    }
 
 }

@@ -88,12 +88,12 @@ public class RecipeSelectIngredientFragment extends Fragment {
         testList.add(new Ingredient("Ingredient1", new Date(), "location", 2, "90 unit", "category"));
         testList.add(new Ingredient("Ingredient2", new Date(), "location2", 2, "90 unit", "category2"));
 
-        selectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                select();
-            }
-        });
+//        selectButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                select();
+//            }
+//        });
 
         layoutManager = new LinearLayoutManager(this.getActivity());
         ingredientsRecyclerView = (RecyclerView) rootView.findViewById(R.id.rsi_recyclerView);
@@ -106,7 +106,8 @@ public class RecipeSelectIngredientFragment extends Fragment {
         return rootView;
     }
 
-    public void select() {
-        // get specific recipe & add ingredient 
-    }
+//    public void select() {
+//        // get specific recipe & add ingredient
+//
+//    }
 }
