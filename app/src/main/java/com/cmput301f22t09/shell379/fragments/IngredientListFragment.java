@@ -19,7 +19,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.Spinner;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.IngredientAdapter;
@@ -27,6 +30,7 @@ import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 //import java.util.Observer;
 
@@ -108,6 +112,25 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_ingredient_list, container, false);
 
+        // Implement the spinner option to sort the ingredient list
+        Spinner spinner = (Spinner) rootView.findViewById(R.id.ingredient_sort_spinner);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
+                getActivity(),
+                android.R.layout.simple_spinner_item,
+                Arrays.asList("Description","Best Before Date", "Location", "Category")
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        // Implement the button to back to previous page
+        ((ImageView)rootView.findViewById(R.id.floatingActionButton5)).setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        back();
+                    }
+                }
+        );
+
         ((Button)rootView.findViewById(R.id.new_button)).setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
@@ -115,6 +138,7 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
                     }
                 }
         );
+
 
         ingredientList = envViewModel.getIngredients().getList();
 //        testList.add(new Ingredient("Milk", new Date(2023,9,10), "Fridge",222,"1L","Diary"));
@@ -137,6 +161,10 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
         return rootView;
 
 
+    }
+
+    private void back(){
+        navController.popBackStack();
     }
 
     public void navigateToViewIngredient(int index){
