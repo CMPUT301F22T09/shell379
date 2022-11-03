@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +19,12 @@ import android.widget.Button;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.RecipeListAdapter;
+import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -59,6 +62,9 @@ public class RecipeListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Recipe newRecipe = createRecipe();
+        env = Environment.of((AppCompatActivity) this.getActivity());
+//        env.getRecipes().add(newRecipe);
         this.navController = NavHostFragment.findNavController(this);
     }
 
@@ -69,8 +75,6 @@ public class RecipeListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_recipe_list, container, false);
 
         addNewRecipe = rootView.findViewById(R.id.recipe_list_newButton);
-
-        env = Environment.of((AppCompatActivity) this.getActivity());
 
         // TODO: add same source as ingredient observer
         final Observer<ArrayList<Recipe>> recipeObserver = new Observer<ArrayList<Recipe>>() {
@@ -94,11 +98,28 @@ public class RecipeListFragment extends Fragment {
         addNewRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("New recipe button clicked!");
-                navController.navigate(RecipeListFragmentDirections.actionRecipeListFragmentToEditRecipe());
+                Log.e("enter", "onlicked");
+                int recipeIndex = -1;
+                navController.navigate(RecipeListFragmentDirections.actionRecipeListFragmentToEditRecipe(recipeIndex));
             }
         });
 
+
+//        env.getRecipes().commit();
+//        env.getRecipes().setList(new ArrayList<Recipe>());
+//        env.getRecipes().commit();
+
+
+//        env.getRecipes().commit();
+
         return rootView;
+    }
+
+    public Recipe createRecipe() {
+        Recipe myRecipe = new Recipe("kongpaochicken",100L,3,"chinese","spicy");
+        myRecipe.addIngredient(new Ingredient("appleesdadadsdawdwadsaszdazawdas",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
+        myRecipe.addIngredient(new Ingredient("chicken",new Date(2023,9,07),"fridge",2,"1lbs","meat"));
+        myRecipe.addIngredient(new Ingredient("banana",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
+        return myRecipe;
     }
 }
