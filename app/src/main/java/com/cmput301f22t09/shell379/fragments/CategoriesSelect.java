@@ -1,29 +1,46 @@
 package com.cmput301f22t09.shell379.fragments;
 
+import android.app.Dialog;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.fragmentadapters.CategoriesSelectRecViewAdapter;
+import com.cmput301f22t09.shell379.data.vm.Environment;
+import com.cmput301f22t09.shell379.data.vm.collections.CategorySet;
 
 import java.util.HashSet;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link CategoriesSelect#newInstance} factory method to
+ * Use the {@link CategoriesSelect#} factory method to
  * create an instance of this fragment.
  */
-public class CategoriesSelect extends Fragment {
+public class CategoriesSelect extends DialogFragment {
+
+    public interface CatSelectListener {
+        void send(String cat);
+    }
+    CatSelectListener csl;
+
+
 
     public CategoriesSelect() {
         // Required empty public constructor
@@ -36,15 +53,17 @@ public class CategoriesSelect extends Fragment {
         View view = inflater.inflate(R.layout.fragment_categories_select, container, false);
 
         RecyclerView recyclerView = view.findViewById(R.id.categories_list);
+        EditText enterCat = view.findViewById(R.id.textInputEditText);
+        Button addCat = view.findViewById(R.id.addButton);
 
         // Initialize contacts
-        HashSet<String> hashset = new HashSet<String>();
-        hashset.add("Ajslkfjslkfj");
-        hashset.add("Bjslkfjslkfj");
-        hashset.add("Cjslkfjslkfj");
-        hashset.add("Djslkfjslkfj");
-        hashset.add("Ejslkfjslkfj");
-        hashset.add("Fjslkfjslkfj");
+
+        Environment env = Environment.of((AppCompatActivity) getActivity());
+        CategorySet categorySet = env.getRecipeCategories();
+        HashSet<String> hashset = categorySet.getCategories();
+
+
+
 
         // Create adapter passing in the sample user data
         CategoriesSelectRecViewAdapter adapter = new CategoriesSelectRecViewAdapter(hashset);
@@ -53,6 +72,39 @@ public class CategoriesSelect extends Fragment {
         // Set layout manager to position the items
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
+        adapter.setOnItemClickListener(new CategoriesSelectRecViewAdapter.ClickListener(){
+
+            @Override
+            public void onItemClick(int position, View v) {
+                Log.e("CatSelect", String.valueOf(position));
+                csl.send(adapter.get(position));
+                dismiss();
+            }
+
+            @Override
+            public void onItemLongClick(int position, View v) {
+                Log.e("CatSelect", String.valueOf(position));
+                dismiss();
+            }
+        });
+
+        addCat.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                String entered = enterCat.getText().toString();
+                if (!hashset.contains(entered)) {
+                    hashset.add(enterCat.getText().toString());
+                    categorySet.addCategory(enterCat.getText().toString());
+                    csl.send(enterCat.getText().toString());
+                    categorySet.commit();
+                    dismiss();
+                } else {
+                    Toast.makeText(getContext(), entered + " already exists", Toast.LENGTH_LONG).show();
+
+                }
+            }
+        });
 
         // Inflate the layout for this fragment
         return view;
@@ -67,4 +119,15 @@ public class CategoriesSelect extends Fragment {
 
 
     }
+
+    @Override
+    public void onAttach(Context context) {
+        try {
+            csl = (CatSelectListener) getTargetFragment();
+        } catch (Exception e) {
+            Log.e("CategoriesSelect", e.getMessage());
+        }
+        super.onAttach(context);
+    }
+
 }

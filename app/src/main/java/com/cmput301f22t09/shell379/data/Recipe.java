@@ -1,7 +1,8 @@
 package com.cmput301f22t09.shell379.data;
 
 import android.graphics.Bitmap;
-import android.media.Image;
+
+import com.cmput301f22t09.shell379.data.vm.collections.FullyEquable;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -95,4 +96,13 @@ public class Recipe implements Serializable {
     public void addIngredients(ArrayList<Ingredient> newIngredients) {
         ingredients.addAll(newIngredients);
     }
+
+//    public boolean fullEquals(Recipe R) {
+//        if (R.getTitle() == title && R.getPreparationTime() == preparationTime && R.getCategory() == category && R.getComments() == comments
+//                && R.getPhotograph() == photograph && R.getServings() == servings) {
+//            return true;
+//        }
+//        return false;
+//    }
+
 }

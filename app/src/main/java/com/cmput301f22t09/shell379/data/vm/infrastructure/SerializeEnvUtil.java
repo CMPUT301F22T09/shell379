@@ -1,6 +1,7 @@
 package com.cmput301f22t09.shell379.data.vm.infrastructure;
 
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -32,14 +33,25 @@ public class SerializeEnvUtil {
     public static Environment deserialize(HashMap<String, String> data) {
         Environment env = new Environment();
         try {
-            env.getIngredients().setList((ArrayList<Ingredient>) SerializeUtil.deserialize(data.get("ingredients")));
-            env.getRecipes().setList((ArrayList<Recipe>) SerializeUtil.deserialize(data.get("recipes")));
-            env.getCart().setList((ArrayList<CartIngredient>) SerializeUtil.deserialize(data.get("cart")));
-            env.getIngredientCategories().setCategories((HashSet<String>) SerializeUtil.deserialize(data.get("ingredient_categories")));
-            env.getRecipeCategories().setCategories((HashSet<String>) SerializeUtil.deserialize(data.get("recipes_categories")));
+            Log.d("FB_BYTES", String.valueOf(data.get("ingredients").length()));
+            Log.d("FB_BYTES", String.valueOf(data.get("recipes").length()));
+            Log.d("FB_BYTES", String.valueOf(data.get("cart").length()));
+            Log.d("FB_BYTES", String.valueOf(data.get("ingredient_categories").length()));
+            Log.d("FB_BYTES", String.valueOf(data.get("recipes_categories").length()));
+            if (data.get("ingredients").length()>0)
+                env.getIngredients().setList((ArrayList<Ingredient>) SerializeUtil.deserialize(data.get("ingredients")));
+            if (data.get("recipes").length()>0)
+                env.getRecipes().setList((ArrayList<Recipe>) SerializeUtil.deserialize(data.get("recipes")));
+            if (data.get("cart").length()>0)
+                env.getCart().setList((ArrayList<CartIngredient>) SerializeUtil.deserialize(data.get("cart")));
+            if (data.get("ingredient_categories").length()>0)
+                env.getIngredientCategories().setCategories((HashSet<String>) SerializeUtil.deserialize(data.get("ingredient_categories")));
+            if (data.get("recipes_categories").length()>0)
+                env.getRecipeCategories().setCategories((HashSet<String>) SerializeUtil.deserialize(data.get("recipes_categories")));
         }
         catch (NullPointerException e) {
         }
+        Log.d("FB_OBJ_CNT", String.valueOf(env.getIngredients().getList().size()));
         return env;
     }
 }
