@@ -27,6 +27,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cmput301f22t09.shell379.R;
@@ -58,6 +59,7 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
     private EditText commentText;
     private EditText nameText;
     private NavController navController;
+    private LinearLayout tableText;
     private int SELECT_PICTURE = 200;
     private String cat;
     Environment env;
@@ -104,6 +106,7 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
         nameText = rootView.findViewById(R.id.recipe_name);
         deleteRecipeButton = rootView.findViewById(R.id.delete_recipe);
         backButton = rootView.findViewById(R.id.back_button);
+        tableText = rootView.findViewById(R.id.table_text);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,9 +138,12 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
         recipe_recyclerView = (RecyclerView) rootView.findViewById(R.id.ingredientsInRep);
         recipe_recyclerView.setLayoutManager(layoutManager);
 
-        recipeListAdapter = new IngredientInRecipeAdapter(myRecipe.getIngredients());
-        recipe_recyclerView.setAdapter(recipeListAdapter);
-        recipe_recyclerView.setItemAnimator(new DefaultItemAnimator());
+        if (myRecipe == null) {
+            tableText.setVisibility(View.INVISIBLE);
+        }
+//        recipeListAdapter = new IngredientInRecipeAdapter(myRecipe.getIngredients(), this);
+//        recipe_recyclerView.setAdapter(recipeListAdapter);
+//        recipe_recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         deleteIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -211,14 +217,14 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
             String category = cat;
             String comment = commentText.getText().toString();
             Bitmap photo = ((BitmapDrawable) previewPhoto.getDrawable()).getBitmap();
-            myRecipe = new Recipe(name, prepareTime, servings, category, comment, photo);
+            Recipe newRecipe = new Recipe(name, prepareTime, servings, category, comment, photo);
             int size = recipeListAdapter.getIngredients().size();
             if (size > 0) {
                 for (int i = 0; i < size; i++) {
-                    myRecipe.addIngredient(recipeListAdapter.getIngredients().get(i));
+                    newRecipe.addIngredient(recipeListAdapter.getIngredients().get(i));
                 }
             }
-            env.getRecipes().add(myRecipe);
+            env.getRecipes().add(newRecipe);
             env.getRecipes().commit();
             navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeListFragment());
             // TODO: SAVE RECIPE TO GLOBAL RECIPE

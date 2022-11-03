@@ -154,6 +154,7 @@
             </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/table_text"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:orientation="horizontal">
@@ -168,13 +169,13 @@
                 android:textSize="18dp" />
 
             <TextView
-                    android:id="@+id/textView2"
-                    android:layout_width="156dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_weight="1"
-                    android:textSize="18dp"
-                    android:text="Amount" />
+                android:id="@+id/textView2"
+                android:layout_width="156dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
+                android:textSize="18dp"
+                android:text="Amount" />
 
             </LinearLayout>
 
