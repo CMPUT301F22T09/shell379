@@ -18,6 +18,7 @@ import androidx.test.espresso.contrib.PickerActions;
 
 import static org.hamcrest.CoreMatchers.anything;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.junit.Assert.assertTrue;
 
 import android.view.View;
 
@@ -31,6 +32,7 @@ import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class IngredientsUITest {
@@ -60,14 +62,21 @@ public class IngredientsUITest {
         onView(withId(R.id.save_button)).perform(scrollTo(), click());
 
 
-
+        final int[] pos = {0};
         // back to fragment_ingredients_list
         onView(withId(R.id.ingredient_list_recyclerView)).check(matches(new TypeSafeMatcher<View>() {
             @Override
             protected boolean matchesSafely(View item) {
                 RecyclerView recyclerView = (RecyclerView) item;
                 IngredientAdapter ingredientAdapter = (IngredientAdapter) recyclerView.getAdapter();
-//                Ingredient ing = ingredientAdapter.getItem(ingredientAdapter.getItemCount() - 1);
+                Ingredient ing = ingredientAdapter.getIngredient(ingredientAdapter.getItemCount() - 1);
+                pos[0] = ingredientAdapter.getItemCount()-1;
+
+                assertTrue(ing.getDescription().equals("Ing1"));
+                assertTrue(ing.getLocation().equals("Pantry"));
+                assertTrue(ing.getAmount() == 34);
+                assertTrue(ing.getCategory().equals("Cat"));
+                assertTrue(ing.getBestBeforeFormatted().equals("30/12/2022"));
                 return true;
             }
 
@@ -76,6 +85,8 @@ public class IngredientsUITest {
 
             }
         }));
+
+        onView(withId(R.id.ingredient_list_recyclerView)).perform(actionOnItemAtPosition(pos[0], click()));
     }
 
 
