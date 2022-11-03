@@ -2,8 +2,6 @@ package com.cmput301f22t09.shell379.data;
 
 import android.graphics.Bitmap;
 
-import com.cmput301f22t09.shell379.data.vm.collections.FullyEquable;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 

@@ -132,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:text="Category" />
 
-            <EditText
+            <TextView
                 android:id="@+id/editCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

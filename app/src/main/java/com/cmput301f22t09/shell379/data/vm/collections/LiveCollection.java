@@ -40,15 +40,15 @@ public class LiveCollection<T> extends Commitable {
         this.lst.setValue(lst);
     }
 
-    public int getIndexByFullEquals(T target){
-        if(!(target instanceof FullyEquable)){
+    public int getIndexByPartialEquals(T target){
+        if(!(target instanceof PartiallyEquable)){
             return -1;
         }
-        FullyEquable FETarget = (FullyEquable)target;
+        PartiallyEquable FETarget = (PartiallyEquable)target;
         ArrayList<T> lstValue = lst.getValue();
         for (int i=0; i< lstValue.size(); i++) {
-            FullyEquable a = (FullyEquable) lstValue.get(i);
-            boolean fullEqual = FETarget.fullEquals(a);
+            PartiallyEquable a = (PartiallyEquable) lstValue.get(i);
+            boolean fullEqual = FETarget.partialEquals(a);
             if (fullEqual==true){
                 return i;
             }

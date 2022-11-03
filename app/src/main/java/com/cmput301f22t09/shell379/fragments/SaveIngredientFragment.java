@@ -37,10 +37,12 @@ import java.util.GregorianCalendar;
  * Use the {@link SaveIngredientFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public abstract class SaveIngredientFragment extends Fragment {
+public abstract class SaveIngredientFragment extends Fragment implements SelectPopup.SelectListener  {
     protected View rootView;
     private NavController navController;
     protected Environment envViewModel;
+    private TextView category;
+    private TextView location;
 
     public SaveIngredientFragment() {
         // Required empty public constructor
@@ -61,6 +63,8 @@ public abstract class SaveIngredientFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_save_ingredient, container, false);
+        category = ((TextView)rootView.findViewById(R.id.editCategory));
+        location = ((TextView)rootView.findViewById(R.id.editLocation));
 
         envViewModel = Environment.of((AppCompatActivity) requireActivity());
 
@@ -97,6 +101,16 @@ public abstract class SaveIngredientFragment extends Fragment {
                     }
                 }
         );
+        category.setOnClickListener(
+                new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    public void onClick(View v) {
+                        onCategoryClick();
+                    }
+                }
+        );
+
+
 //        ((EditText)rootView.findViewById(R.id.editLocation)).setOnClickListener(
 //                new View.OnClickListener() {
 //
@@ -107,6 +121,9 @@ public abstract class SaveIngredientFragment extends Fragment {
 //        );
         return rootView;
     }
+    public void send(String val){
+        category.setText(val);
+    };
 
     private void back(){
         navController.popBackStack();
@@ -139,6 +156,17 @@ public abstract class SaveIngredientFragment extends Fragment {
     private void showError(){
         TextView error = rootView.findViewById(R.id.errorText);
         error.setVisibility(View.VISIBLE);
+    }
+    private void onCategoryClick(){
+        SelectPopup.SelectListener listener = new SelectPopup.SelectListener() {
+            @Override
+            public void send(String val) {
+                category.setText(val);
+            }
+        };
+        SelectPopup selection = new SelectPopup(listener);
+        selection.show(getFragmentManager(), "");
+        selection.setTargetFragment(SaveIngredientFragment.this, 1);
     }
 
   protected abstract void writeToViewModel(Ingredient ing);

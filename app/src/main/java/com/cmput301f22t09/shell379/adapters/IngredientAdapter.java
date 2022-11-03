@@ -124,7 +124,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     public void ingredientOnClick(int i) {
        Ingredient a = ingredients.get(i);
        LiveCollection<Ingredient> ingredientCollection = envViewModel.getIngredients();
-       ingredientCollection.getIndexByFullEquals(a);
+       ingredientCollection.getList().indexOf(a);
        ingredientListener.navigateToViewIngredient(i);
     }
 }
