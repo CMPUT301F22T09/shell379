@@ -2,7 +2,9 @@ package com.cmput301f22t09.shell379.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
@@ -54,6 +56,7 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
     private Button deleteIngredientButton;
     private Button addIngredientButton;
     private Button deleteRecipeButton;
+    private Button takePhotoButton;
     private FloatingActionButton backButton;
     private EditText prepareTimeText;
     private EditText servingsText;
@@ -64,7 +67,9 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
     private int recipeIndex;
     private int SELECT_PICTURE = 200;
     private String cat;
-    Environment env;
+    private Environment env;
+    private static final int CAMERA_REQUEST = 1888;
+    private static final int MY_CAMERA_PERMISSION_CODE = 100;
 
     public EditRecipeFragment() {
         // Required empty public constructor
@@ -97,7 +102,7 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
         });
 
         env = Environment.of((AppCompatActivity) requireActivity());
-        choosePhoto = rootView.findViewById(R.id.choose_button);
+        choosePhoto = rootView.findViewById(R.id.gallery_button);
         previewPhoto = rootView.findViewById(R.id.photo);
         saveRecipeButton = rootView.findViewById(R.id.save_recipe);
         addIngredientButton = rootView.findViewById(R.id.add_ingredient);
@@ -109,6 +114,7 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
         deleteRecipeButton = rootView.findViewById(R.id.delete_recipe);
         backButton = rootView.findViewById(R.id.back_button);
         tableText = rootView.findViewById(R.id.table_text);
+        takePhotoButton = rootView.findViewById(R.id.take_photo_button);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,6 +137,15 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
             }
         });
 
+//        takePhotoButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+//
+//                }
+//            }
+//        });
+
         myRecipe = new Recipe("kongpaochicken",100L,3,"chinese","spicy");
 //        myRecipe.addIngredient(new Ingredient("appleesdadadsdawdwadsaszdazawdas",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
 //        myRecipe.addIngredient(new Ingredient("chicken",new Date(2023,9,07),"fridge",2,"1lbs","meat"));
@@ -145,6 +160,7 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
             servingsText.setText(myRecipe.getServings().toString());
             commentText.setText(myRecipe.getComments());
             nameText.setText(myRecipe.getTitle());
+            previewPhoto.setImageBitmap(myRecipe.getPhotograph());
             ingredientListAdapter = new IngredientInRecipeAdapter(myRecipe.getIngredients(), this);
         } else {
             ingredientListAdapter = new IngredientInRecipeAdapter(new ArrayList<Ingredient>(), this);
