@@ -77,6 +77,13 @@ public class RecipeSelectIngredientFragment extends Fragment {
         }
     }
 
+    /**
+     * Set up the onCreateView method to create the view object
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

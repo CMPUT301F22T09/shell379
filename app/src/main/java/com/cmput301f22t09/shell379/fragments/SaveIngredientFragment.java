@@ -120,7 +120,6 @@ public abstract class SaveIngredientFragment extends Fragment {
             DatePicker bestBeforeDatePicker = rootView.findViewById(R.id.editBestBeforeDate);
             Date bestBeforeDate = new GregorianCalendar(
                     bestBeforeDatePicker.getYear(),
-//                    bestBeforeDatePicker.getMonth() + 1,
                     bestBeforeDatePicker.getMonth(),
                     bestBeforeDatePicker.getDayOfMonth()).getTime();
             String location = ((EditText)rootView.findViewById(R.id.editLocation)).getText().toString();
