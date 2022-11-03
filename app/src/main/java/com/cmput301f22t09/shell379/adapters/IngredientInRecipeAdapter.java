@@ -9,23 +9,27 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.fragments.EditRecipeFragment;
+import com.cmput301f22t09.shell379.fragments.RecipeListFragment;
 
 import java.util.ArrayList;
 
 public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientInRecipeAdapter.IngredientInRecipeViewHolder> {
     private ArrayList<Ingredient> ingredients;
     private int selectedPos = RecyclerView.NO_POSITION;
+    private EditRecipeFragment editRecipeFragment;
 
     public class IngredientInRecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView name;
         private TextView amount;
 
-        public IngredientInRecipeViewHolder(@NonNull View itemView) {
+        public IngredientInRecipeViewHolder(@NonNull View itemView, Fragment fragment) {
             super(itemView);
             this.name = (TextView) itemView.findViewById(R.id.food_name_text);
             this.amount =  (TextView) itemView.findViewById(R.id.amount_text);
@@ -46,8 +50,9 @@ public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientIn
         }
     }
 
-    public IngredientInRecipeAdapter(ArrayList<Ingredient> data) {
+    public IngredientInRecipeAdapter(ArrayList<Ingredient> data, EditRecipeFragment editRecipeFragment) {
         this.ingredients = data;
+        this.editRecipeFragment = editRecipeFragment;
     }
 
     @NonNull
@@ -55,7 +60,7 @@ public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientIn
     public IngredientInRecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.ingredients_in_recipe_9, parent, false);
-        IngredientInRecipeViewHolder ingredientInRecipeViewHolder = new IngredientInRecipeViewHolder(view);
+        IngredientInRecipeViewHolder ingredientInRecipeViewHolder = new IngredientInRecipeViewHolder(view, editRecipeFragment);
         return ingredientInRecipeViewHolder;
     }
 
