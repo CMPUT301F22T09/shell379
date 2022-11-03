@@ -39,7 +39,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Date;
 
-public class EditRecipeFragment extends Fragment implements CategoriesSelect.CatSelectListener {
+public class EditRecipeFragment extends Fragment {
 
     protected View rootView;
     private Recipe myRecipe;

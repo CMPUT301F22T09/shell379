@@ -22,23 +22,19 @@ import android.widget.TextView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.Unit;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
 import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SaveIngredientFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public abstract class SaveIngredientFragment extends Fragment{
     protected View rootView;
     private NavController navController;
     protected Environment envViewModel;
-    private TextView category;
-    private TextView location;
+    private EditText category;
+    private EditText location;
 
     public SaveIngredientFragment() {
         // Required empty public constructor
@@ -59,8 +55,8 @@ public abstract class SaveIngredientFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_save_ingredient, container, false);
-        category = ((TextView)rootView.findViewById(R.id.editCategory));
-        location = ((TextView)rootView.findViewById(R.id.editLocation));
+        category = ((EditText)rootView.findViewById(R.id.editCategory));
+        location = ((EditText)rootView.findViewById(R.id.editLocation));
 
         envViewModel = Environment.of((AppCompatActivity) requireActivity());
 
@@ -70,7 +66,7 @@ public abstract class SaveIngredientFragment extends Fragment{
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
                 getActivity(),
                 android.R.layout.simple_spinner_item,
-                Arrays.asList("testUnit","testUnit") // NEEDS TO BE CHANGED
+                Unit.getAllValuesAsStrings()// NEEDS TO BE CHANGED
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -105,16 +101,15 @@ public abstract class SaveIngredientFragment extends Fragment{
                     }
                 }
         );
+        location.setOnClickListener(
+                new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    public void onClick(View v) {
+                        onLocationCategoryClick();
+                    }
+                }
+        );
 
-
-//        ((EditText)rootView.findViewById(R.id.editLocation)).setOnClickListener(
-//                new View.OnClickListener() {
-//
-//                    public void onClick(View v) {
-//
-//                    }
-//                }
-//        );
         return rootView;
     }
     public void send(String val){
