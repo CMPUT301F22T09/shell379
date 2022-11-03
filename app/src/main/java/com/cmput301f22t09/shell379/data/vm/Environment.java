@@ -29,6 +29,7 @@ public class Environment extends ViewModel implements Serializable {
     private ShoppingCart cart;
     private CategorySet ingredientCategories;
     private CategorySet recipeCategories;
+    private CategorySet locationCategories;
 
     public Environment() {
         ingredients = new LiveCollection<Ingredient>();
@@ -36,6 +37,7 @@ public class Environment extends ViewModel implements Serializable {
         cart = new ShoppingCart();
         ingredientCategories = new CategorySet();
         recipeCategories = new CategorySet();
+        locationCategories = new CategorySet();
     }
 
     public static Environment of(AppCompatActivity owner, Environment envPulled) {
@@ -47,6 +49,7 @@ public class Environment extends ViewModel implements Serializable {
             env.recipes.setList(envPulled.recipes.getList());
             env.ingredientCategories.setCategories(envPulled.ingredientCategories.getCategories());
             env.recipeCategories.setCategories(envPulled.recipeCategories.getCategories());
+            env.locationCategories.setCategories(envPulled.locationCategories.getCategories());
 
             setupObservers(owner, env);
         } catch (NullPointerException e) {
@@ -67,6 +70,7 @@ public class Environment extends ViewModel implements Serializable {
         observeForCommits(owner, env, env.getCart());
         observeForCommits(owner, env, env.getIngredientCategories());
         observeForCommits(owner, env, env.getRecipeCategories());
+        observeForCommits(owner, env, env.getLocationCategories());
     }
 
     private static void observeForCommits(AppCompatActivity owner, Environment env, Commitable commitable) {
@@ -99,5 +103,9 @@ public class Environment extends ViewModel implements Serializable {
 
     public CategorySet getRecipeCategories() {
         return recipeCategories;
+    }
+
+    public CategorySet getLocationCategories() {
+        return locationCategories;
     }
 }
