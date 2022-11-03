@@ -125,6 +125,7 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
         });
 
         saveRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 onSaveRecipeClicked();
@@ -228,6 +229,7 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
         ingredientListAdapter.notifyDataSetChanged();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void onSaveRecipeClicked() {
 
         try {
