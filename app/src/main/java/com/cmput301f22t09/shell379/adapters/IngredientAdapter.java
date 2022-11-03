@@ -24,6 +24,9 @@ import org.w3c.dom.Text;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder>  {
     public interface AdaptorListener{
         public void navigateToViewIngredient(int index);
@@ -33,7 +36,9 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     private Environment envViewModel;
     private AdaptorListener ingredientListener;
 
-
+    /**
+     *
+     */
     public class IngredientViewHolder extends RecyclerView.ViewHolder {
         public View getItemView(){
             return itemView;
@@ -47,6 +52,10 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         private TextView amount;
         private TextView category;
 
+        /**
+         *
+         * @param itemView
+         */
         public IngredientViewHolder(@NonNull View itemView) {
             super(itemView);
             this.ingredientName = (TextView) itemView.findViewById(R.id.ingredient_name);
@@ -57,6 +66,12 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         }
     }
 
+    /**
+     * Construct the IngredientAdapter class
+     * @param data
+     * @param envViewModel
+     * @param ingredientListener
+     */
     public IngredientAdapter(ArrayList<Ingredient> data, Environment envViewModel, AdaptorListener ingredientListener){
         this.envViewModel = envViewModel;
         this.ingredients = data;
@@ -70,6 +85,12 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 //        return ingredientViewHolder;
 //    }
 
+    /**
+     *
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @NonNull
     @Override
     public IngredientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -79,7 +100,11 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         return ingredientViewHolder;
     }
 
-
+    /**
+     *
+     * @param holder
+     * @param position
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull IngredientAdapter.IngredientViewHolder holder, int position) {
@@ -111,16 +136,28 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         });
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getItemCount() {
         return ingredients.size();
     }
 
+    /**
+     *
+     * @param newIngredient
+     */
     public void updateIngredient(ArrayList<Ingredient> newIngredient){
         ingredients = newIngredient;
         notifyDataSetChanged();
     }
 
+    /**
+     *
+     * @param i
+     */
     public void ingredientOnClick(int i) {
        Ingredient a = ingredients.get(i);
        LiveCollection<Ingredient> ingredientCollection = envViewModel.getIngredients();

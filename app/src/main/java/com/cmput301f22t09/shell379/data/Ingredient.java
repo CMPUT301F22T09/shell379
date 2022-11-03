@@ -6,7 +6,10 @@ import androidx.annotation.RequiresApi;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import java.util.Optional;
+/**
+ *
+ */
 public class Ingredient implements Serializable {
     private String description;
     private Date bestBefore;
@@ -24,6 +27,16 @@ public class Ingredient implements Serializable {
 //        this.category = category;
 //    }
 
+    /**
+     * Construct the ingredient class
+     * @param description
+     * @param bestBefore
+     * @param location
+     * @param amount
+     * @param unit
+     * @param category
+     * @throws IllegalArgumentException
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public Ingredient(String description, Date bestBefore, String location, Integer amount, String unit, String category) throws IllegalArgumentException {
         this.description = description;
@@ -59,58 +72,116 @@ public class Ingredient implements Serializable {
         this.category = category;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     *
+     * @param description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     *
+     * @return
+     */
     public Date getBestBefore() {
         return bestBefore;
     }
 
+    /**
+     *
+     * @param bestBefore
+     */
     public void setBestBefore(Date bestBefore) {
         this.bestBefore = bestBefore;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getBestBeforeFormatted() {
         SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
         return simpleDate.format(getBestBefore());
     }
+
+    /**
+     *
+     * @return
+     */
     public String getLocation() {
         return location;
     }
 
+    /**
+     *
+     * @param location
+     */
     public void setLocation(String location) {
         this.location = location;
     }
 
+    /**
+     *
+     * @return
+     */
     public Integer getAmount() {
         return amount;
     }
 
+    /**
+     *
+     * @param amount
+     */
     public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getUnit() {
         return unit;
     }
 
+    /**
+     *
+     * @param unit
+     */
     public void setUnit(String unit) {
         this.unit = unit;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCategory() {
         return category;
     }
 
+    /**
+     *
+     * @param category
+     */
     public void setCategory(String category) {
         this.category = category;
     }
 
+     /**
+     *
+     * @param a
+     * @return
+     */
     public boolean equals(Object o){
         Ingredient ing = (Ingredient) o;
         if (ing.getDescription() == ing.description){
