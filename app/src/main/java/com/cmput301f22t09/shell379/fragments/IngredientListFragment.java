@@ -116,6 +116,14 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
                 }
         );
 
+        ((Button)rootView.findViewById(R.id.floatingActionButton5)).setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        navController.popBackStack();
+                    }
+                }
+        );
+
         ingredientList = envViewModel.getIngredients().getList();
 //        testList.add(new Ingredient("Milk", new Date(2023,9,10), "Fridge",222,"1L","Diary"));
 //        testList.add(new Ingredient("Water", new Date(2023,9,11),"Counter",22,"2L","Liquid"));
