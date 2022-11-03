@@ -22,6 +22,9 @@
         android:label="fragment_recipe_list"
         tools:layout="@layout/fragment_recipe_list" >
         <action
+            android:id="@+id/action_recipeListFragment_to_mainMenuFragment"
+            app:destination="@id/mainMenuFragment"/>
+        <action
             android:id="@+id/action_recipeListFragment_to_edit_recipe"
             app:destination="@id/edit_recipe" />
     </fragment>
@@ -36,6 +39,7 @@
         <action
             android:id="@+id/action_mainMenuFragment_to_recipeListFragment"
             app:destination="@id/recipeListFragment" />
+
         <action
             android:id="@+id/action_mainMenuFragment_to_shoppingListFragment"
             app:destination="@id/shoppingListFragment" />

@@ -85,7 +85,7 @@ public class RecipeListFragment extends Fragment {
             }
         };
 
-        // Implement the button to back to previous page
+//      //   Implement the button to back to previous page
 //        ((ImageView)rootView.findViewById(R.id.floatingActionButton6)).setOnClickListener(
 //                new View.OnClickListener() {
 //                    public void onClick(View v) {
@@ -111,13 +111,13 @@ public class RecipeListFragment extends Fragment {
             }
         });
 
-// to-do
-//        backButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                navController.navigate(RecipeListFragmentDirections.actionRecipeListFragmentToEditRecipe());
-//            }
-//        });
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(RecipeListFragmentDirections.actionRecipeListFragmentToMainMenuFragment());
+            }
+        });
 
         return rootView;
     }

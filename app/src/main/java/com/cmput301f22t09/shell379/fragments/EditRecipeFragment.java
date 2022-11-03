@@ -156,6 +156,7 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
             @Override
             public void onClick(View view) {
                 navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeSelectIngredientFragment());
+
             }
         });
 
