@@ -161,7 +161,9 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
             servingsText.setText(myRecipe.getServings().toString());
             commentText.setText(myRecipe.getComments());
             nameText.setText(myRecipe.getTitle());
-            previewPhoto.setImageBitmap(myRecipe.getPhotograph());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                previewPhoto.setImageBitmap(myRecipe.getPhotograph());
+            }
             ingredientListAdapter = new IngredientInRecipeAdapter(myRecipe.getIngredients(), this);
         } else {
             ingredientListAdapter = new IngredientInRecipeAdapter(new ArrayList<Ingredient>(), this);
