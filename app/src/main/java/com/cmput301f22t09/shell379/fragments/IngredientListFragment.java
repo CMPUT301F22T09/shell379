@@ -19,8 +19,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.IngredientAdapter;
@@ -28,6 +30,7 @@ import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 //import java.util.Observer;
 
@@ -108,6 +111,16 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_ingredient_list, container, false);
+
+        // Implement the spinner option to sort the ingredient list
+        Spinner spinner = (Spinner) rootView.findViewById(R.id.ingredient_sort_spinner);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
+                getActivity(),
+                android.R.layout.simple_spinner_item,
+                Arrays.asList("testUnit","testUnit") // NEEDS TO BE CHANGED
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
 
         ((ImageView)rootView.findViewById(R.id.floatingActionButton5)).setOnClickListener(
                 new View.OnClickListener() {
