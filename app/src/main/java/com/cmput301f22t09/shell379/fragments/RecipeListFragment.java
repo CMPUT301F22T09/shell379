@@ -83,15 +83,6 @@ public class RecipeListFragment extends Fragment {
         };
         env.getRecipes().getListLive().observe(getViewLifecycleOwner(), recipeObserver);
 
-//        recipeList = env.getRecipes().getRecipes();
-//
-//        // TODO: This is temporary! Most likely replace this with data from ViewModel later...
-//        recipeList = new ArrayList<Recipe>();
-//        recipeList.add(new Recipe("Pizza", 36000L, 5, "Italian", "This is a Pizza"));
-//        recipeList.add(new Recipe("Fried Rice", 26000L, 3, "Asian", "This is fried rice"));
-//        recipeList.add(new Recipe("Soup", 26000L, 1, "Yes", "This is soup"));
-
-
         layoutManager = new LinearLayoutManager(this.getActivity());
         recipe_recyclerView = (RecyclerView) rootView.findViewById(R.id.recipe_list_recyclerView);
         recipe_recyclerView.setLayoutManager(layoutManager);
@@ -107,11 +98,6 @@ public class RecipeListFragment extends Fragment {
                 navController.navigate(RecipeListFragmentDirections.actionRecipeListFragmentToEditRecipe());
             }
         });
-
-        // TODO: this is temporary!
-//        Recipe pizzaRecipe = new Recipe("Pizza", 36000L, 5, "Italian", "This is a Pizza");
-//        env.getRecipes().add(pizzaRecipe);
-//        env.getRecipes().commit();
 
         return rootView;
     }

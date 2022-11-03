@@ -67,12 +67,15 @@
     </fragment>
     <fragment
         android:id="@+id/edit_recipe"
-        android:name="com.cmput301f22t09.shell379.fragments.Edit_recipe"
+        android:name="com.cmput301f22t09.shell379.fragments.EditRecipeFragment"
         android:label="fragment_edit_recipe"
         tools:layout="@layout/fragment_edit_recipe_9" >
         <action
             android:id="@+id/action_edit_recipe_to_recipeSelectIngredientFragment"
             app:destination="@id/recipeSelectIngredientFragment" />
+        <action
+            android:id="@+id/action_edit_recipe_to_recipeListFragment"
+            app:destination="@id/recipeListFragment" />
     </fragment>
     <fragment
         android:id="@+id/createIngredientFragment"
