@@ -26,6 +26,7 @@ public class SerializeEnvUtil {
         data.put("cart", SerializeUtil.serialize(env.getCart().getList()));
         data.put("ingredient_categories", SerializeUtil.serialize(env.getIngredientCategories()));
         data.put("recipes_categories", SerializeUtil.serialize(env.getRecipeCategories()));
+        data.put("loc_categories", SerializeUtil.serialize(env.getLocationCategories()));
         return data;
     }
 
@@ -48,6 +49,8 @@ public class SerializeEnvUtil {
                 env.getIngredientCategories().setCategories((HashSet<String>) SerializeUtil.deserialize(data.get("ingredient_categories")));
             if (data.get("recipes_categories").length()>0)
                 env.getRecipeCategories().setCategories((HashSet<String>) SerializeUtil.deserialize(data.get("recipes_categories")));
+            if (data.get("loc_categories").length()>0)
+                env.getLocationCategories().setCategories((HashSet<String>) SerializeUtil.deserialize(data.get("loc_categories")));
         }
         catch (NullPointerException e) {
         }

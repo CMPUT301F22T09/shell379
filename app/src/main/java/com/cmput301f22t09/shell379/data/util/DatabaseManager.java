@@ -63,6 +63,7 @@ public class DatabaseManager {
                     data.put("cart", (String) value.get("cart"));
                     data.put("ingredient_categories", (String) value.get("ingredient_categories"));
                     data.put("recipes_categories", (String) value.get("recipes_categories"));
+                    data.put("loc_categories", (String) value.get("loc_categories"));
                     instance = SerializeEnvUtil.deserialize(data);
                     Environment.of(owner, instance);
                 }
