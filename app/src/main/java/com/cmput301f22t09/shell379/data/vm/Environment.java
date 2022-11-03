@@ -70,6 +70,7 @@ public class Environment extends ViewModel implements Serializable {
         observeForCommits(owner, env, env.getCart());
         observeForCommits(owner, env, env.getIngredientCategories());
         observeForCommits(owner, env, env.getRecipeCategories());
+        observeForCommits(owner, env, env.getLocationCategories());
     }
 
     private static void observeForCommits(AppCompatActivity owner, Environment env, Commitable commitable) {
