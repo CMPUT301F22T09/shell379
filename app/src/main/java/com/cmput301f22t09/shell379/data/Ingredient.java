@@ -72,7 +72,7 @@ public class Ingredient implements Serializable {
     }
 
     /**
-     *
+     * Get the description of ingredient
      * @return
      */
     public String getDescription() {
@@ -80,7 +80,7 @@ public class Ingredient implements Serializable {
     }
 
     /**
-     *
+     * Set the description of ingredient
      * @param description
      */
     public void setDescription(String description) {
@@ -96,7 +96,7 @@ public class Ingredient implements Serializable {
     }
 
     /**
-     *
+     * Set the best before date of ingredient
      * @param bestBefore
      */
     public void setBestBefore(Date bestBefore) {
@@ -104,7 +104,7 @@ public class Ingredient implements Serializable {
     }
 
     /**
-     *
+     * Get the best before date of ingredient
      * @return
      */
     public String getBestBeforeFormatted() {
@@ -113,7 +113,7 @@ public class Ingredient implements Serializable {
     }
 
     /**
-     *
+     * Get the location of ingredient
      * @return
      */
     public String getLocation() {
@@ -121,7 +121,7 @@ public class Ingredient implements Serializable {
     }
 
     /**
-     *
+     * Set the location of ingredient
      * @param location
      */
     public void setLocation(String location) {
@@ -129,7 +129,7 @@ public class Ingredient implements Serializable {
     }
 
     /**
-     *
+     * Get the amount of ingredient
      * @return
      */
     public Integer getAmount() {
@@ -137,7 +137,7 @@ public class Ingredient implements Serializable {
     }
 
     /**
-     *
+     * Set the amount of ingredient
      * @param amount
      */
     public void setAmount(Integer amount) {
@@ -145,7 +145,7 @@ public class Ingredient implements Serializable {
     }
 
     /**
-     *
+     * Get the unit of ingredient
      * @return
      */
     public String getUnit() {
@@ -153,7 +153,7 @@ public class Ingredient implements Serializable {
     }
 
     /**
-     *
+     * Set the unit of ingredient
      * @param unit
      */
     public void setUnit(String unit) {
@@ -161,7 +161,7 @@ public class Ingredient implements Serializable {
     }
 
     /**
-     *
+     * Get the category of ingredient
      * @return
      */
     public String getCategory() {
@@ -169,7 +169,7 @@ public class Ingredient implements Serializable {
     }
 
     /**
-     *
+     * Set the category of ingredient
      * @param category
      */
     public void setCategory(String category) {
