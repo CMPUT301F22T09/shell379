@@ -35,6 +35,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     private ArrayList<Ingredient> ingredients;
     private Environment envViewModel;
     private AdaptorListener ingredientListener;
+    private int ingredientIndex;
 
     /**
      *
@@ -163,6 +164,12 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
        LiveCollection<Ingredient> ingredientCollection = envViewModel.getIngredients();
        ingredientCollection.getIndexByFullEquals(a);
        ingredientListener.navigateToViewIngredient(i);
+    }
+
+
+    public Ingredient getIngredient(int index){
+        Ingredient ingredient = ingredients.get(index);
+        return ingredient;
     }
 }
 
