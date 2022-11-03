@@ -14,6 +14,7 @@ import android.net.Uri;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -155,7 +156,6 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
         recipeIndex = getArguments().getInt("recipeIndex");
         if (recipeIndex > -1 && !env.getRecipes().getList().isEmpty()) {
             myRecipe = env.getRecipes().getList().get(recipeIndex);
-//            previewPhoto = rootView.findViewById(R.id.photo);
             send(myRecipe.getCategory());
             prepareTimeText.setText(myRecipe.getPreparationTime().toString());
             servingsText.setText(myRecipe.getServings().toString());
@@ -193,7 +193,7 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
         addIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeSelectIngredientFragment());
+                navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeSelectIngredientFragment(recipeIndex));
             }
         });
 
@@ -256,6 +256,7 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
             int servings = Integer.parseInt(servingsText.getText().toString());
             String category = cat;
             String comment = commentText.getText().toString();
+//            Bitmap myPhoto = (ResourcesCompat.getDrawable(this.resources, (BitmapDrawable) previewPhoto.getDrawable(), null)).toBitmap();
             Bitmap photo = ((BitmapDrawable) previewPhoto.getDrawable()).getBitmap();
             Recipe newRecipe = new Recipe(name, prepareTime, servings, category, comment, photo);
             int size = ingredientListAdapter.getIngredients().size();
