@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,6 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -26,8 +24,6 @@ import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -37,7 +33,7 @@ import java.util.GregorianCalendar;
  * Use the {@link SaveIngredientFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public abstract class SaveIngredientFragment extends Fragment implements SelectPopup.SelectListener  {
+public abstract class SaveIngredientFragment extends Fragment{
     protected View rootView;
     private NavController navController;
     protected Environment envViewModel;
@@ -105,7 +101,7 @@ public abstract class SaveIngredientFragment extends Fragment implements SelectP
                 new View.OnClickListener() {
                     @RequiresApi(api = Build.VERSION_CODES.N)
                     public void onClick(View v) {
-                        onCategoryClick();
+                        onIngCategoryClick();
                     }
                 }
         );
@@ -157,14 +153,25 @@ public abstract class SaveIngredientFragment extends Fragment implements SelectP
         TextView error = rootView.findViewById(R.id.errorText);
         error.setVisibility(View.VISIBLE);
     }
-    private void onCategoryClick(){
-        SelectPopup.SelectListener listener = new SelectPopup.SelectListener() {
+    private void onIngCategoryClick(){
+        CategorySelectPopup.SelectListener listener = new CategorySelectPopup.SelectListener() {
             @Override
             public void send(String val) {
                 category.setText(val);
             }
         };
-        SelectPopup selection = new SelectPopup(listener);
+        IngredientCategorySelectPopup selection = new IngredientCategorySelectPopup(listener);
+        selection.show(getFragmentManager(), "");
+        selection.setTargetFragment(SaveIngredientFragment.this, 1);
+    }
+    private void onLocationCategoryClick(){
+        CategorySelectPopup.SelectListener listener = new CategorySelectPopup.SelectListener() {
+            @Override
+            public void send(String val) {
+                location.setText(val);
+            }
+        };
+        LocationCategorySelectPopup selection = new LocationCategorySelectPopup(listener);
         selection.show(getFragmentManager(), "");
         selection.setTargetFragment(SaveIngredientFragment.this, 1);
     }

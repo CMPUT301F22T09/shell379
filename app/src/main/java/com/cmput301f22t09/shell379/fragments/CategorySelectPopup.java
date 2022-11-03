@@ -33,18 +33,17 @@ import java.util.HashSet;
  * Use the {@link CategoriesSelect#} factory method to
  * create an instance of this fragment.
  */
-public class SelectPopup extends DialogFragment {
-
+public abstract class CategorySelectPopup extends DialogFragment {
     public interface SelectListener {
         void send(String val);
     }
     private  SelectListener csl;
 
-    public SelectPopup() {
+    public CategorySelectPopup() {
         // Required empty public constructor
     }
 
-    public SelectPopup(SelectListener listener) {
+    public CategorySelectPopup(SelectListener listener) {
         csl  = listener;
     }
 
@@ -61,7 +60,7 @@ public class SelectPopup extends DialogFragment {
         // Initialize contacts
 
         Environment env = Environment.of((AppCompatActivity) getActivity());
-        CategorySet categorySet = env.getRecipeCategories();
+        CategorySet categorySet = getCollection(env);
         HashSet<String> hashset = categorySet.getCategories();
 
 
@@ -118,6 +117,8 @@ public class SelectPopup extends DialogFragment {
         super.onCreate(savedInstanceState);
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_categories_select, null);
     }
+
+    protected abstract CategorySet getCollection(Environment env);
 
     @Override
     public void onAttach(Context context) {
