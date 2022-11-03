@@ -24,9 +24,9 @@ public class SerializeEnvUtil {
         data.put("ingredients", SerializeUtil.serialize(env.getIngredients().getList()));
         data.put("recipes", SerializeUtil.serialize(env.getRecipes().getList()));
         data.put("cart", SerializeUtil.serialize(env.getCart().getList()));
-        data.put("ingredient_categories", SerializeUtil.serialize(env.getIngredientCategories()));
-        data.put("recipes_categories", SerializeUtil.serialize(env.getRecipeCategories()));
-        data.put("loc_categories", SerializeUtil.serialize(env.getLocationCategories()));
+        data.put("ingredient_categories", SerializeUtil.serialize(env.getIngredientCategories().getCategories()));
+        data.put("recipes_categories", SerializeUtil.serialize(env.getRecipeCategories().getCategories()));
+        data.put("loc_categories", SerializeUtil.serialize(env.getLocationCategories().getCategories()));
         return data;
     }
 
