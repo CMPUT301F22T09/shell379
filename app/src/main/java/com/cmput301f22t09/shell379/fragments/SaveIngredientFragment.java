@@ -125,7 +125,7 @@ public abstract class SaveIngredientFragment extends Fragment {
                     bestBeforeDatePicker.getDayOfMonth()).getTime();
             String location = ((EditText)rootView.findViewById(R.id.editLocation)).getText().toString();
             int amount = Integer.parseInt(((EditText)rootView.findViewById(R.id.editAmount)).getText().toString());
-            String category = ((EditText)rootView.findViewById(R.id.editLocation)).getText().toString();
+            String category = ((EditText)rootView.findViewById(R.id.editCategory)).getText().toString();
             String unit = ((Spinner)rootView.findViewById(R.id.editUnit)).getSelectedItem().toString();
 
             // validate
