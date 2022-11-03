@@ -21,6 +21,7 @@ import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.RecipeListAdapter;
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.Environment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -37,8 +38,9 @@ public class RecipeListFragment extends Fragment {
     RecyclerView.LayoutManager layoutManager;
     RecipeListAdapter recipeListAdapter;
     Button addNewRecipe;
-    private NavController navController;
     Environment env;
+    private NavController navController;
+    private FloatingActionButton backButton;
 
     public RecipeListFragment() {
         // Required empty public constructor
@@ -70,7 +72,7 @@ public class RecipeListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_recipe_list, container, false);
 
         addNewRecipe = rootView.findViewById(R.id.recipe_list_newButton);
-
+        backButton = rootView.findViewById(R.id.floatingActionButton6);
         env = Environment.of((AppCompatActivity) this.getActivity());
 
         // TODO: add same source as ingredient observer
@@ -84,13 +86,13 @@ public class RecipeListFragment extends Fragment {
         };
 
         // Implement the button to back to previous page
-        ((ImageView)rootView.findViewById(R.id.floatingActionButton6)).setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        back();
-                    }
-                }
-        );
+//        ((ImageView)rootView.findViewById(R.id.floatingActionButton6)).setOnClickListener(
+//                new View.OnClickListener() {
+//                    public void onClick(View v) {
+//                        back();
+//                    }
+//                }
+//        );
         env.getRecipes().getListLive().observe(getViewLifecycleOwner(), recipeObserver);
 
         layoutManager = new LinearLayoutManager(this.getActivity());
@@ -109,13 +111,21 @@ public class RecipeListFragment extends Fragment {
             }
         });
 
+// to-do
+//        backButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                navController.navigate(RecipeListFragmentDirections.actionRecipeListFragmentToEditRecipe());
+//            }
+//        });
+
         return rootView;
     }
 
-    /**
-     * Implement the option to go back to previous page
-     */
-    private void back(){
-        navController.popBackStack();
-    }
+//    /**
+//     * Implement the option to go back to previous page
+//     */
+//    private void back(){
+//        navController.popBackStack();
+//    }
 }
