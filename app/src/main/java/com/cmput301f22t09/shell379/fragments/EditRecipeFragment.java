@@ -37,6 +37,7 @@ import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class EditRecipeFragment extends Fragment implements CategoriesSelect.CatSelectListener {
@@ -45,7 +46,7 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
     private Recipe myRecipe;
     private RecyclerView recipe_recyclerView;
     private RecyclerView.LayoutManager layoutManager;
-    private IngredientInRecipeAdapter recipeListAdapter;
+    private IngredientInRecipeAdapter ingredientListAdapter;
     private Button choosePhoto;
     private Button catSelect;
     private ImageView previewPhoto;
@@ -60,6 +61,7 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
     private EditText nameText;
     private NavController navController;
     private LinearLayout tableText;
+    private int recipeIndex;
     private int SELECT_PICTURE = 200;
     private String cat;
     Environment env;
@@ -123,32 +125,50 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
         });
 
         saveRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
                 onSaveRecipeClicked();
             }
         });
 
-//        myRecipe = new Recipe("kongpaochicken",100L,3,"chinese","spicy");
+        myRecipe = new Recipe("kongpaochicken",100L,3,"chinese","spicy");
 //        myRecipe.addIngredient(new Ingredient("appleesdadadsdawdwadsaszdazawdas",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
 //        myRecipe.addIngredient(new Ingredient("chicken",new Date(2023,9,07),"fridge",2,"1lbs","meat"));
 //        myRecipe.addIngredient(new Ingredient("banana",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
+
+        recipeIndex = getArguments().getInt("recipeIndex");
+        if (recipeIndex > -1 && !env.getRecipes().getList().isEmpty()) {
+            myRecipe = env.getRecipes().getList().get(recipeIndex);
+//            previewPhoto = rootView.findViewById(R.id.photo);
+            send(myRecipe.getCategory());
+            prepareTimeText.setText(myRecipe.getPreparationTime().toString());
+            servingsText.setText(myRecipe.getServings().toString());
+            commentText.setText(myRecipe.getComments());
+            nameText.setText(myRecipe.getTitle());
+            ingredientListAdapter = new IngredientInRecipeAdapter(myRecipe.getIngredients(), this);
+        } else {
+            ingredientListAdapter = new IngredientInRecipeAdapter(new ArrayList<Ingredient>(), this);
+        }
 
         layoutManager = new LinearLayoutManager(this.getActivity());
         recipe_recyclerView = (RecyclerView) rootView.findViewById(R.id.ingredientsInRep);
         recipe_recyclerView.setLayoutManager(layoutManager);
 
-        if (myRecipe == null) {
+        if (myRecipe == null || myRecipe.getIngredients().isEmpty()) {
             tableText.setVisibility(View.INVISIBLE);
         }
-//        recipeListAdapter = new IngredientInRecipeAdapter(myRecipe.getIngredients(), this);
-//        recipe_recyclerView.setAdapter(recipeListAdapter);
-//        recipe_recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        recipe_recyclerView.setAdapter(ingredientListAdapter);
+        recipe_recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         deleteIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                deleteIngredient(recipeListAdapter.getSelectedPos());
+                int position = ingredientListAdapter.getSelectedPos();
+                if (position > -1) {
+                    deleteIngredient(position);
+                }
             }
         });
 
@@ -205,11 +225,13 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
     }
 
     public void deleteIngredient(int pos) {
-        recipeListAdapter.removeIngredient(pos);
-        recipeListAdapter.notifyDataSetChanged();
+        ingredientListAdapter.removeIngredient(pos);
+        ingredientListAdapter.notifyDataSetChanged();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public void onSaveRecipeClicked() {
+
         try {
             String name = nameText.getText().toString();
             Long prepareTime = Long.parseLong(prepareTimeText.getText().toString());
@@ -218,33 +240,43 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
             String comment = commentText.getText().toString();
             Bitmap photo = ((BitmapDrawable) previewPhoto.getDrawable()).getBitmap();
             Recipe newRecipe = new Recipe(name, prepareTime, servings, category, comment, photo);
-            int size = recipeListAdapter.getIngredients().size();
+            int size = ingredientListAdapter.getIngredients().size();
             if (size > 0) {
                 for (int i = 0; i < size; i++) {
-                    newRecipe.addIngredient(recipeListAdapter.getIngredients().get(i));
+                    newRecipe.addIngredient(ingredientListAdapter.getIngredients().get(i));
                 }
             }
-            env.getRecipes().add(newRecipe);
+
+
+            if (recipeIndex > -1 && !env.getRecipes().getList().isEmpty()) {
+                saveEditedRecipe(newRecipe);
+            } else {
+                env.getRecipes().add(newRecipe);
+            }
+
             env.getRecipes().commit();
             navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeListFragment());
-            // TODO: SAVE RECIPE TO GLOBAL RECIPE
         } catch(Exception E) {
             showError();
         }
-//        for (int i = 0; i < size; i++) {
-//            Log.e("debug", newRecipe.getIngredients().get(i).getDescription());
-//        }
-        // TODO: ADD TO THE LIST OF RECIPES
+    }
+
+    protected void saveEditedRecipe(Recipe r) {
+        env.getRecipes().getList().set(recipeIndex,r);
     }
 
     public void deleteRecipeAction() {
+        if (recipeIndex > -1 && !env.getRecipes().getList().isEmpty()) {
+            Log.e("index", Integer.toString(recipeIndex));
+            env.getRecipes().getList().remove(recipeIndex);
+            env.getRecipes().commit();
+        }
         navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeListFragment());
-        // TODO: implement fully equals 
     }
 
     @Override
     public void send(String cat) {
-        Log.e("EditRecipe", cat);
+//        Log.e("EditRecipe", cat);
         catSelect.setAllCaps(false);
         catSelect.setText(cat);
         catSelect.setGravity(Gravity.LEFT);
