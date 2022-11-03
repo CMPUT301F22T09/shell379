@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.RecipeListAdapter;
@@ -81,6 +82,15 @@ public class RecipeListFragment extends Fragment {
                 }
             }
         };
+
+        // Implement the button to back to previous page
+        ((ImageView)rootView.findViewById(R.id.floatingActionButton6)).setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        back();
+                    }
+                }
+        );
         env.getRecipes().getListLive().observe(getViewLifecycleOwner(), recipeObserver);
 
         layoutManager = new LinearLayoutManager(this.getActivity());
@@ -100,5 +110,12 @@ public class RecipeListFragment extends Fragment {
         });
 
         return rootView;
+    }
+
+    /**
+     * Implement the option to go back to previous page
+     */
+    private void back(){
+        navController.popBackStack();
     }
 }
