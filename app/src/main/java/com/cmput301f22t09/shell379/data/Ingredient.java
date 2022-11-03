@@ -2,6 +2,7 @@ package com.cmput301f22t09.shell379.data;
 
 import android.os.Build;
 import androidx.annotation.RequiresApi;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -176,18 +177,19 @@ public class Ingredient implements Serializable {
         this.category = category;
     }
 
-    /**
+     /**
      *
      * @param a
      * @return
      */
-    public boolean getFullEqual(Ingredient a){
-        if (a.getDescription() == a.description){
-            if (a.getCategory()==a.category){
-                if (a.getLocation() == a.location){
-                    if (a.getBestBefore().equals(bestBefore)){
-                        if (a.getAmount()==a.amount){
-                            if (a.getUnit()==a.unit){
+    public boolean equals(Object o){
+        Ingredient ing = (Ingredient) o;
+        if (ing.getDescription() == ing.description){
+            if (ing.getCategory()==ing.category){
+                if (ing.getLocation() == ing.location){
+                    if (ing.getBestBefore().equals(bestBefore)){
+                        if (ing.getAmount()==ing.amount){
+                            if (ing.getUnit()==ing.unit){
                                 return true;
                             }
                         }
