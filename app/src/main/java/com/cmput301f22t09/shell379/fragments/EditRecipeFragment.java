@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.net.Uri;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -30,15 +31,11 @@ import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.IngredientInRecipeAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
+import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.Date;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link EditRecipeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class EditRecipeFragment extends Fragment implements CategoriesSelect.CatSelectListener {
 
     protected View rootView;
@@ -60,6 +57,7 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
     private NavController navController;
     private int SELECT_PICTURE = 200;
     private String cat;
+    Environment env;
 
     public EditRecipeFragment() {
         // Required empty public constructor
@@ -91,6 +89,7 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
             }
         });
 
+        env = Environment.of((AppCompatActivity) requireActivity());
         choosePhoto = rootView.findViewById(R.id.choose_button);
         previewPhoto = rootView.findViewById(R.id.photo);
         saveRecipeButton = rootView.findViewById(R.id.save_recipe);
@@ -124,10 +123,10 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
             }
         });
 
-        myRecipe = new Recipe("kongpaochicken",100L,3,"chinese","spicy");
-        myRecipe.addIngredient(new Ingredient("appleesdadadsdawdwadsaszdazawdas",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
-        myRecipe.addIngredient(new Ingredient("chicken",new Date(2023,9,07),"fridge",2,"1lbs","meat"));
-        myRecipe.addIngredient(new Ingredient("banana",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
+//        myRecipe = new Recipe("kongpaochicken",100L,3,"chinese","spicy");
+//        myRecipe.addIngredient(new Ingredient("appleesdadadsdawdwadsaszdazawdas",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
+//        myRecipe.addIngredient(new Ingredient("chicken",new Date(2023,9,07),"fridge",2,"1lbs","meat"));
+//        myRecipe.addIngredient(new Ingredient("banana",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
 
         layoutManager = new LinearLayoutManager(this.getActivity());
         recipe_recyclerView = (RecyclerView) rootView.findViewById(R.id.ingredientsInRep);
@@ -147,7 +146,6 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
         addIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                System.out.println("Add button clicked!");
                 navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeSelectIngredientFragment());
             }
         });
@@ -155,8 +153,7 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
         deleteRecipeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeListFragment());
-                // TODO: SAVE THE RECIPE
+                deleteRecipeAction();
             }
         });
 
@@ -211,24 +208,29 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
             String category = cat;
             String comment = commentText.getText().toString();
             Bitmap photo = ((BitmapDrawable) previewPhoto.getDrawable()).getBitmap();
-            Recipe newRecipe = new Recipe(name, prepareTime, servings, category, comment, photo);
+            myRecipe = new Recipe(name, prepareTime, servings, category, comment, photo);
             int size = recipeListAdapter.getIngredients().size();
             if (size > 0) {
                 for (int i = 0; i < size; i++) {
-                    newRecipe.addIngredient(recipeListAdapter.getIngredients().get(i));
+                    myRecipe.addIngredient(recipeListAdapter.getIngredients().get(i));
                 }
             }
+            env.getRecipes().add(myRecipe);
+            env.getRecipes().commit();
             navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeListFragment());
             // TODO: SAVE RECIPE TO GLOBAL RECIPE
         } catch(Exception E) {
             showError();
         }
-
-
 //        for (int i = 0; i < size; i++) {
 //            Log.e("debug", newRecipe.getIngredients().get(i).getDescription());
 //        }
         // TODO: ADD TO THE LIST OF RECIPES
+    }
+
+    public void deleteRecipeAction() {
+        navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeListFragment());
+        // TODO: implement fully equals 
     }
 
     @Override
