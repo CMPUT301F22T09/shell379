@@ -9,6 +9,9 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStore;
+import androidx.lifecycle.ViewModelStoreOwner;
+import androidx.lifecycle.ViewTreeViewModelStoreOwner;
 
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
@@ -26,6 +29,7 @@ public class Environment extends ViewModel implements Serializable {
     private ShoppingCart cart;
     private CategorySet ingredientCategories;
     private CategorySet recipeCategories;
+    private CategorySet locationCategories;
 
     public Environment() {
         ingredients = new LiveCollection<Ingredient>();
@@ -33,20 +37,23 @@ public class Environment extends ViewModel implements Serializable {
         cart = new ShoppingCart();
         ingredientCategories = new CategorySet();
         recipeCategories = new CategorySet();
+        locationCategories = new CategorySet();
     }
 
     public static Environment of(AppCompatActivity owner, Environment envPulled) {
-        Environment env = new ViewModelProvider(owner).get(Environment.class);;
+        Environment env = new ViewModelProvider(owner).get(Environment.class);
         try {
-            env.ingredients = envPulled.ingredients;
-            env.cart = envPulled.cart;
-            env.recipes = envPulled.recipes;
-            env.ingredientCategories = envPulled.ingredientCategories;
-            env.recipeCategories = envPulled.recipeCategories;
+            env.ingredients.setList(envPulled.ingredients.getList());
+            env.cart.setList(envPulled.cart.getList());
+            env.cart.setActiveDays(envPulled.cart.getActiveDays());
+            env.recipes.setList(envPulled.recipes.getList());
+            env.ingredientCategories.setCategories(envPulled.ingredientCategories.getCategories());
+            env.recipeCategories.setCategories(envPulled.recipeCategories.getCategories());
+            env.locationCategories.setCategories(envPulled.locationCategories.getCategories());
 
             setupObservers(owner, env);
         } catch (NullPointerException e) {
-            Log.e("Env","env failed to update data from pull" + e.getMessage());
+            Log.e("ENV","env failed to update data from pull" + e.getMessage());
         }
         return env;
     }
@@ -63,6 +70,7 @@ public class Environment extends ViewModel implements Serializable {
         observeForCommits(owner, env, env.getCart());
         observeForCommits(owner, env, env.getIngredientCategories());
         observeForCommits(owner, env, env.getRecipeCategories());
+        observeForCommits(owner, env, env.getLocationCategories());
     }
 
     private static void observeForCommits(AppCompatActivity owner, Environment env, Commitable commitable) {
@@ -95,5 +103,9 @@ public class Environment extends ViewModel implements Serializable {
 
     public CategorySet getRecipeCategories() {
         return recipeCategories;
+    }
+
+    public CategorySet getLocationCategories() {
+        return locationCategories;
     }
 }

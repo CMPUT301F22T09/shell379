@@ -1,7 +1,9 @@
 package com.cmput301f22t09.shell379.fragments;
 
+import android.media.audiofx.EnvironmentalReverb;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,10 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.RecipeSelectIngredientsAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.vm.Environment;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,6 +34,8 @@ public class RecipeSelectIngredientFragment extends Fragment {
     RecyclerView ingredientsRecyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecipeSelectIngredientsAdapter rsiAdapter;
+    Button selectButton;
+    Environment env;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -75,11 +81,19 @@ public class RecipeSelectIngredientFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        env = Environment.of((AppCompatActivity) requireActivity());
         View rootView = inflater.inflate(R.layout.recipe_select_ingredients, container, false);
 
         testList = new ArrayList<Ingredient>();
         testList.add(new Ingredient("Ingredient1", new Date(), "location", 2, "90 unit", "category"));
         testList.add(new Ingredient("Ingredient2", new Date(), "location2", 2, "90 unit", "category2"));
+
+        selectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                select();
+            }
+        });
 
         layoutManager = new LinearLayoutManager(this.getActivity());
         ingredientsRecyclerView = (RecyclerView) rootView.findViewById(R.id.rsi_recyclerView);
@@ -90,5 +104,9 @@ public class RecipeSelectIngredientFragment extends Fragment {
         ingredientsRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         return rootView;
+    }
+
+    public void select() {
+        // get specific recipe & add ingredient 
     }
 }

@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         DatabaseManager dbm = new DatabaseManager(this);
-        dbm.pull();
-        Environment.of(this, dbm.getInstance());
+        dbm.pull(this);
     }
 }

@@ -9,29 +9,30 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.fragments.EditRecipeFragment;
+import com.cmput301f22t09.shell379.fragments.RecipeListFragment;
 
 import java.util.ArrayList;
 
 public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientInRecipeAdapter.IngredientInRecipeViewHolder> {
     private ArrayList<Ingredient> ingredients;
     private int selectedPos = RecyclerView.NO_POSITION;
+    private EditRecipeFragment editRecipeFragment;
 
     public class IngredientInRecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView name;
-        TextView amount;
-        TextView bestBefore;
+        private TextView name;
+        private TextView amount;
 
-        public IngredientInRecipeViewHolder(@NonNull View itemView) {
+        public IngredientInRecipeViewHolder(@NonNull View itemView, Fragment fragment) {
             super(itemView);
             this.name = (TextView) itemView.findViewById(R.id.food_name_text);
             this.amount =  (TextView) itemView.findViewById(R.id.amount_text);
-            this.bestBefore =  (TextView) itemView.findViewById(R.id.best_before_text);
-
             itemView.setOnClickListener(this);
 
         }
@@ -49,8 +50,9 @@ public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientIn
         }
     }
 
-    public IngredientInRecipeAdapter(ArrayList<Ingredient> data) {
+    public IngredientInRecipeAdapter(ArrayList<Ingredient> data, EditRecipeFragment editRecipeFragment) {
         this.ingredients = data;
+        this.editRecipeFragment = editRecipeFragment;
     }
 
     @NonNull
@@ -58,21 +60,19 @@ public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientIn
     public IngredientInRecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.ingredients_in_recipe_9, parent, false);
-        IngredientInRecipeViewHolder ingredientInRecipeViewHolder = new IngredientInRecipeViewHolder(view);
+        IngredientInRecipeViewHolder ingredientInRecipeViewHolder = new IngredientInRecipeViewHolder(view, editRecipeFragment);
         return ingredientInRecipeViewHolder;
     }
 
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public void onBindViewHolder(@NonNull IngredientInRecipeAdapter.IngredientInRecipeViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull IngredientInRecipeViewHolder holder, int position) {
         TextView name = holder.name;
         TextView amount = holder.amount;
-        TextView bestBefore = holder.bestBefore;
 
         name.setText(ingredients.get(position).getDescription());
         amount.setText(ingredients.get(position).getAmount().toString());
-        bestBefore.setText(ingredients.get(position).getBestBeforeFormatted());
         holder.itemView.setSelected(selectedPos == position);
         holder.itemView.setBackgroundColor(selectedPos == position ? Color.GRAY : Color.TRANSPARENT);
 
@@ -81,11 +81,6 @@ public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientIn
     @Override
     public int getItemCount() {
         return ingredients.size();
-    }
-
-    public void updateIngredient(ArrayList<Ingredient> newIngredient){
-        ingredients = newIngredient;
-        notifyDataSetChanged();
     }
 
     public int getSelectedPos() {
