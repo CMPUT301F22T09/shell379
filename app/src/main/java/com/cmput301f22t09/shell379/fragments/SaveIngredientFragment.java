@@ -40,7 +40,6 @@ import java.util.GregorianCalendar;
 public abstract class SaveIngredientFragment extends Fragment {
     protected View rootView;
     private NavController navController;
-    private Ingredient ingredient;
     protected Environment envViewModel;
 
     public SaveIngredientFragment() {
