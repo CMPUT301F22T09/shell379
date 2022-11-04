@@ -12,6 +12,9 @@ import com.cmput301f22t09.shell379.data.util.SerializeUtil;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * The Recipe class is a model for potential recipes used in the app.
+ */
 public class Recipe implements Serializable {
     private String title;
     private Long preparationTime; //in milliseconds
@@ -21,6 +24,14 @@ public class Recipe implements Serializable {
     private String photograph; //this is a serialized photo
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
 
+    /**
+     * Creates recipe object without image.
+     * @param title recipe name
+     * @param preparationTime the time required for preparation in minutes
+     * @param servings the number of servings for the recipe
+     * @param category the recipe category
+     * @param comments comments regarding the recipe
+     */
     public Recipe(String title, Long preparationTime, Integer servings, String category, String comments) {
         this.title = title;
         this.preparationTime = preparationTime;
@@ -29,6 +40,16 @@ public class Recipe implements Serializable {
         this.comments = comments;
     }
 
+    /**
+     * Creates recipe object with an image.
+     * The image will be serialized to a string!
+     * @param title recipe name
+     * @param preparationTime the time required for preparation in minutes
+     * @param servings the number of servings for the recipe
+     * @param category the recipe category
+     * @param comments comments regarding the recipe
+     * @param photograph the recipe image
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Recipe(String title, Long preparationTime, Integer servings, String category, String comments, Bitmap photograph) {
         this.title = title;
@@ -79,11 +100,19 @@ public class Recipe implements Serializable {
         this.comments = comments;
     }
 
+    /**
+     * Deserializes and returns the Recipe image
+     * @return deserialized image
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Bitmap getPhotograph() {
         return SerializeUtil.deserializeImg(photograph);
     }
 
+    /**
+     * Serializes image to string and sets internally
+     * @param photograph image to be stored
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void setPhotograph(Bitmap photograph) {
         this.photograph = SerializeUtil.serializeImg(photograph);
