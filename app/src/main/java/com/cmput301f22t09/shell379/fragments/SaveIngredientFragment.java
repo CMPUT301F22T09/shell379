@@ -29,7 +29,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public abstract class SaveIngredientFragment extends Fragment{
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the  factory method to
+ * create an instance of this fragment.
+ */
+public abstract class SaveIngredientFragment extends Fragment {
     protected View rootView;
     private NavController navController;
     protected Environment envViewModel;
@@ -124,11 +129,11 @@ public abstract class SaveIngredientFragment extends Fragment{
             DatePicker bestBeforeDatePicker = rootView.findViewById(R.id.editBestBeforeDate);
             Date bestBeforeDate = new GregorianCalendar(
                     bestBeforeDatePicker.getYear(),
-                    bestBeforeDatePicker.getMonth() + 1,
+                    bestBeforeDatePicker.getMonth(),
                     bestBeforeDatePicker.getDayOfMonth()).getTime();
             String location = ((EditText)rootView.findViewById(R.id.editLocation)).getText().toString();
             int amount = Integer.parseInt(((EditText)rootView.findViewById(R.id.editAmount)).getText().toString());
-            String category = ((EditText)rootView.findViewById(R.id.editLocation)).getText().toString();
+            String category = ((EditText)rootView.findViewById(R.id.editCategory)).getText().toString();
             String unit = ((Spinner)rootView.findViewById(R.id.editUnit)).getSelectedItem().toString();
 
             // validate
