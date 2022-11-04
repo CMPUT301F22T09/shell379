@@ -4,14 +4,21 @@ import com.cmput301f22t09.shell379.data.Ingredient;
 
 import java.util.ArrayList;
 
-// TODO: cite https://stackoverflow.com/questions/897935/when-do-java-generics-require-extends-t-instead-of-t-and-is-there-any-down
-// for the <T extends PartiallyEquable> notation
+/**
+ * Extends LiveCollection to allow for the filtering of items to remove duplicates on the basis
+ * of their partial equality
+ */
+// Referenced the following website to check if generic types can be extended
+// https://stackoverflow.com/questions/897935/when-do-java-generics-require-extends-t-instead-of-t-and-is-there-any-down
 public class PartiallyEquableLiveCollection<T extends PartiallyEquable> extends LiveCollection<T> {
     public PartiallyEquableLiveCollection() {
         super();
     }
 
-    // TODO: sorting algorithm
+    /**
+     * Filters the collection of items to remove duplicates that are partially equal
+     * @return LiveCollection<T> collection with no duplicates
+     */
     public LiveCollection<T> getFilteredCollection() {
         LiveCollection<T> filteredCollection = new LiveCollection<T>();
         ArrayList<T> seenBefore = new ArrayList<T>();

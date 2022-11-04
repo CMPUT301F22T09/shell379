@@ -196,8 +196,8 @@ public class Ingredient implements Serializable, PartiallyEquable {
         return false;
     }
 
-    // TODO: cite https://stackoverflow.com/questions/15287842/filter-unique-objects-from-an-arraylist-based-on-property-value-of-the-contained
-    // referenced for how to implement custom equals
+    // Referenced the following website for how to implement custom equals
+    // url: https://stackoverflow.com/questions/15287842/filter-unique-objects-from-an-arraylist-based-on-property-value-of-the-contained
     @Override
     public boolean partialEquals(PartiallyEquable other) {
         if (other == null || getClass() != other.getClass())

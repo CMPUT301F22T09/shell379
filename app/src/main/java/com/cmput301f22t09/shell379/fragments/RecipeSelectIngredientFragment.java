@@ -27,9 +27,11 @@ import org.checkerframework.checker.units.qual.A;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Fragment for selecting ingredients for recipes.
+ */
 public class RecipeSelectIngredientFragment extends Fragment {
 
-    // TODO: Temporary! Testing content
     ArrayList<Ingredient> ingredientList;
     ArrayList<Ingredient> recipeIngredientList;
     Recipe selectedRecipe;
@@ -45,6 +47,10 @@ public class RecipeSelectIngredientFragment extends Fragment {
         // Required empty public constructor
     }
 
+    /**
+     * Initial creation of fragment, called before onCreateView.
+     * @param savedInstanceState state used if the fragment is being recreated from a previous state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,7 +60,7 @@ public class RecipeSelectIngredientFragment extends Fragment {
     }
 
     /**
-     * Set up the onCreateView method to create the view object
+     * Set up the onCreateView method to create the view object.
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -70,9 +76,9 @@ public class RecipeSelectIngredientFragment extends Fragment {
 
         // recipeIndex = -1 means we're creating a new recipe
         if (recipeIndex == -1) {
-            // TODO: can't get recipe from env using recipeIndex because it doesn't exist in env yet
             recipeIngredientList = new ArrayList<>();
         }
+        // Otherwise, we're editing an existing recipe
         else {
             selectedRecipe = env.getRecipes().getList().get(recipeIndex);
             // the selected recipe's ingredients
@@ -104,30 +110,14 @@ public class RecipeSelectIngredientFragment extends Fragment {
                 }
                 // Editing an existing recipe
                 else {
-                    // TODO: cite https://stackoverflow.com/questions/32811156/how-to-iterate-over-recyclerview-items
-                    // for iterating over recyclerview items
-                    ArrayList<Ingredient> checkedIngredients = rsiAdapter.getCheckedIngredients();
-//                    for (int i = 0; i < ingredientsRecyclerView.getChildCount(); i++) {
-//                        RecipeSelectIngredientsAdapter.RecipeSelectIngredientsViewHolder holder
-//                                = (RecipeSelectIngredientsAdapter.RecipeSelectIngredientsViewHolder) ingredientsRecyclerView.findViewHolderForAdapterPosition(i);
-//                        Ingredient dupeIngredient = holder.getDupeIngredient();
-//                        int checkIngredientIndex = 0;
-//                        for (int j = 0; j < checkedIngredients.size(); j++) {
-//                            if (dupeIngredient.partialEquals(checkedIngredients.get(j))) {
-//                                checkIngredientIndex = j;
-//                                break;
-//                            }
-//                        }
-//                        checkedIngredients.get(checkIngredientIndex).setAmount(dupeIngredient.getAmount());
-//                    }
                     // Get checked ingredients from recycler view
+                    ArrayList<Ingredient> checkedIngredients = rsiAdapter.getCheckedIngredients();
                     selectedRecipe.setIngredients(checkedIngredients);
                     env.getRecipes().commit();
                     navController.popBackStack();
                 }
             }
         });
-
 
         // Implement the button to back to previous page
         ((ImageView)rootView.findViewById(R.id.floatingActionButton7)).setOnClickListener(

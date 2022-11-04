@@ -18,7 +18,8 @@
 
 ### Comments:
 1. Due to the usage of LiveData objects, testing was done heavily through the use of UI testing. This is primarily due to the fact that LiveData objects requires threading, which is not available in regular JUnit tests
-2. Please note that in order to add an ingredient to a recipe, the AMOUNT MUST BE PROVIDED
+2. Please note that when adding an ingredient to a recipe, to check a checkbox, the AMOUNT MUST BE PROVIDED
+3. UML and CRC Cards are under the wiki
 
 ### Acknowledgements and References:
 1. CMPUT301 Lecture Lab Code was used in the development of this project
