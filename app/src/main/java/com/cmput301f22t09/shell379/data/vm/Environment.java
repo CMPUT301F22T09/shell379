@@ -95,8 +95,12 @@ public class Environment extends ViewModel implements Serializable {
     }
 
     /**
-     * sets a single observer for the data of a Commitable object.
+     * Sets a single observer for the data of a Commitable object.
      * When the Commitable needs to be committed the environment will be pushed.
+     *
+     * Observer will commit even if the commit attribute was previously
+     * true and then set to true again.
+     *
      * @param owner scope for the observation.
      * @param env env object to push to the database.
      * @param commitable Commitable object to watch for commit triggers.
