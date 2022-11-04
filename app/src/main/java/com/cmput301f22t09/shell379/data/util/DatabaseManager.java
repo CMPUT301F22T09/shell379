@@ -30,7 +30,6 @@ import java.util.List;
  * Connects to and interfaces with the firebase database
  */
 public class DatabaseManager {
-    private FirebaseFirestore db;
     private DocumentReference doc;
     private Environment instance;
     private MutableLiveData<Boolean> loaded = new MutableLiveData<Boolean>();
@@ -51,9 +50,9 @@ public class DatabaseManager {
 
         Log.e("SHELL379", initialized.toString());
 
-        db = FirebaseFirestore.getInstance();
         // unique device identifier:
         // https://stackoverflow.com/questions/2785485/is-there-a-unique-android-device-id
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         String id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         doc = db.collection(id).document("ENV");
     }
