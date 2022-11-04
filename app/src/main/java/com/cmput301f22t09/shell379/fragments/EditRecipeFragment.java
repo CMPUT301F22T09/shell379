@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -42,6 +43,7 @@ import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class EditRecipeFragment extends Fragment {
@@ -70,6 +72,7 @@ public class EditRecipeFragment extends Fragment {
     private String cat;
     private Environment env;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
+    private ArrayList<Ingredient> selectedIngredients;
     private static final int CAMERA_REQUEST = 1888;
     private static final int PICK_FROM_GALLERY = 1;
 
@@ -81,7 +84,7 @@ public class EditRecipeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.navController = NavHostFragment.findNavController(this);
-
+        this.selectedIngredients = new ArrayList<>();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -130,10 +133,55 @@ public class EditRecipeFragment extends Fragment {
         tableText = rootView.findViewById(R.id.table_text);
         takePhotoButton = rootView.findViewById(R.id.take_photo_button);
 
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeListFragment());
+            }
+        });
+
+        choosePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+                {
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
+                }
+                else
+                {
+                    Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
+                }
+            }
+        });
+
+        saveRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
+            @Override
+            public void onClick(View view) {
+                onSaveRecipeClicked();
+            }
+        });
+
+        takePhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+                {
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
+                }
+                else
+                {
+                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                }
+            }
+        });
+        
         recipeIndex = getArguments().getInt("recipeIndex");
         if (recipeIndex > -1 && !env.getRecipes().getList().isEmpty()) {
             myRecipe = env.getRecipes().getList().get(recipeIndex);
-            send(myRecipe.getCategory());
+            setCategory(myRecipe.getCategory());
             prepareTimeText.setText(myRecipe.getPreparationTime().toString());
             servingsText.setText(myRecipe.getServings().toString());
             commentText.setText(myRecipe.getComments());
@@ -146,12 +194,22 @@ public class EditRecipeFragment extends Fragment {
             ingredientListAdapter = new IngredientInRecipeAdapter(new ArrayList<Ingredient>(), this);
         }
 
+        // get selectedIngredients from arguments when navigating back from the edit recipe screen
+        Bundle temp = getArguments().getParcelable("selectedIngredients");
+        if (temp != null) {
+            selectedIngredients = (ArrayList<Ingredient>) EditRecipeFragmentArgs.fromBundle(getArguments()).getSelectedIngredients().get("selectedIngredients");
+            ingredientListAdapter.setIngredients(selectedIngredients);
+        }
+
         layoutManager = new LinearLayoutManager(this.getActivity());
         recipe_recyclerView = rootView.findViewById(R.id.ingredientsInRep);
         recipe_recyclerView.setLayoutManager(layoutManager);
 
         if (myRecipe == null || myRecipe.getIngredients().isEmpty()) {
             tableText.setVisibility(View.INVISIBLE);
+        }
+        if (!selectedIngredients.isEmpty()) {
+            tableText.setVisibility(View.VISIBLE);
         }
 
         recipe_recyclerView.setAdapter(ingredientListAdapter);
@@ -325,7 +383,8 @@ public class EditRecipeFragment extends Fragment {
         navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeListFragment());
     }
 
-    public void send(String cat) {
+    public void setCategory(String cat) {
+        //Log.e("EditRecipe", cat);
         catSelect.setAllCaps(false);
         catSelect.setText(cat);
         catSelect.setGravity(Gravity.LEFT);
