@@ -16,17 +16,20 @@ import java.util.HashMap;
 import java.util.HashSet;
 
 public class SerializeEnvUtil {
-    //serialize/deserialize
+    //serialize/deserialize generally
     //https://stackoverflow.com/questions/2836646/java-serializable-object-to-byte-array
+
+    //serialize/deserialize bitmaps
+    //https://social.msdn.microsoft.com/Forums/en-US/b48af4da-107c-4b24-a5f5-11a38e13c2fe/serializingdeserializing-bitmap-causes-the-image-to-change?forum=csharpgeneral
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static HashMap<String, String> serialize(Environment env) {
         HashMap<String, String> data = new HashMap<String, String>();
         data.put("ingredients", SerializeUtil.serialize(env.getIngredients().getList()));
         data.put("recipes", SerializeUtil.serialize(env.getRecipes().getList()));
         data.put("cart", SerializeUtil.serialize(env.getCart().getList()));
-        data.put("ingredient_categories", SerializeUtil.serialize(env.getIngredientCategories()));
-        data.put("recipes_categories", SerializeUtil.serialize(env.getRecipeCategories()));
-        data.put("loc_categories", SerializeUtil.serialize(env.getLocationCategories()));
+        data.put("ingredient_categories", SerializeUtil.serialize(env.getIngredientCategories().getCategories()));
+        data.put("recipes_categories", SerializeUtil.serialize(env.getRecipeCategories().getCategories()));
+        data.put("loc_categories", SerializeUtil.serialize(env.getLocationCategories().getCategories()));
         return data;
     }
 

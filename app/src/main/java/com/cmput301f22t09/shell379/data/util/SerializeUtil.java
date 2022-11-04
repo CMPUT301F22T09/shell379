@@ -1,20 +1,18 @@
 package com.cmput301f22t09.shell379.data.util;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
-
-import com.google.common.primitives.Bytes;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.List;
 
 public class SerializeUtil {
     //serialize/deserialize
@@ -54,5 +52,24 @@ public class SerializeUtil {
             e.printStackTrace();
         }
         return obj;
+    }
+
+    //bitmap serialization/deserialization issue learned from
+    //https://stackoverflow.com/questions/6002800/android-serializable-problem
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static String serializeImg(Bitmap img) {
+        Log.d("SER_UTIL", "SERIALIZING IMG");
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        img.compress(Bitmap.CompressFormat.PNG, 100, baos);
+
+        byte[] bytes = baos.toByteArray();
+        return Base64.getEncoder().encodeToString(bytes);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static Bitmap deserializeImg(String serialized) {
+        Log.d("SER_UTIL", "DESERIALIZING IMG");
+        byte[] bytes = Base64.getDecoder().decode(serialized);
+        return BitmapFactory.decodeByteArray(bytes, 0, 0);
     }
 }

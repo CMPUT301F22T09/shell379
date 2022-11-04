@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,16 +17,14 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.Unit;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -41,6 +38,8 @@ public abstract class SaveIngredientFragment extends Fragment {
     protected View rootView;
     private NavController navController;
     protected Environment envViewModel;
+    private EditText category;
+    private EditText location;
 
     public SaveIngredientFragment() {
         // Required empty public constructor
@@ -61,6 +60,8 @@ public abstract class SaveIngredientFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_save_ingredient, container, false);
+        category = ((EditText)rootView.findViewById(R.id.editCategory));
+        location = ((EditText)rootView.findViewById(R.id.editLocation));
 
         envViewModel = Environment.of((AppCompatActivity) requireActivity());
 
@@ -70,7 +71,7 @@ public abstract class SaveIngredientFragment extends Fragment {
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
                 getActivity(),
                 android.R.layout.simple_spinner_item,
-                Arrays.asList("testUnit","testUnit") // NEEDS TO BE CHANGED
+                Unit.getAllValuesAsStrings()// NEEDS TO BE CHANGED
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -97,16 +98,28 @@ public abstract class SaveIngredientFragment extends Fragment {
                     }
                 }
         );
-//        ((EditText)rootView.findViewById(R.id.editLocation)).setOnClickListener(
-//                new View.OnClickListener() {
-//
-//                    public void onClick(View v) {
-//
-//                    }
-//                }
-//        );
+        category.setOnClickListener(
+                new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    public void onClick(View v) {
+                        onIngCategoryClick();
+                    }
+                }
+        );
+        location.setOnClickListener(
+                new View.OnClickListener() {
+                    @RequiresApi(api = Build.VERSION_CODES.N)
+                    public void onClick(View v) {
+                        onLocationCategoryClick();
+                    }
+                }
+        );
+
         return rootView;
     }
+    public void send(String val){
+        category.setText(val);
+    };
 
     private void back(){
         navController.popBackStack();
@@ -139,6 +152,28 @@ public abstract class SaveIngredientFragment extends Fragment {
     private void showError(){
         TextView error = rootView.findViewById(R.id.errorText);
         error.setVisibility(View.VISIBLE);
+    }
+    private void onIngCategoryClick(){
+        CategorySelectPopup.SelectListener listener = new CategorySelectPopup.SelectListener() {
+            @Override
+            public void send(String val) {
+                category.setText(val);
+            }
+        };
+        IngredientCategorySelectPopup selection = new IngredientCategorySelectPopup(listener,"Category");
+        selection.show(getFragmentManager(), "");
+        selection.setTargetFragment(SaveIngredientFragment.this, 1);
+    }
+    private void onLocationCategoryClick(){
+        CategorySelectPopup.SelectListener listener = new CategorySelectPopup.SelectListener() {
+            @Override
+            public void send(String val) {
+                location.setText(val);
+            }
+        };
+        LocationCategorySelectPopup selection = new LocationCategorySelectPopup(listener, "Location");
+        selection.show(getFragmentManager(), "");
+        selection.setTargetFragment(SaveIngredientFragment.this, 1);
     }
 
   protected abstract void writeToViewModel(Ingredient ing);
