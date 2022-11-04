@@ -46,8 +46,8 @@ public class CreateIngredientFragment extends SaveIngredientFragment {
     }
 
     /**
-     * 
-     * @param ing
+     *  Adds an ingredient to the environment
+     * @param ing ingredient to add to the environment
      */
     protected void writeToViewModel(Ingredient ing){
         envViewModel.getIngredients().add(ing);

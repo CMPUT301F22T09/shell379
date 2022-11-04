@@ -28,7 +28,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
-
+/**
+ * Child class of SaveIngredientFragment that specializes in creating.
+ */
 public class EditIngredientFragment extends SaveIngredientFragment {
     private int ingredientIndex;
     private Ingredient ingredient;
