@@ -15,7 +15,7 @@ public class LocationCategorySelectPopup extends CategorySelectPopup {
         return env.getLocationCategories();
     };
 
-    public LocationCategorySelectPopup(SelectListener selectListener){
-        super(selectListener);
+    public LocationCategorySelectPopup(SelectListener selectListener,String title){
+        super(selectListener,title);
     }
 }

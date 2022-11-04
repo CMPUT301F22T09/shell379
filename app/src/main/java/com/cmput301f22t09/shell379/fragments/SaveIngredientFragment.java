@@ -155,7 +155,7 @@ public abstract class SaveIngredientFragment extends Fragment{
                 category.setText(val);
             }
         };
-        IngredientCategorySelectPopup selection = new IngredientCategorySelectPopup(listener);
+        IngredientCategorySelectPopup selection = new IngredientCategorySelectPopup(listener,"Category");
         selection.show(getFragmentManager(), "");
         selection.setTargetFragment(SaveIngredientFragment.this, 1);
     }
@@ -166,7 +166,7 @@ public abstract class SaveIngredientFragment extends Fragment{
                 location.setText(val);
             }
         };
-        LocationCategorySelectPopup selection = new LocationCategorySelectPopup(listener);
+        LocationCategorySelectPopup selection = new LocationCategorySelectPopup(listener, "Location");
         selection.show(getFragmentManager(), "");
         selection.setTargetFragment(SaveIngredientFragment.this, 1);
     }

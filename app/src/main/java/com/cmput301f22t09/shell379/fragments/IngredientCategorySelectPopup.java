@@ -35,7 +35,7 @@ public class IngredientCategorySelectPopup extends CategorySelectPopup {
         return env.getIngredientCategories();
     };
 
-    public IngredientCategorySelectPopup(SelectListener selectListener){
-        super(selectListener);
+    public IngredientCategorySelectPopup(SelectListener selectListener, String title){
+        super(selectListener, title);
     }
 }
