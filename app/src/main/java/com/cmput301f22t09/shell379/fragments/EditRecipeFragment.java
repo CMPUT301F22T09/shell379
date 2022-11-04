@@ -313,7 +313,6 @@ public class EditRecipeFragment extends Fragment {
     }
 
     public void send(String cat) {
-//        Log.e("EditRecipe", cat);
         catSelect.setAllCaps(false);
         catSelect.setText(cat);
         catSelect.setGravity(Gravity.LEFT);
