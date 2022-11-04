@@ -23,7 +23,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -41,11 +40,16 @@ import com.cmput301f22t09.shell379.adapters.IngredientInRecipeAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.Environment;
+import com.cmput301f22t09.shell379.data.vm.collections.PartiallyEquableLiveCollection;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * This class has all the functionalities for showing selected recipe information, creating a new
+ * recipe, editing existing recipe, delete recipe. It also leads users to the next fragment to add
+ * ingredients to the recipe.
+ */
 public class EditRecipeFragment extends Fragment {
 
     protected View rootView;
@@ -92,32 +96,9 @@ public class EditRecipeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_edit_recipe_9, container, false);
+        rootView = inflater.inflate(R.layout.fragment_edit_recipe, container, false);
 
-        catSelect = (Button) rootView.findViewById(R.id.select_category);
-        catSelect.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View view) {
-                CategorySelectPopup.SelectListener listener = new CategorySelectPopup.SelectListener() {
-                    @Override
-                    public void send(String val) {
-                        Log.e("EditRecipe", val);
-                        catSelect.setAllCaps(false);
-                        catSelect.setText(val);
-                        catSelect.setGravity(Gravity.LEFT);
-                        catSelect.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
-                        catSelect.setTypeface(Typeface.SANS_SERIF);
-                        cat = val;
-                    }
-                };
-                RecipeCategorySelectPopup selection = new RecipeCategorySelectPopup(listener,"Category");
-                selection.show(getFragmentManager(), "");
-                selection.setTargetFragment(EditRecipeFragment.this, 1);
-
-            }
-        });
-
+        catSelect = rootView.findViewById(R.id.select_category);
         env = Environment.of((AppCompatActivity) requireActivity());
         choosePhoto = rootView.findViewById(R.id.gallery_button);
         previewPhoto = rootView.findViewById(R.id.photo);
@@ -132,6 +113,104 @@ public class EditRecipeFragment extends Fragment {
         backButton = rootView.findViewById(R.id.back_button);
         tableText = rootView.findViewById(R.id.table_text);
         takePhotoButton = rootView.findViewById(R.id.take_photo_button);
+
+        getAdapter();
+
+        // get selectedIngredients from arguments when navigating back from the edit recipe screen
+        Bundle temp = getArguments().getParcelable("selectedIngredients");
+        if (temp != null) {
+            selectedIngredients = (ArrayList<Ingredient>) EditRecipeFragmentArgs.fromBundle(getArguments()).getSelectedIngredients().get("selectedIngredients");
+            ingredientListAdapter.setIngredients(selectedIngredients);
+        }
+
+        if (myRecipe == null || myRecipe.getIngredients().isEmpty()) {
+            tableText.setVisibility(View.INVISIBLE);
+        }
+        if (!selectedIngredients.isEmpty()) {
+            tableText.setVisibility(View.VISIBLE);
+        }
+
+        layoutManager = new LinearLayoutManager(this.getActivity());
+        recipe_recyclerView = rootView.findViewById(R.id.ingredientsInRep);
+        recipe_recyclerView.setLayoutManager(layoutManager);
+
+        recipe_recyclerView.setAdapter(ingredientListAdapter);
+        recipe_recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        onClickMethods();
+
+        return rootView;
+    }
+
+    /**
+     * Upon creating this fragment, this method either sets all the texts if user selects existing
+     * ingredient, or creating an empty adapter for creating a new recipe
+     */
+    public void getAdapter() {
+        recipeIndex = getArguments().getInt("recipeIndex");
+        if (recipeIndex > -1 && !env.getRecipes().getList().isEmpty()) {
+            myRecipe = env.getRecipes().getList().get(recipeIndex);
+            setCategory(myRecipe.getCategory());
+            prepareTimeText.setText(myRecipe.getPreparationTime().toString());
+            servingsText.setText(myRecipe.getServings().toString());
+            commentText.setText(myRecipe.getComments());
+            nameText.setText(myRecipe.getTitle());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && myRecipe.getPhotograph() != null) {
+                previewPhoto.setImageBitmap(myRecipe.getPhotograph());
+            }
+            ingredientListAdapter = new IngredientInRecipeAdapter(myRecipe.getIngredients(), this);
+        } else {
+            ingredientListAdapter = new IngredientInRecipeAdapter(new ArrayList<Ingredient>(), this);
+        }
+    }
+
+    /**
+     * This method gives all the onClick methods to this fragment's buttons
+     */
+    public void onClickMethods() {
+        catSelect.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                CategorySelectPopup.SelectListener listener = new CategorySelectPopup.SelectListener() {
+                    /**
+                     * This method displays the selected category
+                     * @param val, the string is the selected category
+                     */
+                    @Override
+                    public void send(String val) {
+                        setCategory(val);
+                    }
+                };
+                RecipeCategorySelectPopup selection = new RecipeCategorySelectPopup(listener,"Category");
+                selection.show(getFragmentManager(), "");
+                selection.setTargetFragment(EditRecipeFragment.this, 1);
+
+            }
+        });
+
+        deleteIngredientButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = ingredientListAdapter.getSelectedPos();
+                if (position > -1) {
+                    deleteIngredient(position);
+                }
+            }
+        });
+
+        addIngredientButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeSelectIngredientFragment(recipeIndex));
+            }
+        });
+
+        deleteRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteRecipeAction();
+            }
+        });
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,92 +256,18 @@ public class EditRecipeFragment extends Fragment {
                 }
             }
         });
-
-        //myRecipe = new Recipe("kongpaochicken",100L,3,"chinese","spicy");
-//        myRecipe.addIngredient(new Ingredient("appleesdadadsdawdwadsaszdazawdas",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
-//        myRecipe.addIngredient(new Ingredient("chicken",new Date(2023,9,07),"fridge",2,"1lbs","meat"));
-//        myRecipe.addIngredient(new Ingredient("banana",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
-
-        recipeIndex = getArguments().getInt("recipeIndex");
-        if (recipeIndex > -1 && !env.getRecipes().getList().isEmpty()) {
-            myRecipe = env.getRecipes().getList().get(recipeIndex);
-            setCategory(myRecipe.getCategory());
-            prepareTimeText.setText(myRecipe.getPreparationTime().toString());
-            servingsText.setText(myRecipe.getServings().toString());
-            commentText.setText(myRecipe.getComments());
-            nameText.setText(myRecipe.getTitle());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && myRecipe.getPhotograph() != null) {
-//                Log.e("photo", "here");
-                previewPhoto.setImageBitmap(myRecipe.getPhotograph());
-            }
-            ingredientListAdapter = new IngredientInRecipeAdapter(myRecipe.getIngredients(), this);
-        } else {
-            ingredientListAdapter = new IngredientInRecipeAdapter(new ArrayList<Ingredient>(), this);
-        }
-
-        // get selectedIngredients from arguments when navigating back from the edit recipe screen
-        Bundle temp = getArguments().getParcelable("selectedIngredients");
-        if (temp != null) {
-            //selectedIngredients = (ArrayList<Ingredient>) temp;
-            //ingredientListAdapter.setIngredients(selectedIngredients);
-//            Ingredient temp2 = (Ingredient) temp;
-//            System.out.println(temp2);
-            selectedIngredients = (ArrayList<Ingredient>) EditRecipeFragmentArgs.fromBundle(getArguments()).getSelectedIngredients().get("selectedIngredients");
-            ingredientListAdapter.setIngredients(selectedIngredients);
-        }
-
-        // TODO: save it to IngredientInRecipeAdapter
-
-        layoutManager = new LinearLayoutManager(this.getActivity());
-        recipe_recyclerView = (RecyclerView) rootView.findViewById(R.id.ingredientsInRep);
-        recipe_recyclerView.setLayoutManager(layoutManager);
-
-        if (myRecipe == null || myRecipe.getIngredients().isEmpty()) {
-            tableText.setVisibility(View.INVISIBLE);
-        }
-        if (!selectedIngredients.isEmpty()) {
-            tableText.setVisibility(View.VISIBLE);
-        }
-
-        // !empty && recipe == null
-        // empty
-
-
-        recipe_recyclerView.setAdapter(ingredientListAdapter);
-        recipe_recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        deleteIngredientButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int position = ingredientListAdapter.getSelectedPos();
-                if (position > -1) {
-                    deleteIngredient(position);
-                }
-            }
-        });
-
-        addIngredientButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeSelectIngredientFragment(recipeIndex));
-            }
-        });
-
-        deleteRecipeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteRecipeAction();
-            }
-        });
-
-        return rootView;
     }
-    
-    // this function is triggered when user
-    // selects the image from the imageChooser
+
+    /**
+     * This function is triggered when user selects the image, and it displays the image
+     * @param requestCode, identifies which request is made
+     * @param resultCode, result code
+     * @param data
+     * @see *source: https://www.geeksforgeeks.org/how-to-select-an-image-from-gallery-in-android/
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // SOURCE: https://www.geeksforgeeks.org/how-to-select-an-image-from-gallery-in-android/
         super.onActivityResult(requestCode, resultCode, data);
+        // selected photo from gallery
         if (resultCode == RESULT_OK && requestCode == PICK_FROM_GALLERY) {
                 // Get the url of the image from data
                 Uri selectedImageUri = data.getData();
@@ -279,7 +284,14 @@ public class EditRecipeFragment extends Fragment {
         }
     }
 
-    // source: https://stackoverflow.com/questions/5991319/capture-image-from-camera-and-display-in-activity/5991757#5991757
+    /**
+     * This function checks for the permission status. It either pops up a denial message or proceeds
+     * to action upon permission.
+     * @param requestCode, identifies which request is made
+     * @param permissions, permission string
+     * @param grantResults, granted permission results by user
+     * @see *source: https://stackoverflow.com/questions/5991319/capture-image-from-camera-and-display-in-activity/5991757#5991757
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
@@ -308,6 +320,11 @@ public class EditRecipeFragment extends Fragment {
         ingredientListAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * This function handles the exception of not all the required fields are saved.
+     * It either saves the recipe or replace the old recipe with edited version, or show error
+     * if not all the fields are filled.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void onSaveRecipeClicked() {
 
@@ -321,6 +338,7 @@ public class EditRecipeFragment extends Fragment {
             Recipe newRecipe = new Recipe(name, prepareTime, servings, category, comment, photo);
 
             int size = ingredientListAdapter.getIngredients().size();
+            // check if there is any ingredient
             if (size > 0) {
                 for (int i = 0; i < size; i++) {
                     newRecipe.addIngredient(ingredientListAdapter.getIngredients().get(i));
@@ -328,6 +346,7 @@ public class EditRecipeFragment extends Fragment {
             }
             newRecipe.setPhotograph(photo);
 
+            // save or replace with edited
             if (recipeIndex > -1 && !env.getRecipes().getList().isEmpty()) {
                 saveEditedRecipe(newRecipe);
             } else {
@@ -353,8 +372,11 @@ public class EditRecipeFragment extends Fragment {
         navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeListFragment());
     }
 
+    /**
+     * This method displays the selected category
+     * @param cat, the string is the selected category
+     */
     public void setCategory(String cat) {
-        //Log.e("EditRecipe", cat);
         catSelect.setAllCaps(false);
         catSelect.setText(cat);
         catSelect.setGravity(Gravity.LEFT);
