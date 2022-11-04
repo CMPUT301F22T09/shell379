@@ -36,7 +36,7 @@ public class PartiallyEquableLiveCollection<T extends PartiallyEquable> extends 
         return filteredCollection;
     }
 
-        /**
+    /**
      * returns a full only filtered list of elements of type T
      * @return list of full elements of type T
      */
