@@ -104,8 +104,24 @@ public class RecipeSelectIngredientFragment extends Fragment {
                 }
                 // Editing an existing recipe
                 else {
+                    // TODO: cite https://stackoverflow.com/questions/32811156/how-to-iterate-over-recyclerview-items
+                    // for iterating over recyclerview items
+                    ArrayList<Ingredient> checkedIngredients = rsiAdapter.getCheckedIngredients();
+//                    for (int i = 0; i < ingredientsRecyclerView.getChildCount(); i++) {
+//                        RecipeSelectIngredientsAdapter.RecipeSelectIngredientsViewHolder holder
+//                                = (RecipeSelectIngredientsAdapter.RecipeSelectIngredientsViewHolder) ingredientsRecyclerView.findViewHolderForAdapterPosition(i);
+//                        Ingredient dupeIngredient = holder.getDupeIngredient();
+//                        int checkIngredientIndex = 0;
+//                        for (int j = 0; j < checkedIngredients.size(); j++) {
+//                            if (dupeIngredient.partialEquals(checkedIngredients.get(j))) {
+//                                checkIngredientIndex = j;
+//                                break;
+//                            }
+//                        }
+//                        checkedIngredients.get(checkIngredientIndex).setAmount(dupeIngredient.getAmount());
+//                    }
                     // Get checked ingredients from recycler view
-                    selectedRecipe.setIngredients(rsiAdapter.getCheckedIngredients());
+                    selectedRecipe.setIngredients(checkedIngredients);
                     env.getRecipes().commit();
                     navController.popBackStack();
                 }
@@ -133,10 +149,6 @@ public class RecipeSelectIngredientFragment extends Fragment {
 
 
         return rootView;
-    } 
-
-    public void select() {
-        // get specific recipe & add ingredient 
     }
 
     private void onNewIngStubClicked(){
