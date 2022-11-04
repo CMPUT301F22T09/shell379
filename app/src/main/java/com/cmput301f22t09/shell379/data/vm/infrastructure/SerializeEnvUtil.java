@@ -15,12 +15,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 
+/**
+ * Utility class specifically for serializing Environment objects.
+ */
 public class SerializeEnvUtil {
+
+    /**
+     * Serializes attributes of Environment object and returns as HashMap
+     * @param env Environment object
+     */
     //serialize/deserialize generally
     //https://stackoverflow.com/questions/2836646/java-serializable-object-to-byte-array
-
-    //serialize/deserialize bitmaps
-    //https://social.msdn.microsoft.com/Forums/en-US/b48af4da-107c-4b24-a5f5-11a38e13c2fe/serializingdeserializing-bitmap-causes-the-image-to-change?forum=csharpgeneral
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static HashMap<String, String> serialize(Environment env) {
         HashMap<String, String> data = new HashMap<String, String>();
@@ -33,6 +38,10 @@ public class SerializeEnvUtil {
         return data;
     }
 
+    /**
+     * Deserializes HashMap containing Base64 encoded and converts to Environment object
+     * @param data environment object data
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static Environment deserialize(HashMap<String, String> data) {
         Environment env = new Environment();
