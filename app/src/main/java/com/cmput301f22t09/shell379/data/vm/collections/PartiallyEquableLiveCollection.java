@@ -27,6 +27,7 @@ public class PartiallyEquableLiveCollection<T extends PartiallyEquable> extends 
             }
             if (addItem) {
                 filteredCollection.add(tItem);
+                seenBefore.add(tItem);
                 addItem = true;
             }
         }
