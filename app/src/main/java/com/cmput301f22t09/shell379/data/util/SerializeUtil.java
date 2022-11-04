@@ -16,18 +16,18 @@ import java.util.Base64;
 
 
 /**
- * Utility class that helps with serializing environment data to store in the database.
+ * Utility class that helps with serializing data to store in the database.
  */
 public class SerializeUtil {
 
-    //serialize/deserialize
-    //https://stackoverflow.com/questions/2836646/java-serializable-object-to-byte-array
-    //and
-    //https://stackoverflow.com/questions/134492/how-to-serialize-an-object-into-a-string
     /**
      * Serializes an object to bytes for db pushing
      * @param obj the object to serialize
      */
+    //serialize/deserialize
+    //https://stackoverflow.com/questions/2836646/java-serializable-object-to-byte-array
+    //and
+    //https://stackoverflow.com/questions/134492/how-to-serialize-an-object-into-a-string
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String serialize(Object obj) {
         byte[] bytes = {};
@@ -69,7 +69,7 @@ public class SerializeUtil {
      * Serialization method specifically for images.
      * @param img image to serialize
      */
-    //bitmap serialization/deserialization issue learned from
+    //bitmap serialization/deserialization method learned from
     //https://stackoverflow.com/questions/6002800/android-serializable-problem
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static String serializeImg(Bitmap img) {
@@ -83,7 +83,7 @@ public class SerializeUtil {
 
     /**
      * Deserializes bytes from the Data base into an image.
-     * @param serialized is the byte version of the image
+     * @param serialized is the Base64 encoded string representing an image
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static Bitmap deserializeImg(String serialized) {

@@ -9,6 +9,7 @@ Running Instructions:
 
 Assumptions:
 1. This app assumes that a stable internet connection is available to the user
+2. This app is built to run on Android Oreo and above
 
 Comments:
 1. Due to the usage of LiveData objects, testing was done heavily through the use of UI testing. This is primarily due to the fact that LiveData objects requires threading, which is not available in regular JUnit tests.
@@ -16,4 +17,4 @@ Comments:
 Acknowledgements and References:
 1. CMPUT301 Lecture Lab Code was used in the development of this project
 2. Group members used their own prior CMPUT301 Assignment/Lab code in the development of this project
-2. Citations have been provided at several points throughout the codebase
+2. Additional citations have been provided at several points throughout the codebase
