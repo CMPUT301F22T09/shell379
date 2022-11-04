@@ -1,8 +1,10 @@
 package com.cmput301f22t09.shell379.fragments;
 
+import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -14,8 +16,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.net.Uri;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
@@ -25,6 +29,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -35,6 +40,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.IngredientInRecipeAdapter;
@@ -72,8 +78,9 @@ public class EditRecipeFragment extends Fragment {
     private int SELECT_PICTURE = 200;
     private String cat;
     private Environment env;
-    private static final int CAMERA_REQUEST = 1888;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
+    private static final int CAMERA_REQUEST = 1888;
+    private static final int PICK_FROM_GALLERY = 1;
 
     public EditRecipeFragment() {
         // Required empty public constructor
@@ -153,14 +160,20 @@ public class EditRecipeFragment extends Fragment {
             }
         });
 
-//        takePhotoButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-//
-//                }
-//            }
-//        });
+        takePhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
+                {
+                    requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
+                }
+                else
+                {
+                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
+                }
+            }
+        });
 
         myRecipe = new Recipe("kongpaochicken",100L,3,"chinese","spicy");
 //        myRecipe.addIngredient(new Ingredient("appleesdadadsdawdwadsaszdazawdas",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
@@ -243,18 +256,48 @@ public class EditRecipeFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
-
-            // compare the resultCode with the
-            // SELECT_PICTURE constant
+            // select photo
             if (requestCode == SELECT_PICTURE) {
-                // Get the url of the image from data
-                Uri selectedImageUri = data.getData();
-                if (null != selectedImageUri) {
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                if (null != photo) {
                     // update the preview image in the layout
-                    previewPhoto.setImageURI(selectedImageUri);
+                    previewPhoto.setImageBitmap(photo);
                 }
             }
         }
+
+        // take photo from camera
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            previewPhoto.setImageBitmap(photo);
+        }
+    }
+
+    // source: https://stackoverflow.com/questions/5991319/capture-image-from-camera-and-display-in-activity/5991757#5991757
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MY_CAMERA_PERMISSION_CODE)
+        {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                Toast.makeText(getActivity(), "camera permission granted", Toast.LENGTH_LONG).show();
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            }
+            else
+            {
+                Toast.makeText(getActivity(), "camera permission denied", Toast.LENGTH_LONG).show();
+            }
+        } else if (requestCode == PICK_FROM_GALLERY) {
+            
+        }
+    }
+
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
     }
 
     public void deleteIngredient(int pos) {
@@ -281,11 +324,6 @@ public class EditRecipeFragment extends Fragment {
                 }
             }
             newRecipe.setPhotograph(photo);
-            if (newRecipe.getPhotograph() == null) {
-                // get photo graph is null
-                Log.e("photo", "here bruh bruh");
-            }
-
 
             if (recipeIndex > -1 && !env.getRecipes().getList().isEmpty()) {
                 saveEditedRecipe(newRecipe);
@@ -325,4 +363,5 @@ public class EditRecipeFragment extends Fragment {
         TextView error = rootView.findViewById(R.id.errorText);
         error.setVisibility(View.VISIBLE);
     }
+
 }
