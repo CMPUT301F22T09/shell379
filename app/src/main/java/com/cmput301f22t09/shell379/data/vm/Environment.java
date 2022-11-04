@@ -74,6 +74,7 @@ public class Environment extends ViewModel implements Serializable {
      */
     public static Environment of(AppCompatActivity owner) {
         Environment env = new ViewModelProvider(owner).get(Environment.class);
+        if (env == null) env = new Environment();
         setupObservers(owner, env);
         return env;
     }
