@@ -13,11 +13,6 @@ import android.widget.Button;
 
 import com.cmput301f22t09.shell379.R;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MainMenuFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MainMenuFragment extends Fragment {
     private NavController navController;
 
@@ -35,8 +30,8 @@ public class MainMenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
         View rootView = inflater.inflate(R.layout.fragment_main_menu, container, false);
+
         // navigation snippet from https://developer.android.com/guide/navigation/navigation-navigate#groovy
         ((Button)rootView.findViewById(R.id.ingredients_list_button)).setOnClickListener(
                 new View.OnClickListener() {

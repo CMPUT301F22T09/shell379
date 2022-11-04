@@ -32,11 +32,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link SaveIngredientFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public abstract class SaveIngredientFragment extends Fragment {
     protected View rootView;
     private NavController navController;
@@ -51,10 +46,6 @@ public abstract class SaveIngredientFragment extends Fragment {
         super.onCreate(savedInstanceState);
         navController = NavHostFragment.findNavController(this);
     }
-
-    // TO DO
-    // Connect units, category and location to sets
-    // connect dialog
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -97,14 +88,6 @@ public abstract class SaveIngredientFragment extends Fragment {
                     }
                 }
         );
-//        ((EditText)rootView.findViewById(R.id.editLocation)).setOnClickListener(
-//                new View.OnClickListener() {
-//
-//                    public void onClick(View v) {
-//
-//                    }
-//                }
-//        );
         return rootView;
     }
 
@@ -128,6 +111,12 @@ public abstract class SaveIngredientFragment extends Fragment {
             String unit = ((Spinner)rootView.findViewById(R.id.editUnit)).getSelectedItem().toString();
 
             // validate
+            if(description == "" ||
+            location == "" ||
+            category == ""
+            ){
+                throw new IllegalArgumentException("fields not filled");
+            }
             writeToViewModel(new Ingredient(description,bestBeforeDate,location,amount,unit,category));
             navController.popBackStack();
 
@@ -141,6 +130,6 @@ public abstract class SaveIngredientFragment extends Fragment {
         error.setVisibility(View.VISIBLE);
     }
 
-  protected abstract void writeToViewModel(Ingredient ing);
+    protected abstract void writeToViewModel(Ingredient ing);
 
 }

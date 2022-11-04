@@ -48,8 +48,6 @@ public class CategoriesSelectRecViewAdapter extends RecyclerView.Adapter<Categor
         String category = this.cats.get(position);
         TextView catText = holder.catView;
         catText.setText(category);
-
-
     }
 
     @Override
@@ -67,17 +65,8 @@ public class CategoriesSelectRecViewAdapter extends RecyclerView.Adapter<Categor
             view.setOnLongClickListener(this);
 
             catView = (TextView) view.findViewById(R.id.cat_name);
-//            catView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Log.e("TESTCAT", catView.getText().toString());
-//
-//                }
-//
-//            });
-
-
         }
+
         public TextView getTextView() {
             return catView;
         }

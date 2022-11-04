@@ -28,19 +28,12 @@ import com.cmput301f22t09.shell379.data.vm.collections.CategorySet;
 
 import java.util.HashSet;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CategoriesSelect#} factory method to
- * create an instance of this fragment.
- */
 public class CategoriesSelect extends DialogFragment {
 
     public interface CatSelectListener {
         void send(String cat);
     }
     CatSelectListener csl;
-
-
 
     public CategoriesSelect() {
         // Required empty public constructor
@@ -57,13 +50,9 @@ public class CategoriesSelect extends DialogFragment {
         Button addCat = view.findViewById(R.id.addButton);
 
         // Initialize contacts
-
         Environment env = Environment.of((AppCompatActivity) getActivity());
         CategorySet categorySet = env.getRecipeCategories();
         HashSet<String> hashset = categorySet.getCategories();
-
-
-
 
         // Create adapter passing in the sample user data
         CategoriesSelectRecViewAdapter adapter = new CategoriesSelectRecViewAdapter(hashset);
@@ -115,9 +104,6 @@ public class CategoriesSelect extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_categories_select, null);
-
-
-
     }
 
     @Override
@@ -129,5 +115,4 @@ public class CategoriesSelect extends DialogFragment {
         }
         super.onAttach(context);
     }
-
 }

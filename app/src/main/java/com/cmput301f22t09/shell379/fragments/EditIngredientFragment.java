@@ -42,10 +42,6 @@ public class EditIngredientFragment extends SaveIngredientFragment {
         super.onCreate(savedInstanceState);
     }
 
-    // TO DO
-    // Connect units, category and location to sets
-    // connect dialog
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -68,7 +64,6 @@ public class EditIngredientFragment extends SaveIngredientFragment {
                 day);
         ((EditText)rootView.findViewById(R.id.editLocation)).setText(String.valueOf(ingredient.getLocation()));
         ((EditText)rootView.findViewById(R.id.editAmount)).setText(String.valueOf(ingredient.getAmount()));
-//        ((Spinner)rootView.findViewById(R.id.editUnit)).setSelection(ingredient.getUnit());
         ((EditText)rootView.findViewById(R.id.editCategory)).setText(String.valueOf(ingredient.getCategory()));
 
         return rootView;

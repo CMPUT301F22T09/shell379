@@ -25,6 +25,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+/**
+ * Child class of SaveIngredientFragment that specializes in creating.
+ */
 public class CreateIngredientFragment extends SaveIngredientFragment {
 
     public CreateIngredientFragment() {
@@ -41,6 +44,11 @@ public class CreateIngredientFragment extends SaveIngredientFragment {
         super.onCreateView(inflater,container,savedInstanceState);
         return rootView;
     }
+
+    /**
+     * 
+     * @param ing
+     */
     protected void writeToViewModel(Ingredient ing){
         envViewModel.getIngredients().add(ing);
         envViewModel.getIngredients().commit();
