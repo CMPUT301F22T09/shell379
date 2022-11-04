@@ -75,6 +75,7 @@ public class DatabaseManager {
                 }
                 else {
                     instance = new Environment();
+                    loaded.setValue(true);
                 }
             }
         });
