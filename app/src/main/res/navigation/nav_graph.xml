@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/createIngredientFragment">
+    app:startDestination="@id/mainMenuFragment">
     <fragment
         android:id="@+id/ingredientListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.IngredientListFragment"
@@ -73,7 +73,7 @@
         android:id="@+id/editRecipe"
         android:name="com.cmput301f22t09.shell379.fragments.EditRecipeFragment"
         android:label="fragment_edit_recipe"
-        tools:layout="@layout/fragment_edit_recipe_9" >
+        tools:layout="@layout/fragment_edit_recipe" >
         <argument
             android:name="recipeIndex"
             app:argType="integer" />
@@ -83,6 +83,11 @@
         <action
             android:id="@+id/action_editRecipe_to_recipeListFragment"
             app:destination="@id/recipeListFragment" />
+        <argument
+            android:name="selectedIngredients"
+            app:nullable="true"
+            app:argType="android.os.Bundle"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/createIngredientFragment"
@@ -107,12 +112,24 @@
             android:name="recipeIndex"
             app:argType="integer" />
         <action
-            android:id="@+id/action_recipeSelectIngredientFragment_to_recipeNewIngredient"
-            app:destination="@id/recipeNewIngredient" />
+            android:id="@+id/action_recipeSelectIngredientFragment_to_editRecipe"
+            app:destination="@id/editRecipe" />
+        <action
+            android:id="@+id/action_recipeSelectIngredientFragment_to_createIngredientStubFragment3"
+            app:destination="@id/createIngredientStubFragment3" />
     </fragment>
     <fragment
-        android:id="@+id/recipeNewIngredient"
-        android:name="com.cmput301f22t09.shell379.fragments.RecipeNewIngredient"
-        android:label="recipe_new_ingredient"
-        tools:layout="@layout/recipe_new_ingredient" />
+        android:id="@+id/createIngredientStubFragment3"
+        android:name="com.cmput301f22t09.shell379.fragments.CreateIngredientStubFragment"
+        android:label="CreateIngredientStubFragment" >
+        <action
+            android:id="@+id/action_createIngredientStubFragment3_to_editRecipe"
+            app:destination="@id/editRecipe" />
+        <argument
+            android:name="recipeIndex"
+            app:argType="integer" />
+        <argument
+            android:name="existingSelections"
+            app:argType="android.os.Bundle" />
+    </fragment>
 </navigation>

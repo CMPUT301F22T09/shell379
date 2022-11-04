@@ -30,7 +30,6 @@ import java.util.List;
  * Connects to and interfaces with the firebase database
  */
 public class DatabaseManager {
-    private FirebaseFirestore db;
     private DocumentReference doc;
     private Environment instance;
     private MutableLiveData<Boolean> loaded = new MutableLiveData<Boolean>();
@@ -51,9 +50,9 @@ public class DatabaseManager {
 
         Log.e("SHELL379", initialized.toString());
 
-        db = FirebaseFirestore.getInstance();
         // unique device identifier:
         // https://stackoverflow.com/questions/2785485/is-there-a-unique-android-device-id
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         String id = Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
         doc = db.collection(id).document("ENV");
     }
@@ -67,7 +66,7 @@ public class DatabaseManager {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (value != null && value.getData() != null) {
+                try {
                     HashMap<String, String> data = new HashMap<>();
                     data.put("ingredients", (String) value.get("ingredients"));
                     data.put("recipes", (String) value.get("recipes"));
@@ -79,7 +78,7 @@ public class DatabaseManager {
                     Environment.of(owner, instance);
                     loaded.setValue(true);
                 }
-                else {
+                catch (NullPointerException e) {
                     instance = new Environment();
                     loaded.setValue(true);
                 }
