@@ -116,7 +116,7 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
     }
 
     /**
-     * navigate the screen back to the previous one
+     * Navigate the screen back to the previous one
      */
     private void back(){
         navController.popBackStack();

@@ -155,6 +155,10 @@ public abstract class SaveIngredientFragment extends Fragment {
         TextView error = rootView.findViewById(R.id.errorText);
         error.setVisibility(View.VISIBLE);
     }
+
+    /**
+     * Implement the ingredient category dialog
+     */
     private void onIngCategoryClick(){
         CategorySelectPopup.SelectListener listener = new CategorySelectPopup.SelectListener() {
             @Override
@@ -166,6 +170,10 @@ public abstract class SaveIngredientFragment extends Fragment {
         selection.show(getFragmentManager(), "");
         selection.setTargetFragment(SaveIngredientFragment.this, 1);
     }
+
+    /**
+     * Implement the ingredient location dialog
+     */
     private void onLocationCategoryClick(){
         CategorySelectPopup.SelectListener listener = new CategorySelectPopup.SelectListener() {
             @Override
@@ -178,6 +186,10 @@ public abstract class SaveIngredientFragment extends Fragment {
         selection.setTargetFragment(SaveIngredientFragment.this, 1);
     }
 
+    /**
+     * Pass in the data into view model
+     * @param ing
+     */
     protected abstract void writeToViewModel(Ingredient ing);
 
 }
