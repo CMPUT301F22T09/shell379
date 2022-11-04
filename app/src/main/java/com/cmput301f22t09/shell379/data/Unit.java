@@ -9,6 +9,11 @@ public enum Unit {
     ML,
     TEASPOON;
 
+    /**
+     * returns the associated string for each ENUM
+     * @param u Unit enum value
+     * @return string representation or "invalid unit" if not found
+     */
     public static String getUnitName(Unit u) {
         switch (u){
             case KG:
@@ -25,6 +30,11 @@ public enum Unit {
         return "invalid unit";
     }
 
+    /**
+     * returns the associated string for each ENUM
+     * @param string Unit string value
+     * @return Unit representation of the string or NULL if not found
+     */
     public static Unit getFromString(String string){
         switch (string){
             case "Kilograms":
@@ -40,6 +50,11 @@ public enum Unit {
         }
         return null;
     }
+
+    /**
+     * Gets all enum values as strings
+     * @return an array of strings, one for each enum value
+     */
     public static ArrayList<String> getAllValuesAsStrings()
     {
         ArrayList<String> strings = new ArrayList<String>();

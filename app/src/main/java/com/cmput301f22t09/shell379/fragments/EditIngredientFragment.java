@@ -30,7 +30,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
-
+/**
+ * Child class of SaveIngredientFragment that specializes in editing.
+ */
 public class EditIngredientFragment extends SaveIngredientFragment {
     private int ingredientIndex;
     private Ingredient ingredient;
@@ -43,10 +45,6 @@ public class EditIngredientFragment extends SaveIngredientFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
-    // TO DO
-    // Connect units, category and location to sets
-    // connect dialog
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override

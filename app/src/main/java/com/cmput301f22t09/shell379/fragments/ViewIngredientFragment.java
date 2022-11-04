@@ -39,7 +39,6 @@ public class ViewIngredientFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        ingredient = new Ingredient("Place Ho", new Date(2023,12,12),"test",2,"2 test sadasdadsdsadsadsadsadsadsadsadsadsadadsaadadsdadsadadaddadasdsadsadsadsadaddsadsdadsdadasd","test");
         navController = NavHostFragment.findNavController(this);
     }
 
@@ -101,7 +100,6 @@ public class ViewIngredientFragment extends Fragment {
         }else{
             ((TextView)rootView.findViewById(R.id.amount).findViewById(R.id.detail_value)).setText( "Tap edit below to add");
         }
-
 
         ((TextView)rootView.findViewById(R.id.category).findViewById(R.id.detail_name)).setText( "Category");
         if(ingredient.getCategory() != null){

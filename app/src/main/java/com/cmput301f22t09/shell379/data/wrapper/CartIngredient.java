@@ -7,7 +7,9 @@ import androidx.annotation.RequiresApi;
 import com.cmput301f22t09.shell379.data.Ingredient;
 
 import java.io.Serializable;
-
+/**
+ * Ingredient that resides in the cart.
+ */
 public class CartIngredient extends Ingredient implements Serializable {
     private Boolean isPickedUp;
     private Boolean detailsFilled;

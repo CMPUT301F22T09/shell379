@@ -25,7 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
- *
+ * Adapter for the recycler view in the ingredient list fragment
  */
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder>  {
     public interface AdaptorListener{
@@ -37,9 +37,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     private AdaptorListener ingredientListener;
     private int ingredientIndex;
 
-    /**
-     *
-     */
     public class IngredientViewHolder extends RecyclerView.ViewHolder {
         public View getItemView(){
             return itemView;
@@ -53,10 +50,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         private TextView amount;
         private TextView category;
 
-        /**
-         *
-         * @param itemView
-         */
         public IngredientViewHolder(@NonNull View itemView) {
             super(itemView);
             this.ingredientName = (TextView) itemView.findViewById(R.id.ingredient_name);
@@ -78,13 +71,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         this.ingredients = data;
         this.ingredientListener = ingredientListener;
     }
-
-//    public IngredientAdapter.IngredientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        View view = LayoutInflater.from(parent.getContext())
-//                .inflate(R.layout.ingredients_in_recipe_9, parent, false);
-//        IngredientAdapter.IngredientViewHolder ingredientViewHolder = new IngredientAdapter.IngredientViewHolder(view);
-//        return ingredientViewHolder;
-//    }
 
     /**
      *
@@ -114,19 +100,10 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         TextView location = holder.location;
         TextView category = holder.category;
 
-//        TextView serving = holder.serving;
-//        TextView unit = holder.unit;
-//        TextView amount = holder.amount;
-
-
         ingredientName.setText(ingredients.get(position).getDescription());
         bestBefore.setText(ingredients.get(position).getBestBeforeFormatted());
         category.setText(ingredients.get(position).getCategory());
         location.setText(ingredients.get(position).getLocation());
-//        serving.setText(ingredients.get(position).getAmount().toString());
-//        unit.setText(ingredients.get(position).getUnit());
-//        amount.setText(ingredients.get(position).getAmount().toString());
-//        holder.bind(position,this);
 
         View itemView = holder.getItemView();
         itemView.setOnClickListener(new View.OnClickListener() {
@@ -139,7 +116,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
 
     /**
      *
-     * @return
+     * @return size of the ingredients list
      */
     @Override
     public int getItemCount() {
@@ -147,8 +124,8 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     }
 
     /**
-     *
-     * @param newIngredient
+     * sets the adapter's ingredients
+     * @param newIngredient ingredients to update with
      */
     public void updateIngredient(ArrayList<Ingredient> newIngredient){
         ingredients = newIngredient;
@@ -156,8 +133,9 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     }
 
     /**
-     *
-     * @param i
+     *  Responds to an ingredient item being clicked in the recyclerView.
+     *  Navigates to viewing the ingredient
+     * @param i index of ingredient in the environment viewModel
      */
     public void ingredientOnClick(int i) {
        Ingredient a = ingredients.get(i);
