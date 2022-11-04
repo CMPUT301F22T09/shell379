@@ -61,7 +61,7 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
                 // Update the UI, in this case, a TextView.
 //                ingredient_recyclerView.setText(newName);
                 if (ingredientListAdapter != null){
-                    ingredientListAdapter.updateIngredient(ingredient);
+                    ingredientListAdapter.updateIngredient(envViewModel.getIngredients().getFullList());
                 }
             }
         };
@@ -103,7 +103,7 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
                 }
         );
 
-        ingredientList = envViewModel.getIngredients().getList();
+        ingredientList = envViewModel.getIngredients().getFullList();
         layoutManager = new LinearLayoutManager(this.getActivity());
         ingredient_recyclerView = (RecyclerView) rootView.findViewById(R.id.ingredient_list_recyclerView);
         ingredient_recyclerView.setLayoutManager(layoutManager);

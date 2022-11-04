@@ -1,5 +1,7 @@
 package com.cmput301f22t09.shell379.data.vm.collections;
 
+import com.cmput301f22t09.shell379.data.Ingredient;
+
 import java.util.ArrayList;
 
 // TODO: cite https://stackoverflow.com/questions/897935/when-do-java-generics-require-extends-t-instead-of-t-and-is-there-any-down
@@ -15,8 +17,7 @@ public class PartiallyEquableLiveCollection<T extends PartiallyEquable> extends 
         ArrayList<T> seenBefore = new ArrayList<T>();
         int seenBeforeLength;
         boolean addItem = true;
-
-        for (Object item : this.getList()) {
+        for (Object item : lst.getValue()) {
             T tItem = (T) item;
             seenBeforeLength = seenBefore.size();
             for (int i = 0; i < seenBeforeLength; i++) {
@@ -35,12 +36,11 @@ public class PartiallyEquableLiveCollection<T extends PartiallyEquable> extends 
         return filteredCollection;
     }
 
-    /**
+        /**
      * returns a full only filtered list of elements of type T
      * @return list of full elements of type T
      */
-    @Override
-    public ArrayList<T> getList() {
+    public ArrayList<T> getFullList() {
         ArrayList<T> filteredList = new ArrayList<T>();
         ArrayList<T> list = lst.getValue();
         for (int i = 0; i < list.size();i++){
@@ -49,5 +49,12 @@ public class PartiallyEquableLiveCollection<T extends PartiallyEquable> extends 
             }
         }
         return filteredList;
+    }
+    /**
+     * returns a all elements of type T
+     * @return list of all elements of type T
+     */
+    public ArrayList<T> getAll() {
+        return lst.getValue();
     }
 }

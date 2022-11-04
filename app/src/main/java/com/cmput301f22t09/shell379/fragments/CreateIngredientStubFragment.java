@@ -22,6 +22,7 @@ import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Unit;
 import com.cmput301f22t09.shell379.data.vm.Environment;
+import com.cmput301f22t09.shell379.data.vm.collections.PartiallyEquableLiveCollection;
 
 import java.util.ArrayList;
 
@@ -133,6 +134,7 @@ public class CreateIngredientStubFragment extends Fragment{
             CreateIngredientStubFragmentDirections.ActionCreateIngredientStubFragment3ToEditRecipe action =
                 CreateIngredientStubFragmentDirections.actionCreateIngredientStubFragment3ToEditRecipe (recipeIndex);
             action.setSelectedIngredients(bundle);
+
             navController.navigate(action);
 
 
