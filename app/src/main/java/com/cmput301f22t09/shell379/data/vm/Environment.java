@@ -20,6 +20,7 @@ import com.cmput301f22t09.shell379.data.util.DatabaseManager;
 import com.cmput301f22t09.shell379.data.vm.collections.CategorySet;
 import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
 import com.cmput301f22t09.shell379.data.vm.infrastructure.Commitable;
+import com.cmput301f22t09.shell379.data.vm.collections.PartiallyEquableLiveCollection;
 
 import java.io.Serializable;
 
@@ -29,7 +30,7 @@ import java.io.Serializable;
  * The class is accessible from all fragments and does not change between fragments.
  */
 public class Environment extends ViewModel implements Serializable {
-    private LiveCollection<Ingredient> ingredients;
+    private PartiallyEquableLiveCollection<Ingredient> ingredients;
     private LiveCollection<Recipe> recipes;
     private ShoppingCart cart;
     private CategorySet ingredientCategories;
@@ -37,7 +38,7 @@ public class Environment extends ViewModel implements Serializable {
     private CategorySet locationCategories;
 
     public Environment() {
-        ingredients = new LiveCollection<Ingredient>();
+        ingredients = new PartiallyEquableLiveCollection<Ingredient>();
         recipes = new LiveCollection<Recipe>();
         cart = new ShoppingCart();
         ingredientCategories = new CategorySet();
@@ -74,6 +75,7 @@ public class Environment extends ViewModel implements Serializable {
      */
     public static Environment of(AppCompatActivity owner) {
         Environment env = new ViewModelProvider(owner).get(Environment.class);
+        if (env == null) env = new Environment();
         setupObservers(owner, env);
         return env;
     }
@@ -94,8 +96,12 @@ public class Environment extends ViewModel implements Serializable {
     }
 
     /**
-     * sets a single observer for the data of a Commitable object.
+     * Sets a single observer for the data of a Commitable object.
      * When the Commitable needs to be committed the environment will be pushed.
+     *
+     * Observer will commit even if the commit attribute was previously
+     * true and then set to true again.
+     *
      * @param owner scope for the observation.
      * @param env env object to push to the database.
      * @param commitable Commitable object to watch for commit triggers.
@@ -112,7 +118,7 @@ public class Environment extends ViewModel implements Serializable {
         });
     }
 
-    public LiveCollection<Ingredient> getIngredients() {
+    public PartiallyEquableLiveCollection<Ingredient> getIngredients() {
         return ingredients;
     }
 
