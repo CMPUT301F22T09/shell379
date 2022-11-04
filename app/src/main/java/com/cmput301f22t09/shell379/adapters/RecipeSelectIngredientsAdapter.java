@@ -1,5 +1,7 @@
 package com.cmput301f22t09.shell379.adapters;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,6 +50,22 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
             this.checkbox = (CheckBox) itemView.findViewById(R.id.rsi_checkBox);
             this.inputAmount = (EditText) itemView.findViewById(R.id.rsi_amount);
         }
+
+//        public Ingredient getDupeIngredient() {
+//            String description = this.description.getText().toString();
+//            String category = this.category.getText().toString();
+//            Integer amount;
+////            if (this.inputAmount.getText().toString().equals("")) {
+////                amount = -1;
+////            }
+////            else {
+////                amount = Integer.parseInt(this.inputAmount.getText().toString());
+////            }
+//            amount = Integer.parseInt(this.inputAmount.getText().toString());
+//
+//            Ingredient dupeIngredient = new Ingredient(description, null, amount, null, category);
+//            return dupeIngredient;
+//        }
     }
 
     public RecipeSelectIngredientsAdapter(ArrayList<Ingredient> ingredients, ArrayList<Ingredient> recipeIngredients) {
@@ -130,6 +148,8 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
 
     public ArrayList<Ingredient> getCheckedIngredients() {
         // for each checked ingredient, get its amount (default to 0 if empty?)
+        // TODO: update any editText values
+
         return this.checkedIngredients;
     }
 
