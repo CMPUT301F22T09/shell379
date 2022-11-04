@@ -48,10 +48,23 @@ public class RecipeUITest {
         // action 10
         while (true) {
             try {
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException f) {
+                    continue;
+                }
+
                 onView(withId(R.id.recipes_list_button)).perform(click());
                 break;
             } catch (PerformException e) {
                 Log.e("RecipeUITest", e.getMessage());
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException f) {
+
+                }
             }
         }
         onView(withText("Recipes")).check(matches(isDisplayed()));
@@ -104,10 +117,21 @@ public class RecipeUITest {
         // action 10
         while (true) {
             try {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException f) {
+                    continue;
+                }
+
                 onView(withId(R.id.recipes_list_button)).perform(click());
                 break;
             } catch (PerformException e) {
                 Log.e("RecipeUITest", e.getMessage());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException f) {
+
+                }
             }
         }
         onView(withText("Recipes")).check(matches(isDisplayed()));

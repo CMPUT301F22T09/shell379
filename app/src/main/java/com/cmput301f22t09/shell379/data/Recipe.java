@@ -152,6 +152,6 @@ public class Recipe implements Serializable {
         Recipe r = (Recipe) o;
 
         return r.getTitle().equals(title) && r.getPreparationTime().equals(preparationTime) && r.getServings().equals(servings)
-                && r.getCategory().equals(category) && r.getComments().equals(comments) && r.getPhotograph().equals(photograph);
+                && r.getCategory().equals(category) && r.getComments().equals(comments);
     }
 }

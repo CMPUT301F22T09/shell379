@@ -26,6 +26,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Adapter for recycler view in select ingredients page for recipes.
+ */
 public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeSelectIngredientsAdapter.RecipeSelectIngredientsViewHolder> {
 
     private ArrayList<Ingredient> ingredients;
@@ -34,6 +37,9 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
     private ArrayList<Ingredient> checkedIngredients;
 
 
+    /**
+     * Custom view holder for describing each ingredient's view
+     */
     public class RecipeSelectIngredientsViewHolder extends RecyclerView.ViewHolder {
 
         TextView description;
@@ -103,9 +109,8 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
             }
         }
 
-        // TODO: cite https://stackoverflow.com/questions/51778606/android-how-to-check-if-a-checkbox-is-checked-in-an-item-of-a-recyclerview
         // referenced for how to detect when a checkbox is clicked
-        // user Aanal Shah
+        // url: https://stackoverflow.com/questions/51778606/android-how-to-check-if-a-checkbox-is-checked-in-an-item-of-a-recyclerview
         holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -147,9 +152,6 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
     }
 
     public ArrayList<Ingredient> getCheckedIngredients() {
-        // for each checked ingredient, get its amount (default to 0 if empty?)
-        // TODO: update any editText values
-
         return this.checkedIngredients;
     }
 

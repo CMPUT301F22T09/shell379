@@ -16,6 +16,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withParent;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.test.espresso.PerformException;
 import androidx.test.espresso.UiController;
 import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.contrib.PickerActions;
@@ -54,7 +55,24 @@ public class IngredientsUITest {
     public void test_1_2_3_8_5_9_7_8_6() {
 
         // action 1
-        onView(withText("Ingredients")).perform(click());
+        while (true) {
+            try {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException f) {
+                    continue;
+                }
+                onView(withId(R.id.ingredients_list_button)).perform(click());
+                break;
+            } catch (PerformException e) {
+                Log.e("IngredientsUITest", e.getMessage());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException f) {
+
+                }
+            }
+        }
 //        onView(withId(R.id.ingredient_list_recyclerView)).check(matches(isDisplayed()));
 
         // action 2
@@ -66,7 +84,13 @@ public class IngredientsUITest {
 
         onView(withId(R.id.editDescription)).perform(scrollTo(), replaceText("Ing1"));
         onView(withId(R.id.editBestBeforeDate)).perform(PickerActions.setDate(2030, 12, 30));
-        onView(withId(R.id.editLocation)).perform(scrollTo(),replaceText("Pantry"));
+
+        // action xx
+        onView(withId(R.id.editLocation)).perform(click());
+        onView(withId(R.id.textInputEditText)).perform(replaceText("Pantry"));
+
+        // action xx
+        onView(withId(R.id.addButton)).perform(click());
         onView(withId(R.id.editAmount)).perform(scrollTo(),replaceText("34"));
         onView(withId(R.id.editCategory)).perform(scrollTo(),replaceText("Cat"));
 
@@ -107,7 +131,7 @@ public class IngredientsUITest {
         onView(withText("Ing1")).check(matches(isDisplayed()));
         onView(withText("30/12/2030")).check(matches(isDisplayed()));
         onView(withText("Pantry")).check(matches(isDisplayed()));
-        onView(withText("34testUnit")).check(matches(isDisplayed()));
+        onView(withText(containsString("34"))).check(matches(isDisplayed()));
         onView(withText("Cat")).check(matches(isDisplayed()));
 
         // action 5
@@ -115,7 +139,12 @@ public class IngredientsUITest {
 
         onView(withId(R.id.editDescription)).perform(scrollTo(), replaceText("Ing2"));
         onView(withId(R.id.editBestBeforeDate)).perform(PickerActions.setDate(2030, 10, 30));
-        onView(withId(R.id.editLocation)).perform(scrollTo(),replaceText("Fridge"));
+        // action xx
+        onView(withId(R.id.editLocation)).perform(click());
+        onView(withId(R.id.textInputEditText)).perform(replaceText("Fridge"));
+
+        // action xx
+        onView(withId(R.id.addButton)).perform(click());
         onView(withId(R.id.editAmount)).perform(scrollTo(),replaceText("35"));
         onView(withId(R.id.editCategory)).perform(scrollTo(),replaceText("Cat2"));
 
@@ -163,7 +192,7 @@ public class IngredientsUITest {
         onView(withText("Ing2")).check(matches(isDisplayed()));
         onView(withText("30/10/2030")).check(matches(isDisplayed()));
         onView(withText("Fridge")).check(matches(isDisplayed()));
-        onView(withText("35testUnit")).check(matches(isDisplayed()));
+        onView(withText(containsString("35"))).check(matches(isDisplayed()));
         onView(withText("Cat2")).check(matches(isDisplayed()));
 
 
@@ -195,7 +224,24 @@ public class IngredientsUITest {
     @Test
     public void test_1_2_4() {
         // action 1
-        onView(withText("Ingredients")).perform(click());
+        while (true) {
+            try {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException f) {
+                    continue;
+                }
+                onView(withId(R.id.ingredients_list_button)).perform(click());
+                break;
+            } catch (PerformException e) {
+                Log.e("IngredientsUITest", e.getMessage());
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException f) {
+
+                }
+            }
+        }
 
         // action 2
         onView(withId(R.id.new_button)).perform(click());
