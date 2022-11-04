@@ -73,7 +73,7 @@
         android:id="@+id/editRecipe"
         android:name="com.cmput301f22t09.shell379.fragments.EditRecipeFragment"
         android:label="fragment_edit_recipe"
-        tools:layout="@layout/fragment_edit_recipe_9" >
+        tools:layout="@layout/fragment_edit_recipe" >
         <argument
             android:name="recipeIndex"
             app:argType="integer" />
