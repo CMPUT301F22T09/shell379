@@ -89,6 +89,6 @@ public class SerializeUtil {
     public static Bitmap deserializeImg(String serialized) {
         Log.d("SER_UTIL", "DESERIALIZING IMG");
         byte[] bytes = Base64.getDecoder().decode(serialized);
-        return BitmapFactory.decodeByteArray(bytes, 0, 0);
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 }

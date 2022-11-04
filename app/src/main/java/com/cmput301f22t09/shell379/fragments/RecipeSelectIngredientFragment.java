@@ -17,6 +17,7 @@ import android.widget.Button;
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.RecipeSelectIngredientsAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ public class RecipeSelectIngredientFragment extends Fragment {
     RecipeSelectIngredientsAdapter rsiAdapter;
     Button selectButton;
     Environment env;
+    int recipeIndex;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -78,6 +81,11 @@ public class RecipeSelectIngredientFragment extends Fragment {
         // Inflate the layout for this fragment
         env = Environment.of((AppCompatActivity) requireActivity());
         View rootView = inflater.inflate(R.layout.recipe_select_ingredients, container, false);
+        recipeIndex = getArguments().getInt("recipeIndex");
+
+        // selected recipe
+        Recipe selectedR = env.getRecipes().getList().get(recipeIndex);
+
 
         testList = new ArrayList<Ingredient>();
         testList.add(new Ingredient("Ingredient1", new Date(), "location", 2, "90 unit", "category"));
