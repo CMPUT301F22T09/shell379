@@ -12,6 +12,9 @@ public class RecipeUnitTest {
         return recipe;
     }
 
+    /**
+     * Test the Equals function for recipe class
+     */
     @Test
     void testEquals() {
         Recipe newR = mockRecipe();
