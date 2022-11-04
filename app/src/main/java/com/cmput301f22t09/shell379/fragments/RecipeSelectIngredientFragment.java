@@ -89,23 +89,8 @@ public class RecipeSelectIngredientFragment extends Fragment {
         ingredientsRecyclerView.setAdapter(rsiAdapter);
         ingredientsRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-//        selectedRecipe = env.getRecipes().getList().get(recipeIndex);
-//        // the selected recipe's ingredients
-//        recipeIngredientList = selectedRecipe.getIngredients();
-//        // filtered ingredients list from environment
-//        ingredientList = env.getIngredients().getFilteredCollection().getList();
-//
-//        layoutManager = new LinearLayoutManager(this.getActivity());
-//        ingredientsRecyclerView = (RecyclerView) rootView.findViewById(R.id.rsi_recyclerView);
-//        ingredientsRecyclerView.setLayoutManager(layoutManager);
-//
-//        rsiAdapter = new RecipeSelectIngredientsAdapter(ingredientList, recipeIngredientList);
-//        ingredientsRecyclerView.setAdapter(rsiAdapter);
-//        ingredientsRecyclerView.setItemAnimator(new DefaultItemAnimator());
         selectButton = rootView.findViewById(R.id.select_button);
         selectButton.setOnClickListener(new View.OnClickListener() {
-            // TODO: Create dupe ingredient objects with amount
-
             @Override
             public void onClick(View view) {
                 // Creating a new recipe
@@ -122,6 +107,7 @@ public class RecipeSelectIngredientFragment extends Fragment {
                     // Get checked ingredients from recycler view
                     selectedRecipe.setIngredients(rsiAdapter.getCheckedIngredients());
                     env.getRecipes().commit();
+                    navController.popBackStack();
                 }
             }
         });
@@ -147,7 +133,7 @@ public class RecipeSelectIngredientFragment extends Fragment {
 
 
         return rootView;
-    }
+    } 
 
     public void select() {
         // get specific recipe & add ingredient 

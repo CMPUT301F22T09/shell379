@@ -171,12 +171,12 @@ public class Ingredient implements Serializable, PartiallyEquable {
     @Override
     public boolean equals(Object o){
         Ingredient ing = (Ingredient) o;
-        if (ing.getDescription() == ing.description){
-            if (ing.getCategory()==ing.category){
-                if (ing.getLocation() == ing.location){
+        if (ing.getDescription().equals( ing.description)){
+            if (ing.getCategory().equals(ing.category)){
+                if (ing.getLocation().equals(ing.location)){
                     if (ing.getBestBefore().equals(bestBefore)){
-                        if (ing.getAmount()==ing.amount){
-                            if (ing.getUnit()==ing.unit){
+                        if (ing.getAmount().equals(ing.amount)){
+                            if (ing.getUnit().equals(ing.unit)){
                                 return true;
                             }
                         }
