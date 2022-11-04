@@ -1,7 +1,7 @@
 Team Name: shell379
 Team Members (and ccids): Alphonso Dineros (alphonso), Elsa Xiaoyi Chen (xiaoyi9), Joshusa Wong (jyw2), Muhammad Fiaz (mfiaz), Yi Meng Wang (yimeng2), Zong Lin Yu (zonglin1)
 CMPUT 301
-Project Part 2
+Project Part 3
 
 Running Instructions:
 1. Install the APK
