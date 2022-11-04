@@ -87,11 +87,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         return ingredientViewHolder;
     }
 
-    /**
-     *
-     * @param holder
-     * @param position
-     */
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull IngredientAdapter.IngredientViewHolder holder, int position) {
@@ -115,7 +111,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     }
 
     /**
-     *
+     * Get the size of items in the ingredient list
      * @return size of the ingredients list
      */
     @Override
