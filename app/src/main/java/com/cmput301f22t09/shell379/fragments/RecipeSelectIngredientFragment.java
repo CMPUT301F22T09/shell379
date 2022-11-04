@@ -122,7 +122,7 @@ public class RecipeSelectIngredientFragment extends Fragment {
                 }
         );
         return rootView;
-    }
+    } 
 
     public void select() {
         // get specific recipe & add ingredient 
