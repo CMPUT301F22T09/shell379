@@ -242,13 +242,12 @@ public class EditRecipeFragment extends Fragment {
 
         return rootView;
     }
-
+    
     // this function is triggered when user
     // selects the image from the imageChooser
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         // SOURCE: https://www.geeksforgeeks.org/how-to-select-an-image-from-gallery-in-android/
         super.onActivityResult(requestCode, resultCode, data);
-
         if (resultCode == RESULT_OK && requestCode == PICK_FROM_GALLERY) {
                 // Get the url of the image from data
                 Uri selectedImageUri = data.getData();
@@ -287,6 +286,41 @@ public class EditRecipeFragment extends Fragment {
                 Toast.makeText(getActivity(), "Gallery permission denied", Toast.LENGTH_SHORT).show();
             }
         }
+
+        // take photo from camera
+        if (requestCode == CAMERA_REQUEST && resultCode == Activity.RESULT_OK) {
+            Bitmap photo = (Bitmap) data.getExtras().get("data");
+            previewPhoto.setImageBitmap(photo);
+        }
+    }
+
+    // source: https://stackoverflow.com/questions/5991319/capture-image-from-camera-and-display-in-activity/5991757#5991757
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
+    {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == MY_CAMERA_PERMISSION_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getActivity(), "Camera permission granted", Toast.LENGTH_SHORT).show();
+                Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(cameraIntent, CAMERA_REQUEST);
+            } else {
+                Toast.makeText(getActivity(), "Camera permission denied", Toast.LENGTH_SHORT).show();
+            }
+        } else if (requestCode == PICK_FROM_GALLERY) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getActivity(), "Gallery permission granted", Toast.LENGTH_SHORT).show();
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
+            } else {
+                Toast.makeText(getActivity(), "Gallery permission denied", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
     }
 
     @Override
