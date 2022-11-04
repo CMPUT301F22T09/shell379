@@ -57,10 +57,18 @@ public class Ingredient implements Serializable {
         this.category = category;
     }
 
+    /**
+     * Get the description of ingredient
+     * @return
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * Set the description of ingredient
+     * @param description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
@@ -69,11 +77,17 @@ public class Ingredient implements Serializable {
         return bestBefore;
     }
 
+    /**
+     * Set the best before date of ingredient
+     * @param bestBefore
+     */
     public void setBestBefore(Date bestBefore) {
         this.bestBefore = bestBefore;
     }
 
     /**
+     * Get the best before date of ingredient
+     * @return
      * get best before date in the format dd/MM/yyyy
      * @return best before date in a string as dd/mm/yyy
      */
@@ -82,34 +96,66 @@ public class Ingredient implements Serializable {
         return simpleDate.format(getBestBefore());
     }
 
+    /**
+     * Get the location of ingredient
+     * @return
+     */
     public String getLocation() {
         return location;
     }
 
+    /**
+     * Set the location of ingredient
+     * @param location
+     */
     public void setLocation(String location) {
         this.location = location;
     }
 
+    /**
+     * Get the amount of ingredient
+     * @return
+     */
     public Integer getAmount() {
         return amount;
     }
 
+    /**
+     * Set the amount of ingredient
+     * @param amount
+     */
     public void setAmount(Integer amount) {
         this.amount = amount;
     }
 
+    /**
+     * Get the unit of ingredient
+     * @return
+     */
     public String getUnit() {
         return unit;
     }
 
+    /**
+     * Set the unit of ingredient
+     * @param unit
+     */
     public void setUnit(String unit) {
         this.unit = unit;
     }
 
+    /**
+     * Get the category of ingredient
+     * @return
+     */
     public String getCategory() {
         return category;
     }
 
+    /**
+     * Set the category of ingredient
+     * @param category
+     */
     public void setCategory(String category) {
         this.category = category;
     }

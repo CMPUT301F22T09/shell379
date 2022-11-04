@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.RecipeSelectIngredientsAdapter;
@@ -32,6 +34,7 @@ public class RecipeSelectIngredientFragment extends Fragment {
     RecipeSelectIngredientsAdapter rsiAdapter;
     Button selectButton;
     Environment env;
+    private NavController navController;
     int recipeIndex;
 
 
@@ -75,6 +78,13 @@ public class RecipeSelectIngredientFragment extends Fragment {
         }
     }
 
+    /**
+     * Set up the onCreateView method to create the view object
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -106,11 +116,26 @@ public class RecipeSelectIngredientFragment extends Fragment {
         ingredientsRecyclerView.setAdapter(rsiAdapter);
         ingredientsRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
+
+        // Implement the button to back to previous page
+        ((ImageView)rootView.findViewById(R.id.floatingActionButton7)).setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        back();
+                    }
+                }
+        );
         return rootView;
     }
 
-//    public void select() {
-//        // get specific recipe & add ingredient
-//
-//    }
+    public void select() {
+        // get specific recipe & add ingredient 
+    }
+
+    /**
+     * Implement the option to go back to previous page
+     */
+    private void back(){
+        navController.popBackStack();
+    }
 }
