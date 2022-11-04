@@ -2,8 +2,12 @@ package com.cmput301f22t09.shell379.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
@@ -12,6 +16,7 @@ import android.net.Uri;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -19,6 +24,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -54,6 +60,7 @@ public class EditRecipeFragment extends Fragment {
     private Button deleteIngredientButton;
     private Button addIngredientButton;
     private Button deleteRecipeButton;
+    private Button takePhotoButton;
     private FloatingActionButton backButton;
     private EditText prepareTimeText;
     private EditText servingsText;
@@ -64,7 +71,9 @@ public class EditRecipeFragment extends Fragment {
     private int recipeIndex;
     private int SELECT_PICTURE = 200;
     private String cat;
-    Environment env;
+    private Environment env;
+    private static final int CAMERA_REQUEST = 1888;
+    private static final int MY_CAMERA_PERMISSION_CODE = 100;
 
     public EditRecipeFragment() {
         // Required empty public constructor
@@ -108,7 +117,7 @@ public class EditRecipeFragment extends Fragment {
         });
 
         env = Environment.of((AppCompatActivity) requireActivity());
-        choosePhoto = rootView.findViewById(R.id.choose_button);
+        choosePhoto = rootView.findViewById(R.id.gallery_button);
         previewPhoto = rootView.findViewById(R.id.photo);
         saveRecipeButton = rootView.findViewById(R.id.save_recipe);
         addIngredientButton = rootView.findViewById(R.id.add_ingredient);
@@ -120,6 +129,7 @@ public class EditRecipeFragment extends Fragment {
         deleteRecipeButton = rootView.findViewById(R.id.delete_recipe);
         backButton = rootView.findViewById(R.id.back_button);
         tableText = rootView.findViewById(R.id.table_text);
+        takePhotoButton = rootView.findViewById(R.id.take_photo_button);
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,6 +153,15 @@ public class EditRecipeFragment extends Fragment {
             }
         });
 
+//        takePhotoButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+//
+//                }
+//            }
+//        });
+
         myRecipe = new Recipe("kongpaochicken",100L,3,"chinese","spicy");
 //        myRecipe.addIngredient(new Ingredient("appleesdadadsdawdwadsaszdazawdas",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
 //        myRecipe.addIngredient(new Ingredient("chicken",new Date(2023,9,07),"fridge",2,"1lbs","meat"));
@@ -151,12 +170,15 @@ public class EditRecipeFragment extends Fragment {
         recipeIndex = getArguments().getInt("recipeIndex");
         if (recipeIndex > -1 && !env.getRecipes().getList().isEmpty()) {
             myRecipe = env.getRecipes().getList().get(recipeIndex);
-//            previewPhoto = rootView.findViewById(R.id.photo);
             send(myRecipe.getCategory());
             prepareTimeText.setText(myRecipe.getPreparationTime().toString());
             servingsText.setText(myRecipe.getServings().toString());
             commentText.setText(myRecipe.getComments());
             nameText.setText(myRecipe.getTitle());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && myRecipe.getPhotograph() != null) {
+//                Log.e("photo", "here");
+                previewPhoto.setImageBitmap(myRecipe.getPhotograph());
+            }
             ingredientListAdapter = new IngredientInRecipeAdapter(myRecipe.getIngredients(), this);
         } else {
             ingredientListAdapter = new IngredientInRecipeAdapter(new ArrayList<Ingredient>(), this);
@@ -186,7 +208,7 @@ public class EditRecipeFragment extends Fragment {
         addIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeSelectIngredientFragment());
+                navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeSelectIngredientFragment(recipeIndex));
             }
         });
 
@@ -251,11 +273,17 @@ public class EditRecipeFragment extends Fragment {
             String comment = commentText.getText().toString();
             Bitmap photo = ((BitmapDrawable) previewPhoto.getDrawable()).getBitmap();
             Recipe newRecipe = new Recipe(name, prepareTime, servings, category, comment, photo);
+
             int size = ingredientListAdapter.getIngredients().size();
             if (size > 0) {
                 for (int i = 0; i < size; i++) {
                     newRecipe.addIngredient(ingredientListAdapter.getIngredients().get(i));
                 }
+            }
+            newRecipe.setPhotograph(photo);
+            if (newRecipe.getPhotograph() == null) {
+                // get photo graph is null
+                Log.e("photo", "here bruh bruh");
             }
 
 
@@ -278,7 +306,6 @@ public class EditRecipeFragment extends Fragment {
 
     public void deleteRecipeAction() {
         if (recipeIndex > -1 && !env.getRecipes().getList().isEmpty()) {
-            Log.e("index", Integer.toString(recipeIndex));
             env.getRecipes().getList().remove(recipeIndex);
             env.getRecipes().commit();
         }
@@ -286,7 +313,6 @@ public class EditRecipeFragment extends Fragment {
     }
 
     public void send(String cat) {
-        Log.e("EditRecipe", cat);
         catSelect.setAllCaps(false);
         catSelect.setText(cat);
         catSelect.setGravity(Gravity.LEFT);

@@ -3,6 +3,7 @@ package com.cmput301f22t09.shell379.data;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Parcel;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
