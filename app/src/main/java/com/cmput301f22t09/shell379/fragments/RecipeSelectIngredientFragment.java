@@ -1,11 +1,11 @@
 package com.cmput301f22t09.shell379.fragments;
 
-import android.media.audiofx.EnvironmentalReverb;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,13 +22,17 @@ import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 public class RecipeSelectIngredientFragment extends Fragment {
 
     // TODO: Temporary! Testing content
-    ArrayList<Ingredient> testList;
+    ArrayList<Ingredient> ingredientList;
+    ArrayList<Ingredient> recipeIngredientList;
+    Recipe selectedRecipe;
     RecyclerView ingredientsRecyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecipeSelectIngredientsAdapter rsiAdapter;
@@ -37,45 +41,16 @@ public class RecipeSelectIngredientFragment extends Fragment {
     private NavController navController;
     int recipeIndex;
 
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     public RecipeSelectIngredientFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RecipeSelectIngredientFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RecipeSelectIngredientFragment newInstance(String param1, String param2) {
-        RecipeSelectIngredientFragment fragment = new RecipeSelectIngredientFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        ingredientList = new ArrayList<Ingredient>();
+        recipeIngredientList = new ArrayList<Ingredient>();
+        navController = NavHostFragment.findNavController(this);
     }
 
     /**
@@ -93,28 +68,49 @@ public class RecipeSelectIngredientFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.recipe_select_ingredients, container, false);
         recipeIndex = getArguments().getInt("recipeIndex");
 
-        // selected recipe
-        Recipe selectedR = env.getRecipes().getList().get(recipeIndex);
-
-
-        testList = new ArrayList<Ingredient>();
-        testList.add(new Ingredient("Ingredient1", new Date(), "location", 2, "90 unit", "category"));
-        testList.add(new Ingredient("Ingredient2", new Date(), "location2", 2, "90 unit", "category2"));
-
-//        selectButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                select();
-//            }
-//        });
+        // recipeIndex = -1 means we're creating a new recipe
+        if (recipeIndex == -1) {
+            // TODO: can't get recipe from env using recipeIndex because it doesn't exist in env yet
+            recipeIngredientList = new ArrayList<>();
+        }
+        else {
+            selectedRecipe = env.getRecipes().getList().get(recipeIndex);
+            // the selected recipe's ingredients
+            recipeIngredientList = selectedRecipe.getIngredients();
+        }
+        // filtered ingredients list from environment
+        ingredientList = env.getIngredients().getFilteredCollection().getList();
 
         layoutManager = new LinearLayoutManager(this.getActivity());
         ingredientsRecyclerView = (RecyclerView) rootView.findViewById(R.id.rsi_recyclerView);
         ingredientsRecyclerView.setLayoutManager(layoutManager);
 
-        rsiAdapter = new RecipeSelectIngredientsAdapter(testList);
+        rsiAdapter = new RecipeSelectIngredientsAdapter(ingredientList, recipeIngredientList);
         ingredientsRecyclerView.setAdapter(rsiAdapter);
         ingredientsRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        selectButton = rootView.findViewById(R.id.select_button);
+        selectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Creating a new recipe
+                if (recipeIndex == -1) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("selectedIngredients", rsiAdapter.getCheckedIngredients());
+                    RecipeSelectIngredientFragmentDirections.ActionRecipeSelectIngredientFragmentToEditRecipe action
+                            = RecipeSelectIngredientFragmentDirections.actionRecipeSelectIngredientFragmentToEditRecipe(recipeIndex);
+                    action.setSelectedIngredients(bundle);
+                    navController.navigate(action);
+                }
+                // Editing an existing recipe
+                else {
+                    // Get checked ingredients from recycler view
+                    selectedRecipe.setIngredients(rsiAdapter.getCheckedIngredients());
+                    env.getRecipes().commit();
+                    navController.popBackStack();
+                }
+            }
+        });
 
 
         // Implement the button to back to previous page

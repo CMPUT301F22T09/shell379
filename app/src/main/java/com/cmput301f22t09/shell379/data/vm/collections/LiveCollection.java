@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Collection of T entity objects stored in a MutableLiveData object.
  */
 public class LiveCollection<T> extends Commitable {
-    private final MutableLiveData<ArrayList<T>> lst = new MutableLiveData<>();
+    protected final MutableLiveData<ArrayList<T>> lst = new MutableLiveData<>();
 
     public LiveCollection() {
         lst.setValue(new ArrayList<T>());

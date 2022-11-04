@@ -66,7 +66,7 @@ public class DatabaseManager {
             @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (value != null && value.getData() != null) {
+                try {
                     HashMap<String, String> data = new HashMap<>();
                     data.put("ingredients", (String) value.get("ingredients"));
                     data.put("recipes", (String) value.get("recipes"));
@@ -78,7 +78,7 @@ public class DatabaseManager {
                     Environment.of(owner, instance);
                     loaded.setValue(true);
                 }
-                else {
+                catch (NullPointerException e) {
                     instance = new Environment();
                     loaded.setValue(true);
                 }
