@@ -2,12 +2,13 @@ package com.cmput301f22t09.shell379.data;
 
 import android.os.Build;
 import androidx.annotation.RequiresApi;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 /**
- *
+ * Ingredient
  */
 public class Ingredient implements Serializable {
     private String description;
@@ -16,15 +17,6 @@ public class Ingredient implements Serializable {
     private Integer amount;
     private String unit;
     private String category;
-
-//    public Ingredient(String description, Date bestBefore, String location, Integer amount, String unit, String category) {
-//        this.description = description;
-//        this.bestBefore = bestBefore;
-//        this.location = location;
-//        this.amount = amount;
-//        this.unit = unit;
-//        this.category = category;
-//    }
 
     /**
      * Construct the ingredient class
@@ -52,12 +44,6 @@ public class Ingredient implements Serializable {
             throw new IllegalArgumentException("Amount cannot be negative.");
         }
         this.unit = unit;
-//        if (unit.replaceAll("[^0-9]", "").equals("")) {
-//            throw new IllegalArgumentException("Unit must contain numeric values.");
-//        }
-//        if (Integer.parseInt(unit.replaceAll("[^0-9]", "")) <= 1e-10)  {
-//            throw new IllegalArgumentException("Unit must be non-zero");
-//        }
         this.category = category;
     }
 
@@ -87,10 +73,6 @@ public class Ingredient implements Serializable {
         this.description = description;
     }
 
-    /**
-     *
-     * @return
-     */
     public Date getBestBefore() {
         return bestBefore;
     }
@@ -106,6 +88,8 @@ public class Ingredient implements Serializable {
     /**
      * Get the best before date of ingredient
      * @return
+     * get best before date in the format dd/MM/yyyy
+     * @return best before date in a string as dd/mm/yyy
      */
     public String getBestBeforeFormatted() {
         SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
@@ -176,18 +160,20 @@ public class Ingredient implements Serializable {
         this.category = category;
     }
 
-    /**
-     *
-     * @param a
-     * @return
+     /**
+     * overrides Java's equals method
+     * @param o ingredient to compare to
+     * @return true if the ingredient is equal, false otherwise
      */
-    public boolean getFullEqual(Ingredient a){
-        if (a.getDescription() == a.description){
-            if (a.getCategory()==a.category){
-                if (a.getLocation() == a.location){
-                    if (a.getBestBefore().equals(bestBefore)){
-                        if (a.getAmount()==a.amount){
-                            if (a.getUnit()==a.unit){
+    @Override
+    public boolean equals(Object o){
+        Ingredient ing = (Ingredient) o;
+        if (ing.getDescription() == ing.description){
+            if (ing.getCategory()==ing.category){
+                if (ing.getLocation() == ing.location){
+                    if (ing.getBestBefore().equals(bestBefore)){
+                        if (ing.getAmount()==ing.amount){
+                            if (ing.getUnit()==ing.unit){
                                 return true;
                             }
                         }

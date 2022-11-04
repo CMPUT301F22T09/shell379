@@ -15,13 +15,12 @@ import com.cmput301f22t09.shell379.R;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
-
+/**
+ * Adapter for choosing a category in the select category popup
+ */
 public class CategoriesSelectRecViewAdapter extends RecyclerView.Adapter<CategoriesSelectRecViewAdapter.ViewHolder> {
-
     private ArrayList<String> cats;
     private static ClickListener clickListener;
-
-
 
     public CategoriesSelectRecViewAdapter(HashSet<String> cats) {
         this.cats = new ArrayList<String>(cats);
@@ -48,8 +47,6 @@ public class CategoriesSelectRecViewAdapter extends RecyclerView.Adapter<Categor
         String category = this.cats.get(position);
         TextView catText = holder.catView;
         catText.setText(category);
-
-
     }
 
     @Override
@@ -67,17 +64,8 @@ public class CategoriesSelectRecViewAdapter extends RecyclerView.Adapter<Categor
             view.setOnLongClickListener(this);
 
             catView = (TextView) view.findViewById(R.id.cat_name);
-//            catView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    Log.e("TESTCAT", catView.getText().toString());
-//
-//                }
-//
-//            });
-
-
         }
+
         public TextView getTextView() {
             return catView;
         }
@@ -94,16 +82,17 @@ public class CategoriesSelectRecViewAdapter extends RecyclerView.Adapter<Categor
         }
     }
 
+    /**
+     * interface for functions that will trigger on item clicks
+     */
     public interface ClickListener {
         void onItemClick(int position, View v);
         void onItemLongClick(int position, View v);
     }
 
-
     public void setOnItemClickListener(ClickListener clickListener) {
         CategoriesSelectRecViewAdapter.clickListener = clickListener;
     }
-
 
     public static String getCategory(String cat) {
         return cat;
@@ -112,6 +101,4 @@ public class CategoriesSelectRecViewAdapter extends RecyclerView.Adapter<Categor
     public String get(int position) {
         return this.cats.get(position);
     }
-
-
 }

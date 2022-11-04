@@ -19,16 +19,12 @@ import android.widget.ImageView;
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.RecipeSelectIngredientsAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RecipeSelectIngredientFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RecipeSelectIngredientFragment extends Fragment {
 
     // TODO: Temporary! Testing content
@@ -39,6 +35,8 @@ public class RecipeSelectIngredientFragment extends Fragment {
     Button selectButton;
     Environment env;
     private NavController navController;
+    int recipeIndex;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -93,17 +91,22 @@ public class RecipeSelectIngredientFragment extends Fragment {
         // Inflate the layout for this fragment
         env = Environment.of((AppCompatActivity) requireActivity());
         View rootView = inflater.inflate(R.layout.recipe_select_ingredients, container, false);
+        recipeIndex = getArguments().getInt("recipeIndex");
+
+        // selected recipe
+        Recipe selectedR = env.getRecipes().getList().get(recipeIndex);
+
 
         testList = new ArrayList<Ingredient>();
         testList.add(new Ingredient("Ingredient1", new Date(), "location", 2, "90 unit", "category"));
         testList.add(new Ingredient("Ingredient2", new Date(), "location2", 2, "90 unit", "category2"));
 
-        selectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                select();
-            }
-        });
+//        selectButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                select();
+//            }
+//        });
 
         layoutManager = new LinearLayoutManager(this.getActivity());
         ingredientsRecyclerView = (RecyclerView) rootView.findViewById(R.id.rsi_recyclerView);

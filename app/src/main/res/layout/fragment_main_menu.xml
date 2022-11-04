@@ -10,6 +10,16 @@
     tools:context=".fragments.MainMenuFragment"
     >
 
+    <TextView
+        android:id="@+id/loadingText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="Loading Data!"
+        android:textColor="@color/teal_200"
+        android:textSize="20sp"
+        android:visibility="gone" />
     <Button
         android:id="@+id/ingredients_list_button"
         android:layout_width="match_parent"
