@@ -21,6 +21,9 @@
 2. Please note that when adding an ingredient to a recipe, to check a checkbox, the AMOUNT MUST BE PROVIDED
 3. UML and CRC Cards are under the wiki
 
+### Known issues:
+1. Currently, when the user is in the middle of creating a new Recipe and has already filled out some of its fields, then goes to add some ingredients to the recipe (which takes them to another fragment), their progress is lost upon returning from the ingredient selection screen and the fields that they had previously filled out are reset. We were not able to fix this issue in time for the half-way checkpoint, but we will ensure that we get it fixed by the final project submission date.
+
 ### Acknowledgements and References:
 1. CMPUT301 Lecture Lab Code was used in the development of this project
 2. Group members used their own prior CMPUT301 Assignment/Lab code in the development of this project
