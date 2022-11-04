@@ -100,7 +100,7 @@ public class EditRecipeFragment extends Fragment {
                         catSelect.setTypeface(Typeface.SANS_SERIF);
                     }
                 };
-                IngredientCategorySelectPopup selection = new IngredientCategorySelectPopup(listener);
+                RecipeCategorySelectPopup selection = new RecipeCategorySelectPopup(listener,"Category");
                 selection.show(getFragmentManager(), "");
                 selection.setTargetFragment(EditRecipeFragment.this, 1);
 
