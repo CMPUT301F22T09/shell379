@@ -9,8 +9,9 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
+
 /**
- * Ingredient
+ * Ingredient class is a model for the ingredient used in the app
  */
 public class Ingredient implements Serializable, PartiallyEquable {
     private String description;
@@ -49,6 +50,14 @@ public class Ingredient implements Serializable, PartiallyEquable {
         this.category = category;
     }
 
+    /**
+     * Creates Ingredient object with an image.
+     * @param description
+     * @param location
+     * @param amount
+     * @param unit
+     * @param category
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public Ingredient(String description, String location, Integer amount, String unit, String category) {
         this.description = description;
