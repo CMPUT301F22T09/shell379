@@ -107,6 +107,7 @@ public class EditRecipeFragment extends Fragment {
                         catSelect.setGravity(Gravity.LEFT);
                         catSelect.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
                         catSelect.setTypeface(Typeface.SANS_SERIF);
+                        cat = val;
                     }
                 };
                 RecipeCategorySelectPopup selection = new RecipeCategorySelectPopup(listener,"Category");
