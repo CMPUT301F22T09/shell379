@@ -46,11 +46,8 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         }
 
         private TextView ingredientName;
-        private TextView serving;
         private TextView bestBefore;
         private TextView location;
-        private TextView unit;
-        private TextView amount;
         private TextView category;
 
         /**
