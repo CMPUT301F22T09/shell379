@@ -94,6 +94,7 @@ public abstract class SaveIngredientFragment extends Fragment {
                     }
                 }
         );
+        // Implement the onclick category to enter the text
         category.setOnClickListener(
                 new View.OnClickListener() {
                     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -102,6 +103,7 @@ public abstract class SaveIngredientFragment extends Fragment {
                     }
                 }
         );
+        // Implement the onclick location to enter the text
         location.setOnClickListener(
                 new View.OnClickListener() {
                     @RequiresApi(api = Build.VERSION_CODES.N)
