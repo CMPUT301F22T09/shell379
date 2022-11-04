@@ -5,7 +5,9 @@ import static android.app.Activity.RESULT_OK;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
@@ -22,6 +24,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -172,7 +175,8 @@ public class EditRecipeFragment extends Fragment {
             servingsText.setText(myRecipe.getServings().toString());
             commentText.setText(myRecipe.getComments());
             nameText.setText(myRecipe.getTitle());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && myRecipe.getPhotograph() != null) {
+//                Log.e("photo", "here");
                 previewPhoto.setImageBitmap(myRecipe.getPhotograph());
             }
             ingredientListAdapter = new IngredientInRecipeAdapter(myRecipe.getIngredients(), this);
@@ -267,14 +271,19 @@ public class EditRecipeFragment extends Fragment {
             int servings = Integer.parseInt(servingsText.getText().toString());
             String category = cat;
             String comment = commentText.getText().toString();
-//            Bitmap myPhoto = (ResourcesCompat.getDrawable(this.resources, (BitmapDrawable) previewPhoto.getDrawable(), null)).toBitmap();
             Bitmap photo = ((BitmapDrawable) previewPhoto.getDrawable()).getBitmap();
             Recipe newRecipe = new Recipe(name, prepareTime, servings, category, comment, photo);
+
             int size = ingredientListAdapter.getIngredients().size();
             if (size > 0) {
                 for (int i = 0; i < size; i++) {
                     newRecipe.addIngredient(ingredientListAdapter.getIngredients().get(i));
                 }
+            }
+            newRecipe.setPhotograph(photo);
+            if (newRecipe.getPhotograph() == null) {
+                // get photo graph is null
+                Log.e("photo", "here bruh bruh");
             }
 
 
@@ -297,7 +306,6 @@ public class EditRecipeFragment extends Fragment {
 
     public void deleteRecipeAction() {
         if (recipeIndex > -1 && !env.getRecipes().getList().isEmpty()) {
-            Log.e("index", Integer.toString(recipeIndex));
             env.getRecipes().getList().remove(recipeIndex);
             env.getRecipes().commit();
         }
@@ -305,7 +313,7 @@ public class EditRecipeFragment extends Fragment {
     }
 
     public void send(String cat) {
-        Log.e("EditRecipe", cat);
+//        Log.e("EditRecipe", cat);
         catSelect.setAllCaps(false);
         catSelect.setText(cat);
         catSelect.setGravity(Gravity.LEFT);
