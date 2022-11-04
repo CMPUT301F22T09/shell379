@@ -33,4 +33,20 @@ public class PartiallyEquableLiveCollection<T extends PartiallyEquable> extends 
 
         return filteredCollection;
     }
+
+    /**
+     * returns a full only filtered list of elements of type T
+     * @return list of full elements of type T
+     */
+    @Override
+    public ArrayList<T> getList() {
+        ArrayList<T> filteredList = new ArrayList<T>();
+        ArrayList<T> list = lst.getValue();
+        for (int i = 0; i < list.size();i++){
+            if(list.get(i).isFull()){
+                filteredList.add(list.get(i));
+            }
+        }
+        return filteredList;
+    }
 }

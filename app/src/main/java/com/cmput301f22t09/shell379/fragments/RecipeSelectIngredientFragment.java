@@ -135,11 +135,28 @@ public class RecipeSelectIngredientFragment extends Fragment {
                     }
                 }
         );
+
+        // Implement the new ingredient function
+        ((Button)rootView.findViewById(R.id.new_ingredient_stub_button)).setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        onNewIngStubClicked();
+                    }
+                }
+        );
+
+
         return rootView;
     }
 
     public void select() {
         // get specific recipe & add ingredient 
+    }
+
+    private void onNewIngStubClicked(){
+        navController.navigate(
+                RecipeSelectIngredientFragmentDirections.actionRecipeSelectIngredientFragmentToCreateIngredientStubFragment3(recipeIndex)
+        );
     }
 
     /**

@@ -35,7 +35,7 @@ public class Ingredient implements Serializable, PartiallyEquable {
         this.description = description;
 
         this.bestBefore = bestBefore;
-        if (bestBefore.before(new Date())) {
+        if (bestBefore != null && bestBefore.before(new Date())) {
             throw new IllegalArgumentException("Best Before Date shall not be before today upon construction!");
         }
 
@@ -58,6 +58,7 @@ public class Ingredient implements Serializable, PartiallyEquable {
         this.unit = unit;
         this.category = category;
     }
+
 
     /**
      * Get the description of ingredient
@@ -200,6 +201,18 @@ public class Ingredient implements Serializable, PartiallyEquable {
             if (otherIngredient.getCategory().equals(this.getCategory())) {
                 return true;
             }
+        }
+        return false;
+    }
+
+    public boolean isFull(){
+        if (description != "" &&
+            bestBefore != null &&
+            amount != null &&
+            location != null &&
+            unit != null &&
+            category != null ){
+            return true;
         }
         return false;
     }
