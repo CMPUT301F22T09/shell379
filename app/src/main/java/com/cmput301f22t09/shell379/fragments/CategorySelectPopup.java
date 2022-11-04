@@ -101,7 +101,8 @@ public abstract class CategorySelectPopup extends DialogFragment {
                     dismiss();
                 } else {
                     Toast.makeText(getContext(), entered + " already exists", Toast.LENGTH_LONG).show();
-
+                    csl.send(entered);
+                    dismiss();
                 }
             }
         });
