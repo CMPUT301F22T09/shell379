@@ -2,20 +2,29 @@ package com.cmput301f22t09.shell379.fragments;
 
 import android.os.Bundle;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.RecipeListAdapter;
+import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
+import com.cmput301f22t09.shell379.data.vm.Environment;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,19 +34,13 @@ import java.util.ArrayList;
 public class RecipeListFragment extends Fragment {
 
     // TODO: Temporary! Testing content
-    ArrayList<Recipe> testList;
+    ArrayList<Recipe> recipeList;
     RecyclerView recipe_recyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecipeListAdapter recipeListAdapter;
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    Button addNewRecipe;
+    private NavController navController;
+    Environment env;
 
     public RecipeListFragment() {
         // Required empty public constructor
@@ -47,16 +50,11 @@ public class RecipeListFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment RecipeListFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static RecipeListFragment newInstance(String param1, String param2) {
         RecipeListFragment fragment = new RecipeListFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,10 +62,10 @@ public class RecipeListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        Recipe newRecipe = createRecipe();
+        env = Environment.of((AppCompatActivity) this.getActivity());
+//        env.getRecipes().add(newRecipe);
+        this.navController = NavHostFragment.findNavController(this);
     }
 
     @Override
@@ -76,20 +74,52 @@ public class RecipeListFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_recipe_list, container, false);
 
-        // TODO: This is temporary! Most likely replace this with data from ViewModel later...
-        testList = new ArrayList<Recipe>();
-        testList.add(new Recipe("Pizza", 36000L, 5, "Italian", "This is a Pizza"));
-        testList.add(new Recipe("Fried Rice", 26000L, 3, "Asian", "This is fried rice"));
-        testList.add(new Recipe("Soup", 26000L, 1, "Yes", "This is soup"));
+        addNewRecipe = rootView.findViewById(R.id.recipe_list_newButton);
+
+        // TODO: add same source as ingredient observer
+        final Observer<ArrayList<Recipe>> recipeObserver = new Observer<ArrayList<Recipe>>() {
+            @Override
+            public void onChanged(ArrayList<Recipe> recipes) {
+                if (recipeListAdapter != null) {
+                    recipeListAdapter.updateRecipes(recipes);
+                }
+            }
+        };
+        env.getRecipes().getListLive().observe(getViewLifecycleOwner(), recipeObserver);
 
         layoutManager = new LinearLayoutManager(this.getActivity());
         recipe_recyclerView = (RecyclerView) rootView.findViewById(R.id.recipe_list_recyclerView);
         recipe_recyclerView.setLayoutManager(layoutManager);
 
-        recipeListAdapter = new RecipeListAdapter(testList);
+        recipeListAdapter = new RecipeListAdapter(recipeList, this);
         recipe_recyclerView.setAdapter(recipeListAdapter);
         recipe_recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        addNewRecipe.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.e("enter", "onlicked");
+                int recipeIndex = -1;
+                navController.navigate(RecipeListFragmentDirections.actionRecipeListFragmentToEditRecipe(recipeIndex));
+            }
+        });
+
+
+//        env.getRecipes().commit();
+//        env.getRecipes().setList(new ArrayList<Recipe>());
+//        env.getRecipes().commit();
+
+
+//        env.getRecipes().commit();
+
         return rootView;
+    }
+
+    public Recipe createRecipe() {
+        Recipe myRecipe = new Recipe("kongpaochicken",100L,3,"chinese","spicy");
+        myRecipe.addIngredient(new Ingredient("appleesdadadsdawdwadsaszdazawdas",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
+        myRecipe.addIngredient(new Ingredient("chicken",new Date(2023,9,07),"fridge",2,"1lbs","meat"));
+        myRecipe.addIngredient(new Ingredient("banana",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
+        return myRecipe;
     }
 }

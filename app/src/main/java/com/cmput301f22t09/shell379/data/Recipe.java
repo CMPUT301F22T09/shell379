@@ -1,16 +1,23 @@
 package com.cmput301f22t09.shell379.data;
 
-import android.media.Image;
+import android.graphics.Bitmap;
+import android.os.Build;
+import android.os.Parcel;
 
+import androidx.annotation.RequiresApi;
+
+import com.cmput301f22t09.shell379.data.util.SerializeUtil;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Recipe {
+public class Recipe implements Serializable {
     private String title;
     private Long preparationTime; //in milliseconds
     private Integer servings;
     private String category;
     private String comments;
-    private Image photograph;
+    private String photograph; //this is a serialized photo
     private ArrayList<Ingredient> ingredients = new ArrayList<>();
 
     public Recipe(String title, Long preparationTime, Integer servings, String category, String comments) {
@@ -21,13 +28,14 @@ public class Recipe {
         this.comments = comments;
     }
 
-    public Recipe(String title, Long preparationTime, Integer servings, String category, String comments, Image photograph) {
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public Recipe(String title, Long preparationTime, Integer servings, String category, String comments, Bitmap photograph) {
         this.title = title;
         this.preparationTime = preparationTime;
         this.servings = servings;
         this.category = category;
         this.comments = comments;
-        this.photograph = photograph;
+        this.photograph = SerializeUtil.serializeImg(photograph);
     }
 
     public String getTitle() {
@@ -70,12 +78,14 @@ public class Recipe {
         this.comments = comments;
     }
 
-    public Image getPhotograph() {
-        return photograph;
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public Bitmap getPhotograph() {
+        return SerializeUtil.deserializeImg(photograph);
     }
 
-    public void setPhotograph(Image photograph) {
-        this.photograph = photograph;
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void setPhotograph(Bitmap photograph) {
+        this.photograph = SerializeUtil.serializeImg(photograph);
     }
 
     public ArrayList<Ingredient> getIngredients() {
@@ -92,5 +102,21 @@ public class Recipe {
 
     public void addIngredients(ArrayList<Ingredient> newIngredients) {
         ingredients.addAll(newIngredients);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+
+        if (!(o instanceof Recipe)) {
+            return false;
+        }
+
+        Recipe r = (Recipe) o;
+
+        return r.getTitle().equals(title) && r.getPreparationTime().equals(preparationTime) && r.getServings().equals(servings)
+                && r.getCategory().equals(category) && r.getComments().equals(comments) && r.getPhotograph().equals(photograph);
     }
 }

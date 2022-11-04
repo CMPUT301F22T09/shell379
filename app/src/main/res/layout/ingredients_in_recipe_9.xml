@@ -8,25 +8,20 @@
         android:id="@+id/food_name_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="20dp"
+        android:padding="10dp"
+        android:minWidth="120dp"
+        android:maxWidth="120dp"
+        android:textSize="16dp"
         android:text="Food Name" />
 
     <TextView
-        android:id="@+id/serving_text"
+        android:id="@+id/amount_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:minWidth="80dp"
-        android:maxWidth="80dp"
-        android:text="Servings" />
-
-    <TextView
-        android:id="@+id/best_before_text"
-        android:layout_width="96dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
-        android:maxWidth="60dp"
-        android:minWidth="60dp"
-        android:text="Best Before" />
+        android:layout_marginLeft="100dp"
+        android:maxWidth="50dp"
+        android:minWidth="50dp"
+        android:text="Servings"
+        android:textSize="16dp" />
 
 </LinearLayout>
