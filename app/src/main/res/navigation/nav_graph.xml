@@ -103,7 +103,7 @@
             app:argType="integer" />
     </fragment>
 
-    <fragment
+    <dialog
         android:id="@+id/recipeSelectIngredientFragment"
         android:name="com.cmput301f22t09.shell379.fragments.RecipeSelectIngredientFragment"
         android:label="fragment_recipe_select_ingredient"
@@ -117,8 +117,8 @@
         <action
             android:id="@+id/action_recipeSelectIngredientFragment_to_createIngredientStubFragment3"
             app:destination="@id/createIngredientStubFragment3" />
-    </fragment>
-    <fragment
+    </dialog>
+    <dialog
         android:id="@+id/createIngredientStubFragment3"
         android:name="com.cmput301f22t09.shell379.fragments.CreateIngredientStubFragment"
         android:label="CreateIngredientStubFragment" >
@@ -131,5 +131,5 @@
         <argument
             android:name="existingSelections"
             app:argType="android.os.Bundle" />
-    </fragment>
+    </dialog>
 </navigation>

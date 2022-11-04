@@ -3,7 +3,9 @@ package com.cmput301f22t09.shell379.fragments;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -20,14 +22,21 @@ import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.RecipeSelectIngredientsAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
+import com.cmput301f22t09.shell379.data.vm.EditRecipeViewModel;
 import com.cmput301f22t09.shell379.data.vm.Environment;
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-public class RecipeSelectIngredientFragment extends Fragment {
+public class RecipeSelectIngredientFragment extends DialogFragment {
+//    From Anubhav Arora  https://medium.com/geekculture/android-full-screen-dialogfragment-1410dbd96d37
+    @Override
+    public int getTheme() {
+        return R.style.DialogTheme;
+    }
 
     // TODO: Temporary! Testing content
     ArrayList<Ingredient> ingredientList;
@@ -40,6 +49,7 @@ public class RecipeSelectIngredientFragment extends Fragment {
     Environment env;
     private NavController navController;
     int recipeIndex;
+    private EditRecipeViewModel editRecipeViewModel
 
     public RecipeSelectIngredientFragment() {
         // Required empty public constructor
@@ -48,6 +58,7 @@ public class RecipeSelectIngredientFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        EditRecipeViewModel editRecipeViewModel =  new ViewModelProvider(this).get(EditRecipeViewModel.class);
         ingredientList = new ArrayList<Ingredient>();
         recipeIngredientList = new ArrayList<Ingredient>();
         navController = NavHostFragment.findNavController(this);

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -26,7 +27,13 @@ import com.cmput301f22t09.shell379.data.vm.collections.PartiallyEquableLiveColle
 
 import java.util.ArrayList;
 
-public class CreateIngredientStubFragment extends Fragment{
+public class CreateIngredientStubFragment extends DialogFragment{
+    //    From Anubhav Arora  https://medium.com/geekculture/android-full-screen-dialogfragment-1410dbd96d37
+    @Override
+    public int getTheme() {
+        return R.style.DialogTheme;
+    }
+
     protected View rootView;
     private NavController navController;
     protected Environment envViewModel;
