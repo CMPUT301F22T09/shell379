@@ -37,19 +37,23 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     private AdaptorListener ingredientListener;
     private int ingredientIndex;
 
+    /**
+     * Implement the IngredientViewHolder as an inner class
+     */
     public class IngredientViewHolder extends RecyclerView.ViewHolder {
         public View getItemView(){
             return itemView;
         }
 
         private TextView ingredientName;
-        private TextView serving;
         private TextView bestBefore;
         private TextView location;
-        private TextView unit;
-        private TextView amount;
         private TextView category;
 
+        /**
+         * Construct the IngredientViewHolder class
+         * @param itemView
+         */
         public IngredientViewHolder(@NonNull View itemView) {
             super(itemView);
             this.ingredientName = (TextView) itemView.findViewById(R.id.ingredient_name);
@@ -72,12 +76,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         this.ingredientListener = ingredientListener;
     }
 
-    /**
-     *
-     * @param parent
-     * @param viewType
-     * @return
-     */
+
     @NonNull
     @Override
     public IngredientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -87,11 +86,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         return ingredientViewHolder;
     }
 
-    /**
-     *
-     * @param holder
-     * @param position
-     */
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onBindViewHolder(@NonNull IngredientAdapter.IngredientViewHolder holder, int position) {
@@ -115,7 +110,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     }
 
     /**
-     *
+     * Get the size of items in the ingredient list
      * @return size of the ingredients list
      */
     @Override
