@@ -89,9 +89,9 @@ public class EditRecipeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_edit_recipe_9, container, false);
+        rootView = inflater.inflate(R.layout.fragment_edit_recipe, container, false);
 
-        catSelect = (Button) rootView.findViewById(R.id.select_category);
+        catSelect = rootView.findViewById(R.id.select_category);
         catSelect.setOnClickListener(new View.OnClickListener(){
 
             @Override
@@ -129,6 +129,58 @@ public class EditRecipeFragment extends Fragment {
         backButton = rootView.findViewById(R.id.back_button);
         tableText = rootView.findViewById(R.id.table_text);
         takePhotoButton = rootView.findViewById(R.id.take_photo_button);
+
+        recipeIndex = getArguments().getInt("recipeIndex");
+        if (recipeIndex > -1 && !env.getRecipes().getList().isEmpty()) {
+            myRecipe = env.getRecipes().getList().get(recipeIndex);
+            send(myRecipe.getCategory());
+            prepareTimeText.setText(myRecipe.getPreparationTime().toString());
+            servingsText.setText(myRecipe.getServings().toString());
+            commentText.setText(myRecipe.getComments());
+            nameText.setText(myRecipe.getTitle());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && myRecipe.getPhotograph() != null) {
+                previewPhoto.setImageBitmap(myRecipe.getPhotograph());
+            }
+            ingredientListAdapter = new IngredientInRecipeAdapter(myRecipe.getIngredients(), this);
+        } else {
+            ingredientListAdapter = new IngredientInRecipeAdapter(new ArrayList<Ingredient>(), this);
+        }
+
+        layoutManager = new LinearLayoutManager(this.getActivity());
+        recipe_recyclerView = rootView.findViewById(R.id.ingredientsInRep);
+        recipe_recyclerView.setLayoutManager(layoutManager);
+
+        if (myRecipe == null || myRecipe.getIngredients().isEmpty()) {
+            tableText.setVisibility(View.INVISIBLE);
+        }
+
+        recipe_recyclerView.setAdapter(ingredientListAdapter);
+        recipe_recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        deleteIngredientButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int position = ingredientListAdapter.getSelectedPos();
+                if (position > -1) {
+                    deleteIngredient(position);
+                }
+            }
+        });
+
+        addIngredientButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeSelectIngredientFragment(recipeIndex));
+            }
+        });
+
+        deleteRecipeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteRecipeAction();
+            }
+        });
+
 
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -172,63 +224,6 @@ public class EditRecipeFragment extends Fragment {
                     Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(cameraIntent, CAMERA_REQUEST);
                 }
-            }
-        });
-
-        myRecipe = new Recipe("kongpaochicken",100L,3,"chinese","spicy");
-//        myRecipe.addIngredient(new Ingredient("appleesdadadsdawdwadsaszdazawdas",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
-//        myRecipe.addIngredient(new Ingredient("chicken",new Date(2023,9,07),"fridge",2,"1lbs","meat"));
-//        myRecipe.addIngredient(new Ingredient("banana",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
-
-        recipeIndex = getArguments().getInt("recipeIndex");
-        if (recipeIndex > -1 && !env.getRecipes().getList().isEmpty()) {
-            myRecipe = env.getRecipes().getList().get(recipeIndex);
-            send(myRecipe.getCategory());
-            prepareTimeText.setText(myRecipe.getPreparationTime().toString());
-            servingsText.setText(myRecipe.getServings().toString());
-            commentText.setText(myRecipe.getComments());
-            nameText.setText(myRecipe.getTitle());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && myRecipe.getPhotograph() != null) {
-//                Log.e("photo", "here");
-                previewPhoto.setImageBitmap(myRecipe.getPhotograph());
-            }
-            ingredientListAdapter = new IngredientInRecipeAdapter(myRecipe.getIngredients(), this);
-        } else {
-            ingredientListAdapter = new IngredientInRecipeAdapter(new ArrayList<Ingredient>(), this);
-        }
-
-        layoutManager = new LinearLayoutManager(this.getActivity());
-        recipe_recyclerView = (RecyclerView) rootView.findViewById(R.id.ingredientsInRep);
-        recipe_recyclerView.setLayoutManager(layoutManager);
-
-        if (myRecipe == null || myRecipe.getIngredients().isEmpty()) {
-            tableText.setVisibility(View.INVISIBLE);
-        }
-
-        recipe_recyclerView.setAdapter(ingredientListAdapter);
-        recipe_recyclerView.setItemAnimator(new DefaultItemAnimator());
-
-        deleteIngredientButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int position = ingredientListAdapter.getSelectedPos();
-                if (position > -1) {
-                    deleteIngredient(position);
-                }
-            }
-        });
-
-        addIngredientButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeSelectIngredientFragment(recipeIndex));
-            }
-        });
-
-        deleteRecipeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                deleteRecipeAction();
             }
         });
 
