@@ -154,8 +154,12 @@ public class RecipeSelectIngredientFragment extends Fragment {
     }
 
     private void onNewIngStubClicked(){
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("selectedIngredients", rsiAdapter.getCheckedIngredients());
+        RecipeSelectIngredientFragmentDirections.ActionRecipeSelectIngredientFragmentToCreateIngredientStubFragment3 action =
+                RecipeSelectIngredientFragmentDirections.actionRecipeSelectIngredientFragmentToCreateIngredientStubFragment3(recipeIndex, bundle);
         navController.navigate(
-                RecipeSelectIngredientFragmentDirections.actionRecipeSelectIngredientFragmentToCreateIngredientStubFragment3(recipeIndex)
+                action
         );
     }
 

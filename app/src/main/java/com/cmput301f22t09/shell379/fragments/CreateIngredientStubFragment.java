@@ -32,6 +32,7 @@ public class CreateIngredientStubFragment extends Fragment{
     private EditText category;
     private EditText location;
     private int recipeIndex;
+    private ArrayList<Ingredient> selectedIngredients;
 
     public CreateIngredientStubFragment() {
         // Required empty public constructor
@@ -42,6 +43,10 @@ public class CreateIngredientStubFragment extends Fragment{
         super.onCreate(savedInstanceState);
         navController = NavHostFragment.findNavController(this);
         recipeIndex = getArguments().getInt("recipeIndex");
+        Bundle temp = getArguments().getParcelable("existingSelections");
+        if (temp != null) {
+            selectedIngredients = (ArrayList<Ingredient>) CreateIngredientStubFragmentArgs.fromBundle(getArguments()).getExistingSelections().get("selectedIngredients");
+        }
     }
 
 
@@ -120,12 +125,11 @@ public class CreateIngredientStubFragment extends Fragment{
             }
 
             Ingredient ing =  new Ingredient(description,null,null,amount,unit,category);
-            ArrayList<Ingredient> ingredients = new ArrayList<Ingredient>();
-            ingredients.add(ing);
+            selectedIngredients.add(ing);
             envViewModel.getIngredients().add(ing);
             envViewModel.getIngredients().commit();
             Bundle bundle = new Bundle();
-            bundle.putSerializable("selectedIngredients", ingredients);
+            bundle.putSerializable("selectedIngredients", selectedIngredients);
             CreateIngredientStubFragmentDirections.ActionCreateIngredientStubFragment3ToEditRecipe action =
                 CreateIngredientStubFragmentDirections.actionCreateIngredientStubFragment3ToEditRecipe (recipeIndex);
             action.setSelectedIngredients(bundle);
@@ -133,7 +137,7 @@ public class CreateIngredientStubFragment extends Fragment{
 
 
         }catch (Exception e){
-            showError();
+            showError(e);
         }
     }
 

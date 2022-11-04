@@ -128,5 +128,8 @@
         <argument
             android:name="recipeIndex"
             app:argType="integer" />
+        <argument
+            android:name="existingSelections"
+            app:argType="android.os.Bundle" />
     </fragment>
 </navigation>
