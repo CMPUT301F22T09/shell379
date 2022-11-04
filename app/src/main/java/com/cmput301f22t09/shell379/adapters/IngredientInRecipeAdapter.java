@@ -41,8 +41,7 @@ public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientIn
 
         @Override
         public void onClick(View v) {
-            // Below line is just like a safety check, because sometimes holder could be null,
-            // in that case, getAdapterPosition() will return RecyclerView.NO_POSITION
+            // Below line is just like a safety check, sometimes holder can be null
             if (getAdapterPosition() == RecyclerView.NO_POSITION) return;
 
             // Updating old as well as new positions

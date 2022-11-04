@@ -23,7 +23,6 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -43,9 +42,13 @@ import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * This class has all the functionalities for showing selected recipe information, creating a new
+ * recipe, editing existing recipe, delete recipe. It also leads users to the next fragment to add
+ * ingredients to the recipe.
+ */
 public class EditRecipeFragment extends Fragment {
 
     protected View rootView;
@@ -95,29 +98,6 @@ public class EditRecipeFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_edit_recipe, container, false);
 
         catSelect = rootView.findViewById(R.id.select_category);
-        catSelect.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick(View view) {
-                CategorySelectPopup.SelectListener listener = new CategorySelectPopup.SelectListener() {
-                    @Override
-                    public void send(String val) {
-                        Log.e("EditRecipe", val);
-                        catSelect.setAllCaps(false);
-                        catSelect.setText(val);
-                        catSelect.setGravity(Gravity.LEFT);
-                        catSelect.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
-                        catSelect.setTypeface(Typeface.SANS_SERIF);
-                        cat = val;
-                    }
-                };
-                RecipeCategorySelectPopup selection = new RecipeCategorySelectPopup(listener,"Category");
-                selection.show(getFragmentManager(), "");
-                selection.setTargetFragment(EditRecipeFragment.this, 1);
-
-            }
-        });
-
         env = Environment.of((AppCompatActivity) requireActivity());
         choosePhoto = rootView.findViewById(R.id.gallery_button);
         previewPhoto = rootView.findViewById(R.id.photo);
@@ -133,51 +113,39 @@ public class EditRecipeFragment extends Fragment {
         tableText = rootView.findViewById(R.id.table_text);
         takePhotoButton = rootView.findViewById(R.id.take_photo_button);
 
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeListFragment());
-            }
-        });
+        getAdapter();
 
-        choosePhoto.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
-                {
-                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
-                }
-                else
-                {
-                    Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
-                }
-            }
-        });
+        // get selectedIngredients from arguments when navigating back from the edit recipe screen
+        Bundle temp = getArguments().getParcelable("selectedIngredients");
+        if (temp != null) {
+            selectedIngredients = (ArrayList<Ingredient>) EditRecipeFragmentArgs.fromBundle(getArguments()).getSelectedIngredients().get("selectedIngredients");
+            ingredientListAdapter.setIngredients(selectedIngredients);
+        }
 
-        saveRecipeButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onClick(View view) {
-                onSaveRecipeClicked();
-            }
-        });
+        if (myRecipe == null || myRecipe.getIngredients().isEmpty()) {
+            tableText.setVisibility(View.INVISIBLE);
+        }
+        if (!selectedIngredients.isEmpty()) {
+            tableText.setVisibility(View.VISIBLE);
+        }
 
-        takePhotoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED)
-                {
-                    requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_PERMISSION_CODE);
-                }
-                else
-                {
-                    Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(cameraIntent, CAMERA_REQUEST);
-                }
-            }
-        });
-        
+        layoutManager = new LinearLayoutManager(this.getActivity());
+        recipe_recyclerView = rootView.findViewById(R.id.ingredientsInRep);
+        recipe_recyclerView.setLayoutManager(layoutManager);
+
+        recipe_recyclerView.setAdapter(ingredientListAdapter);
+        recipe_recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        onClickMethods();
+
+        return rootView;
+    }
+
+    /**
+     * Upon creating this fragment, this method either sets all the texts if user selects existing
+     * ingredient, or creating an empty adapter for creating a new recipe
+     */
+    public void getAdapter() {
         recipeIndex = getArguments().getInt("recipeIndex");
         if (recipeIndex > -1 && !env.getRecipes().getList().isEmpty()) {
             myRecipe = env.getRecipes().getList().get(recipeIndex);
@@ -193,27 +161,31 @@ public class EditRecipeFragment extends Fragment {
         } else {
             ingredientListAdapter = new IngredientInRecipeAdapter(new ArrayList<Ingredient>(), this);
         }
+    }
 
-        // get selectedIngredients from arguments when navigating back from the edit recipe screen
-        Bundle temp = getArguments().getParcelable("selectedIngredients");
-        if (temp != null) {
-            selectedIngredients = (ArrayList<Ingredient>) EditRecipeFragmentArgs.fromBundle(getArguments()).getSelectedIngredients().get("selectedIngredients");
-            ingredientListAdapter.setIngredients(selectedIngredients);
-        }
+    /**
+     * This method gives all the onClick methods to this fragment's buttons
+     */
+    public void onClickMethods() {
+        catSelect.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                CategorySelectPopup.SelectListener listener = new CategorySelectPopup.SelectListener() {
+                    /**
+                     * This method displays the selected category
+                     * @param val, the string is the selected category
+                     */
+                    @Override
+                    public void send(String val) {
+                        setCategory(val);
+                    }
+                };
+                RecipeCategorySelectPopup selection = new RecipeCategorySelectPopup(listener,"Category");
+                selection.show(getFragmentManager(), "");
+                selection.setTargetFragment(EditRecipeFragment.this, 1);
 
-        layoutManager = new LinearLayoutManager(this.getActivity());
-        recipe_recyclerView = rootView.findViewById(R.id.ingredientsInRep);
-        recipe_recyclerView.setLayoutManager(layoutManager);
-
-        if (myRecipe == null || myRecipe.getIngredients().isEmpty()) {
-            tableText.setVisibility(View.INVISIBLE);
-        }
-        if (!selectedIngredients.isEmpty()) {
-            tableText.setVisibility(View.VISIBLE);
-        }
-
-        recipe_recyclerView.setAdapter(ingredientListAdapter);
-        recipe_recyclerView.setItemAnimator(new DefaultItemAnimator());
+            }
+        });
 
         deleteIngredientButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -239,7 +211,6 @@ public class EditRecipeFragment extends Fragment {
             }
         });
 
-
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -284,15 +255,18 @@ public class EditRecipeFragment extends Fragment {
                 }
             }
         });
-
-        return rootView;
     }
-    
-    // this function is triggered when user
-    // selects the image from the imageChooser
+
+    /**
+     * This function is triggered when user selects the image, and it displays the image
+     * @param requestCode, identifies which request is made
+     * @param resultCode, result code
+     * @param data
+     * @see *source: https://www.geeksforgeeks.org/how-to-select-an-image-from-gallery-in-android/
+     */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // SOURCE: https://www.geeksforgeeks.org/how-to-select-an-image-from-gallery-in-android/
         super.onActivityResult(requestCode, resultCode, data);
+        // selected photo from gallery
         if (resultCode == RESULT_OK && requestCode == PICK_FROM_GALLERY) {
                 // Get the url of the image from data
                 Uri selectedImageUri = data.getData();
@@ -309,7 +283,14 @@ public class EditRecipeFragment extends Fragment {
         }
     }
 
-    // source: https://stackoverflow.com/questions/5991319/capture-image-from-camera-and-display-in-activity/5991757#5991757
+    /**
+     * This function checks for the permission status. It either pops up a denial message or proceeds
+     * to action upon permission.
+     * @param requestCode, identifies which request is made
+     * @param permissions, permission string
+     * @param grantResults, granted permission results by user
+     * @see *source: https://stackoverflow.com/questions/5991319/capture-image-from-camera-and-display-in-activity/5991757#5991757
+     */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
@@ -338,6 +319,11 @@ public class EditRecipeFragment extends Fragment {
         ingredientListAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * This function handles the exception of not all the required fields are saved.
+     * It either saves the recipe or replace the old recipe with edited version, or show error
+     * if not all the fields are filled.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void onSaveRecipeClicked() {
 
@@ -351,6 +337,7 @@ public class EditRecipeFragment extends Fragment {
             Recipe newRecipe = new Recipe(name, prepareTime, servings, category, comment, photo);
 
             int size = ingredientListAdapter.getIngredients().size();
+            // check if there is any ingredient
             if (size > 0) {
                 for (int i = 0; i < size; i++) {
                     newRecipe.addIngredient(ingredientListAdapter.getIngredients().get(i));
@@ -358,6 +345,7 @@ public class EditRecipeFragment extends Fragment {
             }
             newRecipe.setPhotograph(photo);
 
+            // save or replace with edited
             if (recipeIndex > -1 && !env.getRecipes().getList().isEmpty()) {
                 saveEditedRecipe(newRecipe);
             } else {
@@ -383,8 +371,11 @@ public class EditRecipeFragment extends Fragment {
         navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeListFragment());
     }
 
+    /**
+     * This method displays the selected category
+     * @param cat, the string is the selected category
+     */
     public void setCategory(String cat) {
-        //Log.e("EditRecipe", cat);
         catSelect.setAllCaps(false);
         catSelect.setText(cat);
         catSelect.setGravity(Gravity.LEFT);
