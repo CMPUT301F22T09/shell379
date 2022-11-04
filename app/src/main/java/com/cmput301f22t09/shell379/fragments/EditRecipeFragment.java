@@ -40,6 +40,7 @@ import com.cmput301f22t09.shell379.adapters.IngredientInRecipeAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.Environment;
+import com.cmput301f22t09.shell379.data.vm.collections.PartiallyEquableLiveCollection;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
