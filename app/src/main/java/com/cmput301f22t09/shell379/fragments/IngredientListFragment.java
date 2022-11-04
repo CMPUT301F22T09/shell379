@@ -33,6 +33,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
+/**
+ * Fragment for ingredient list which implements the listener
+ */
 public class IngredientListFragment extends Fragment implements IngredientAdapter.AdaptorListener{
     ArrayList<Ingredient> ingredientList;
     RecyclerView ingredient_recyclerView;
@@ -65,12 +68,9 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
         envViewModel.getIngredients().getListLive().observe(this, ingredientObserver);
     }
 
-    /**
-     *
-     */
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -115,6 +115,9 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
         return rootView;
     }
 
+    /**
+     * Navigate the screen back to the previous one
+     */
     private void back(){
         navController.popBackStack();
     }
