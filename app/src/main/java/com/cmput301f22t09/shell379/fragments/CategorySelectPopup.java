@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cmput301f22t09.shell379.R;
@@ -28,22 +29,21 @@ import com.cmput301f22t09.shell379.data.vm.collections.CategorySet;
 
 import java.util.HashSet;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CategoriesSelect#} factory method to
- * create an instance of this fragment.
- */
-public class CategoriesSelect extends DialogFragment {
 
-    public interface CatSelectListener {
-        void send(String cat);
+public abstract class CategorySelectPopup extends DialogFragment {
+    public interface SelectListener {
+        void send(String val);
     }
-    CatSelectListener csl;
+    private  SelectListener csl;
+    private   String title;
 
-
-
-    public CategoriesSelect() {
+    public CategorySelectPopup() {
         // Required empty public constructor
+    }
+
+    public CategorySelectPopup(SelectListener listener,String title) {
+        this.title = title;
+        csl  = listener;
     }
 
     @Override
@@ -59,10 +59,10 @@ public class CategoriesSelect extends DialogFragment {
         // Initialize contacts
 
         Environment env = Environment.of((AppCompatActivity) getActivity());
-        CategorySet categorySet = env.getRecipeCategories();
+        CategorySet categorySet = getCollection(env);
         HashSet<String> hashset = categorySet.getCategories();
 
-
+        ((TextView)view.findViewById(R.id.title_text)).setText(title);
 
 
         // Create adapter passing in the sample user data
@@ -115,18 +115,12 @@ public class CategoriesSelect extends DialogFragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View view = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_categories_select, null);
-
-
-
     }
+
+    protected abstract CategorySet getCollection(Environment env);
 
     @Override
     public void onAttach(Context context) {
-        try {
-            csl = (CatSelectListener) getTargetFragment();
-        } catch (Exception e) {
-            Log.e("CategoriesSelect", e.getMessage());
-        }
         super.onAttach(context);
     }
 

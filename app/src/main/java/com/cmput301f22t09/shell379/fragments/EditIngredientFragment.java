@@ -21,14 +21,18 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.Unit;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
-
+/**
+ * Child class of SaveIngredientFragment that specializes in editing.
+ */
 public class EditIngredientFragment extends SaveIngredientFragment {
     private int ingredientIndex;
     private Ingredient ingredient;
@@ -41,10 +45,6 @@ public class EditIngredientFragment extends SaveIngredientFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
-    // TO DO
-    // Connect units, category and location to sets
-    // connect dialog
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
@@ -68,8 +68,10 @@ public class EditIngredientFragment extends SaveIngredientFragment {
                 day);
         ((EditText)rootView.findViewById(R.id.editLocation)).setText(String.valueOf(ingredient.getLocation()));
         ((EditText)rootView.findViewById(R.id.editAmount)).setText(String.valueOf(ingredient.getAmount()));
-//        ((Spinner)rootView.findViewById(R.id.editUnit)).setSelection(ingredient.getUnit());
         ((EditText)rootView.findViewById(R.id.editCategory)).setText(String.valueOf(ingredient.getCategory()));
+        ArrayList<Unit> units = new ArrayList<Unit>(Arrays.asList(Unit.values()));
+        int unitSelectionIndex = units.indexOf(Unit.getFromString(ingredient.getUnit()));
+        ((Spinner)rootView.findViewById(R.id.editUnit)).setSelection(unitSelectionIndex);
 
         return rootView;
     }
