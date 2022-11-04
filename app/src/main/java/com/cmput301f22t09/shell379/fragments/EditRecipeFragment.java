@@ -148,7 +148,15 @@ public class EditRecipeFragment extends Fragment {
         choosePhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                imageChooser();
+                if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED)
+                {
+                    requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
+                }
+                else
+                {
+                    Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
+                }
             }
         });
 
@@ -235,20 +243,20 @@ public class EditRecipeFragment extends Fragment {
         return rootView;
     }
 
-    // this function is triggered when
-    // the Select Image Button is clicked
-    public void imageChooser() {
-        // SOURCE: https://www.geeksforgeeks.org/how-to-select-an-image-from-gallery-in-android/
-        // create an instance of the
-        // intent of the type image
-        Intent i = new Intent();
-        i.setType("image/*");
-        i.setAction(Intent.ACTION_GET_CONTENT);
-
-        // pass the constant to compare it
-        // with the returned requestCode
-        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
-    }
+//    // this function is triggered when
+//    // the Select Image Button is clicked
+//    public void imageChooser() {
+//        // SOURCE: https://www.geeksforgeeks.org/how-to-select-an-image-from-gallery-in-android/
+//        // create an instance of the
+//        // intent of the type image
+//        Intent i = new Intent();
+//        i.setType("image/*");
+//        i.setAction(Intent.ACTION_GET_CONTENT);
+//
+//        // pass the constant to compare it
+//        // with the returned requestCode
+//        startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
+//    }
 
     // this function is triggered when user
     // selects the image from the imageChooser
@@ -256,12 +264,14 @@ public class EditRecipeFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK) {
+
             // select photo
             if (requestCode == SELECT_PICTURE) {
-                Bitmap photo = (Bitmap) data.getExtras().get("data");
-                if (null != photo) {
+                // Get the url of the image from data
+                Uri selectedImageUri = data.getData();
+                if (null != selectedImageUri) {
                     // update the preview image in the layout
-                    previewPhoto.setImageBitmap(photo);
+                    previewPhoto.setImageURI(selectedImageUri);
                 }
             }
         }
@@ -278,20 +288,22 @@ public class EditRecipeFragment extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults)
     {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == MY_CAMERA_PERMISSION_CODE)
-        {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            {
-                Toast.makeText(getActivity(), "camera permission granted", Toast.LENGTH_LONG).show();
+        if (requestCode == MY_CAMERA_PERMISSION_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getActivity(), "Camera permission granted", Toast.LENGTH_SHORT).show();
                 Intent cameraIntent = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(cameraIntent, CAMERA_REQUEST);
-            }
-            else
-            {
-                Toast.makeText(getActivity(), "camera permission denied", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity(), "Camera permission denied", Toast.LENGTH_SHORT).show();
             }
         } else if (requestCode == PICK_FROM_GALLERY) {
-            
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(getActivity(), "Gallery permission granted", Toast.LENGTH_SHORT).show();
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent, PICK_FROM_GALLERY);
+            } else {
+                Toast.makeText(getActivity(), "Gallery permission denied", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -324,6 +336,11 @@ public class EditRecipeFragment extends Fragment {
                 }
             }
             newRecipe.setPhotograph(photo);
+            if (newRecipe.getPhotograph() == null) {
+                // get photo graph is null
+                Log.e("photo", "here bruh bruh");
+            }
+
 
             if (recipeIndex > -1 && !env.getRecipes().getList().isEmpty()) {
                 saveEditedRecipe(newRecipe);
