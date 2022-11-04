@@ -28,6 +28,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Fragment that displays the list of all recipes.
+ */
 public class RecipeListFragment extends Fragment {
 
     private ArrayList<Recipe> recipeList;
@@ -70,7 +73,7 @@ public class RecipeListFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        // TODO: add same source as ingredient observer
+
         final Observer<ArrayList<Recipe>> recipeObserver = new Observer<ArrayList<Recipe>>() {
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
@@ -107,4 +110,5 @@ public class RecipeListFragment extends Fragment {
 
         return rootView;
     }
+
 }
