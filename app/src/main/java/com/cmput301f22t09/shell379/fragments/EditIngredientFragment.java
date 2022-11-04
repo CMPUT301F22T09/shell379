@@ -21,8 +21,10 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.Unit;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -67,6 +69,9 @@ public class EditIngredientFragment extends SaveIngredientFragment {
         ((EditText)rootView.findViewById(R.id.editLocation)).setText(String.valueOf(ingredient.getLocation()));
         ((EditText)rootView.findViewById(R.id.editAmount)).setText(String.valueOf(ingredient.getAmount()));
         ((EditText)rootView.findViewById(R.id.editCategory)).setText(String.valueOf(ingredient.getCategory()));
+        ArrayList<Unit> units = new ArrayList<Unit>(Arrays.asList(Unit.values()));
+        int unitSelectionIndex = units.indexOf(Unit.getFromString(ingredient.getUnit()));
+        ((Spinner)rootView.findViewById(R.id.editUnit)).setSelection(unitSelectionIndex);
 
         return rootView;
     }
