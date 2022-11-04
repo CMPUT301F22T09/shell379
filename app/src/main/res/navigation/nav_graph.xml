@@ -79,6 +79,11 @@
         <action
             android:id="@+id/action_editRecipe_to_recipeListFragment"
             app:destination="@id/recipeListFragment" />
+        <argument
+            android:name="selectedIngredients"
+            app:nullable="true"
+            app:argType="android.os.Bundle"
+            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/createIngredientFragment"
@@ -105,6 +110,9 @@
         <action
             android:id="@+id/action_recipeSelectIngredientFragment_to_recipeNewIngredient"
             app:destination="@id/recipeNewIngredient" />
+        <action
+            android:id="@+id/action_recipeSelectIngredientFragment_to_editRecipe"
+            app:destination="@id/editRecipe" />
     </fragment>
     <fragment
         android:id="@+id/recipeNewIngredient"

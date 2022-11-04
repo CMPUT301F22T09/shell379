@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -37,7 +38,10 @@ import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class EditRecipeFragment extends Fragment {
 
@@ -67,6 +71,7 @@ public class EditRecipeFragment extends Fragment {
     private Environment env;
     private static final int CAMERA_REQUEST = 1888;
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
+    private ArrayList<Ingredient> selectedIngredients;
 
     public EditRecipeFragment() {
         // Required empty public constructor
@@ -76,7 +81,7 @@ public class EditRecipeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.navController = NavHostFragment.findNavController(this);
-
+        this.selectedIngredients = new ArrayList<>();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -155,7 +160,7 @@ public class EditRecipeFragment extends Fragment {
 //            }
 //        });
 
-        myRecipe = new Recipe("kongpaochicken",100L,3,"chinese","spicy");
+        //myRecipe = new Recipe("kongpaochicken",100L,3,"chinese","spicy");
 //        myRecipe.addIngredient(new Ingredient("appleesdadadsdawdwadsaszdazawdas",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
 //        myRecipe.addIngredient(new Ingredient("chicken",new Date(2023,9,07),"fridge",2,"1lbs","meat"));
 //        myRecipe.addIngredient(new Ingredient("banana",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
@@ -176,6 +181,19 @@ public class EditRecipeFragment extends Fragment {
             ingredientListAdapter = new IngredientInRecipeAdapter(new ArrayList<Ingredient>(), this);
         }
 
+        // get selectedIngredients from arguments when navigating back from the edit recipe screen
+        Bundle temp = getArguments().getParcelable("selectedIngredients");
+        if (temp != null) {
+            //selectedIngredients = (ArrayList<Ingredient>) temp;
+            //ingredientListAdapter.setIngredients(selectedIngredients);
+//            Ingredient temp2 = (Ingredient) temp;
+//            System.out.println(temp2);
+            selectedIngredients = (ArrayList<Ingredient>) EditRecipeFragmentArgs.fromBundle(getArguments()).getSelectedIngredients().get("selectedIngredients");
+            ingredientListAdapter.setIngredients(selectedIngredients);
+        }
+
+        // TODO: save it to IngredientInRecipeAdapter
+
         layoutManager = new LinearLayoutManager(this.getActivity());
         recipe_recyclerView = (RecyclerView) rootView.findViewById(R.id.ingredientsInRep);
         recipe_recyclerView.setLayoutManager(layoutManager);
@@ -183,6 +201,13 @@ public class EditRecipeFragment extends Fragment {
         if (myRecipe == null || myRecipe.getIngredients().isEmpty()) {
             tableText.setVisibility(View.INVISIBLE);
         }
+        if (!selectedIngredients.isEmpty()) {
+            tableText.setVisibility(View.VISIBLE);
+        }
+
+        // !empty && recipe == null
+        // empty
+
 
         recipe_recyclerView.setAdapter(ingredientListAdapter);
         recipe_recyclerView.setItemAnimator(new DefaultItemAnimator());

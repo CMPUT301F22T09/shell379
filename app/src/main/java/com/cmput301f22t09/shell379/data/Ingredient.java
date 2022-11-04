@@ -206,16 +206,14 @@ public class Ingredient implements Serializable, PartiallyEquable {
     // referenced for how to implement custom equals
     @Override
     public boolean partialEquals(PartiallyEquable other) {
-        if (this == other)
-            return true;
         if (other == null || getClass() != other.getClass())
             return false;
 
         Ingredient otherIngredient = (Ingredient) other;
 
         // Use description and category as a measure of equality between ingredients
-        if (otherIngredient.getDescription() == this.getDescription()) {
-            if (otherIngredient.getCategory() == this.getCategory()) {
+        if (otherIngredient.getDescription().equals(this.getDescription())) {
+            if (otherIngredient.getCategory().equals(this.getCategory())) {
                 return true;
             }
         }
