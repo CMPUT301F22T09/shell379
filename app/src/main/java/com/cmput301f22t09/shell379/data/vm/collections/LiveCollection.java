@@ -7,7 +7,7 @@ import com.cmput301f22t09.shell379.data.vm.infrastructure.Commitable;
 import java.util.ArrayList;
 
 /**
- * Collection of T entity objects.
+ * Collection of T entity objects stored in a MutableLiveData object.
  */
 public class LiveCollection<T> extends Commitable {
     private final MutableLiveData<ArrayList<T>> lst = new MutableLiveData<>();
