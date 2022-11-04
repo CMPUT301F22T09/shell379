@@ -19,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cmput301f22t09.shell379.R;
@@ -28,22 +29,20 @@ import com.cmput301f22t09.shell379.data.vm.collections.CategorySet;
 
 import java.util.HashSet;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CategoriesSelect#} factory method to
- * create an instance of this fragment.
- */
+
 public abstract class CategorySelectPopup extends DialogFragment {
     public interface SelectListener {
         void send(String val);
     }
     private  SelectListener csl;
+    private   String title;
 
     public CategorySelectPopup() {
         // Required empty public constructor
     }
 
-    public CategorySelectPopup(SelectListener listener) {
+    public CategorySelectPopup(SelectListener listener,String title) {
+        this.title = title;
         csl  = listener;
     }
 
@@ -63,7 +62,7 @@ public abstract class CategorySelectPopup extends DialogFragment {
         CategorySet categorySet = getCollection(env);
         HashSet<String> hashset = categorySet.getCategories();
 
-
+        ((TextView)view.findViewById(R.id.title_text)).setText(title);
 
 
         // Create adapter passing in the sample user data
@@ -102,7 +101,8 @@ public abstract class CategorySelectPopup extends DialogFragment {
                     dismiss();
                 } else {
                     Toast.makeText(getContext(), entered + " already exists", Toast.LENGTH_LONG).show();
-
+                    csl.send(entered);
+                    dismiss();
                 }
             }
         });

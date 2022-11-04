@@ -15,56 +15,42 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.RecipeListAdapter;
-import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.Environment;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Arrays;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link RecipeListFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment that displays the list of all recipes.
  */
 public class RecipeListFragment extends Fragment {
 
-    // TODO: Temporary! Testing content
-    ArrayList<Recipe> recipeList;
-    RecyclerView recipe_recyclerView;
-    RecyclerView.LayoutManager layoutManager;
-    RecipeListAdapter recipeListAdapter;
-    Button addNewRecipe;
+    private ArrayList<Recipe> recipeList;
+    private RecyclerView recipe_recyclerView;
+    private RecyclerView.LayoutManager layoutManager;
+    private RecipeListAdapter recipeListAdapter;
+    private Button addNewRecipe;
+    private Environment env;
     private NavController navController;
-    Environment env;
+    private FloatingActionButton backButton;
+    private Spinner spinner;
 
     public RecipeListFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment RecipeListFragment.
-     */
-    public static RecipeListFragment newInstance(String param1, String param2) {
-        RecipeListFragment fragment = new RecipeListFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Recipe newRecipe = createRecipe();
         env = Environment.of((AppCompatActivity) this.getActivity());
-//        env.getRecipes().add(newRecipe);
         this.navController = NavHostFragment.findNavController(this);
     }
 
@@ -75,8 +61,19 @@ public class RecipeListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_recipe_list, container, false);
 
         addNewRecipe = rootView.findViewById(R.id.recipe_list_newButton);
+        backButton = rootView.findViewById(R.id.floatingActionButton6);
+        spinner = rootView.findViewById(R.id.recipe_list_spinner);
+        env = Environment.of((AppCompatActivity) requireActivity());
 
-        // TODO: add same source as ingredient observer
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
+                getActivity(),
+                android.R.layout.simple_spinner_item,
+                Arrays.asList("Description","Best Before Date", "Location", "Category")
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+
         final Observer<ArrayList<Recipe>> recipeObserver = new Observer<ArrayList<Recipe>>() {
             @Override
             public void onChanged(ArrayList<Recipe> recipes) {
@@ -85,10 +82,11 @@ public class RecipeListFragment extends Fragment {
                 }
             }
         };
+
         env.getRecipes().getListLive().observe(getViewLifecycleOwner(), recipeObserver);
 
         layoutManager = new LinearLayoutManager(this.getActivity());
-        recipe_recyclerView = (RecyclerView) rootView.findViewById(R.id.recipe_list_recyclerView);
+        recipe_recyclerView = rootView.findViewById(R.id.recipe_list_recyclerView);
         recipe_recyclerView.setLayoutManager(layoutManager);
 
         recipeListAdapter = new RecipeListAdapter(recipeList, this);
@@ -98,28 +96,19 @@ public class RecipeListFragment extends Fragment {
         addNewRecipe.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.e("enter", "onlicked");
                 int recipeIndex = -1;
                 navController.navigate(RecipeListFragmentDirections.actionRecipeListFragmentToEditRecipe(recipeIndex));
             }
         });
 
-
-//        env.getRecipes().commit();
-//        env.getRecipes().setList(new ArrayList<Recipe>());
-//        env.getRecipes().commit();
-
-
-//        env.getRecipes().commit();
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(RecipeListFragmentDirections.actionRecipeListFragmentToMainMenuFragment());
+            }
+        });
 
         return rootView;
     }
 
-    public Recipe createRecipe() {
-        Recipe myRecipe = new Recipe("kongpaochicken",100L,3,"chinese","spicy");
-        myRecipe.addIngredient(new Ingredient("appleesdadadsdawdwadsaszdazawdas",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
-        myRecipe.addIngredient(new Ingredient("chicken",new Date(2023,9,07),"fridge",2,"1lbs","meat"));
-        myRecipe.addIngredient(new Ingredient("banana",new Date(2023,9,07),"fridge",2,"1lbs","fruit"));
-        return myRecipe;
-    }
 }

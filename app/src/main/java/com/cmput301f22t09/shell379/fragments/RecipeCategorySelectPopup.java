@@ -12,10 +12,10 @@ import com.cmput301f22t09.shell379.data.vm.collections.CategorySet;
  */
 public class RecipeCategorySelectPopup extends CategorySelectPopup {
     protected CategorySet getCollection(Environment env){
-        return env.getIngredientCategories();
+        return env.getRecipeCategories();
     };
 
-    public RecipeCategorySelectPopup(SelectListener selectListener){
-        super(selectListener);
+    public RecipeCategorySelectPopup(SelectListener selectListener,String title){
+        super(selectListener,title);
     }
 }

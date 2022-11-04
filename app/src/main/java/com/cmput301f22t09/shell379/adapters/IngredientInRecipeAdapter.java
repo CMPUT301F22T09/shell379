@@ -15,10 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.fragments.EditRecipeFragment;
-import com.cmput301f22t09.shell379.fragments.RecipeListFragment;
 
 import java.util.ArrayList;
 
+/**
+ * Adapter for recycler view in edit recipes for choosing ingredients
+ */
 public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientInRecipeAdapter.IngredientInRecipeViewHolder> {
     private ArrayList<Ingredient> ingredients;
     private int selectedPos = RecyclerView.NO_POSITION;
@@ -39,8 +41,7 @@ public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientIn
 
         @Override
         public void onClick(View v) {
-            // Below line is just like a safety check, because sometimes holder could be null,
-            // in that case, getAdapterPosition() will return RecyclerView.NO_POSITION
+            // Below line is just like a safety check, sometimes holder can be null
             if (getAdapterPosition() == RecyclerView.NO_POSITION) return;
 
             // Updating old as well as new positions
@@ -59,7 +60,7 @@ public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientIn
     @Override
     public IngredientInRecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.ingredients_in_recipe_9, parent, false);
+                .inflate(R.layout.ingredients_in_recipe, parent, false);
         IngredientInRecipeViewHolder ingredientInRecipeViewHolder = new IngredientInRecipeViewHolder(view, editRecipeFragment);
         return ingredientInRecipeViewHolder;
     }
@@ -89,6 +90,10 @@ public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientIn
 
     public ArrayList<Ingredient> getIngredients() {
         return ingredients;
+    }
+
+    public void setIngredients(ArrayList<Ingredient> ingredients) {
+        this.ingredients = ingredients;
     }
 
     public void removeIngredient(int index) {

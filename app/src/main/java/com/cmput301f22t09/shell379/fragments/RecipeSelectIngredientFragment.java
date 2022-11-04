@@ -4,6 +4,8 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -12,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.RecipeSelectIngredientsAdapter;
@@ -19,33 +22,50 @@ import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
+ * Fragment for selecting ingredients for recipes.
  */
 public class RecipeSelectIngredientFragment extends Fragment {
 
-    // TODO: Temporary! Testing content
     ArrayList<Ingredient> ingredientList;
+    ArrayList<Ingredient> recipeIngredientList;
+    Recipe selectedRecipe;
     RecyclerView ingredientsRecyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecipeSelectIngredientsAdapter rsiAdapter;
     Button selectButton;
     Environment env;
+    private NavController navController;
     int recipeIndex;
-
 
     public RecipeSelectIngredientFragment() {
         // Required empty public constructor
     }
 
+    /**
+     * Initial creation of fragment, called before onCreateView.
+     * @param savedInstanceState state used if the fragment is being recreated from a previous state
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ingredientList = new ArrayList<Ingredient>();
+        recipeIngredientList = new ArrayList<Ingredient>();
+        navController = NavHostFragment.findNavController(this);
     }
 
+    /**
+     * Set up the onCreateView method to create the view object.
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -54,34 +74,87 @@ public class RecipeSelectIngredientFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.recipe_select_ingredients, container, false);
         recipeIndex = getArguments().getInt("recipeIndex");
 
-        // selected recipe
-        Recipe selectedR = env.getRecipes().getList().get(recipeIndex);
-
+        // recipeIndex = -1 means we're creating a new recipe
+        if (recipeIndex == -1) {
+            recipeIngredientList = new ArrayList<>();
+        }
+        // Otherwise, we're editing an existing recipe
+        else {
+            selectedRecipe = env.getRecipes().getList().get(recipeIndex);
+            // the selected recipe's ingredients
+            recipeIngredientList = selectedRecipe.getIngredients();
+        }
+        // filtered ingredients list from environment
         ingredientList = env.getIngredients().getFilteredCollection().getList();
-
-//        ingredientList.add(new Ingredient("Ingredient1", new Date(), "location", 2, "90 unit", "category"));
-//        ingredientList.add(new Ingredient("Ingredient2", new Date(), "location2", 2, "90 unit", "category2"));
-
-//        selectButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                select();
-//            }
-//        });
 
         layoutManager = new LinearLayoutManager(this.getActivity());
         ingredientsRecyclerView = (RecyclerView) rootView.findViewById(R.id.rsi_recyclerView);
         ingredientsRecyclerView.setLayoutManager(layoutManager);
 
-        rsiAdapter = new RecipeSelectIngredientsAdapter(ingredientList);
+        rsiAdapter = new RecipeSelectIngredientsAdapter(ingredientList, recipeIngredientList);
         ingredientsRecyclerView.setAdapter(rsiAdapter);
         ingredientsRecyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        selectButton = rootView.findViewById(R.id.select_button);
+        selectButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Creating a new recipe
+                if (recipeIndex == -1) {
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable("selectedIngredients", rsiAdapter.getCheckedIngredients());
+                    RecipeSelectIngredientFragmentDirections.ActionRecipeSelectIngredientFragmentToEditRecipe action
+                            = RecipeSelectIngredientFragmentDirections.actionRecipeSelectIngredientFragmentToEditRecipe(recipeIndex);
+                    action.setSelectedIngredients(bundle);
+                    navController.navigate(action);
+                }
+                // Editing an existing recipe
+                else {
+                    // Get checked ingredients from recycler view
+                    ArrayList<Ingredient> checkedIngredients = rsiAdapter.getCheckedIngredients();
+                    selectedRecipe.setIngredients(checkedIngredients);
+                    env.getRecipes().commit();
+                    navController.popBackStack();
+                }
+            }
+        });
+
+        // Implement the button to back to previous page
+        ((ImageView)rootView.findViewById(R.id.floatingActionButton7)).setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        back();
+                    }
+                }
+        );
+
+        // Implement the new ingredient function
+        ((Button)rootView.findViewById(R.id.new_ingredient_stub_button)).setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        onNewIngStubClicked();
+                    }
+                }
+        );
+
 
         return rootView;
     }
 
-//    public void select() {
-//        // get specific recipe & add ingredient
-//
-//    }
+    private void onNewIngStubClicked(){
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("selectedIngredients", rsiAdapter.getCheckedIngredients());
+        RecipeSelectIngredientFragmentDirections.ActionRecipeSelectIngredientFragmentToCreateIngredientStubFragment3 action =
+                RecipeSelectIngredientFragmentDirections.actionRecipeSelectIngredientFragmentToCreateIngredientStubFragment3(recipeIndex, bundle);
+        navController.navigate(
+                action
+        );
+    }
+
+    /**
+     * Implement the option to go back to previous page
+     */
+    private void back(){
+        navController.popBackStack();
+    }
 }
