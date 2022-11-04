@@ -19,6 +19,9 @@ import com.cmput301f22t09.shell379.fragments.RecipeListFragment;
 
 import java.util.ArrayList;
 
+/**
+ * Adapter for recycler view in edit recipes for choosing ingredients
+ */
 public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientInRecipeAdapter.IngredientInRecipeViewHolder> {
     private ArrayList<Ingredient> ingredients;
     private int selectedPos = RecyclerView.NO_POSITION;
@@ -37,6 +40,9 @@ public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientIn
 
         }
 
+        /**
+         * Used when a ingredient is clicked.
+         */
         @Override
         public void onClick(View v) {
             // Below line is just like a safety check, because sometimes holder could be null,

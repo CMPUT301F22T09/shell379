@@ -24,7 +24,9 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 
 import java.util.HashMap;
 import java.util.List;
-
+/**
+ * Connects to and interfaces with the firebase database
+ */
 public class DatabaseManager {
     private FirebaseFirestore db;
     private DocumentReference doc;
@@ -51,6 +53,9 @@ public class DatabaseManager {
         doc = db.collection(id).document("ENV");
     }
 
+    /**
+     * Syncs local environment to the database
+     */
     public void pull(AppCompatActivity owner) {
         this.doc.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @RequiresApi(api = Build.VERSION_CODES.O)

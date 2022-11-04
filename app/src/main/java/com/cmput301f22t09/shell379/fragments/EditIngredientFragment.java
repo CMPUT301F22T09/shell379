@@ -31,7 +31,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 /**
- * Child class of SaveIngredientFragment that specializes in creating.
+ * Child class of SaveIngredientFragment that specializes in editing.
  */
 public class EditIngredientFragment extends SaveIngredientFragment {
     private int ingredientIndex;
