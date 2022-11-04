@@ -3,6 +3,8 @@ package com.cmput301f22t09.shell379.data;
 import android.os.Build;
 import androidx.annotation.RequiresApi;
 
+import com.cmput301f22t09.shell379.data.vm.collections.PartiallyEquable;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,7 +12,7 @@ import java.util.Optional;
 /**
  *
  */
-public class Ingredient implements Serializable {
+public class Ingredient implements Serializable, PartiallyEquable {
     private String description;
     private Date bestBefore;
     private String location;
@@ -179,7 +181,7 @@ public class Ingredient implements Serializable {
 
      /**
      *
-     * @param a
+     * @param o
      * @return
      */
     public boolean equals(Object o){
@@ -195,6 +197,26 @@ public class Ingredient implements Serializable {
                         }
                     }
                 }
+            }
+        }
+        return false;
+    }
+
+    // TODO: cite https://stackoverflow.com/questions/15287842/filter-unique-objects-from-an-arraylist-based-on-property-value-of-the-contained
+    // referenced for how to implement custom equals
+    @Override
+    public boolean partialEquals(PartiallyEquable other) {
+        if (this == other)
+            return true;
+        if (other == null || getClass() != other.getClass())
+            return false;
+
+        Ingredient otherIngredient = (Ingredient) other;
+
+        // Use description and category as a measure of equality between ingredients
+        if (otherIngredient.getDescription() == this.getDescription()) {
+            if (otherIngredient.getCategory() == this.getCategory()) {
+                return true;
             }
         }
         return false;

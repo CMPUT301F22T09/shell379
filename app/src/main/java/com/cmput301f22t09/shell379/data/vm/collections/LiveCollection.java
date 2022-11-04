@@ -7,7 +7,7 @@ import com.cmput301f22t09.shell379.data.vm.infrastructure.Commitable;
 import java.util.ArrayList;
 
 public class LiveCollection<T> extends Commitable {
-    private final MutableLiveData<ArrayList<T>> lst = new MutableLiveData<>();
+    protected final MutableLiveData<ArrayList<T>> lst = new MutableLiveData<>();
 
     public LiveCollection() {
         lst.setValue(new ArrayList<T>());

@@ -2,9 +2,7 @@ package com.cmput301f22t09.shell379.fragments;
 
 import static android.app.Activity.RESULT_OK;
 
-import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
@@ -14,7 +12,6 @@ import android.net.Uri;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -41,7 +38,6 @@ import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class EditRecipeFragment extends Fragment {
 
@@ -167,7 +163,7 @@ public class EditRecipeFragment extends Fragment {
         recipeIndex = getArguments().getInt("recipeIndex");
         if (recipeIndex > -1 && !env.getRecipes().getList().isEmpty()) {
             myRecipe = env.getRecipes().getList().get(recipeIndex);
-            send(myRecipe.getCategory());
+            setCategory(myRecipe.getCategory());
             prepareTimeText.setText(myRecipe.getPreparationTime().toString());
             servingsText.setText(myRecipe.getServings().toString());
             commentText.setText(myRecipe.getComments());
@@ -304,8 +300,8 @@ public class EditRecipeFragment extends Fragment {
         navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeListFragment());
     }
 
-    public void send(String cat) {
-        Log.e("EditRecipe", cat);
+    public void setCategory(String cat) {
+        //Log.e("EditRecipe", cat);
         catSelect.setAllCaps(false);
         catSelect.setText(cat);
         catSelect.setGravity(Gravity.LEFT);

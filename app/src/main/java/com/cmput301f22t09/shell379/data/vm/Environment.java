@@ -20,11 +20,12 @@ import com.cmput301f22t09.shell379.data.util.DatabaseManager;
 import com.cmput301f22t09.shell379.data.vm.collections.CategorySet;
 import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
 import com.cmput301f22t09.shell379.data.vm.infrastructure.Commitable;
+import com.cmput301f22t09.shell379.data.vm.collections.PartiallyEquableLiveCollection;
 
 import java.io.Serializable;
 
 public class Environment extends ViewModel implements Serializable {
-    private LiveCollection<Ingredient> ingredients;
+    private PartiallyEquableLiveCollection<Ingredient> ingredients;
     private LiveCollection<Recipe> recipes;
     private ShoppingCart cart;
     private CategorySet ingredientCategories;
@@ -32,7 +33,7 @@ public class Environment extends ViewModel implements Serializable {
     private CategorySet locationCategories;
 
     public Environment() {
-        ingredients = new LiveCollection<Ingredient>();
+        ingredients = new PartiallyEquableLiveCollection<Ingredient>();
         recipes = new LiveCollection<Recipe>();
         cart = new ShoppingCart();
         ingredientCategories = new CategorySet();
@@ -85,7 +86,7 @@ public class Environment extends ViewModel implements Serializable {
         });
     }
 
-    public LiveCollection<Ingredient> getIngredients() {
+    public PartiallyEquableLiveCollection<Ingredient> getIngredients() {
         return ingredients;
     }
 
