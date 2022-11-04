@@ -87,7 +87,6 @@ public class SerializeUtil {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static Bitmap deserializeImg(String serialized) {
-        Log.d("SER_UTIL", "DESERIALIZING IMG");
         byte[] bytes = Base64.getDecoder().decode(serialized);
         return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
