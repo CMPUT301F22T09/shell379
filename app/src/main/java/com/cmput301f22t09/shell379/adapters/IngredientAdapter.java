@@ -37,6 +37,9 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
     private AdaptorListener ingredientListener;
     private int ingredientIndex;
 
+    /**
+     * Implement the IngredientViewHolder as an inner class
+     */
     public class IngredientViewHolder extends RecyclerView.ViewHolder {
         public View getItemView(){
             return itemView;
@@ -50,6 +53,10 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         private TextView amount;
         private TextView category;
 
+        /**
+         * Construct the IngredientViewHolder class
+         * @param itemView
+         */
         public IngredientViewHolder(@NonNull View itemView) {
             super(itemView);
             this.ingredientName = (TextView) itemView.findViewById(R.id.ingredient_name);
@@ -72,12 +79,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         this.ingredientListener = ingredientListener;
     }
 
-    /**
-     *
-     * @param parent
-     * @param viewType
-     * @return
-     */
+
     @NonNull
     @Override
     public IngredientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
