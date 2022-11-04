@@ -26,14 +26,8 @@ import com.cmput301f22t09.shell379.data.vm.Environment;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RecipeListFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RecipeListFragment extends Fragment {
 
-    // TODO: Temporary! Testing content
     ArrayList<Recipe> recipeList;
     RecyclerView recipe_recyclerView;
     RecyclerView.LayoutManager layoutManager;
@@ -46,25 +40,11 @@ public class RecipeListFragment extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment RecipeListFragment.
-     */
-    public static RecipeListFragment newInstance(String param1, String param2) {
-        RecipeListFragment fragment = new RecipeListFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Recipe newRecipe = createRecipe();
         env = Environment.of((AppCompatActivity) this.getActivity());
-//        env.getRecipes().add(newRecipe);
         this.navController = NavHostFragment.findNavController(this);
     }
 
@@ -103,14 +83,6 @@ public class RecipeListFragment extends Fragment {
                 navController.navigate(RecipeListFragmentDirections.actionRecipeListFragmentToEditRecipe(recipeIndex));
             }
         });
-
-
-//        env.getRecipes().commit();
-//        env.getRecipes().setList(new ArrayList<Recipe>());
-//        env.getRecipes().commit();
-
-
-//        env.getRecipes().commit();
 
         return rootView;
     }

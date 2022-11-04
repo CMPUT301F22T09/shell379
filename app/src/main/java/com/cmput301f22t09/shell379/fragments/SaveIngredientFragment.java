@@ -46,10 +46,6 @@ public abstract class SaveIngredientFragment extends Fragment{
         navController = NavHostFragment.findNavController(this);
     }
 
-    // TO DO
-    // Connect units, category and location to sets
-    // connect dialog
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -136,6 +132,12 @@ public abstract class SaveIngredientFragment extends Fragment{
             String unit = ((Spinner)rootView.findViewById(R.id.editUnit)).getSelectedItem().toString();
 
             // validate
+            if(description == "" ||
+            location == "" ||
+            category == ""
+            ){
+                throw new IllegalArgumentException("fields not filled");
+            }
             writeToViewModel(new Ingredient(description,bestBeforeDate,location,amount,unit,category));
             navController.popBackStack();
 
@@ -171,6 +173,6 @@ public abstract class SaveIngredientFragment extends Fragment{
         selection.setTargetFragment(SaveIngredientFragment.this, 1);
     }
 
-  protected abstract void writeToViewModel(Ingredient ing);
+    protected abstract void writeToViewModel(Ingredient ing);
 
 }

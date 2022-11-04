@@ -23,11 +23,6 @@ import com.cmput301f22t09.shell379.data.vm.Environment;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link RecipeSelectIngredientFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RecipeSelectIngredientFragment extends Fragment {
 
     // TODO: Temporary! Testing content

@@ -23,11 +23,6 @@ import android.widget.TextView;
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.util.DatabaseManager;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MainMenuFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MainMenuFragment extends Fragment {
     private NavController navController;
 
@@ -45,7 +40,6 @@ public class MainMenuFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-
 
         View rootView = inflater.inflate(R.layout.fragment_main_menu, container, false);
 
