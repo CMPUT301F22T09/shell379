@@ -22,10 +22,7 @@ import com.cmput301f22t09.shell379.fragments.RecipeListFragmentDirections;
 import java.util.ArrayList;
 
 /**
- * This class is a custom RecyclerView adapter which helps display Recipe data in the RecyclerView
- * TODO: Cite these sources since they were referenced while working on this adapter:
- * TODO:    - https://www.digitalocean.com/community/tutorials/android-recyclerview-android-cardview-example-tutorial
- * TODO:    -
+ * This class is a custom RecyclerView adapter which helps display Recipe data in the RecyclerView.
  */
 public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.RecipeViewHolder>{
 
@@ -33,6 +30,9 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
     private RecipeListFragment recipeListFragment;
     private NavController navController;
 
+    /**
+     * Custom ViewHolder to describe each recipe list item's view.
+     */
     public class RecipeViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView recipeName;
@@ -46,13 +46,10 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             this.prepTime = itemView.findViewById(R.id.rli_prep_time_textView);
             this.servings = itemView.findViewById(R.id.rli_servings_textView);
             this.category = itemView.findViewById(R.id.rli_category_textView);
-            // TODO: cite https://developer.android.com/guide/navigation/navigation-getting-started
-            // for how to get nav controller
-            //this.navController = NavHostFragment.findNavController(fragment);
         }
 
-        // TODO: cite this later https://stackoverflow.com/questions/24885223/why-doesnt-recyclerview-have-onitemclicklistener
-        // used this to reference how to create an on click listener for recycler view items
+        // Used this to reference how to create an on click listener for recycler view items
+        // https://stackoverflow.com/questions/24885223/why-doesnt-recyclerview-have-onitemclicklistener
         @Override
         public void onClick(View view) {
             //navController.navigate(RecipeListFragmentDirections.actionRecipeListFragmentToEditRecipe());
