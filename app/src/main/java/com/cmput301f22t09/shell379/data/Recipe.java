@@ -104,6 +104,11 @@ public class Recipe implements Serializable {
         ingredients.addAll(newIngredients);
     }
 
+    /**
+     * overrides Java's equals method
+     * @param o recipe to compare to
+     * @return true if the recipe is equal, false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (o == this) {

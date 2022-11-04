@@ -40,9 +40,6 @@ public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientIn
 
         }
 
-        /**
-         * Used when a ingredient is clicked.
-         */
         @Override
         public void onClick(View v) {
             // Below line is just like a safety check, because sometimes holder could be null,

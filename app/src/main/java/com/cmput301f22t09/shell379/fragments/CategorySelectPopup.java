@@ -29,11 +29,7 @@ import com.cmput301f22t09.shell379.data.vm.collections.CategorySet;
 
 import java.util.HashSet;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CategoriesSelect#} factory method to
- * create an instance of this fragment.
- */
+
 public abstract class CategorySelectPopup extends DialogFragment {
     public interface SelectListener {
         void send(String val);

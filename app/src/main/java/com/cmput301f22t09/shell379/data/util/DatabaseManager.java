@@ -55,6 +55,7 @@ public class DatabaseManager {
 
     /**
      * Syncs local environment to the database
+     * @param owner the owner of the environment view model scope.
      */
     public void pull(AppCompatActivity owner) {
         this.doc.addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -79,6 +80,11 @@ public class DatabaseManager {
         });
     }
 
+
+    /**
+     * Pushes local environment to the database
+     * @param env the environment Environment to push to the database.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void push(Environment env) {
         doc.set(SerializeEnvUtil.serialize(env)).addOnSuccessListener(new OnSuccessListener<Void>() {
