@@ -43,7 +43,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class EditRecipeFragment extends Fragment implements CategoriesSelect.CatSelectListener {
+public class EditRecipeFragment extends Fragment {
 
     protected View rootView;
     private Recipe myRecipe;
@@ -95,7 +95,18 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
 
             @Override
             public void onClick(View view) {
-                CategoriesSelect selection = new CategoriesSelect();
+                CategorySelectPopup.SelectListener listener = new CategorySelectPopup.SelectListener() {
+                    @Override
+                    public void send(String val) {
+                        Log.e("EditRecipe", val);
+                        catSelect.setAllCaps(false);
+                        catSelect.setText(val);
+                        catSelect.setGravity(Gravity.LEFT);
+                        catSelect.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
+                        catSelect.setTypeface(Typeface.SANS_SERIF);
+                    }
+                };
+                RecipeCategorySelectPopup selection = new RecipeCategorySelectPopup(listener,"Category");
                 selection.show(getFragmentManager(), "");
                 selection.setTargetFragment(EditRecipeFragment.this, 1);
 
@@ -293,9 +304,8 @@ public class EditRecipeFragment extends Fragment implements CategoriesSelect.Cat
         navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeListFragment());
     }
 
-    @Override
     public void send(String cat) {
-//        Log.e("EditRecipe", cat);
+        Log.e("EditRecipe", cat);
         catSelect.setAllCaps(false);
         catSelect.setText(cat);
         catSelect.setGravity(Gravity.LEFT);

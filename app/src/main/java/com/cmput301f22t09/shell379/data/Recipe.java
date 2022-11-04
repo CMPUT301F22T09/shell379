@@ -7,7 +7,6 @@ import android.os.Parcel;
 import androidx.annotation.RequiresApi;
 
 import com.cmput301f22t09.shell379.data.util.SerializeUtil;
-import com.cmput301f22t09.shell379.data.vm.collections.FullyEquable;
 
 import java.io.Serializable;
 import java.util.ArrayList;

@@ -92,11 +92,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:ems="10"
-                android:hint="Description"
                 android:inputType="textCapSentences"
                 android:padding="10dp"
                 android:maxLength="30"
+                android:focusable="false"
                 android:textCursorDrawable="@null"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Unit"
+                style="@style/QuestionHeader"/>
+
+            <Spinner
+                android:id="@+id/editUnit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                />
 
             <TextView
                 android:layout_width="match_parent"
@@ -113,18 +127,6 @@
                 android:padding="10dp"
                 android:textCursorDrawable="@null"/>
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Unit"
-                style="@style/QuestionHeader"/>
-
-            <Spinner
-                android:id="@+id/editUnit"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                />
 
             <TextView
                 style="@style/QuestionHeader"
@@ -139,6 +141,7 @@
                 android:ems="10"
                 android:inputType="text"
                 android:padding="10dp"
+                android:focusable="false"
                 android:textCursorDrawable="@null"/>
 
 
