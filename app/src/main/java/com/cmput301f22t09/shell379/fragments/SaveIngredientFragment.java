@@ -29,7 +29,12 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public abstract class SaveIngredientFragment extends Fragment{
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the  factory method to
+ * create an instance of this fragment.
+ */
+public abstract class SaveIngredientFragment extends Fragment {
     protected View rootView;
     private NavController navController;
     protected Environment envViewModel;
@@ -45,10 +50,6 @@ public abstract class SaveIngredientFragment extends Fragment{
         super.onCreate(savedInstanceState);
         navController = NavHostFragment.findNavController(this);
     }
-
-    // TO DO
-    // Connect units, category and location to sets
-    // connect dialog
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -128,14 +129,20 @@ public abstract class SaveIngredientFragment extends Fragment{
             DatePicker bestBeforeDatePicker = rootView.findViewById(R.id.editBestBeforeDate);
             Date bestBeforeDate = new GregorianCalendar(
                     bestBeforeDatePicker.getYear(),
-                    bestBeforeDatePicker.getMonth() + 1,
+                    bestBeforeDatePicker.getMonth(),
                     bestBeforeDatePicker.getDayOfMonth()).getTime();
             String location = ((EditText)rootView.findViewById(R.id.editLocation)).getText().toString();
             int amount = Integer.parseInt(((EditText)rootView.findViewById(R.id.editAmount)).getText().toString());
-            String category = ((EditText)rootView.findViewById(R.id.editLocation)).getText().toString();
+            String category = ((EditText)rootView.findViewById(R.id.editCategory)).getText().toString();
             String unit = ((Spinner)rootView.findViewById(R.id.editUnit)).getSelectedItem().toString();
 
             // validate
+            if(description == "" ||
+            location == "" ||
+            category == ""
+            ){
+                throw new IllegalArgumentException("fields not filled");
+            }
             writeToViewModel(new Ingredient(description,bestBeforeDate,location,amount,unit,category));
             navController.popBackStack();
 
@@ -155,7 +162,7 @@ public abstract class SaveIngredientFragment extends Fragment{
                 category.setText(val);
             }
         };
-        IngredientCategorySelectPopup selection = new IngredientCategorySelectPopup(listener);
+        IngredientCategorySelectPopup selection = new IngredientCategorySelectPopup(listener,"Category");
         selection.show(getFragmentManager(), "");
         selection.setTargetFragment(SaveIngredientFragment.this, 1);
     }
@@ -166,11 +173,11 @@ public abstract class SaveIngredientFragment extends Fragment{
                 location.setText(val);
             }
         };
-        LocationCategorySelectPopup selection = new LocationCategorySelectPopup(listener);
+        LocationCategorySelectPopup selection = new LocationCategorySelectPopup(listener, "Location");
         selection.show(getFragmentManager(), "");
         selection.setTargetFragment(SaveIngredientFragment.this, 1);
     }
 
-  protected abstract void writeToViewModel(Ingredient ing);
+    protected abstract void writeToViewModel(Ingredient ing);
 
 }

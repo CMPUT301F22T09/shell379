@@ -51,8 +51,4 @@ public class IngredientCustomList extends ArrayAdapter<Ingredient> {
 
         return view;
     }
-
-
-
-
 }

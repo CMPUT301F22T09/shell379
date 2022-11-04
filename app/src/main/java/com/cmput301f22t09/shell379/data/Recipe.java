@@ -3,6 +3,7 @@ package com.cmput301f22t09.shell379.data;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Parcel;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -104,6 +105,11 @@ public class Recipe implements Serializable {
         ingredients.addAll(newIngredients);
     }
 
+    /**
+     * overrides Java's equals method
+     * @param o recipe to compare to
+     * @return true if the recipe is equal, false otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (o == this) {

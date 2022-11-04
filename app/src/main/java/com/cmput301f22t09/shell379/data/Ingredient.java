@@ -10,7 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 /**
- *
+ * Ingredient
  */
 public class Ingredient implements Serializable, PartiallyEquable {
     private String description;
@@ -19,15 +19,6 @@ public class Ingredient implements Serializable, PartiallyEquable {
     private Integer amount;
     private String unit;
     private String category;
-
-//    public Ingredient(String description, Date bestBefore, String location, Integer amount, String unit, String category) {
-//        this.description = description;
-//        this.bestBefore = bestBefore;
-//        this.location = location;
-//        this.amount = amount;
-//        this.unit = unit;
-//        this.category = category;
-//    }
 
     /**
      * Construct the ingredient class
@@ -55,12 +46,6 @@ public class Ingredient implements Serializable, PartiallyEquable {
             throw new IllegalArgumentException("Amount cannot be negative.");
         }
         this.unit = unit;
-//        if (unit.replaceAll("[^0-9]", "").equals("")) {
-//            throw new IllegalArgumentException("Unit must contain numeric values.");
-//        }
-//        if (Integer.parseInt(unit.replaceAll("[^0-9]", "")) <= 1e-10)  {
-//            throw new IllegalArgumentException("Unit must be non-zero");
-//        }
         this.category = category;
     }
 
@@ -75,7 +60,7 @@ public class Ingredient implements Serializable, PartiallyEquable {
     }
 
     /**
-     *
+     * Get the description of ingredient
      * @return
      */
     public String getDescription() {
@@ -83,23 +68,19 @@ public class Ingredient implements Serializable, PartiallyEquable {
     }
 
     /**
-     *
+     * Set the description of ingredient
      * @param description
      */
     public void setDescription(String description) {
         this.description = description;
     }
 
-    /**
-     *
-     * @return
-     */
     public Date getBestBefore() {
         return bestBefore;
     }
 
     /**
-     *
+     * Set the best before date of ingredient
      * @param bestBefore
      */
     public void setBestBefore(Date bestBefore) {
@@ -107,8 +88,10 @@ public class Ingredient implements Serializable, PartiallyEquable {
     }
 
     /**
-     *
+     * Get the best before date of ingredient
      * @return
+     * get best before date in the format dd/MM/yyyy
+     * @return best before date in a string as dd/mm/yyy
      */
     public String getBestBeforeFormatted() {
         SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
@@ -116,7 +99,7 @@ public class Ingredient implements Serializable, PartiallyEquable {
     }
 
     /**
-     *
+     * Get the location of ingredient
      * @return
      */
     public String getLocation() {
@@ -124,7 +107,7 @@ public class Ingredient implements Serializable, PartiallyEquable {
     }
 
     /**
-     *
+     * Set the location of ingredient
      * @param location
      */
     public void setLocation(String location) {
@@ -132,7 +115,7 @@ public class Ingredient implements Serializable, PartiallyEquable {
     }
 
     /**
-     *
+     * Get the amount of ingredient
      * @return
      */
     public Integer getAmount() {
@@ -140,7 +123,7 @@ public class Ingredient implements Serializable, PartiallyEquable {
     }
 
     /**
-     *
+     * Set the amount of ingredient
      * @param amount
      */
     public void setAmount(Integer amount) {
@@ -148,7 +131,7 @@ public class Ingredient implements Serializable, PartiallyEquable {
     }
 
     /**
-     *
+     * Get the unit of ingredient
      * @return
      */
     public String getUnit() {
@@ -156,7 +139,7 @@ public class Ingredient implements Serializable, PartiallyEquable {
     }
 
     /**
-     *
+     * Set the unit of ingredient
      * @param unit
      */
     public void setUnit(String unit) {
@@ -164,7 +147,7 @@ public class Ingredient implements Serializable, PartiallyEquable {
     }
 
     /**
-     *
+     * Get the category of ingredient
      * @return
      */
     public String getCategory() {
@@ -172,7 +155,7 @@ public class Ingredient implements Serializable, PartiallyEquable {
     }
 
     /**
-     *
+     * Set the category of ingredient
      * @param category
      */
     public void setCategory(String category) {
@@ -180,10 +163,11 @@ public class Ingredient implements Serializable, PartiallyEquable {
     }
 
      /**
-     *
-     * @param o
-     * @return
+     * overrides Java's equals method
+     * @param o ingredient to compare to
+     * @return true if the ingredient is equal, false otherwise
      */
+    @Override
     public boolean equals(Object o){
         Ingredient ing = (Ingredient) o;
         if (ing.getDescription() == ing.description){

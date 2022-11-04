@@ -6,6 +6,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+/**
+ * Set of entity categories to choose from.
+ * Used for ingredient categories, recipe categories and location categories.
+ */
 public class CategorySet extends Commitable implements Serializable {
     private HashSet<String> set;
 

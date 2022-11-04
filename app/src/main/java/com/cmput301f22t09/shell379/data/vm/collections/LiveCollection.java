@@ -6,6 +6,9 @@ import com.cmput301f22t09.shell379.data.vm.infrastructure.Commitable;
 
 import java.util.ArrayList;
 
+/**
+ * Collection of T entity objects.
+ */
 public class LiveCollection<T> extends Commitable {
     protected final MutableLiveData<ArrayList<T>> lst = new MutableLiveData<>();
 
@@ -38,21 +41,5 @@ public class LiveCollection<T> extends Commitable {
 
     public void setList(ArrayList<T> lst) {
         this.lst.setValue(lst);
-    }
-
-    public int getIndexByPartialEquals(T target){
-        if(!(target instanceof PartiallyEquable)){
-            return -1;
-        }
-        PartiallyEquable FETarget = (PartiallyEquable)target;
-        ArrayList<T> lstValue = lst.getValue();
-        for (int i=0; i< lstValue.size(); i++) {
-            PartiallyEquable a = (PartiallyEquable) lstValue.get(i);
-            boolean fullEqual = FETarget.partialEquals(a);
-            if (fullEqual==true){
-                return i;
-            }
-        }
-        return -1;
     }
 }

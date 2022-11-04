@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.RecipeSelectIngredientsAdapter;
@@ -26,8 +27,6 @@ import org.checkerframework.checker.units.qual.A;
 import java.util.ArrayList;
 import java.util.Date;
 
-/**
- */
 public class RecipeSelectIngredientFragment extends Fragment {
 
     // TODO: Temporary! Testing content
@@ -39,8 +38,8 @@ public class RecipeSelectIngredientFragment extends Fragment {
     RecipeSelectIngredientsAdapter rsiAdapter;
     Button selectButton;
     Environment env;
-    int recipeIndex;
     private NavController navController;
+    int recipeIndex;
 
     public RecipeSelectIngredientFragment() {
         // Required empty public constructor
@@ -54,6 +53,13 @@ public class RecipeSelectIngredientFragment extends Fragment {
         navController = NavHostFragment.findNavController(this);
     }
 
+    /**
+     * Set up the onCreateView method to create the view object
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -120,7 +126,26 @@ public class RecipeSelectIngredientFragment extends Fragment {
             }
         });
 
+
+        // Implement the button to back to previous page
+        ((ImageView)rootView.findViewById(R.id.floatingActionButton7)).setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        back();
+                    }
+                }
+        );
         return rootView;
     }
 
+    public void select() {
+        // get specific recipe & add ingredient 
+    }
+
+    /**
+     * Implement the option to go back to previous page
+     */
+    private void back(){
+        navController.popBackStack();
+    }
 }

@@ -25,17 +25,12 @@ import com.cmput301f22t09.shell379.data.vm.collections.CategorySet;
 
 import java.util.HashSet;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link CategoriesSelect#} factory method to
- * create an instance of this fragment.
- */
 public class IngredientCategorySelectPopup extends CategorySelectPopup {
     protected CategorySet getCollection(Environment env){
         return env.getIngredientCategories();
     };
 
-    public IngredientCategorySelectPopup(SelectListener selectListener){
-        super(selectListener);
+    public IngredientCategorySelectPopup(SelectListener selectListener, String title){
+        super(selectListener, title);
     }
 }

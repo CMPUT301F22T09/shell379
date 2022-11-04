@@ -24,6 +24,11 @@ import com.cmput301f22t09.shell379.data.vm.collections.PartiallyEquableLiveColle
 
 import java.io.Serializable;
 
+/**
+ * ViewModel object that acts as the central source of truth of data
+ * in the application. All stateful data manipulation must go through this class.
+ * The class is accessible from all fragments and does not change between fragments.
+ */
 public class Environment extends ViewModel implements Serializable {
     private PartiallyEquableLiveCollection<Ingredient> ingredients;
     private LiveCollection<Recipe> recipes;
@@ -41,6 +46,11 @@ public class Environment extends ViewModel implements Serializable {
         locationCategories = new CategorySet();
     }
 
+    /**
+     * Returns the Environment viewModel and sets it to an existing Environment object
+     * @param owner activity requesting the environment viewModel
+     * @param envPulled is the environment to apply to the environment viewModel
+     */
     public static Environment of(AppCompatActivity owner, Environment envPulled) {
         Environment env = new ViewModelProvider(owner).get(Environment.class);
         try {
@@ -59,12 +69,23 @@ public class Environment extends ViewModel implements Serializable {
         return env;
     }
 
+    /**
+     * Returns the Environment viewModel
+     * @param owner activity requesting the environment viewModel
+     */
     public static Environment of(AppCompatActivity owner) {
         Environment env = new ViewModelProvider(owner).get(Environment.class);
+        if (env == null) env = new Environment();
         setupObservers(owner, env);
         return env;
     }
 
+    /**
+     * sets up observers for changes to the environment data.
+     * Observers will trigger database pushes
+     * @param owner activity requesting the environment viewModel
+     * @param env the environment to push to the database
+     */
     private static void setupObservers(AppCompatActivity owner, Environment env) {
         observeForCommits(owner, env, env.getIngredients());
         observeForCommits(owner, env, env.getRecipes());
@@ -74,6 +95,13 @@ public class Environment extends ViewModel implements Serializable {
         observeForCommits(owner, env, env.getLocationCategories());
     }
 
+    /**
+     * sets a single observer for the data of a Commitable object.
+     * When the Commitable needs to be committed the environment will be pushed.
+     * @param owner scope for the observation.
+     * @param env env object to push to the database.
+     * @param commitable Commitable object to watch for commit triggers.
+     */
     private static void observeForCommits(AppCompatActivity owner, Environment env, Commitable commitable) {
         commitable.isCommitNeeded().observe(owner, new Observer<Boolean>() {
             @RequiresApi(api = Build.VERSION_CODES.O)
