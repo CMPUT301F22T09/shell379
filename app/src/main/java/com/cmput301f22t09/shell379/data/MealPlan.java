@@ -1,7 +1,5 @@
 package com.cmput301f22t09.shell379.data;
 
-import android.media.Image;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -80,5 +78,21 @@ public class MealPlan implements Serializable {
 
     public void addRecipes(ArrayList<Recipe> recipes) {
         this.recipes.addAll(recipes);
+    }
+
+    public Ingredient getIngredientAtIdx(Integer idx) {
+        return this.ingredients.get(idx);
+    }
+
+    public Recipe getRecipeAtIdx(Integer idx) {
+        return this.recipes.get(idx);
+    }
+
+    public void removeIngredientAtIdx(Integer idx) {
+        this.ingredients.remove(idx);
+    }
+
+    public void removeRecipeAtIdx(Integer idx) {
+        this.recipes.remove(idx);
     }
 }
