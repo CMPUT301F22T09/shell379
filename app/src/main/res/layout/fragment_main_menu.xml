@@ -36,13 +36,15 @@
         android:id="@+id/meal_plans_list_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Meal Plans"
-        android:enabled="false"/>
+        android:text="Meal Plans" />
+<!--        android:enabled="false"-->
+
 
     <Button
         android:id="@+id/shopping_list_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Shopping List"
-        android:enabled="false"/>
+        />
+<!--    android:enabled="false"-->
 </LinearLayout>
