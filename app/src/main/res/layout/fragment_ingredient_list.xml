@@ -27,33 +27,31 @@
         android:textSize="25sp">
     </TextView>
 
-
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_height="wrap_content"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="25dp"
         android:orientation="horizontal">
 
         <Spinner
             android:id="@+id/ingredient_sort_spinner"
-            android:layout_width="200dp"
+            android:layout_width="220dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:spinnerMode="dropdown"/>
-        <!--            android:background="@drawable/custom_border"-->
-        />
+            android:spinnerMode="dropdown"
+            android:background="@drawable/spinner_background"/>
 
         <Button
-            android:text="NEW"
             android:id="@+id/new_button"
             android:layout_width="80dp"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
+            android:layout_margin="5dp"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:layout_gravity="center"/>
+            android:text="NEW" />
 
     </LinearLayout>
 
