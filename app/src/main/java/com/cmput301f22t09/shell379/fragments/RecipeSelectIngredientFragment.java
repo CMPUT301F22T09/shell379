@@ -2,9 +2,11 @@ package com.cmput301f22t09.shell379.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -17,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.RecipeSelectIngredientsAdapter;
@@ -34,7 +37,7 @@ import java.util.Date;
 /**
  * Fragment for selecting ingredients for recipes.
  */
-public class RecipeSelectIngredientFragment extends Fragment {
+public class RecipeSelectIngredientFragment extends DialogFragment {
     //    From Anubhav Arora  https://medium.com/geekculture/android-full-screen-dialogfragment-1410dbd96d37
     @Override
     public int getTheme() {
@@ -43,15 +46,13 @@ public class RecipeSelectIngredientFragment extends Fragment {
 
     ArrayList<Ingredient> ingredientList;
     ArrayList<Ingredient> recipeIngredientList;
-    Recipe selectedRecipe;
     RecyclerView ingredientsRecyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecipeSelectIngredientsAdapter rsiAdapter;
     Button selectButton;
     Environment env;
     private NavController navController;
-    int recipeIndex;
-    private EditRecipeViewModel editRecipeViewModel
+    private EditRecipeViewModel editRecipeViewModel;
 
     public RecipeSelectIngredientFragment() {
         // Required empty public constructor
@@ -64,10 +65,15 @@ public class RecipeSelectIngredientFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EditRecipeViewModel editRecipeViewModel =  new ViewModelProvider(this).get(EditRecipeViewModel.class);
+        editRecipeViewModel =  new ViewModelProvider(requireActivity()).get(EditRecipeViewModel.class);
         ingredientList = new ArrayList<Ingredient>();
-        recipeIngredientList = new ArrayList<Ingredient>();
+        recipeIngredientList = editRecipeViewModel.getRecipe().getIngredients();
+
         navController = NavHostFragment.findNavController(this);
+        env = Environment.of((AppCompatActivity) requireActivity());
+
+        // filtered ingredients list from environment
+        ingredientList = env.getIngredients().getFilteredCollection().getList();
     }
 
     /**
@@ -81,22 +87,7 @@ public class RecipeSelectIngredientFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        env = Environment.of((AppCompatActivity) requireActivity());
         View rootView = inflater.inflate(R.layout.recipe_select_ingredients, container, false);
-        recipeIndex = getArguments().getInt("recipeIndex");
-
-        // recipeIndex = -1 means we're creating a new recipe
-        if (recipeIndex == -1) {
-            recipeIngredientList = new ArrayList<>();
-        }
-        // Otherwise, we're editing an existing recipe
-        else {
-            selectedRecipe = env.getRecipes().getList().get(recipeIndex);
-            // the selected recipe's ingredients
-            recipeIngredientList = selectedRecipe.getIngredients();
-        }
-        // filtered ingredients list from environment
-        ingredientList = env.getIngredients().getFilteredCollection().getList();
 
         layoutManager = new LinearLayoutManager(this.getActivity());
         ingredientsRecyclerView = (RecyclerView) rootView.findViewById(R.id.rsi_recyclerView);
@@ -110,23 +101,15 @@ public class RecipeSelectIngredientFragment extends Fragment {
         selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Creating a new recipe
-                if (recipeIndex == -1) {
-                    Bundle bundle = new Bundle();
-                    bundle.putSerializable("selectedIngredients", rsiAdapter.getCheckedIngredients());
-                    RecipeSelectIngredientFragmentDirections.ActionRecipeSelectIngredientFragmentToEditRecipe action
-                            = RecipeSelectIngredientFragmentDirections.actionRecipeSelectIngredientFragmentToEditRecipe(recipeIndex);
-                    action.setSelectedIngredients(bundle);
-                    navController.navigate(action);
-                }
-                // Editing an existing recipe
-                else {
-                    // Get checked ingredients from recycler view
+                if(rsiAdapter.selectedIngsHaveAmounts()){
                     ArrayList<Ingredient> checkedIngredients = rsiAdapter.getCheckedIngredients();
-                    selectedRecipe.setIngredients(checkedIngredients);
-                    env.getRecipes().commit();
+                    editRecipeViewModel.getRecipe().setIngredients(checkedIngredients);
+                    editRecipeViewModel.forceSignalUpdate();
                     navController.popBackStack();
+                }else{
+                    Toast.makeText(getContext(), "Please enter amounts for all ingredients", Toast.LENGTH_LONG).show();
                 }
+
             }
         });
 
@@ -148,18 +131,28 @@ public class RecipeSelectIngredientFragment extends Fragment {
                 }
         );
 
-
         return rootView;
     }
 
+    /**
+     *  save the ing draft and move to creating a new ingredient
+     */
     private void onNewIngStubClicked(){
+        saveIngToDraft();
+
         Bundle bundle = new Bundle();
         bundle.putSerializable("selectedIngredients", rsiAdapter.getCheckedIngredients());
-        RecipeSelectIngredientFragmentDirections.ActionRecipeSelectIngredientFragmentToCreateIngredientStubFragment3 action =
-                RecipeSelectIngredientFragmentDirections.actionRecipeSelectIngredientFragmentToCreateIngredientStubFragment3(recipeIndex, bundle);
-        navController.navigate(
-                action
-        );
+
+        navController.navigate( RecipeSelectIngredientFragmentDirections.actionRecipeSelectIngredientFragmentToCreateIngredientStubFragment3());
+    }
+
+    /**
+     *  save the ing draft
+     */
+    private void saveIngToDraft(){
+        Recipe newRecipe = editRecipeViewModel.getRecipe();
+        newRecipe.setIngredients(rsiAdapter.getCheckedIngredients());
+        editRecipeViewModel.liveRecipe().setValue(newRecipe);
     }
 
     /**

@@ -83,11 +83,6 @@
         <action
             android:id="@+id/action_editRecipe_to_recipeListFragment"
             app:destination="@id/recipeListFragment" />
-        <argument
-            android:name="selectedIngredients"
-            app:nullable="true"
-            app:argType="android.os.Bundle"
-            android:defaultValue="@null" />
     </fragment>
     <fragment
         android:id="@+id/createIngredientFragment"
@@ -108,9 +103,6 @@
         android:name="com.cmput301f22t09.shell379.fragments.RecipeSelectIngredientFragment"
         android:label="fragment_recipe_select_ingredient"
         tools:layout="@layout/recipe_select_ingredients" >
-        <argument
-            android:name="recipeIndex"
-            app:argType="integer" />
         <action
             android:id="@+id/action_recipeSelectIngredientFragment_to_editRecipe"
             app:destination="@id/editRecipe" />
@@ -125,11 +117,5 @@
         <action
             android:id="@+id/action_createIngredientStubFragment3_to_editRecipe"
             app:destination="@id/editRecipe" />
-        <argument
-            android:name="recipeIndex"
-            app:argType="integer" />
-        <argument
-            android:name="existingSelections"
-            app:argType="android.os.Bundle" />
     </dialog>
 </navigation>

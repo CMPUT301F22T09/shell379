@@ -13,10 +13,13 @@ import android.os.Bundle;
 import android.net.Uri;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -39,6 +42,7 @@ import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.IngredientInRecipeAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
+import com.cmput301f22t09.shell379.data.vm.EditRecipeViewModel;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.collections.PartiallyEquableLiveCollection;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -53,7 +57,6 @@ import java.util.ArrayList;
 public class EditRecipeFragment extends Fragment {
 
     protected View rootView;
-    private Recipe myRecipe;
     private RecyclerView recipe_recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private IngredientInRecipeAdapter ingredientListAdapter;
@@ -79,16 +82,48 @@ public class EditRecipeFragment extends Fragment {
     private ArrayList<Ingredient> selectedIngredients;
     private static final int CAMERA_REQUEST = 1888;
     private static final int PICK_FROM_GALLERY = 1;
+    private EditRecipeViewModel editRecipeViewModel;
 
     public EditRecipeFragment() {
         // Required empty public constructor
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.navController = NavHostFragment.findNavController(this);
         this.selectedIngredients = new ArrayList<>();
+        editRecipeViewModel =  new ViewModelProvider(requireActivity()).get(EditRecipeViewModel.class);
+        recipeIndex = getArguments().getInt("recipeIndex");
+        env = Environment.of((AppCompatActivity) requireActivity());
+
+        final Observer<Recipe> recipeObs = new Observer<Recipe>() {
+            @Override
+            public void onChanged(@Nullable final Recipe recipe) {
+                // update the recipe draft.
+                restoreRecipe(recipe);
+            }
+        };
+        editRecipeViewModel.liveRecipe().observe(this, recipeObs);
+        if (recipeIndex > -1 && !env.getRecipes().getList().isEmpty()) {
+            // grab existing recipe if updating
+
+            Recipe ogRecipe = env.getRecipes().getList().get(recipeIndex);
+
+            Recipe newRecipe = new Recipe(
+                    ogRecipe.getTitle(),
+                    ogRecipe.getPreparationTime(),
+                    ogRecipe.getServings(),
+                    ogRecipe.getCategory(),
+                    ogRecipe.getComments()
+            );
+            newRecipe.setPhotograph(ogRecipe.getPhotograph());
+            newRecipe.setIngredients(new ArrayList<Ingredient>(ogRecipe.getIngredients()));
+            editRecipeViewModel.liveRecipe().setValue(newRecipe);
+        }else {
+            editRecipeViewModel.liveRecipe().setValue(new Recipe(null,null,null,null,null));
+        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -99,7 +134,6 @@ public class EditRecipeFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_edit_recipe, container, false);
 
         catSelect = rootView.findViewById(R.id.select_category);
-        env = Environment.of((AppCompatActivity) requireActivity());
         choosePhoto = rootView.findViewById(R.id.gallery_button);
         previewPhoto = rootView.findViewById(R.id.photo);
         saveRecipeButton = rootView.findViewById(R.id.save_recipe);
@@ -116,20 +150,6 @@ public class EditRecipeFragment extends Fragment {
 
         getAdapter();
 
-        // get selectedIngredients from arguments when navigating back from the edit recipe screen
-        Bundle temp = getArguments().getParcelable("selectedIngredients");
-        if (temp != null) {
-            selectedIngredients = (ArrayList<Ingredient>) EditRecipeFragmentArgs.fromBundle(getArguments()).getSelectedIngredients().get("selectedIngredients");
-            ingredientListAdapter.setIngredients(selectedIngredients);
-        }
-
-        if (myRecipe == null || myRecipe.getIngredients().isEmpty()) {
-            tableText.setVisibility(View.INVISIBLE);
-        }
-        if (!selectedIngredients.isEmpty()) {
-            tableText.setVisibility(View.VISIBLE);
-        }
-
         layoutManager = new LinearLayoutManager(this.getActivity());
         recipe_recyclerView = rootView.findViewById(R.id.ingredientsInRep);
         recipe_recyclerView.setLayoutManager(layoutManager);
@@ -138,6 +158,8 @@ public class EditRecipeFragment extends Fragment {
         recipe_recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         onClickMethods();
+
+        restoreRecipe(editRecipeViewModel.getRecipe());
 
         return rootView;
     }
@@ -149,16 +171,15 @@ public class EditRecipeFragment extends Fragment {
     public void getAdapter() {
         recipeIndex = getArguments().getInt("recipeIndex");
         if (recipeIndex > -1 && !env.getRecipes().getList().isEmpty()) {
-            myRecipe = env.getRecipes().getList().get(recipeIndex);
-            setCategory(myRecipe.getCategory());
-            prepareTimeText.setText(myRecipe.getPreparationTime().toString());
-            servingsText.setText(myRecipe.getServings().toString());
-            commentText.setText(myRecipe.getComments());
-            nameText.setText(myRecipe.getTitle());
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && myRecipe.getPhotograph() != null) {
-                previewPhoto.setImageBitmap(myRecipe.getPhotograph());
+            setCategory(editRecipeViewModel.getRecipe().getCategory());
+            prepareTimeText.setText(editRecipeViewModel.getRecipe().getPreparationTime().toString());
+            servingsText.setText(editRecipeViewModel.getRecipe().getServings().toString());
+            commentText.setText(editRecipeViewModel.getRecipe().getComments());
+            nameText.setText(editRecipeViewModel.getRecipe().getTitle());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && editRecipeViewModel.getRecipe().getPhotograph() != null) {
+                previewPhoto.setImageBitmap(editRecipeViewModel.getRecipe().getPhotograph());
             }
-            ingredientListAdapter = new IngredientInRecipeAdapter(myRecipe.getIngredients(), this);
+            ingredientListAdapter = new IngredientInRecipeAdapter(editRecipeViewModel.getRecipe().getIngredients(), this);
         } else {
             ingredientListAdapter = new IngredientInRecipeAdapter(new ArrayList<Ingredient>(), this);
         }
@@ -199,9 +220,11 @@ public class EditRecipeFragment extends Fragment {
         });
 
         addIngredientButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View view) {
-                navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeSelectIngredientFragment(recipeIndex));
+                saveDraft();
+                navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeSelectIngredientFragment());
             }
         });
 
@@ -356,7 +379,72 @@ public class EditRecipeFragment extends Fragment {
             env.getRecipes().commit();
             navController.navigate(EditRecipeFragmentDirections.actionEditRecipeToRecipeListFragment());
         } catch(Exception E) {
-            showError();
+            showError(E);
+        }
+    }
+
+    /**
+     * This function saves a draft of a recipe so it can be returned to after selecting ingredients
+     */
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void saveDraft() {
+        try {
+            String name = nameText.getText().toString();
+            Long prepareTime = prepareTimeText.getText().toString().isEmpty()?
+                    null: Long.parseLong(prepareTimeText.getText().toString());
+            int servings = servingsText.getText().toString().isEmpty()?
+                    null: Integer.parseInt(servingsText.getText().toString());
+            String category = cat;
+            String comment = commentText.getText().toString();
+            Bitmap photo = ((BitmapDrawable) previewPhoto.getDrawable()).getBitmap();
+            Recipe newRecipe = new Recipe(name, prepareTime, servings, category, comment, photo);
+
+            int size = ingredientListAdapter.getIngredients().size();
+            // check if there is any ingredient
+            if (size > 0) {
+                for (int i = 0; i < size; i++) {
+                    newRecipe.addIngredient(ingredientListAdapter.getIngredients().get(i));
+                }
+            }
+            newRecipe.setPhotograph(photo);
+
+            editRecipeViewModel.liveRecipe().setValue(newRecipe);
+        } catch(Exception E) {
+            showError(E);
+        }
+    }
+
+    /**
+     * restores a saved draft recipe
+     */
+    private void restoreRecipe(Recipe recipe){
+        if(recipe.getCategory() != null && !recipe.getCategory().isEmpty()){
+            setCategory(recipe.getCategory());
+        }
+        if(recipe.getPreparationTime() != null){
+            prepareTimeText.setText(recipe.getPreparationTime().toString());
+        }
+        if(recipe.getServings() != null){
+            servingsText.setText(recipe.getServings().toString());
+        }
+        if(recipe.getComments() != null && !recipe.getComments().isEmpty()){
+            commentText.setText(recipe.getComments());
+        }
+        if(recipe.getTitle() != null && !recipe.getTitle().isEmpty()){
+            nameText.setText(recipe.getTitle());
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O && recipe.getPhotograph() != null) {
+            previewPhoto.setImageBitmap(recipe.getPhotograph());
+        }
+        if(recipe.getIngredients() != null){
+            ingredientListAdapter.setIngredients(recipe.getIngredients());
+        }
+
+        if (editRecipeViewModel.getRecipe() == null || editRecipeViewModel.getRecipe().getIngredients().isEmpty()) {
+            tableText.setVisibility(View.INVISIBLE);
+        }
+        if (!selectedIngredients.isEmpty()) {
+            tableText.setVisibility(View.VISIBLE);
         }
     }
 
@@ -385,8 +473,9 @@ public class EditRecipeFragment extends Fragment {
         this.cat = cat;
     }
 
-    private void showError(){
+    private void showError(Exception e){
         TextView error = rootView.findViewById(R.id.errorText);
+        error.setText(e.getMessage());
         error.setVisibility(View.VISIBLE);
     }
 

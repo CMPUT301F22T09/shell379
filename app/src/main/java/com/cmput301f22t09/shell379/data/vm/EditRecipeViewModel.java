@@ -14,10 +14,21 @@ public class EditRecipeViewModel extends ViewModel {
     private MutableLiveData<Recipe> liveRecipe = new MutableLiveData<Recipe>();
 
     public MutableLiveData<Recipe> liveRecipe() {
-       return liveRecipe;
+        return liveRecipe;
     }
 
+    public void forceSignalUpdate(){
+        liveRecipe.setValue(liveRecipe.getValue());
+    }
+
+
     public Recipe getRecipe(){
+        if (liveRecipe.getValue() == null){
+            Recipe newRecipe = new Recipe(null,null,null,null,null);
+            liveRecipe.setValue(newRecipe);
+            return newRecipe;
+        }
         return  liveRecipe.getValue();
     }
+
 }

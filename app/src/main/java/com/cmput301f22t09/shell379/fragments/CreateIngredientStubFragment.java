@@ -16,12 +16,14 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Unit;
+import com.cmput301f22t09.shell379.data.vm.EditRecipeViewModel;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.collections.PartiallyEquableLiveCollection;
 
@@ -39,8 +41,7 @@ public class CreateIngredientStubFragment extends DialogFragment{
     protected Environment envViewModel;
     private EditText category;
     private EditText location;
-    private int recipeIndex;
-    private ArrayList<Ingredient> selectedIngredients;
+    private EditRecipeViewModel editRecipeViewModel;
 
     public CreateIngredientStubFragment() {
         // Required empty public constructor
@@ -50,11 +51,7 @@ public class CreateIngredientStubFragment extends DialogFragment{
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         navController = NavHostFragment.findNavController(this);
-        recipeIndex = getArguments().getInt("recipeIndex");
-        Bundle temp = getArguments().getParcelable("existingSelections");
-        if (temp != null) {
-            selectedIngredients = (ArrayList<Ingredient>) CreateIngredientStubFragmentArgs.fromBundle(getArguments()).getExistingSelections().get("selectedIngredients");
-        }
+        editRecipeViewModel =  new ViewModelProvider(requireActivity()).get(EditRecipeViewModel.class);
     }
 
 
@@ -133,18 +130,13 @@ public class CreateIngredientStubFragment extends DialogFragment{
             }
 
             Ingredient ing =  new Ingredient(description,null,null,amount,unit,category);
-            selectedIngredients.add(ing);
             envViewModel.getIngredients().add(ing);
             envViewModel.getIngredients().commit();
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("selectedIngredients", selectedIngredients);
-            CreateIngredientStubFragmentDirections.ActionCreateIngredientStubFragment3ToEditRecipe action =
-                CreateIngredientStubFragmentDirections.actionCreateIngredientStubFragment3ToEditRecipe (recipeIndex);
-            action.setSelectedIngredients(bundle);
 
-            navController.navigate(action);
+            editRecipeViewModel.getRecipe().getIngredients().add(ing);
+            editRecipeViewModel.forceSignalUpdate();
 
-
+            navController.popBackStack();
         }catch (Exception e){
             showError(e);
         }

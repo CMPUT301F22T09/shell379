@@ -60,6 +60,15 @@ public class Recipe implements Serializable {
         this.photograph = SerializeUtil.serializeImg(photograph);
     }
 
+    private Recipe(Recipe r) {
+        this.title = r.title;
+        this.preparationTime = r.preparationTime;
+        this.servings = r.servings;
+        this.category = r.category;
+        this.comments = r.comments;
+        this.photograph = r.photograph;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -100,13 +109,22 @@ public class Recipe implements Serializable {
         this.comments = comments;
     }
 
+
+//
     /**
      * Deserializes and returns the Recipe image
      * @return deserialized image
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Bitmap getPhotograph() {
-        return SerializeUtil.deserializeImg(photograph);
+        if(photograph == null){
+            return null;
+        }
+        try{
+            return SerializeUtil.deserializeImg(photograph);
+        }catch(Exception e){
+            return null;
+        }
     }
 
     /**
@@ -134,6 +152,8 @@ public class Recipe implements Serializable {
         ingredients.addAll(newIngredients);
     }
 
+
+
     /**
      * overrides Java's equals method
      * @param o recipe to compare to
@@ -154,4 +174,5 @@ public class Recipe implements Serializable {
         return r.getTitle().equals(title) && r.getPreparationTime().equals(preparationTime) && r.getServings().equals(servings)
                 && r.getCategory().equals(category) && r.getComments().equals(comments);
     }
+
 }

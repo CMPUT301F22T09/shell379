@@ -11,6 +11,7 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -56,22 +57,6 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
             this.checkbox = (CheckBox) itemView.findViewById(R.id.rsi_checkBox);
             this.inputAmount = (EditText) itemView.findViewById(R.id.rsi_amount);
         }
-
-//        public Ingredient getDupeIngredient() {
-//            String description = this.description.getText().toString();
-//            String category = this.category.getText().toString();
-//            Integer amount;
-////            if (this.inputAmount.getText().toString().equals("")) {
-////                amount = -1;
-////            }
-////            else {
-////                amount = Integer.parseInt(this.inputAmount.getText().toString());
-////            }
-//            amount = Integer.parseInt(this.inputAmount.getText().toString());
-//
-//            Ingredient dupeIngredient = new Ingredient(description, null, amount, null, category);
-//            return dupeIngredient;
-//        }
     }
 
     public RecipeSelectIngredientsAdapter(ArrayList<Ingredient> ingredients, ArrayList<Ingredient> recipeIngredients) {
@@ -81,6 +66,16 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
         if (!recipeIngredients.isEmpty()) {
             this.checkedIngredients = recipeIngredients;
         }
+    }
+
+    public boolean selectedIngsHaveAmounts(){
+        for (int i = 0 ; i < checkedIngredients.size();i++){
+            if(checkedIngredients.get(i).getAmount() == null){
+              return false;
+            }
+
+        }
+        return true;
     }
 
     @NonNull
@@ -97,6 +92,7 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
         TextView description = holder.description;
         TextView unit = holder.unit;
         TextView category = holder.category;
+        EditText inputAmount = holder.inputAmount;
 
         description.setText(ingredients.get(position).getDescription());
         category.setText(ingredients.get(position).getCategory());
@@ -116,11 +112,6 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
                     String amount = holder.inputAmount.getText().toString();
-                    // Prevent the checkbox from being clicked if there is no amount entered
-                    if (amount == null || amount.length() == 0) {
-                        holder.checkbox.setChecked(false);
-                        return;
-                    }
                     System.out.println(amount);
                     Ingredient originalIngredient = ingredients.get(holder.getAdapterPosition());
                     Ingredient dupeIngredient = createDupeIngredient(holder, originalIngredient);
@@ -144,6 +135,37 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
                 }
             }
         });
+
+        // text listener template from jettimadhuChowdary, Aug 19, 2011
+        // https://stackoverflow.com/questions/7117209/how-to-know-key-presses-in-edittext
+        inputAmount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(holder.checkbox.isChecked()){
+                    Ingredient ingredient = ingredients.get(holder.getAdapterPosition());
+                    for (int i = 0;  i < checkedIngredients.size(); i++){
+                        if (ingredient.partialEquals(checkedIngredients.get(i))){
+                            checkedIngredients.get(i).setAmount(inputAmount.getText().toString().isEmpty()?
+                                    null: Integer.parseInt(inputAmount.getText().toString()));
+                        }
+                    }
+                }
+                if(inputAmount.getText().toString().isEmpty()){
+                    holder.checkbox.setEnabled(false);
+                }
+                else{
+                    holder.checkbox.setEnabled(true);
+                }
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // TODO Auto-generated method stub
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
+            }
+        });
     }
 
     @Override
@@ -157,7 +179,6 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
 
     public Ingredient createDupeIngredient(RecipeSelectIngredientsViewHolder holder, Ingredient originalIngredient) {
         String description = originalIngredient.getDescription();
-        String test = holder.inputAmount.getText().toString();
         Integer amount;
         if (!holder.inputAmount.getText().toString().isEmpty()) {
             amount = Integer.parseInt(holder.inputAmount.getText().toString());

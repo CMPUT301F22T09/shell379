@@ -94,6 +94,7 @@ public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientIn
 
     public void setIngredients(ArrayList<Ingredient> ingredients) {
         this.ingredients = ingredients;
+        notifyDataSetChanged();
     }
 
     public void removeIngredient(int index) {
