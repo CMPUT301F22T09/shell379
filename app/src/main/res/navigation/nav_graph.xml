@@ -56,7 +56,7 @@
         android:id="@+id/mealPlanListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.MealPlanListFragment"
         android:label="fragment_meal_plan_list"
-        tools:layout="@layout/fragment_meal_plan_list" />
+        tools:layout="@layout/fragment_meal_plan" />
     <fragment
         android:id="@+id/viewIngredientFragment"
         android:name="com.cmput301f22t09.shell379.fragments.ViewIngredientFragment"
