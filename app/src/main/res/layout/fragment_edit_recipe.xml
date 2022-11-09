@@ -33,8 +33,69 @@
                 app:backgroundTint="@android:color/white"
                 app:srcCompat="@drawable/ic_baseline_arrow_back_24"
                 tools:ignore="SpeakableTextPresentCheck" />
-            
-           <LinearLayout
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="156dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:text="Ingredients"
+                    android:textSize="20dp" />
+
+                <Button
+                    android:id="@+id/delete_ingredient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:minHeight="48dp"
+                    android:text="Delete" />
+
+                <Button
+                    android:id="@+id/add_ingredient"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:layout_weight="1"
+                    android:minHeight="48dp"
+                    android:text="Add" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/table_text"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="156dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:text="Name"
+                    android:textSize="18dp" />
+
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="156dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:text="Amount"
+                    android:textSize="18dp" />
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -146,67 +207,6 @@
                 android:background="@drawable/customborder"
                 android:minHeight="48dp"
                 tools:ignore="SpeakableTextPresentCheck" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView11"
-                    android:layout_width="156dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:text="Ingredients"
-                    android:textSize="20dp" />
-
-                <Button
-                    android:id="@+id/delete_ingredient"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:minHeight="48dp"
-                    android:text="Delete" />
-
-                <Button
-                    android:id="@+id/add_ingredient"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_weight="1"
-                    android:minHeight="48dp"
-                    android:text="Add" />
-
-
-            </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/table_text"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="156dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:text="Name"
-                android:textSize="18dp" />
-
-            <TextView
-                android:id="@+id/textView2"
-                android:layout_width="156dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:layout_weight="1"
-                android:textSize="18dp"
-                android:text="Amount" />
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

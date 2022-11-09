@@ -107,7 +107,7 @@ public class IngredientsUITest {
         while (true) {
             try {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException f) {
                     continue;
                 }
@@ -116,7 +116,7 @@ public class IngredientsUITest {
             } catch (PerformException e) {
                 Log.e("IngredientsUITest", e.getMessage());
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException f) {
 
                 }
@@ -287,7 +287,7 @@ public class IngredientsUITest {
         while (true) {
             try {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException f) {
                     continue;
                 }
@@ -296,7 +296,7 @@ public class IngredientsUITest {
             } catch (PerformException e) {
                 Log.e("IngredientsUITest", e.getMessage());
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException f) {
 
                 }

@@ -22,7 +22,7 @@
 3. UML and CRC Cards are under the wiki
 
 ### Known issues:
-1. Currently, when the user is in the middle of creating a new Recipe and has already filled out some of its fields, then goes to add some ingredients to the recipe (which takes them to another fragment), their progress is lost upon returning from the ingredient selection screen and the fields that they had previously filled out are reset. We were not able to fix this issue in time for the half-way checkpoint, but we will ensure that we get it fixed by the final project submission date.
+1. Currently, when the user is in the middle of creating a new Recipe and has already filled out some of its fields, then goes to add some ingredients to the recipe (which takes them to another fragment), their progress is lost upon returning from the ingredient selection screen and the fields that they had previously filled out are reset. The previously selected ingredients are also overrriden by the most recent selection (writing instead of appending). We were not able to fix this issue in time for the half-way checkpoint, but we will ensure that we get it fixed by the final project submission date. Adding and removing ingredients in an existing recipe does however work as intended.
 
 ### Acknowledgements and References:
 1. CMPUT301 Lecture Lab Code was used in the development of this project
