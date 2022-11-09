@@ -22,7 +22,9 @@
         android:padding="15dp"
         android:text="Add Recipe To Meal Plan"
         android:textColor="@color/black"
-        android:textSize="25sp"></TextView>
+        android:textSize="25sp">
+
+    </TextView>
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -31,16 +33,33 @@
         android:layout_marginStart="25dp"
         android:layout_marginTop="20dp"
         android:layout_marginEnd="25dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
         <Spinner
-            android:id="@+id/shopping_list_sort_spinner"
+            android:id="@+id/add_recipe_toMP_sort_spinner"
             android:layout_width="200dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:spinnerMode="dropdown"
             android:background="@drawable/spinner_background"/>
-
     </LinearLayout>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/add_recipe_to_mealPlan_recyclerView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible" />
+    </LinearLayout>
+
 </LinearLayout>

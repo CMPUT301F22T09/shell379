@@ -22,7 +22,9 @@
         android:padding="15dp"
         android:text="Meal Plan"
         android:textColor="@color/black"
-        android:textSize="25sp"></TextView>
+        android:textSize="25sp">
+
+    </TextView>
 
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -48,7 +50,7 @@
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ingredient_list_recyclerView"
+            android:id="@+id/meal_plan_recyclerView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
