@@ -34,12 +34,39 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 
+/**
+ * Branches to be covered:  10  11  12  13  14  15  16
+ * First test case covers:  10  11  12      14  15
+ * Second test case covers: 10      12  13  14      16
+ */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RecipeUITest {
 
     @Rule
     public ActivityScenarioRule<MainActivity> activityRule = new ActivityScenarioRule<>(MainActivity.class);
 
+    /**
+     * Tests all actions mentioned in the sequence:
+     * Starting from the fragment_main_menu:
+     * 10. Click on recipes_list_button
+     *      - App goes to fragment_recipe_list
+     *      - Checks if "Recipes" is displayed
+     * 11. Click on recipe_list_newButton
+     *      - App goes to fragment_edit_recipe_9
+     *      - Set recipe_name = "Rec1"
+     * 14. Click on select_category
+     *      - App launches dialog fragment fragment_categories_select
+     *      - Set textInputEditText = "Cat1"
+     * 15. Click on addButton
+     *      - App goes back to fragment_edit_recipe_9
+     *      - Set prepare_text = 123
+     *      - Set serving_text = 456
+     *      - Set comment_text = "This is a comment"
+     * 12. Click on save_recipe
+     *      - App goes to fragment_recipes_list
+     *      - Checks that the last element of RecipeListAdapter
+     *          is a Recipe object with the fields shown above
+     */
     @Test
     public void test_10_11_14_15_12() {
 
@@ -110,6 +137,29 @@ public class RecipeUITest {
         }));
     }
 
+
+    /**
+     * This test relies on the last one completing
+     * Tests all actions mentioned in the sequence:
+     * Starting from the fragment_main_menu:
+     * 10. Click on recipes_list_button
+     *      - App goes to fragment_recipe_list
+     *      - Checks if "Recipes" is displayed
+     * 13. Click on the last item of recipe_list_recyclerView
+     *      - App goes to fragment_edit_recipe_9
+     *      - Set recipe_name = "Rec2"
+     * 14. Click on select_category
+     *      - App launches dialog fragment fragment_categories_select
+     * 16. Click on categories_list at element 0 (selecting from existing categories)
+     *      - App goes back to fragment_edit_recipe_9
+     *      - Set prepare_text = 234
+     *      - Set serving_text = 345
+     *      - Set comment_text = This is another comment
+     * 12. Click on save_recipe
+     *      - App goes to fragment_recipe_list
+     *      - Checks that the last element of RecipeListAdapter
+     *          is a Recipe object with the fields shown above
+     */
     @Test
     public void test_10_13_14_16_12() {
 

@@ -45,12 +45,61 @@ import org.junit.Test;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * Branches to be covered:  1  2  3  4  5  6  7  8  9
+ * First test case covers:  1  2  3     5  6  7  8  9
+ * Second test case covers: 1  2     4
+ */
 public class IngredientsUITest {
 
 
     @Rule
     public ActivityScenarioRule<MainActivity> activityRule = new ActivityScenarioRule<>(MainActivity.class);
 
+
+    /**
+     * Tests all actions mentioned in the sequence:
+     * Starting from the fragment_main_menu:
+     * 1. Click on ingredients_list_button
+     *      - App goes to fragment_ingredients_list
+     * 2. Click on new_button
+     *      - App goes to fragment_save_ingredient
+     *      - Set editDescription = "Ing1"
+     *      - Set editBestBeforeDate = Date(30, 12, 2030)
+     *      - Set editLocation = "Pantry"
+     *      - Set editAmount = 34
+     *      - Set editCategory = "Cat"
+     * 3. Click on save_button
+     *      - App goes to fragment_ingredients_list
+     *      - Checks that the last element of IngredientAdapter
+     *          is an Ingredient object with the fields shown above
+     * 8. Click on last element of ingredient_list_recyclerView
+     *      - App goes to fragment_view_ingredient
+     * 5. Click on edit_ingredient_button
+     *      - App goes to fragment_save_ingredient
+     *      - Set editDescription = "Ing2"
+     *      - Set editBestBeforeDate = Date(30, 10, 2030)
+     *      - Set editLocation = "Fridge"
+     *      - Set editAmount = 35
+     *      - Set editCategory = "Cat2"
+     * 9. Click on save_button
+     *      - App goes to fragment_view_ingredient
+     * 7. Click on back
+     *      - App goes to fragment_ingredients_list
+     *      - Checks that the last element of IngredientAdapter
+     *          is an Ingredient object with the fields shown above
+     *      - Checks that IngredientAdapter size has not changed
+     *          (Editing an element should not increase or decrease
+     *          the size of the IngredientAdapter)
+     * 8. Click on last element of ingredient_list_recyclerView
+     *      - App goes to fragment_view_ingredient
+     *      - Check that fragment_view_ingredient displays
+     *          all information in the ingredient object correctly
+     *          after editing the fields
+     * 6. Click on the delete_ingredient_button
+     *      - App goes to fragment_ingredients_list
+     *      - Check that the IngredientAdapter has shrunk by 1
+     */
     @Test
     public void test_1_2_3_8_5_9_7_8_6() {
 
@@ -58,7 +107,7 @@ public class IngredientsUITest {
         while (true) {
             try {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException f) {
                     continue;
                 }
@@ -67,7 +116,7 @@ public class IngredientsUITest {
             } catch (PerformException e) {
                 Log.e("IngredientsUITest", e.getMessage());
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException f) {
 
                 }
@@ -221,13 +270,24 @@ public class IngredientsUITest {
 
     }
 
+
+    /**
+     * Tests all actions mentioned in the sequence:
+     * Starting from the fragment_main_menu:
+     * 1. Click on ingredients_list_button
+     *      - App goes to fragment_ingredients_list
+     * 2. Click on new_button
+     *      - App goes to fragment_save_ingredient
+     * 4. Click on cancel_button
+     *      - App goes to fragment_ingredients_list
+     */
     @Test
     public void test_1_2_4() {
         // action 1
         while (true) {
             try {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException f) {
                     continue;
                 }
@@ -236,7 +296,7 @@ public class IngredientsUITest {
             } catch (PerformException e) {
                 Log.e("IngredientsUITest", e.getMessage());
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(2000);
                 } catch (InterruptedException f) {
 
                 }

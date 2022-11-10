@@ -28,6 +28,7 @@
             android:id="@+id/action_recipeListFragment_to_edit_recipe"
             app:destination="@id/editRecipe" />
     </fragment>
+
     <fragment
         android:id="@+id/mainMenuFragment"
         android:name="com.cmput301f22t09.shell379.fragments.MainMenuFragment"
@@ -47,6 +48,7 @@
             android:id="@+id/action_mainMenuFragment_to_mealPlanListFragment"
             app:destination="@id/mealPlanListFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/shoppingListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.ShoppingListFragment"
@@ -55,8 +57,10 @@
     <fragment
         android:id="@+id/mealPlanListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.MealPlanListFragment"
-        android:label="fragment_meal_plan_list"
-        tools:layout="@layout/fragment_meal_plan_list" />
+        android:label="fragment_meal_plan"
+        tools:layout="@layout/fragment_meal_plan">
+    </fragment>
+
     <fragment
         android:id="@+id/viewIngredientFragment"
         android:name="com.cmput301f22t09.shell379.fragments.ViewIngredientFragment"

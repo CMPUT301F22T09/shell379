@@ -1,57 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="wrap_content"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton5"
+        android:id="@+id/back_button"
+        app:backgroundTint="@android:color/white"
+        app:srcCompat="@drawable/ic_baseline_arrow_back_24"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
         android:clickable="true"
-        app:backgroundTint="@android:color/white"
-        app:srcCompat="@drawable/ic_baseline_arrow_back_24"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        android:text="Ingredients"
+        android:text="Add Ingredient To Meal Plan"
         android:textColor="@color/black"
         android:textSize="25sp">
+
     </TextView>
+
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="20dp"
         android:layout_marginEnd="25dp"
+        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
 
         <Spinner
-            android:id="@+id/ingredient_sort_spinner"
-            android:layout_width="220dp"
+            android:id="@+id/add_ingredient_toMP_sort_spinner"
+            android:layout_width="200dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             android:spinnerMode="dropdown"
             android:background="@drawable/spinner_background"/>
-
-        <Button
-            android:id="@+id/new_button"
-            android:layout_width="80dp"
-            android:layout_height="50dp"
-            android:layout_margin="5dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:text="NEW" />
 
     </LinearLayout>
 
@@ -61,7 +53,7 @@
         android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ingredient_list_recyclerView"
+            android:id="@+id/add_ingredient_to_mealPlan_recyclerView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -69,8 +61,5 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="visible" />
-
     </LinearLayout>
 </LinearLayout>
-
-
