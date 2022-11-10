@@ -133,7 +133,8 @@ public class RecipeSelectIngredientFragment extends DialogFragment {
     private boolean saveIngToDraft(){
         if(rsiAdapter.selectedIngsHaveAmounts()){
             ArrayList<IngredientStub> checkedIngredients = rsiAdapter.getCheckedIngredients();
-            editRecipeViewModel.setSelectedIngredients(checkedIngredients);
+            editRecipeViewModel.getSelectedIngredients().addAll(checkedIngredients);
+            editRecipeViewModel.forceSignalUpdate();
         }else{
             Toast.makeText(getContext(), "Please enter amounts for all ingredients", Toast.LENGTH_LONG).show();
             return false;

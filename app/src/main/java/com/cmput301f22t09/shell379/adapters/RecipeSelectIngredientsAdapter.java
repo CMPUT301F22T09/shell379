@@ -114,11 +114,10 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
                     // get index of dupe ingredient and remove it
                     Ingredient originalIngredient = ingredients.get(holder.getAdapterPosition());
                     IngredientStub dupeIngredient = createDupeIngredient(holder, originalIngredient);
-                    //int dupeIngredientIndex = checkedIngredients.indexOf(dupeIngredient);
-                    //checkedIngredients.remove(dupeIngredientIndex);
+
                     int removeIndex = -1;
                     for (int i = 0; i < checkedIngredients.size(); i++) {
-                        if (dupeIngredient.equals(checkedIngredients.get(i))) {
+                        if (dupeIngredient.looseEquals(checkedIngredients.get(i))) {
                             removeIndex = i;
                             break;
                         }

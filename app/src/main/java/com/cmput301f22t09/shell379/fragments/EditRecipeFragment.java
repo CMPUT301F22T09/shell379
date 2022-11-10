@@ -157,6 +157,12 @@ public class EditRecipeFragment extends Fragment {
         recipe_recyclerView.setAdapter(ingredientListAdapter);
         recipe_recyclerView.setItemAnimator(new DefaultItemAnimator());
 
+        if(recipeIndex==-1){
+            deleteRecipeButton.setText("Cancel");
+        }else{
+            deleteRecipeButton.setText("Delete");
+        }
+
         onClickMethods();
 
         updateSelectedIngredients(editRecipeViewModel.getSelectedIngredients());
