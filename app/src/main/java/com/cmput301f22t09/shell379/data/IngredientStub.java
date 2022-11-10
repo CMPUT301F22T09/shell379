@@ -4,11 +4,7 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.cmput301f22t09.shell379.data.vm.collections.PartiallyEquable;
-
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Ingredient
@@ -32,7 +28,7 @@ public class IngredientStub implements Serializable {
         this.description = description;
 
         this.amount = amount;
-        if (amount < 0) {
+        if (amount!= null && amount < 0) {
             throw new IllegalArgumentException("Amount cannot be negative.");
         }
         this.unit = unit;
@@ -117,6 +113,23 @@ public class IngredientStub implements Serializable {
                     if (this.amount.equals(ing.amount)){
                         return true;
                     }
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * looser equals method that ignores amount
+     * @param o ingredient to compare to
+     * @return true if the ingredient is equal, false otherwise
+     */
+    public boolean looseEquals(Object o){
+        IngredientStub ing = (IngredientStub) o;
+        if (this.description.equals( ing.description)){
+            if (this.category.equals(ing.category)){
+                if (this.unit.equals(ing.unit)){
+                        return true;
                 }
             }
         }

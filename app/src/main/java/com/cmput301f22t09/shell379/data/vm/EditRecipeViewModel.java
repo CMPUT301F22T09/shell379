@@ -3,7 +3,7 @@ package com.cmput301f22t09.shell379.data.vm;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.data.Recipe;
 
 import java.util.ArrayList;
@@ -14,27 +14,27 @@ import java.util.ArrayList;
 public class EditRecipeViewModel extends ViewModel {
     // view model template code from https://developer.android.com/topic/libraries/architecture/viewmodel
 
-    private MutableLiveData<ArrayList<Ingredient>> liveSelectedIngredients = new MutableLiveData<ArrayList<Ingredient>>();
+    private MutableLiveData<ArrayList<IngredientStub>> liveSelectedIngredientStubs = new MutableLiveData<ArrayList<IngredientStub>>();
 
-    public MutableLiveData<ArrayList<Ingredient>> getLiveSelectedIngredients() {
-        return liveSelectedIngredients;
+    public MutableLiveData<ArrayList<IngredientStub>> getLiveSelectedIngredients() {
+        return liveSelectedIngredientStubs;
     }
 
     public void forceSignalUpdate(){
-        liveSelectedIngredients.setValue(liveSelectedIngredients.getValue());
+        liveSelectedIngredientStubs.setValue(liveSelectedIngredientStubs.getValue());
     }
 
-    public ArrayList<Ingredient> getSelectedIngredients(){
-        if (liveSelectedIngredients.getValue() == null){
-            ArrayList<Ingredient> selectedIngredients = new ArrayList<Ingredient>();
-            liveSelectedIngredients.setValue(selectedIngredients);
-            return liveSelectedIngredients.getValue();
+    public ArrayList<IngredientStub> getSelectedIngredients(){
+        if (liveSelectedIngredientStubs.getValue() == null){
+            ArrayList<IngredientStub> selectedIngredientStubs = new ArrayList<IngredientStub>();
+            liveSelectedIngredientStubs.setValue(selectedIngredientStubs);
+            return liveSelectedIngredientStubs.getValue();
         }
-        return  liveSelectedIngredients.getValue();
+        return  liveSelectedIngredientStubs.getValue();
     }
 
-    public void setSelectedIngredients(ArrayList<Ingredient> newIngs){
-        liveSelectedIngredients.setValue(newIngs);
+    public void setSelectedIngredients(ArrayList<IngredientStub> newIngs){
+        liveSelectedIngredientStubs.setValue(newIngs);
     }
 
 }

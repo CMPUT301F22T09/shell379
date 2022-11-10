@@ -22,7 +22,7 @@ public class Recipe implements Serializable {
     private String category;
     private String comments;
     private String photograph; //this is a serialized photo
-    private ArrayList<Ingredient> ingredients = new ArrayList<>();
+    private ArrayList<IngredientStub> ingredients = new ArrayList<>();
 
     /**
      * Creates recipe object without image.
@@ -136,19 +136,19 @@ public class Recipe implements Serializable {
         this.photograph = SerializeUtil.serializeImg(photograph);
     }
 
-    public ArrayList<Ingredient> getIngredients() {
+    public ArrayList<IngredientStub> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(ArrayList<Ingredient> ingredients) {
+    public void setIngredients(ArrayList<IngredientStub> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public void addIngredient(Ingredient ingredient) {
+    public void addIngredient(IngredientStub ingredient) {
         ingredients.add(ingredient);
     }
 
-    public void addIngredients(ArrayList<Ingredient> newIngredients) {
+    public void addIngredients(ArrayList<IngredientStub> newIngredients) {
         ingredients.addAll(newIngredients);
     }
 

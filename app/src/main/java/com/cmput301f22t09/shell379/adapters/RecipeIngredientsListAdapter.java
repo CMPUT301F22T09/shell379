@@ -16,6 +16,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.IngredientStub;
+import com.cmput301f22t09.shell379.data.vm.EditRecipeViewModel;
+import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
 
 import java.util.ArrayList;
 
@@ -24,8 +27,9 @@ import java.util.ArrayList;
  */
 public class RecipeIngredientsListAdapter extends RecyclerView.Adapter<RecipeIngredientsListAdapter.RecipeIngredientListViewHolder> {
 
-    private ArrayList<Ingredient> recipeIngredients;
+    private ArrayList<IngredientStub> recipeIngredients;
     private RecipeIngredientListListener recipeIngredientListListener;
+    private EditRecipeViewModel editRecipeViewModel;
 
     public interface RecipeIngredientListListener{
         public void editRecipeIngredient(int index);
@@ -47,14 +51,19 @@ public class RecipeIngredientsListAdapter extends RecyclerView.Adapter<RecipeIng
             this.amount = (TextView) itemView.findViewById(R.id.rsi_amount);
             this.category = (TextView) itemView.findViewById(R.id.rsi_category);
         }
+
+        public View getItemView(){
+            return itemView;
+        }
     }
 
-    public RecipeIngredientsListAdapter( ArrayList<Ingredient> recipeIngredients, RecipeIngredientListListener recipeIngredientListListener) {
+    public RecipeIngredientsListAdapter( ArrayList<IngredientStub> recipeIngredients, RecipeIngredientListListener recipeIngredientListListener, EditRecipeViewModel editRecipeViewModel) {
         this.recipeIngredients = recipeIngredients;
         this.recipeIngredientListListener =recipeIngredientListListener;
+        this.editRecipeViewModel = editRecipeViewModel;
     }
 
-    public void updateList(ArrayList<Ingredient> newIngredients,ArrayList<Ingredient> newRecipeIngredients){
+    public void updateList(ArrayList<IngredientStub> newRecipeIngredients){
         recipeIngredients = newRecipeIngredients;
         notifyDataSetChanged();
     }
@@ -77,6 +86,24 @@ public class RecipeIngredientsListAdapter extends RecyclerView.Adapter<RecipeIng
         description.setText(recipeIngredients.get(position).getDescription());
         category.setText(recipeIngredients.get(position).getCategory());
         amount.setText(recipeIngredients.get(position).getAmount() +" "+ recipeIngredients.get(position).getUnit());
+        holder.getItemView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ingredientOnClick(holder.getAdapterPosition());
+            }
+        });
+    }
+
+    /**
+     *  Responds to an ingredient item being clicked in the recyclerView.
+     *  Navigates to viewing the ingredient
+     * @param i index of ingredient in the edit recipe view model
+     */
+    public void ingredientOnClick(int i) {
+        IngredientStub a = recipeIngredients.get(i);
+        ArrayList<IngredientStub> ingredients = editRecipeViewModel.getSelectedIngredients();
+        int index = ingredients.indexOf(a);
+        recipeIngredientListListener.editRecipeIngredient(index);
     }
 
     @Override

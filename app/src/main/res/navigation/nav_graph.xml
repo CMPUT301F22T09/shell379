@@ -126,8 +126,37 @@
         android:id="@+id/recipeIngredientListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.RecipeIngredientListFragment"
         android:label="RecipeIngredientListFragment" >
-    <action
-        android:id="@+id/action_createIngredientStubFragment3_to_editRecipe"
-        app:destination="@id/editRecipe" />
+        <action
+            android:id="@+id/action_ing_list_to_editIngredientStub"
+            app:destination="@id/EditIngredientStub" />
+        <action
+            android:id="@+id/action_ing_list_to_select_ing_type"
+            app:destination="@id/selectIngredientType" />
+    </dialog>
+    <dialog
+        android:id="@+id/createIngredientStub"
+        android:name="com.cmput301f22t09.shell379.fragments.CreateIngredientStubFragment"
+        android:label="CreateIngredientStubFragment" >
+
+    </dialog>
+    <dialog
+        android:id="@+id/EditIngredientStub"
+        android:name="com.cmput301f22t09.shell379.fragments.EditIngredientStubFragment"
+        android:label="EditIngredientStubFragment" >
+        <argument
+            android:name="ingredientIndex"
+            app:argType="integer" />
+    </dialog>
+    <dialog
+        android:id="@+id/selectIngredientType"
+        android:name="com.cmput301f22t09.shell379.fragments.RecipeAddIngredientTypeFragment"
+        android:label="RecipeAddIngredientTypeFragment" >
+        <action
+            android:id="@+id/to_new"
+            app:destination="@id/createIngredientStub" />
+        <action
+            android:id="@+id/to_storage"
+            app:destination="@id/recipeSelectIngredientFragment" />
+
     </dialog>
 </navigation>

@@ -3,16 +3,14 @@ package com.cmput301f22t09.shell379.data;
 import android.os.Build;
 import androidx.annotation.RequiresApi;
 
-import com.cmput301f22t09.shell379.data.vm.collections.PartiallyEquable;
-
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Optional;
+
 /**
  * Ingredient
  */
-public class Ingredient implements Serializable, PartiallyEquable {
+public class Ingredient implements Serializable{
     private String description;
     private Date bestBefore;
     private String location;
@@ -190,42 +188,4 @@ public class Ingredient implements Serializable, PartiallyEquable {
         }
         return false;
     }
-
-    // Referenced the following website for how to implement custom equals
-    // url: https://stackoverflow.com/questions/15287842/filter-unique-objects-from-an-arraylist-based-on-property-value-of-the-contained
-    @Override
-    public boolean partialEquals(PartiallyEquable other) {
-        if (other == null || getClass() != other.getClass())
-            return false;
-
-        Ingredient otherIngredient = (Ingredient) other;
-
-        // Use description and category as a measure of equality between ingredients
-        if (otherIngredient.getDescription().equals(this.getDescription())) {
-            if (otherIngredient.getCategory().equals(this.getCategory())) {
-                if (otherIngredient.getUnit().equals(this.getUnit())) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    public boolean isFull(){
-        if (description != "" &&
-            bestBefore != null &&
-            amount != null &&
-            location != null &&
-            unit != null &&
-            category != null ){
-            return true;
-        }
-        return false;
-    }
-
-    public void combine(PartiallyEquable i){
-        Ingredient incomingIngredient = (Ingredient)i;
-        this.amount += ((Ingredient) i).amount;
-    }
-
 }

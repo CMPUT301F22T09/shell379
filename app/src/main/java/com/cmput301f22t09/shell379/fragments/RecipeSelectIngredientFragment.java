@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.RecipeSelectIngredientsAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.EditRecipeViewModel;
 import com.cmput301f22t09.shell379.data.vm.Environment;
@@ -81,17 +82,6 @@ public class RecipeSelectIngredientFragment extends DialogFragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.recipe_select_ingredients, container, false);
 
-
-        final Observer<ArrayList<Ingredient>> ingredientObserver = new Observer<ArrayList<Ingredient>>() {
-            @Override
-            public void onChanged(@Nullable final ArrayList<Ingredient> ingredients) {
-                // update the recipe draft.
-                rsiAdapter.updateList(env.getIngredients().getFilteredCollection().getList(),
-                        editRecipeViewModel.getSelectedIngredients());
-            }
-        };
-        env.getIngredients().getListLive().observe(this, ingredientObserver);
-
         renderList(rootView);
 
         botBackButton = rootView.findViewById(R.id.bot_back_button);
@@ -99,6 +89,7 @@ public class RecipeSelectIngredientFragment extends DialogFragment {
             @Override
             public void onClick(View view) {
                 if(saveIngToDraft()){
+                    navController.popBackStack();
                     navController.popBackStack();
                 }
             }
@@ -113,22 +104,11 @@ public class RecipeSelectIngredientFragment extends DialogFragment {
                 }
         );
 
-        // Implement the new ingredient function
-        ((Button)rootView.findViewById(R.id.new_ingredient_stub_button)).setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        onNewIngStubClicked();
-                    }
-                }
-        );
-
         return rootView;
     }
 
     private void renderList(View rootView){
-        recipeIngredientList = editRecipeViewModel.getSelectedIngredients();
-        // filtered ingredients list from environment
-        ingredientList = env.getIngredients().getFilteredCollection().getList();
+        ingredientList = env.getIngredients().getList();
 
         layoutManager = new LinearLayoutManager(this.getActivity());
         ingredientsRecyclerView = (RecyclerView) rootView.findViewById(R.id.rsi_recyclerView);
@@ -139,14 +119,6 @@ public class RecipeSelectIngredientFragment extends DialogFragment {
         ingredientsRecyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
-    /**
-     *  save the ing draft and move to creating a new ingredient
-     */
-    private void onNewIngStubClicked(){
-        if(saveIngToDraft()){
-            navController.navigate( RecipeSelectIngredientFragmentDirections.actionRecipeSelectIngredientFragmentToCreateIngredientStubFragment3());
-        }
-    }
 
     /**
      *  save the ing draft.
@@ -154,7 +126,7 @@ public class RecipeSelectIngredientFragment extends DialogFragment {
      */
     private boolean saveIngToDraft(){
         if(rsiAdapter.selectedIngsHaveAmounts()){
-            ArrayList<Ingredient> checkedIngredients = rsiAdapter.getCheckedIngredients();
+            ArrayList<IngredientStub> checkedIngredients = rsiAdapter.getCheckedIngredients();
             editRecipeViewModel.setSelectedIngredients(checkedIngredients);
         }else{
             Toast.makeText(getContext(), "Please enter amounts for all ingredients", Toast.LENGTH_LONG).show();
@@ -167,8 +139,6 @@ public class RecipeSelectIngredientFragment extends DialogFragment {
      * Implement the option to go back to previous page
      */
     private void back(){
-        if(saveIngToDraft()){
-            navController.popBackStack();
-        }
+        navController.popBackStack();
     }
 }

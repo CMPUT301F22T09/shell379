@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.data.Recipe;
 
 import org.checkerframework.checker.units.qual.C;
@@ -34,9 +35,8 @@ import java.util.Date;
 public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeSelectIngredientsAdapter.RecipeSelectIngredientsViewHolder> {
 
     private ArrayList<Ingredient> ingredients;
-    private ArrayList<Ingredient> recipeIngredients;
-    // This contains "dupe" ingredients
-    private ArrayList<Ingredient> checkedIngredients;
+    // This contains "dupe" stub ingredients
+    private ArrayList<IngredientStub> checkedIngredients;
 
 
     /**
@@ -62,17 +62,7 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
 
     public RecipeSelectIngredientsAdapter(ArrayList<Ingredient> ingredients, ArrayList<Ingredient> recipeIngredients) {
         this.ingredients = ingredients;
-        this.recipeIngredients = recipeIngredients;
         this.checkedIngredients = new ArrayList<>();
-        if (!recipeIngredients.isEmpty()) {
-            this.checkedIngredients = recipeIngredients;
-        }
-    }
-
-    public void updateList(ArrayList<Ingredient> newIngredients,ArrayList<Ingredient> newRecipeIngredients){
-        ingredients = newIngredients;
-        recipeIngredients = newRecipeIngredients;
-        notifyDataSetChanged();
     }
 
     public boolean selectedIngsHaveAmounts(){
@@ -80,7 +70,6 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
             if(checkedIngredients.get(i).getAmount() == null){
               return false;
             }
-
         }
         return true;
     }
@@ -104,14 +93,6 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
         description.setText(ingredients.get(position).getDescription());
         category.setText(ingredients.get(position).getCategory());
         unit.setText(ingredients.get(position).getUnit());
-        Log.e("test","binding!");
-
-        for (int i = 0; i < recipeIngredients.size(); i++) {
-            if (createDupeIngredient(holder, ingredients.get(position)).partialEquals(recipeIngredients.get(i))) {
-                holder.checkbox.setChecked(true);
-                holder.inputAmount.setText(recipeIngredients.get(i).getAmount().toString(), TextView.BufferType.EDITABLE);
-            }
-        }
 
         // referenced for how to detect when a checkbox is clicked
         // url: https://stackoverflow.com/questions/51778606/android-how-to-check-if-a-checkbox-is-checked-in-an-item-of-a-recyclerview
@@ -122,18 +103,18 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
                     String amount = holder.inputAmount.getText().toString();
                     System.out.println(amount);
                     Ingredient originalIngredient = ingredients.get(holder.getAdapterPosition());
-                    Ingredient dupeIngredient = createDupeIngredient(holder, originalIngredient);
+                    IngredientStub dupeIngredient = createDupeIngredient(holder, originalIngredient);
                     checkedIngredients.add(dupeIngredient);
                 }
                 else {
                     // get index of dupe ingredient and remove it
                     Ingredient originalIngredient = ingredients.get(holder.getAdapterPosition());
-                    Ingredient dupeIngredient = createDupeIngredient(holder, originalIngredient);
+                    IngredientStub dupeIngredient = createDupeIngredient(holder, originalIngredient);
                     //int dupeIngredientIndex = checkedIngredients.indexOf(dupeIngredient);
                     //checkedIngredients.remove(dupeIngredientIndex);
                     int removeIndex = -1;
                     for (int i = 0; i < checkedIngredients.size(); i++) {
-                        if (dupeIngredient.partialEquals(checkedIngredients.get(i))) {
+                        if (dupeIngredient.equals(checkedIngredients.get(i))) {
                             removeIndex = i;
                             break;
                         }
@@ -154,8 +135,14 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(holder.checkbox.isChecked()){
                     Ingredient ingredient = ingredients.get(holder.getAdapterPosition());
+                    IngredientStub ingredientStub = new IngredientStub(
+                            ingredient.getDescription(),
+                            ingredient.getAmount(),
+                            ingredient.getUnit(),
+                            ingredient.getCategory());
+
                     for (int i = 0;  i < checkedIngredients.size(); i++){
-                        if (ingredient.partialEquals(checkedIngredients.get(i))){
+                        if (ingredientStub.looseEquals(checkedIngredients.get(i))){
                             checkedIngredients.get(i).setAmount(inputAmount.getText().toString().isEmpty()?
                                     null: Integer.parseInt(inputAmount.getText().toString()));
                         }
@@ -182,11 +169,11 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
         return ingredients.size();
     }
 
-    public ArrayList<Ingredient> getCheckedIngredients() {
+    public ArrayList<IngredientStub> getCheckedIngredients() {
         return this.checkedIngredients;
     }
 
-    public Ingredient createDupeIngredient(RecipeSelectIngredientsViewHolder holder, Ingredient originalIngredient) {
+    public IngredientStub createDupeIngredient(RecipeSelectIngredientsViewHolder holder, Ingredient originalIngredient) {
         String description = originalIngredient.getDescription();
         Integer amount;
         if (!holder.inputAmount.getText().toString().isEmpty()) {
@@ -197,7 +184,7 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
         }
         String category = originalIngredient.getCategory();
 
-        Ingredient dupeIngredient = new Ingredient(description, null, amount, originalIngredient.getUnit(), category);
+        IngredientStub dupeIngredient = new IngredientStub(description, amount, originalIngredient.getUnit(), category);
         return dupeIngredient;
     }
 }

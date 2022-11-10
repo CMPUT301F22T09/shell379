@@ -22,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.RecipeIngredientsListAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.data.vm.EditRecipeViewModel;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
@@ -37,8 +38,7 @@ public class RecipeIngredientListFragment extends DialogFragment implements Reci
         return R.style.DialogTheme;
     }
 
-    ArrayList<Ingredient> ingredientList;
-    ArrayList<Ingredient> recipeIngredientList;
+    ArrayList<IngredientStub> recipeIngredientList;
     RecyclerView ingredientsRecyclerView;
     RecyclerView.LayoutManager layoutManager;
     RecipeIngredientsListAdapter rsiAdapter;
@@ -59,7 +59,6 @@ public class RecipeIngredientListFragment extends DialogFragment implements Reci
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         editRecipeViewModel =  new ViewModelProvider(requireActivity()).get(EditRecipeViewModel.class);
-        ingredientList = new ArrayList<Ingredient>();
 
         navController = NavHostFragment.findNavController(this);
         env = Environment.of((AppCompatActivity) requireActivity());
@@ -80,15 +79,13 @@ public class RecipeIngredientListFragment extends DialogFragment implements Reci
         View rootView = inflater.inflate(R.layout.recipe_ingredients_list, container, false);
 
 
-        final Observer<ArrayList<Ingredient>> ingredientObserver = new Observer<ArrayList<Ingredient>>() {
+        final Observer<ArrayList<IngredientStub>> ingredientObserver = new Observer<ArrayList<IngredientStub>>() {
             @Override
-            public void onChanged(@Nullable final ArrayList<Ingredient> ingredients) {
-                // update the recipe draft.
-                rsiAdapter.updateList(env.getIngredients().getFilteredCollection().getList(),
-                        editRecipeViewModel.getSelectedIngredients());
+            public void onChanged(@Nullable final ArrayList<IngredientStub> ingredients) {
+                rsiAdapter.updateList(editRecipeViewModel.getSelectedIngredients());
             }
         };
-        env.getIngredients().getListLive().observe(this, ingredientObserver);
+        editRecipeViewModel.getLiveSelectedIngredients().observe(this, ingredientObserver);
 
         renderList(rootView);
 
@@ -124,13 +121,12 @@ public class RecipeIngredientListFragment extends DialogFragment implements Reci
     private void renderList(View rootView){
         recipeIngredientList = editRecipeViewModel.getSelectedIngredients();
         // filtered ingredients list from environment
-        ingredientList = env.getIngredients().getFilteredCollection().getList();
 
         layoutManager = new LinearLayoutManager(this.getActivity());
         ingredientsRecyclerView = (RecyclerView) rootView.findViewById(R.id.rsi_recyclerView);
         ingredientsRecyclerView.setLayoutManager(layoutManager);
 
-        rsiAdapter = new RecipeIngredientsListAdapter(recipeIngredientList, this);
+        rsiAdapter = new RecipeIngredientsListAdapter(recipeIngredientList, this, editRecipeViewModel);
         ingredientsRecyclerView.setAdapter(rsiAdapter);
         ingredientsRecyclerView.setItemAnimator(new DefaultItemAnimator());
     }
@@ -139,9 +135,7 @@ public class RecipeIngredientListFragment extends DialogFragment implements Reci
      *  save the ing draft and move to creating a new ingredient
      */
     private void onNewIngStubClicked(){
-
-//            navController.navigate( RecipeSelectIngredientFragmentDirections.actionRecipeSelectIngredientFragmentToCreateIngredientStubFragment3());
-
+            navController.navigate(RecipeIngredientListFragmentDirections.actionIngListToSelectIngType());
     }
 
 
@@ -156,6 +150,6 @@ public class RecipeIngredientListFragment extends DialogFragment implements Reci
      *  Moves to the edit recipe ingredient fragment
      */
     public void editRecipeIngredient(int index){
-
+        navController.navigate(RecipeIngredientListFragmentDirections.actionIngListToEditIngredientStub(index));
     };
 }

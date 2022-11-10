@@ -4,6 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="5dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    tools:context=".fragments.MainMenuFragment"
+    >
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/white"
+        app:srcCompat="@drawable/ic_baseline_arrow_back_24"
+        tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:gravity="center"
     android:padding="40dp"
     android:orientation="vertical"
@@ -11,38 +30,25 @@
     >
 
     <TextView
-        android:id="@+id/loadingText"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="5dp"
-        android:text="Loading Data!"
-        android:textColor="@color/teal_200"
-        android:textSize="20sp"
-        android:visibility="gone" />
+        android:text="Add Ingredient"
+        android:padding="20dp"
+        android:textSize="30sp"
+        ></TextView>
+
     <Button
         android:id="@+id/ingredients_list_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ingredients" />
+        android:text="From Stored Ingredients" />
 
     <Button
-        android:id="@+id/recipes_list_button"
+        android:id="@+id/new_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Recipes" />
+        android:text="Create new" />
 
-    <Button
-        android:id="@+id/meal_plans_list_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Meal Plans"
-        android:enabled="false"/>
-
-    <Button
-        android:id="@+id/shopping_list_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Shopping List"
-        android:enabled="false"/>
 </LinearLayout>
+</LinearLayout>
+

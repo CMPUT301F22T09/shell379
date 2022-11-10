@@ -6,9 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.cmput301f22t09.shell379.R;
-import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.data.Unit;
 
 
@@ -17,11 +18,13 @@ import java.util.Arrays;
 
 public class EditIngredientStubFragment extends SaveIngredientStubFragment{
     private int ingredientIndex;
-    private Ingredient ingredient;
+    private IngredientStub ingredient;
 
-    public void writeToViewModel(Ingredient ing){
+    public void writeToViewModel(IngredientStub ing){
         editRecipeViewModel.getSelectedIngredients().set(ingredientIndex,ing);
         editRecipeViewModel.forceSignalUpdate();
+        navController.popBackStack();
+
     };
 
     @Override
@@ -40,6 +43,16 @@ public class EditIngredientStubFragment extends SaveIngredientStubFragment{
         ArrayList<Unit> units = new ArrayList<Unit>(Arrays.asList(Unit.values()));
         int unitSelectionIndex = units.indexOf(Unit.getFromString(ingredient.getUnit()));
         ((Spinner)rootView.findViewById(R.id.editUnit)).setSelection(unitSelectionIndex);
+
+        ((TextView)rootView.findViewById(R.id.cancel_button)).setText("Delete");
+        ((TextView)rootView.findViewById(R.id.cancel_button)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editRecipeViewModel.getSelectedIngredients().remove(ingredientIndex);
+                editRecipeViewModel.forceSignalUpdate();
+                navController.popBackStack();
+            }
+        });
 
         return rootView;
     }

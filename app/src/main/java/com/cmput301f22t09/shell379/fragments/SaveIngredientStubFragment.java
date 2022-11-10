@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,12 +21,10 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.cmput301f22t09.shell379.R;
-import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.data.Unit;
 import com.cmput301f22t09.shell379.data.vm.EditRecipeViewModel;
 import com.cmput301f22t09.shell379.data.vm.Environment;
-
-import java.util.ArrayList;
 
 public abstract class SaveIngredientStubFragment extends DialogFragment{
     //    From Anubhav Arora  https://medium.com/geekculture/android-full-screen-dialogfragment-1410dbd96d37
@@ -35,7 +34,7 @@ public abstract class SaveIngredientStubFragment extends DialogFragment{
     }
 
     protected View rootView;
-    private NavController navController;
+    protected NavController navController;
     protected Environment envViewModel;
     protected EditText category;
     protected EditText location;
@@ -57,7 +56,7 @@ public abstract class SaveIngredientStubFragment extends DialogFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_create_ingredient_stub, container, false);
+        rootView = inflater.inflate(R.layout.fragment_save_ingredient_stub, container, false);
         category = ((EditText)rootView.findViewById(R.id.editCategory));
         location = ((EditText)rootView.findViewById(R.id.editLocation));
 
@@ -114,42 +113,40 @@ public abstract class SaveIngredientStubFragment extends DialogFragment{
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void save(){
-        try{
+
             // Load data from Views
             String description = ((EditText)rootView.findViewById(R.id.editDescription)).getText().toString();
-            int amount = Integer.parseInt(((EditText)rootView.findViewById(R.id.editAmount)).getText().toString());
             String category = ((EditText)rootView.findViewById(R.id.editCategory)).getText().toString();
             String unit = ((Spinner)rootView.findViewById(R.id.editUnit)).getSelectedItem().toString();
 
             if(description.isEmpty() ||
-                    category.isEmpty()
+                category == null ||
+                category.isEmpty() ||
+                unit.isEmpty()
             ){
-                throw new IllegalArgumentException("All fields not filled");
+                showError("All fields not filled");
+                return;
+            }
+            int amount = 0;
+            if(((EditText)rootView.findViewById(R.id.editAmount)).getText().toString().isEmpty()){
+                showError("Amount not filled");
+                return;
+            }else{
+                amount = Integer.parseInt(((EditText)rootView.findViewById(R.id.editAmount)).getText().toString());
             }
 
-            Ingredient ing =  new Ingredient(description,null,null,amount,unit,category);
-            ArrayList<Ingredient> ingredients = envViewModel.getIngredients().getAll();
-            for(int i = 0;i < ingredients.size();i++){
-                if (ingredients.get(i).partialEquals(ing)){
-                    throw new IllegalArgumentException("Ingredient Already Exists");
-                }
-            }
+
+            IngredientStub ing =  new IngredientStub(description,amount,unit,category);
 
             writeToViewModel(ing);
 
-            navController.popBackStack();
-
-
-        }catch (Exception e){
-            showError(e);
-        }
     }
 
-    private void showError(Exception e){
-        TextView error = rootView.findViewById(R.id.errorText);
-        error.setText(e.getMessage());
-        error.setVisibility(View.VISIBLE);
+
+    private void showError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
+
 
     private void onIngCategoryClick(){
         CategorySelectPopup.SelectListener listener = new CategorySelectPopup.SelectListener() {
@@ -163,6 +160,6 @@ public abstract class SaveIngredientStubFragment extends DialogFragment{
         selection.setTargetFragment(SaveIngredientStubFragment.this, 1);
     }
 
-    public abstract void writeToViewModel(Ingredient ing);
+    public abstract void writeToViewModel(IngredientStub ing);
 
 }

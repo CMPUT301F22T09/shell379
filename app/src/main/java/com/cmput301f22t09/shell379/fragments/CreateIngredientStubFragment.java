@@ -21,6 +21,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.data.Unit;
 import com.cmput301f22t09.shell379.data.vm.EditRecipeViewModel;
 import com.cmput301f22t09.shell379.data.vm.Environment;
@@ -28,12 +29,13 @@ import com.cmput301f22t09.shell379.data.vm.Environment;
 import java.util.ArrayList;
 
 public class CreateIngredientStubFragment extends SaveIngredientStubFragment{
-    public void writeToViewModel(Ingredient ing){
-        envViewModel.getIngredients().add(ing);
-        envViewModel.getIngredients().commit();
-
+    public void writeToViewModel(IngredientStub ing){
         editRecipeViewModel.getSelectedIngredients().add(ing);
         editRecipeViewModel.forceSignalUpdate();
+
+        navController.popBackStack();
+        navController.popBackStack();
+
     };
 
 }

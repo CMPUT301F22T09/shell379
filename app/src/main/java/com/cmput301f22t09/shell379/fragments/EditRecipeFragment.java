@@ -39,6 +39,7 @@ import android.widget.Toast;
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.IngredientInRecipeAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.EditRecipeViewModel;
 import com.cmput301f22t09.shell379.data.vm.Environment;
@@ -96,9 +97,9 @@ public class EditRecipeFragment extends Fragment {
         recipeIndex = getArguments().getInt("recipeIndex");
         env = Environment.of((AppCompatActivity) requireActivity());
 
-        final Observer<ArrayList<Ingredient>> selectedIngObs = new Observer<ArrayList<Ingredient>>() {
+        final Observer<ArrayList<IngredientStub>> selectedIngObs = new Observer<ArrayList<IngredientStub>>() {
             @Override
-            public void onChanged(@Nullable final ArrayList<Ingredient> newIngredients) {
+            public void onChanged(@Nullable final ArrayList<IngredientStub> newIngredients) {
                 // update the recipe draft.
                 updateSelectedIngredients(newIngredients);
             }
@@ -117,11 +118,11 @@ public class EditRecipeFragment extends Fragment {
                     ogRecipe.getComments()
             );
             newRecipe.setPhotograph(ogRecipe.getPhotograph());
-            newRecipe.setIngredients(new ArrayList<Ingredient>(ogRecipe.getIngredients()));
+            newRecipe.setIngredients(new ArrayList<IngredientStub>(ogRecipe.getIngredients()));
             existingRecipe = newRecipe;
             editRecipeViewModel.setSelectedIngredients(existingRecipe.getIngredients());
         }else{
-            editRecipeViewModel.setSelectedIngredients(new ArrayList<Ingredient>());
+            editRecipeViewModel.setSelectedIngredients(new ArrayList<IngredientStub>());
         }
     }
 
@@ -180,7 +181,7 @@ public class EditRecipeFragment extends Fragment {
             }
             ingredientListAdapter = new IngredientInRecipeAdapter(existingRecipe.getIngredients(), this);
         } else {
-            ingredientListAdapter = new IngredientInRecipeAdapter(new ArrayList<Ingredient>(), this);
+            ingredientListAdapter = new IngredientInRecipeAdapter(new ArrayList<IngredientStub>(), this);
         }
     }
 
@@ -409,7 +410,7 @@ public class EditRecipeFragment extends Fragment {
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void saveDraftIngredients() {
 
-            ArrayList<Ingredient> selectedIngredients = new ArrayList<Ingredient>();
+            ArrayList<IngredientStub> selectedIngredients = new ArrayList<IngredientStub>();
             int size = ingredientListAdapter.getIngredients().size();
             // check if there is any ingredient
             if (size > 0) {
@@ -423,7 +424,7 @@ public class EditRecipeFragment extends Fragment {
     /**
      * updates the selected ingredients
      */
-    private void updateSelectedIngredients(ArrayList<Ingredient> newIngredients){
+    private void updateSelectedIngredients(ArrayList<IngredientStub> newIngredients){
         if(newIngredients != null){
             ingredientListAdapter.setIngredients(newIngredients);
         }

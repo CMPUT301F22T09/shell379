@@ -2,31 +2,34 @@ package com.cmput301f22t09.shell379.fragments;
 
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleOwner;
-import androidx.lifecycle.Observer;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.util.DatabaseManager;
 
-public class MainMenuFragment extends Fragment {
+public class RecipeAddIngredientTypeFragment extends DialogFragment {
+    //    From Anubhav Arora  https://medium.com/geekculture/android-full-screen-dialogfragment-1410dbd96d37
+    @Override
+    public int getTheme() {
+        return R.style.DialogTheme;
+    }
     private NavController navController;
 
-    public MainMenuFragment() {
+    public RecipeAddIngredientTypeFragment() {
         // Required empty public constructor
     }
 
@@ -41,72 +44,32 @@ public class MainMenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View rootView = inflater.inflate(R.layout.fragment_main_menu, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_recipe_add_ingredient_type, container, false);
 
-        DatabaseManager dbm = new DatabaseManager((AppCompatActivity) requireActivity());
-        dbm.pull((AppCompatActivity) requireActivity());
-        blockNavUntilDownloaded(dbm, rootView);
 
         // navigation snippet from https://developer.android.com/guide/navigation/navigation-navigate#groovy
         ((Button)rootView.findViewById(R.id.ingredients_list_button)).setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        navController.navigate(MainMenuFragmentDirections.actionMainMenuFragmentToIngredientListFragment());
+                        navController.navigate(RecipeAddIngredientTypeFragmentDirections.toStorage());
                     }
                 }
         );
-        ((Button)rootView.findViewById(R.id.recipes_list_button)).setOnClickListener(
+        ((Button)rootView.findViewById(R.id.new_button)).setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        navController.navigate(MainMenuFragmentDirections.actionMainMenuFragmentToRecipeListFragment());
+                        navController.navigate(RecipeAddIngredientTypeFragmentDirections.toNew());
                     }
                 }
         );
-        ((Button)rootView.findViewById(R.id.meal_plans_list_button)).setOnClickListener(
+        // Implement the button to back to previous page
+        ((ImageView)rootView.findViewById(R.id.floatingActionButton7)).setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
-                        navController.navigate(MainMenuFragmentDirections.actionMainMenuFragmentToMealPlanListFragment());
-                    }
-                }
-        );
-        ((Button)rootView.findViewById(R.id.shopping_list_button)).setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-                        navController.navigate(MainMenuFragmentDirections.actionMainMenuFragmentToShoppingListFragment());
+                        navController.popBackStack();
                     }
                 }
         );
         return rootView;
-    }
-
-    private void blockNavUntilDownloaded(DatabaseManager dbm, View rootView) {
-        TextView loadingTxt = (TextView) rootView.findViewById(R.id.loadingText);
-        loadingTxt.setVisibility(View.VISIBLE);
-
-        Button recipesLstBtn = (Button)rootView.findViewById(R.id.recipes_list_button);
-        Button mealPlanLstBtn = (Button)rootView.findViewById(R.id.meal_plans_list_button);
-        Button shoppingCartBtn = (Button)rootView.findViewById(R.id.shopping_list_button);
-        Button ingrLstBtn = (Button)rootView.findViewById(R.id.ingredients_list_button);
-
-        recipesLstBtn.setVisibility(View.GONE);
-        mealPlanLstBtn.setVisibility(View.GONE);
-        shoppingCartBtn.setVisibility(View.GONE);
-        ingrLstBtn.setVisibility(View.GONE);
-        Log.d("MAIN_MENU", String.valueOf(dbm.getLoaded().getValue()));
-
-        dbm.getLoaded().observe(requireActivity(), new Observer<Boolean>() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onChanged(Boolean loaded) {
-                if (loaded==true) {
-                    Log.d("MAIN_MENU", String.valueOf(loaded));
-                    loadingTxt.setVisibility(View.GONE);
-                    recipesLstBtn.setVisibility(View.VISIBLE);
-                    mealPlanLstBtn.setVisibility(View.VISIBLE);
-                    shoppingCartBtn.setVisibility(View.VISIBLE);
-                    ingrLstBtn.setVisibility(View.VISIBLE);
-                };
-            }
-        });
     }
 }
