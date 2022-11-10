@@ -16,6 +16,9 @@ import com.cmput301f22t09.shell379.data.Unit;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Child class of SaveIngredientStubFragment that specializes in editing existing stubs.
+ */
 public class EditIngredientStubFragment extends SaveIngredientStubFragment{
     private int ingredientIndex;
     private IngredientStub ingredient;
@@ -37,6 +40,7 @@ public class EditIngredientStubFragment extends SaveIngredientStubFragment{
         ingredientIndex = getArguments().getInt("ingredientIndex");
         ingredient = editRecipeViewModel.getSelectedIngredients().get(ingredientIndex);
 
+        // populate data for the existing ingredient stub
         ((EditText)rootView.findViewById(R.id.editDescription)).setText(ingredient.getDescription());
         ((EditText)rootView.findViewById(R.id.editAmount)).setText(String.valueOf(ingredient.getAmount()));
         ((EditText)rootView.findViewById(R.id.editCategory)).setText(String.valueOf(ingredient.getCategory()));

@@ -65,6 +65,10 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
         this.checkedIngredients = new ArrayList<>();
     }
 
+    /**
+     * Gives information on whether all ingredients have valid amount numbers
+     * @return true is all ingredients have non zero and non null amounts
+     */
     public boolean selectedIngsHaveAmounts(){
         for (int i = 0 ; i < checkedIngredients.size();i++){
             if(checkedIngredients.get(i).getAmount() == null){
@@ -173,6 +177,13 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
         return this.checkedIngredients;
     }
 
+    /**
+     * creates a duplicate stub ingredient from an ingredient and the holder's current
+     * amount value. Copies the description, unit and category from the ingredient.
+     * @param holder holder to pull the amount from
+     * @param originalIngredient ingredient to pull unit, category and description from.
+     * @return
+     */
     public IngredientStub createDupeIngredient(RecipeSelectIngredientsViewHolder holder, Ingredient originalIngredient) {
         String description = originalIngredient.getDescription();
         Integer amount;

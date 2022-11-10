@@ -32,7 +32,8 @@ import java.util.ArrayList;
  * Fragment for viewing selected ingredients for a recipe.
  */
 public class RecipeIngredientListFragment extends DialogFragment implements RecipeIngredientsListAdapter.RecipeIngredientListListener{
-    //    From Anubhav Arora  https://medium.com/geekculture/android-full-screen-dialogfragment-1410dbd96d37
+    // Full screen dialog strategy from Anubhav Arora , Nov 11 2020
+    // https://medium.com/geekculture/android-full-screen-dialogfragment-1410dbd96d37
     @Override
     public int getTheme() {
         return R.style.DialogTheme;
@@ -118,6 +119,10 @@ public class RecipeIngredientListFragment extends DialogFragment implements Reci
         return rootView;
     }
 
+    /**
+     * renders recucler view and pulls data.
+     * @param rootView
+     */
     private void renderList(View rootView){
         recipeIngredientList = editRecipeViewModel.getSelectedIngredients();
         // filtered ingredients list from environment
@@ -137,7 +142,6 @@ public class RecipeIngredientListFragment extends DialogFragment implements Reci
     private void onNewIngStubClicked(){
             navController.navigate(RecipeIngredientListFragmentDirections.actionIngListToSelectIngType());
     }
-
 
     /**
      * Implement the option to go back to previous page

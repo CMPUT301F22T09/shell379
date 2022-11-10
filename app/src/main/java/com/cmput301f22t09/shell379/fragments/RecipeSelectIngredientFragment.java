@@ -34,7 +34,8 @@ import java.util.ArrayList;
  * Fragment for selecting ingredients for recipes.
  */
 public class RecipeSelectIngredientFragment extends DialogFragment {
-    //    From Anubhav Arora  https://medium.com/geekculture/android-full-screen-dialogfragment-1410dbd96d37
+    // Full screen dialog strategy from Anubhav Arora , Nov 11 2020
+    // https://medium.com/geekculture/android-full-screen-dialogfragment-1410dbd96d37
     @Override
     public int getTheme() {
         return R.style.DialogTheme;
@@ -107,6 +108,11 @@ public class RecipeSelectIngredientFragment extends DialogFragment {
         return rootView;
     }
 
+
+    /**
+     * renders recucler view and pulls data.
+     * @param rootView
+     */
     private void renderList(View rootView){
         ingredientList = env.getIngredients().getList();
 

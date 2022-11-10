@@ -21,8 +21,12 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.util.DatabaseManager;
 
+/**
+ * fragment to select how to create a new ingredient stub.
+ */
 public class RecipeAddIngredientTypeFragment extends DialogFragment {
-    //    From Anubhav Arora  https://medium.com/geekculture/android-full-screen-dialogfragment-1410dbd96d37
+    // Full screen dialog strategy from Anubhav Arora , Nov 11 2020
+    // https://medium.com/geekculture/android-full-screen-dialogfragment-1410dbd96d37
     @Override
     public int getTheme() {
         return R.style.DialogTheme;

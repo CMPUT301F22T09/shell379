@@ -23,7 +23,7 @@ import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
 import java.util.ArrayList;
 
 /**
- * Adapter for recycler view in select ingredients page for recipes.
+ * Adapter for recycler view in view selected ingredients page for recipes.
  */
 public class RecipeIngredientsListAdapter extends RecyclerView.Adapter<RecipeIngredientsListAdapter.RecipeIngredientListViewHolder> {
 
@@ -63,6 +63,10 @@ public class RecipeIngredientsListAdapter extends RecyclerView.Adapter<RecipeIng
         this.editRecipeViewModel = editRecipeViewModel;
     }
 
+    /**
+     * Updates the recycler view and re-renders it
+     * @param newRecipeIngredients the new list of ingredient stubs for the recycler view
+     */
     public void updateList(ArrayList<IngredientStub> newRecipeIngredients){
         recipeIngredients = newRecipeIngredients;
         notifyDataSetChanged();

@@ -28,6 +28,9 @@ import com.cmput301f22t09.shell379.data.vm.Environment;
 
 import java.util.ArrayList;
 
+/**
+ * fragment for creating ingredient stubs for recipes.
+ */
 public class CreateIngredientStubFragment extends SaveIngredientStubFragment{
     public void writeToViewModel(IngredientStub ing){
         editRecipeViewModel.getSelectedIngredients().add(ing);

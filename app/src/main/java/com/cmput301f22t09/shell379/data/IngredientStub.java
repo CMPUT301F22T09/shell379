@@ -7,7 +7,7 @@ import androidx.annotation.RequiresApi;
 import java.io.Serializable;
 
 /**
- * Ingredient
+ * Partial ingredient that is missing date and location. Otherwise quite similar.
  */
 public class IngredientStub implements Serializable {
     private String description;
@@ -120,7 +120,7 @@ public class IngredientStub implements Serializable {
     }
 
     /**
-     * looser equals method that ignores amount
+     * looser equals method that does not compare amount
      * @param o ingredient to compare to
      * @return true if the ingredient is equal, false otherwise
      */

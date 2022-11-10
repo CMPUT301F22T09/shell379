@@ -9,7 +9,7 @@ import com.cmput301f22t09.shell379.data.Recipe;
 import java.util.ArrayList;
 
 /**
- *  maintains state for a draft recipe change.
+ *  maintains state for a draft recipe change. Currently it only tracks ingredients for the recipe
  */
 public class EditRecipeViewModel extends ViewModel {
     // view model template code from https://developer.android.com/topic/libraries/architecture/viewmodel
@@ -20,6 +20,9 @@ public class EditRecipeViewModel extends ViewModel {
         return liveSelectedIngredientStubs;
     }
 
+    /**
+     * notifies all listeners of the ingredient stubs of a change
+     */
     public void forceSignalUpdate(){
         liveSelectedIngredientStubs.setValue(liveSelectedIngredientStubs.getValue());
     }

@@ -26,8 +26,12 @@ import com.cmput301f22t09.shell379.data.Unit;
 import com.cmput301f22t09.shell379.data.vm.EditRecipeViewModel;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
+/**
+ * abstract fragment for saving (creating and editing)  an ingredient stub.
+ */
 public abstract class SaveIngredientStubFragment extends DialogFragment{
-    //    From Anubhav Arora  https://medium.com/geekculture/android-full-screen-dialogfragment-1410dbd96d37
+    // Full screen dialog strategy from Anubhav Arora , Nov 11 2020
+    // https://medium.com/geekculture/android-full-screen-dialogfragment-1410dbd96d37
     @Override
     public int getTheme() {
         return R.style.DialogTheme;
@@ -111,6 +115,10 @@ public abstract class SaveIngredientStubFragment extends DialogFragment{
         navController.popBackStack();
     }
 
+    /**
+     *  Pulls inputs from view objects and saves according to
+     *  the abstract method writeToViewModel(Ingredient).
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void save(){
 
@@ -119,6 +127,7 @@ public abstract class SaveIngredientStubFragment extends DialogFragment{
             String category = ((EditText)rootView.findViewById(R.id.editCategory)).getText().toString();
             String unit = ((Spinner)rootView.findViewById(R.id.editUnit)).getSelectedItem().toString();
 
+            // validate
             if(description.isEmpty() ||
                 category == null ||
                 category.isEmpty() ||
@@ -139,15 +148,20 @@ public abstract class SaveIngredientStubFragment extends DialogFragment{
             IngredientStub ing =  new IngredientStub(description,amount,unit,category);
 
             writeToViewModel(ing);
-
     }
 
-
+    /**
+     * snack bar message
+     * @param message error message to show
+     */
     private void showError(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
-
+    /**
+     *  Callback function for category component.
+     *  Will update the associated view with the selected category.
+     */
     private void onIngCategoryClick(){
         CategorySelectPopup.SelectListener listener = new CategorySelectPopup.SelectListener() {
             @Override
@@ -160,6 +174,11 @@ public abstract class SaveIngredientStubFragment extends DialogFragment{
         selection.setTargetFragment(SaveIngredientStubFragment.this, 1);
     }
 
+    /**
+     * dictates what happens when the fragment saves the ingredient. All writing to outside
+     * classes should be done in this method for child classes.
+     * @param ing the ingredient stub to write.
+     */
     public abstract void writeToViewModel(IngredientStub ing);
 
 }
