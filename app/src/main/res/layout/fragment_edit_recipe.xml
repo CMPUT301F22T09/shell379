@@ -157,13 +157,13 @@
                     android:text="Delete" />
 
                 <Button
-                    android:id="@+id/add_ingredient"
+                    android:id="@+id/edit_ings_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:minHeight="48dp"
-                    android:text="Add" />
+                    android:text="Edit" />
 
 
             </LinearLayout>

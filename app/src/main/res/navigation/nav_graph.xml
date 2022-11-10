@@ -83,6 +83,9 @@
         <action
             android:id="@+id/action_editRecipe_to_recipeListFragment"
             app:destination="@id/recipeListFragment" />
+        <action
+            android:id="@+id/action_editRecipe_to_recipeIngredientListFragment"
+            app:destination="@id/recipeIngredientListFragment" />
     </fragment>
     <fragment
         android:id="@+id/createIngredientFragment"
@@ -117,5 +120,14 @@
         <action
             android:id="@+id/action_createIngredientStubFragment3_to_editRecipe"
             app:destination="@id/editRecipe" />
+
+    </dialog>
+    <dialog
+        android:id="@+id/recipeIngredientListFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.RecipeIngredientListFragment"
+        android:label="RecipeIngredientListFragment" >
+    <action
+        android:id="@+id/action_createIngredientStubFragment3_to_editRecipe"
+        app:destination="@id/editRecipe" />
     </dialog>
 </navigation>

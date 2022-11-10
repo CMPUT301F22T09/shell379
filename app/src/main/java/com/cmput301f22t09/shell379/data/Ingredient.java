@@ -95,8 +95,12 @@ public class Ingredient implements Serializable, PartiallyEquable {
      * @return best before date in a string as dd/mm/yyy
      */
     public String getBestBeforeFormatted() {
-        SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
-        return simpleDate.format(getBestBefore());
+        if(bestBefore != null){
+            SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
+            return simpleDate.format(getBestBefore());
+        }else{
+            return "Date not set";
+        }
     }
 
     /**
@@ -171,12 +175,12 @@ public class Ingredient implements Serializable, PartiallyEquable {
     @Override
     public boolean equals(Object o){
         Ingredient ing = (Ingredient) o;
-        if (ing.getDescription().equals( ing.description)){
-            if (ing.getCategory().equals(ing.category)){
-                if (ing.getLocation().equals(ing.location)){
-                    if (ing.getBestBefore().equals(bestBefore)){
-                        if (ing.getAmount().equals(ing.amount)){
-                            if (ing.getUnit().equals(ing.unit)){
+        if (this.description.equals( ing.description)){
+            if (this.category.equals(ing.category)){
+                if (this.unit.equals(ing.unit)){
+                    if (this.amount.equals(ing.amount)){
+                        if ((this.bestBefore == null && ing.bestBefore == null) || (this.bestBefore != null && this.getBestBefore().equals(ing.bestBefore))){
+                            if ((this.location== null && ing.location == null)  || (this.location != null && this.location.equals(ing.location))){
                                 return true;
                             }
                         }
@@ -199,7 +203,9 @@ public class Ingredient implements Serializable, PartiallyEquable {
         // Use description and category as a measure of equality between ingredients
         if (otherIngredient.getDescription().equals(this.getDescription())) {
             if (otherIngredient.getCategory().equals(this.getCategory())) {
-                return true;
+                if (otherIngredient.getUnit().equals(this.getUnit())) {
+                    return true;
+                }
             }
         }
         return false;
@@ -216,4 +222,10 @@ public class Ingredient implements Serializable, PartiallyEquable {
         }
         return false;
     }
+
+    public void combine(PartiallyEquable i){
+        Ingredient incomingIngredient = (Ingredient)i;
+        this.amount += ((Ingredient) i).amount;
+    }
+
 }

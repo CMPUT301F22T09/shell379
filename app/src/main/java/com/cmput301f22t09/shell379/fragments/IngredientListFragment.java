@@ -61,7 +61,7 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
                 // Update the UI, in this case, a TextView.
 //                ingredient_recyclerView.setText(newName);
                 if (ingredientListAdapter != null){
-                    ingredientListAdapter.updateIngredient(envViewModel.getIngredients().getFullList());
+                    ingredientListAdapter.updateIngredient(envViewModel.getIngredients().getAll());
                 }
             }
         };

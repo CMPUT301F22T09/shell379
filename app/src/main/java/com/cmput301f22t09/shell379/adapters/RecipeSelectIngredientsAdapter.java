@@ -2,6 +2,7 @@ package com.cmput301f22t09.shell379.adapters;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,6 +69,12 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
         }
     }
 
+    public void updateList(ArrayList<Ingredient> newIngredients,ArrayList<Ingredient> newRecipeIngredients){
+        ingredients = newIngredients;
+        recipeIngredients = newRecipeIngredients;
+        notifyDataSetChanged();
+    }
+
     public boolean selectedIngsHaveAmounts(){
         for (int i = 0 ; i < checkedIngredients.size();i++){
             if(checkedIngredients.get(i).getAmount() == null){
@@ -97,6 +104,7 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
         description.setText(ingredients.get(position).getDescription());
         category.setText(ingredients.get(position).getCategory());
         unit.setText(ingredients.get(position).getUnit());
+        Log.e("test","binding!");
 
         for (int i = 0; i < recipeIngredients.size(); i++) {
             if (createDupeIngredient(holder, ingredients.get(position)).partialEquals(recipeIngredients.get(i))) {
@@ -130,6 +138,9 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
                             break;
                         }
                     }
+                    if(removeIndex == -1){
+                        throw new RuntimeException("ingredient is checked in UI but not checked for recipe in data model");
+                    }
                     checkedIngredients.remove(removeIndex);
                     holder.inputAmount.setText("", TextView.BufferType.EDITABLE);
                 }
@@ -150,12 +161,10 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
                         }
                     }
                 }
-                if(inputAmount.getText().toString().isEmpty()){
-                    holder.checkbox.setEnabled(false);
+                else if(!inputAmount.getText().toString().isEmpty()){
+                    holder.checkbox.setChecked(true);
                 }
-                else{
-                    holder.checkbox.setEnabled(true);
-                }
+
             }
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -184,11 +193,11 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
             amount = Integer.parseInt(holder.inputAmount.getText().toString());
         }
         else {
-            amount = 0;
+            amount = null;
         }
         String category = originalIngredient.getCategory();
 
-        Ingredient dupeIngredient = new Ingredient(description, null, amount, null, category);
+        Ingredient dupeIngredient = new Ingredient(description, null, amount, originalIngredient.getUnit(), category);
         return dupeIngredient;
     }
 }

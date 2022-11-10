@@ -72,8 +72,9 @@ public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientIn
         TextView name = holder.name;
         TextView amount = holder.amount;
 
-        name.setText(ingredients.get(position).getDescription());
-        amount.setText(ingredients.get(position).getAmount().toString());
+        Ingredient ing = ingredients.get(position);
+        name.setText(ing.getDescription());
+        amount.setText(ing.getAmount().toString()+" "+ ing.getUnit());
         holder.itemView.setSelected(selectedPos == position);
         holder.itemView.setBackgroundColor(selectedPos == position ? Color.GRAY : Color.TRANSPARENT);
 

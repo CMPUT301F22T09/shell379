@@ -96,7 +96,7 @@ public class ViewIngredientFragment extends Fragment {
 
         ((TextView)rootView.findViewById(R.id.amount).findViewById(R.id.detail_name)).setText( "Amount");
         if(ingredient.getAmount() != null && ingredient.getUnit() != null){
-            ((TextView)rootView.findViewById(R.id.amount).findViewById(R.id.detail_value)).setText( ingredient.getAmount() + ingredient.getUnit() );
+            ((TextView)rootView.findViewById(R.id.amount).findViewById(R.id.detail_value)).setText( ingredient.getAmount() +" "+ ingredient.getUnit() );
         }else{
             ((TextView)rootView.findViewById(R.id.amount).findViewById(R.id.detail_value)).setText( "Tap edit below to add");
         }
