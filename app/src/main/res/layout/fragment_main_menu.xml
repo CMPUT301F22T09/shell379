@@ -24,7 +24,7 @@
         android:id="@+id/ingredients_list_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ingredients" />
+        android:text="Ingredients Storage" />
 
     <Button
         android:id="@+id/recipes_list_button"
