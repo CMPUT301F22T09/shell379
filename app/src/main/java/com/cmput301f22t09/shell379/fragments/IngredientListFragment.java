@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,11 +28,13 @@ import android.widget.Spinner;
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.IngredientAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.util.ArraySortUtil;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Fragment for ingredient list which implements the listener
@@ -41,6 +44,7 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
     RecyclerView ingredient_recyclerView;
     RecyclerView.LayoutManager layoutManager;
     IngredientAdapter ingredientListAdapter;
+    int selectedSortIndex;
 
     private NavController navController;
     private Environment envViewModel;
@@ -81,10 +85,31 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
                 getActivity(),
                 android.R.layout.simple_spinner_item,
-                Arrays.asList("Description","Best Before Date", "Location", "Category")
+                Ingredient.getSortableProps()
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        spinner.setSelection(0);
+        selectedSortIndex = 0;
+
+        // setting spinner events from khaled ben aissa, dec 21 2011
+        // https://stackoverflow.com/questions/8597582/get-the-position-of-a-spinner-in-android
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                // resorts the recycler view of ingredients
+                selectedSortIndex = ((Spinner) rootView.findViewById(R.id.ingredient_sort_spinner)).getSelectedItemPosition();
+                ingredientListAdapter.updateIngredient(
+                        ArraySortUtil.sortByStringProp(ingredientListAdapter.getIngredients(),
+                        Ingredient.getStringPropGetter(selectedSortIndex))
+                );
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // do nothing
+            }
+        });
 
         // Implement the button to back to previous page
         ((ImageView)rootView.findViewById(R.id.floatingActionButton5)).setOnClickListener(
@@ -103,7 +128,8 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
                 }
         );
 
-        ingredientList = envViewModel.getIngredients().getList();
+        ingredientList = ArraySortUtil.sortByStringProp(envViewModel.getIngredients().getList(),
+                Ingredient.getStringPropGetter(selectedSortIndex));
         layoutManager = new LinearLayoutManager(this.getActivity());
         ingredient_recyclerView = (RecyclerView) rootView.findViewById(R.id.ingredient_list_recyclerView);
         ingredient_recyclerView.setLayoutManager(layoutManager);
@@ -127,4 +153,6 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
                 = IngredientListFragmentDirections.actionIngredientListFragmentToViewIngredientFragment(index);
         navController.navigate(action);
     }
+
+
 }

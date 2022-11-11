@@ -197,4 +197,18 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
         IngredientStub dupeIngredient = new IngredientStub(description, amount, originalIngredient.getUnit(), category);
         return dupeIngredient;
     }
+
+    public ArrayList<Ingredient> getIngredients(){
+        return ingredients;
+    }
+
+    /**
+     * sets the adapter's ingredients
+     * @param newIngredient ingredients to update with
+     */
+    public void updateIngredient(ArrayList<Ingredient> newIngredient){
+        ingredients = newIngredient;
+        notifyDataSetChanged();
+    }
+
 }
