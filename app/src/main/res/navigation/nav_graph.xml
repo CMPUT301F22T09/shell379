@@ -63,6 +63,9 @@
         <action
             android:id="@+id/action_mealPlanFragment_to_createMealPlanFragment"
             app:destination="@id/createMealPlanFragment" />
+        <action
+            android:id="@+id/action_mealPlanFragment_to_viewMealPlanFragment"
+            app:destination="@id/viewMealPlanFragment" />
     </fragment>
 
     <fragment
@@ -119,10 +122,23 @@
         android:name="com.cmput301f22t09.shell379.fragments.ViewMealPlanFragment"
         android:label="fragment_view_mealPlan"
         tools:layout="@layout/fragment_view_meal_plan_14" >
-    <argument
-        android:name="index"
-        app:argType="integer" />
+        <argument
+            android:name="index"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_mealPlanFragment_to_viewMealPlanFragment"
+            app:destination="@id/editMealPlanFragment" />
     </fragment>
+
+    <fragment
+        android:id="@+id/editMealPlanFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.EditMealPlanFragment"
+        android:label="EditMealPlanFragment" >
+        <argument
+            android:name="MealPlanIndex"
+            app:argType="integer" />
+    </fragment>
+
 
 
     <dialog
