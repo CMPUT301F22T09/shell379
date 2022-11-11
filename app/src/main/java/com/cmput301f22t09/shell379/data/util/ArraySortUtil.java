@@ -21,8 +21,9 @@ public class ArraySortUtil {
      *              the property to sort on.
      */
     public static <T> ArrayList<T> sortByStringProp(ArrayList<T> objects, StringPropGetter stringPropGetter){
-        // https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Field.html
-        // Dynamic prop referencing from https://stackoverflow.com/questions/13128194/java-how-can-i-dynamically-reference-an-objects-property
+        // Field reflection from https://docs.oracle.com/javase/8/docs/api/java/lang/reflect/Field.html
+        // Dynamic prop referencing from Trevor Dixon, oct 29 2012,
+        // https://stackoverflow.com/questions/13128194/java-how-can-i-dynamically-reference-an-objects-property
         // Generics documentation https://docs.oracle.com/javase/tutorial/extra/generics/methods.html
 
         // check type and if property exists
