@@ -12,9 +12,11 @@ public class MealPlan implements Serializable {
     private String startDate;
     private String endDate;
     private Integer activeDays;
+    private String mealPlanName;
     private static final SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");
 
-    public MealPlan(ArrayList<Recipe> recipes, ArrayList<Ingredient> ingredients, Date startDate, Date endDate, Integer activeDays) {
+    public MealPlan(String mealPlanName, ArrayList<Recipe> recipes, ArrayList<Ingredient> ingredients, Date startDate, Date endDate, Integer activeDays) {
+        this.mealPlanName = mealPlanName;
         this.recipes = recipes;
         this.ingredients = ingredients;
         this.startDate = formatter.format(startDate);
@@ -22,11 +24,12 @@ public class MealPlan implements Serializable {
         this.activeDays = activeDays;
     }
 
-    public MealPlan(Date startDate, Date endDate, Integer activeDays) {
-        this.startDate = formatter.format(startDate);
-        this.endDate = formatter.format(endDate);
-        this.activeDays = activeDays;
-    }
+//    public MealPlan(Date startDate, Date endDate, Integer activeDays) {
+//        this.startDate = formatter.format(startDate);
+//        this.endDate = formatter.format(endDate);
+//        this.activeDays = activeDays;
+//    }
+
 
     public ArrayList<Recipe> getRecipes() {
         return recipes;
@@ -42,6 +45,10 @@ public class MealPlan implements Serializable {
 
     public void setIngredients(ArrayList<Ingredient> ingredients) {
         this.ingredients = ingredients;
+    }
+
+    public String getMealPlanName(){
+        return mealPlanName;
     }
 
     public Date getStartDate() {
@@ -108,5 +115,23 @@ public class MealPlan implements Serializable {
 
     public void removeRecipeAtIdx(Integer idx) {
         this.recipes.remove(idx);
+    }
+
+    public String getStartDateFormatted() {
+        if(startDate != null){
+            SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
+            return simpleDate.format(getStartDate());
+        }else{
+            return "Date not set";
+        }
+    }
+
+    public String getEndDateFormatted() {
+        if(endDate != null){
+            SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
+            return simpleDate.format(getEndDate());
+        }else{
+            return "Date not set";
+        }
     }
 }
