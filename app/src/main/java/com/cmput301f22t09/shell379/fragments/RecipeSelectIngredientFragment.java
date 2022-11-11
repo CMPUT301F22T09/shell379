@@ -109,10 +109,7 @@ public class RecipeSelectIngredientFragment extends DialogFragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 // resorts the recycler view of ingredients
                 selectedSortIndex = ((Spinner) rootView.findViewById(R.id.select_rec_ing_sort_spinner)).getSelectedItemPosition();
-                rsiAdapter.updateIngredient(
-                        ArraySortUtil.sortByStringProp(rsiAdapter.getIngredients(),
-                                Ingredient.getStringPropGetter(selectedSortIndex))
-                );
+                renderList(rootView);
             }
 
             @Override

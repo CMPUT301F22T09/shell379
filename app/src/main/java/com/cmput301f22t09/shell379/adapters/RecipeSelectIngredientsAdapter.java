@@ -83,6 +83,8 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
         TextView unit = holder.unit;
         TextView category = holder.category;
         EditText inputAmount = holder.inputAmount;
+        holder.checkbox.setChecked(false);
+        holder.inputAmount.setText("");
 
         description.setText(ingredients.get(position).getDescription());
         category.setText(ingredients.get(position).getCategory());
