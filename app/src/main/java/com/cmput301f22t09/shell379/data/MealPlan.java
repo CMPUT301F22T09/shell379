@@ -1,7 +1,10 @@
 package com.cmput301f22t09.shell379.data;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MealPlan implements Serializable {
     private ArrayList<Recipe> recipes = new ArrayList<>();
@@ -9,18 +12,19 @@ public class MealPlan implements Serializable {
     private String startDate;
     private String endDate;
     private Integer activeDays;
+    private static final SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");
 
-    public MealPlan(ArrayList<Recipe> recipes, ArrayList<Ingredient> ingredients, String startDate, String endDate, Integer activeDays) {
+    public MealPlan(ArrayList<Recipe> recipes, ArrayList<Ingredient> ingredients, Date startDate, Date endDate, Integer activeDays) {
         this.recipes = recipes;
         this.ingredients = ingredients;
-        this.startDate = startDate;
-        this.endDate = endDate;
+        this.startDate = formatter.format(startDate);
+        this.endDate = formatter.format(endDate);
         this.activeDays = activeDays;
     }
 
-    public MealPlan(String startDate, String endDate, Integer activeDays) {
-        this.startDate = startDate;
-        this.endDate = endDate;
+    public MealPlan(Date startDate, Date endDate, Integer activeDays) {
+        this.startDate = formatter.format(startDate);
+        this.endDate = formatter.format(endDate);
         this.activeDays = activeDays;
     }
 
@@ -40,20 +44,30 @@ public class MealPlan implements Serializable {
         this.ingredients = ingredients;
     }
 
-    public String getStartDate() {
-        return startDate;
+    public Date getStartDate() {
+        try {
+            return formatter.parse(this.startDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Date();
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
+    public void setStartDate(Date startDate) {
+        this.startDate = formatter.format(startDate);
     }
 
-    public String getEndDate() {
-        return endDate;
+    public Date getEndDate() {
+        try {
+            return formatter.parse(this.endDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return new Date();
     }
 
-    public void setEndDate(String endDate) {
-        this.endDate = endDate;
+    public void setEndDate(Date endDate) {
+        this.endDate = formatter.format(endDate);
     }
 
     public Integer getActiveDays() {

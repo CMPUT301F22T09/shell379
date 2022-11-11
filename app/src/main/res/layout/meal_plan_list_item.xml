@@ -12,7 +12,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/rli_name"
+            android:id="@+id/mpli_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/rli_start_date_label"
+            android:id="@+id/mpli_start_date_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
@@ -34,10 +34,10 @@
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rli_name" />
+            app:layout_constraintTop_toBottomOf="@+id/mpli_name" />
 
         <TextView
-            android:id="@+id/rli_end_date_label"
+            android:id="@+id/mpli_end_date_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
@@ -48,10 +48,10 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rli_start_date_label" />
+            app:layout_constraintTop_toBottomOf="@+id/mpli_start_date_label" />
 
         <TextView
-            android:id="@+id/rli_start_date_textView"
+            android:id="@+id/mpli_start_date_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
@@ -60,10 +60,10 @@
             android:textAlignment="textEnd"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rli_name" />
+            app:layout_constraintTop_toBottomOf="@+id/mpli_name" />
 
         <TextView
-            android:id="@+id/rli_end_date_textView"
+            android:id="@+id/mpli_end_date_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
@@ -72,7 +72,7 @@
             android:textAlignment="textEnd"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/rli_start_date_textView" />
+            app:layout_constraintTop_toBottomOf="@+id/mpli_start_date_textView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

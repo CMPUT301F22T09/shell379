@@ -18,12 +18,12 @@
         tools:ignore="MissingConstraints,SpeakableTextPresentCheck" />
 
     <TextView
-        android:id="@+id/cart_list_title"
+        android:id="@+id/meal_plan_list_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="60dp"
-        android:text="Cart"
+        android:text="Meal Plan"
         android:textSize="25sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@id/floatingActionButton6"
@@ -39,17 +39,17 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cart_list_title">
+        app:layout_constraintTop_toBottomOf="@+id/meal_plan_list_title">
 
         <Spinner
-            android:id="@+id/cart_spinner"
+            android:id="@+id/meal_plan_spinner"
             android:layout_width="276dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             tools:ignore="SpeakableTextPresentCheck" />
 
         <Button
-            android:id="@+id/cart_newButton"
+            android:id="@+id/meal_plan_newButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -57,7 +57,7 @@
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/cart_recyclerView"
+        android:id="@+id/meal_plan_recyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="25dp"
