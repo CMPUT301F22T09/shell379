@@ -2,10 +2,8 @@ package com.cmput301f22t09.shell379.fragments;
 
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -24,7 +22,6 @@ import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.RecipeSelectIngredientsAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.IngredientStub;
-import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.EditRecipeViewModel;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
@@ -81,7 +78,7 @@ public class RecipeSelectIngredientFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.recipe_select_ingredients, container, false);
+        View rootView = inflater.inflate(R.layout.recipe_select_ingredients_10, container, false);
 
         renderList(rootView);
 

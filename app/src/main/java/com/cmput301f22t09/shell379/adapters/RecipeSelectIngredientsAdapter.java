@@ -2,17 +2,13 @@ package com.cmput301f22t09.shell379.adapters;
 
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.NumberPicker;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,14 +16,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.IngredientStub;
-import com.cmput301f22t09.shell379.data.Recipe;
 
-import org.checkerframework.checker.units.qual.C;
-import org.w3c.dom.Text;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 /**
  * Adapter for recycler view in select ingredients page for recipes.
@@ -82,7 +72,7 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
     @Override
     public RecipeSelectIngredientsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recipe_select_ingredients_content, parent, false);
+                .inflate(R.layout.recipe_select_ingredients_content_10, parent, false);
         RecipeSelectIngredientsViewHolder rsiViewHolder = new RecipeSelectIngredientsViewHolder(view);
         return rsiViewHolder;
     }
