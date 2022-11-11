@@ -38,6 +38,7 @@ public class Environment extends ViewModel implements Serializable {
         ingredients = new LiveCollection<Ingredient>();
         recipes = new LiveCollection<Recipe>();
         cart = new ShoppingCart();
+        mealPlans = new LiveCollection<MealPlan>();
         ingredientCategories = new CategorySet();
         recipeCategories = new CategorySet();
         locationCategories = new CategorySet();
