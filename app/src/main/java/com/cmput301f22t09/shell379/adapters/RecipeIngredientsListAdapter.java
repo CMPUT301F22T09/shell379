@@ -1,24 +1,16 @@
 package com.cmput301f22t09.shell379.adapters;
 
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
-import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.data.vm.EditRecipeViewModel;
-import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
 
 import java.util.ArrayList;
 
@@ -76,7 +68,7 @@ public class RecipeIngredientsListAdapter extends RecyclerView.Adapter<RecipeIng
     @Override
     public RecipeIngredientListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recipe_ingredients_list_content, parent, false);
+                .inflate(R.layout.recipe_ingredients_list_content_23, parent, false);
         RecipeIngredientListViewHolder rsiViewHolder = new RecipeIngredientListViewHolder(view);
         return rsiViewHolder;
     }

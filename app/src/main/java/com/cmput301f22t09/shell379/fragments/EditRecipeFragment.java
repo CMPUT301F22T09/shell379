@@ -131,7 +131,7 @@ public class EditRecipeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_edit_recipe, container, false);
+        rootView = inflater.inflate(R.layout.fragment_edit_recipe_9, container, false);
 
         catSelect = rootView.findViewById(R.id.select_category);
         choosePhoto = rootView.findViewById(R.id.gallery_button);

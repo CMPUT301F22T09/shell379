@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -60,7 +59,7 @@ public abstract class SaveIngredientStubFragment extends DialogFragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_save_ingredient_stub, container, false);
+        rootView = inflater.inflate(R.layout.fragment_save_ingredient_stub_12_24, container, false);
         category = ((EditText)rootView.findViewById(R.id.editCategory));
         location = ((EditText)rootView.findViewById(R.id.editLocation));
 

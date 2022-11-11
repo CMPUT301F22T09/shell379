@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 //import android.os.Environment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,7 +30,6 @@ import com.cmput301f22t09.shell379.data.vm.Environment;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 
 /**
  * Fragment for ingredient list which implements the listener
@@ -74,7 +72,7 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_ingredient_list, container, false);
+        View rootView =  inflater.inflate(R.layout.fragment_ingredient_list_2, container, false);
 
         // Implement the spinner option to sort the ingredient list
         Spinner spinner = (Spinner) rootView.findViewById(R.id.ingredient_sort_spinner);
