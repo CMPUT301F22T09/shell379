@@ -13,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
-import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.fragments.EditRecipeFragment;
 
@@ -61,7 +60,7 @@ public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientIn
     @Override
     public IngredientInRecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.ingredients_in_recipe, parent, false);
+                .inflate(R.layout.ingredients_in_recipe_9, parent, false);
         IngredientInRecipeViewHolder ingredientInRecipeViewHolder = new IngredientInRecipeViewHolder(view, editRecipeFragment);
         return ingredientInRecipeViewHolder;
     }

@@ -2,14 +2,9 @@ package com.cmput301f22t09.shell379;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.navigation.Navigation;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.util.Log;
-
-import com.cmput301f22t09.shell379.data.util.DatabaseManager;
-import com.cmput301f22t09.shell379.data.vm.Environment;
 
 public class MainActivity extends AppCompatActivity {
 

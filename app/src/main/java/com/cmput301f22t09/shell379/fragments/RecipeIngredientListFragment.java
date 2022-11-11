@@ -24,7 +24,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.RecipeIngredientsListAdapter;
-import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.data.util.ArraySortUtil;
 import com.cmput301f22t09.shell379.data.vm.EditRecipeViewModel;
@@ -84,7 +83,7 @@ public class RecipeIngredientListFragment extends DialogFragment implements Reci
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.recipe_ingredients_list, container, false);
+        View rootView = inflater.inflate(R.layout.recipe_ingredients_list_23, container, false);
 
 
         final Observer<ArrayList<IngredientStub>> ingredientObserver = new Observer<ArrayList<IngredientStub>>() {

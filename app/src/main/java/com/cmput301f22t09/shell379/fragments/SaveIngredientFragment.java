@@ -18,7 +18,6 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cmput301f22t09.shell379.R;
@@ -27,7 +26,6 @@ import com.cmput301f22t09.shell379.data.Unit;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -57,7 +55,7 @@ public abstract class SaveIngredientFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_save_ingredient, container, false);
+        rootView = inflater.inflate(R.layout.fragment_save_ingredient_5_6, container, false);
         category = ((EditText)rootView.findViewById(R.id.editCategory));
         location = ((EditText)rootView.findViewById(R.id.editLocation));
 

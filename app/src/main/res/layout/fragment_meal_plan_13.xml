@@ -7,7 +7,7 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/back_button"
+        android:id="@+id/MP_back_button"
         app:backgroundTint="@android:color/white"
         app:srcCompat="@drawable/ic_baseline_arrow_back_24"
         android:layout_width="match_parent"
