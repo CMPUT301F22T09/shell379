@@ -16,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.cmput301f22t09.shell379.R;
-import com.cmput301f22t09.shell379.adapters.IngredientAdapter;
 import com.cmput301f22t09.shell379.adapters.MealPlanAdapter;
 import com.cmput301f22t09.shell379.data.MealPlan;
 import com.cmput301f22t09.shell379.data.vm.Environment;
@@ -24,14 +23,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class MealPlanListFragment extends Fragment {
+public class MealPlanListFragment extends Fragment implements MealPlanAdapter.AdaptorListener{
     private ArrayList<MealPlan> mealPlanList;
     private RecyclerView mealPlan_recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private MealPlanAdapter mealPlanListAdapter;
     private Environment envViewModel;
     private NavController navController;
-    private FloatingActionButton backButton;
+//    private FloatingActionButton backButton;
 
 
     public MealPlanListFragment() {
@@ -51,7 +50,7 @@ public class MealPlanListFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_meal_plan, container, false);
+        View rootView =  inflater.inflate(R.layout.fragment_meal_plan_13, container, false);
 
         // Implement the button to back to previous page
         ((ImageView)rootView.findViewById(R.id.MP_back_button)).setOnClickListener(
@@ -63,14 +62,14 @@ public class MealPlanListFragment extends Fragment {
         );
 
 
-        mealPlanList = envViewModel.getIngredients().getFullList();
+        mealPlanList = envViewModel.getMealPlans().getList();
         layoutManager = new LinearLayoutManager(this.getActivity());
-        ingredient_recyclerView = (RecyclerView) rootView.findViewById(R.id.ingredient_list_recyclerView);
-        ingredient_recyclerView.setLayoutManager(layoutManager);
+        mealPlan_recyclerView = (RecyclerView) rootView.findViewById(R.id.meal_plan_recyclerView);
+        mealPlan_recyclerView.setLayoutManager(layoutManager);
 
-        ingredientListAdapter = new IngredientAdapter(ingredientList, envViewModel,this);
-        ingredient_recyclerView.setAdapter(ingredientListAdapter);
-        ingredient_recyclerView.setItemAnimator(new DefaultItemAnimator());
+        mealPlanListAdapter = new MealPlanAdapter(mealPlanList, envViewModel,this);
+        mealPlan_recyclerView.setAdapter(mealPlanListAdapter);
+        mealPlan_recyclerView.setItemAnimator(new DefaultItemAnimator());
 
         return rootView;
     }
@@ -80,5 +79,14 @@ public class MealPlanListFragment extends Fragment {
      */
     private void back(){
         navController.popBackStack();
+    }
+
+    public void navigateToViewMealPlan(int index){
+    //    to-do
+//        MealPlanListFragmentDirections.
+
+//        IngredientListFragmentDirections.ActionIngredientListFragmentToViewIngredientFragment action
+//                = IngredientListFragmentDirections.actionIngredientListFragmentToViewIngredientFragment(index);
+//        navController.navigate(action);
     }
 }
