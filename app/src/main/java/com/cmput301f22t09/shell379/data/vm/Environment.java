@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.MealPlan;
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.ShoppingCart;
 import com.cmput301f22t09.shell379.data.util.DatabaseManager;
@@ -27,6 +28,7 @@ import java.io.Serializable;
 public class Environment extends ViewModel implements Serializable {
     private LiveCollection<Ingredient> ingredients;
     private LiveCollection<Recipe> recipes;
+    private LiveCollection<MealPlan> mealPlans;
     private ShoppingCart cart;
     private CategorySet ingredientCategories;
     private CategorySet recipeCategories;
@@ -135,5 +137,9 @@ public class Environment extends ViewModel implements Serializable {
 
     public CategorySet getLocationCategories() {
         return locationCategories;
+    }
+
+    public LiveCollection<MealPlan> getMealPlans() {
+        return mealPlans;
     }
 }
