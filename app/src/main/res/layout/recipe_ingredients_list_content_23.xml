@@ -5,19 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
+
     android:elevation="12dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:layout_marginVertical="20dp"
+       >
 
         <TextView
-            android:id="@+id/mpli_name"
+            android:id="@+id/rsi_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:elevation="8dp"
             android:text="Name"
             android:textSize="23sp"
             android:textStyle="bold"
@@ -25,54 +26,50 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/mpli_start_date_label"
+            android:id="@+id/rsi_category_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginTop="20dp"
-            android:text="Start Date"
-            android:textSize="18sp"
+            android:text="Category"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mpli_name" />
+            app:layout_constraintTop_toBottomOf="@+id/rsi_description" />
+
 
         <TextView
-            android:id="@+id/mpli_end_date_label"
+            android:id="@+id/rsi_category"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:text="(Category)"
+            android:textAlignment="textEnd"
+            android:textSize="16sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/rsi_category_label"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/rsi_unit_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginBottom="28dp"
-            android:text="End Date"
-            android:textSize="18sp"
+            android:layout_marginTop="15dp"
+            android:text="Amount"
+            android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mpli_start_date_label" />
+            app:layout_constraintTop_toBottomOf="@+id/rsi_category_label" />
 
         <TextView
-            android:id="@+id/mpli_start_date_textView"
+            android:id="@+id/rsi_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
             android:layout_marginEnd="40dp"
-            android:text="(start date)"
+            android:text="(Unit)"
             android:textAlignment="textEnd"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mpli_name" />
-
-        <TextView
-            android:id="@+id/mpli_end_date_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:layout_marginEnd="40dp"
-            android:text="(end date)"
-            android:textAlignment="textEnd"
-            android:textSize="18sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mpli_start_date_textView" />
-
+            android:textSize="16sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/rsi_unit_label"
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

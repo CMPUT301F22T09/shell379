@@ -34,8 +34,8 @@ public abstract class CategorySelectPopup extends DialogFragment {
     public interface SelectListener {
         void send(String val);
     }
-    private  SelectListener csl;
-    private   String title;
+    private SelectListener csl;
+    private String title;
 
     public CategorySelectPopup() {
         // Required empty public constructor

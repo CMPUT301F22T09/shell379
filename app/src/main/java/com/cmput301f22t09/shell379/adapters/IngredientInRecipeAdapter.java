@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
-import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.fragments.EditRecipeFragment;
 
 import java.util.ArrayList;
@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Adapter for recycler view in edit recipes for choosing ingredients
  */
 public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientInRecipeAdapter.IngredientInRecipeViewHolder> {
-    private ArrayList<Ingredient> ingredients;
+    private ArrayList<IngredientStub> ingredients;
     private int selectedPos = RecyclerView.NO_POSITION;
     private EditRecipeFragment editRecipeFragment;
 
@@ -51,7 +51,7 @@ public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientIn
         }
     }
 
-    public IngredientInRecipeAdapter(ArrayList<Ingredient> data, EditRecipeFragment editRecipeFragment) {
+    public IngredientInRecipeAdapter(ArrayList<IngredientStub> data, EditRecipeFragment editRecipeFragment) {
         this.ingredients = data;
         this.editRecipeFragment = editRecipeFragment;
     }
@@ -60,7 +60,7 @@ public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientIn
     @Override
     public IngredientInRecipeViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.ingredients_in_recipe, parent, false);
+                .inflate(R.layout.ingredients_in_recipe_9, parent, false);
         IngredientInRecipeViewHolder ingredientInRecipeViewHolder = new IngredientInRecipeViewHolder(view, editRecipeFragment);
         return ingredientInRecipeViewHolder;
     }
@@ -72,8 +72,9 @@ public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientIn
         TextView name = holder.name;
         TextView amount = holder.amount;
 
-        name.setText(ingredients.get(position).getDescription());
-        amount.setText(ingredients.get(position).getAmount().toString());
+        IngredientStub ing = ingredients.get(position);
+        name.setText(ing.getDescription());
+        amount.setText(ing.getAmount().toString()+" "+ ing.getUnit());
         holder.itemView.setSelected(selectedPos == position);
         holder.itemView.setBackgroundColor(selectedPos == position ? Color.GRAY : Color.TRANSPARENT);
 
@@ -88,12 +89,13 @@ public class IngredientInRecipeAdapter extends RecyclerView.Adapter<IngredientIn
         return selectedPos;
     }
 
-    public ArrayList<Ingredient> getIngredients() {
+    public ArrayList<IngredientStub> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(ArrayList<Ingredient> ingredients) {
+    public void setIngredients(ArrayList<IngredientStub> ingredients) {
         this.ingredients = ingredients;
+        notifyDataSetChanged();
     }
 
     public void removeIngredient(int index) {

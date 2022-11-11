@@ -9,6 +9,8 @@
     tools:context=".fragments.SaveIngredientFragment"
     android:orientation="vertical"
     >
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -26,7 +28,7 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp"
         >
@@ -39,7 +41,9 @@
             android:orientation="vertical"
             android:paddingHorizontal="25dp"
             android:paddingVertical="20dp"
-            >
+          >
+
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -61,6 +65,35 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Best Before"
+                style="@style/QuestionHeader"/>
+            <DatePicker
+                android:id="@+id/editBestBeforeDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:datePickerMode="calendar" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Location"
+                style="@style/QuestionHeader"/>
+
+            <EditText
+                android:id="@+id/editLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textCapSentences"
+                android:padding="10dp"
+                android:maxLength="30"
+                android:focusable="false"
+                android:textCursorDrawable="@null"/>
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Unit"
                 style="@style/QuestionHeader"/>
 
@@ -68,7 +101,7 @@
                 android:id="@+id/editUnit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:layout_margin="10dp"
                 />
 
             <TextView
@@ -102,7 +135,6 @@
                 android:padding="10dp"
                 android:focusable="false"
                 android:textCursorDrawable="@null"/>
-
             <TextView
                 android:id="@+id/errorText"
                 android:layout_width="match_parent"
@@ -112,6 +144,7 @@
                 android:gravity="center"
                 android:padding="5dp"
                 android:visibility="gone" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -134,7 +167,11 @@
                     android:text="Cancel"
                     android:id="@+id/cancel_button"
                     android:layout_margin="10dp"/>
+
+
             </LinearLayout>
+
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>
