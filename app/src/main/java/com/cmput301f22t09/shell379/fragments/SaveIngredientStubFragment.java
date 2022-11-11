@@ -2,48 +2,49 @@ package com.cmput301f22t09.shell379.fragments;
 
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.NavController;
-import androidx.navigation.fragment.NavHostFragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
+
 import com.cmput301f22t09.shell379.R;
-import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.data.Unit;
+import com.cmput301f22t09.shell379.data.vm.EditRecipeViewModel;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.GregorianCalendar;
-
 /**
- * A simple {@link Fragment} subclass.
- * Use the  factory method to
- * create an instance of this fragment.
+ * abstract fragment for saving (creating and editing)  an ingredient stub.
  */
-public abstract class SaveIngredientFragment extends Fragment {
-    protected View rootView;
-    private NavController navController;
-    protected Environment envViewModel;
-    private EditText category;
-    private EditText location;
+public abstract class SaveIngredientStubFragment extends DialogFragment{
+    // Full screen dialog strategy from Anubhav Arora , Nov 11 2020
+    // https://medium.com/geekculture/android-full-screen-dialogfragment-1410dbd96d37
+    @Override
+    public int getTheme() {
+        return R.style.DialogTheme;
+    }
 
-    public SaveIngredientFragment() {
+    protected View rootView;
+    protected NavController navController;
+    protected Environment envViewModel;
+    protected EditText category;
+    protected EditText location;
+    protected EditRecipeViewModel editRecipeViewModel;
+
+    public SaveIngredientStubFragment() {
         // Required empty public constructor
     }
 
@@ -51,13 +52,15 @@ public abstract class SaveIngredientFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         navController = NavHostFragment.findNavController(this);
+        editRecipeViewModel =  new ViewModelProvider(requireActivity()).get(EditRecipeViewModel.class);
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_save_ingredient, container, false);
+        rootView = inflater.inflate(R.layout.fragment_save_ingredient_stub, container, false);
         category = ((EditText)rootView.findViewById(R.id.editCategory));
         location = ((EditText)rootView.findViewById(R.id.editLocation));
 
@@ -96,7 +99,6 @@ public abstract class SaveIngredientFragment extends Fragment {
                     }
                 }
         );
-        // Implement the onclick category to enter the text
         category.setOnClickListener(
                 new View.OnClickListener() {
                     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -105,89 +107,61 @@ public abstract class SaveIngredientFragment extends Fragment {
                     }
                 }
         );
-        // Implement the onclick location to enter the text
-        location.setOnClickListener(
-                new View.OnClickListener() {
-                    @RequiresApi(api = Build.VERSION_CODES.N)
-                    public void onClick(View v) {
-                        onLocationCategoryClick();
-                    }
-                }
-        );
 
         return rootView;
     }
-    public void send(String val){
-        category.setText(val);
-    };
 
     private void back(){
         navController.popBackStack();
     }
 
+    /**
+     *  Pulls inputs from view objects and saves according to
+     *  the abstract method writeToViewModel(Ingredient).
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void save(){
-        try {
-
 
             // Load data from Views
-            String description = ((EditText) rootView.findViewById(R.id.editDescription)).getText().toString();
-            String location = ((EditText) rootView.findViewById(R.id.editLocation)).getText().toString();
-            String strAmount = ((EditText) rootView.findViewById(R.id.editAmount)).getText().toString();
-            String category = ((EditText) rootView.findViewById(R.id.editCategory)).getText().toString();
-            String unit = ((Spinner) rootView.findViewById(R.id.editUnit)).getSelectedItem().toString();
+            String description = ((EditText)rootView.findViewById(R.id.editDescription)).getText().toString();
+            String category = ((EditText)rootView.findViewById(R.id.editCategory)).getText().toString();
+            String unit = ((Spinner)rootView.findViewById(R.id.editUnit)).getSelectedItem().toString();
 
             // validate
-            if (description.isEmpty() ||
-                    location.isEmpty() ||
-                    category.isEmpty() ||
-                    unit.isEmpty() ||
-                    strAmount.isEmpty()
-            ) {
+            if(description.isEmpty() ||
+                category == null ||
+                category.isEmpty() ||
+                unit.isEmpty()
+            ){
                 showError("All fields not filled");
                 return;
             }
-
             int amount = 0;
-            if (strAmount.isEmpty()) {
+            if(((EditText)rootView.findViewById(R.id.editAmount)).getText().toString().isEmpty()){
                 showError("Amount not filled");
                 return;
-            } else {
-                amount = Integer.parseInt(strAmount);
+            }else{
+                amount = Integer.parseInt(((EditText)rootView.findViewById(R.id.editAmount)).getText().toString());
             }
 
-            DatePicker bestBeforeDatePicker = rootView.findViewById(R.id.editBestBeforeDate);
-            Date bestBeforeDate = new GregorianCalendar(
-                    bestBeforeDatePicker.getYear(),
-                    bestBeforeDatePicker.getMonth(),
-                    bestBeforeDatePicker.getDayOfMonth()).getTime();
 
-            Ingredient newIng = new Ingredient(description, bestBeforeDate, location, amount, unit, category);
+            IngredientStub ing =  new IngredientStub(description,amount,unit,category);
 
-            ArrayList<Ingredient> ingredients = envViewModel.getIngredients().getList();
-            for (int i = 0; i < ingredients.size(); i++) {
-                if (ingredients.get(i).equals(newIng)) {
-                    throw new IllegalArgumentException("Ingredient Already Exists");
-                }
-            }
-
-            writeToViewModel(newIng);
-            navController.popBackStack();
-        }catch(Exception e){
-            showError(e.getMessage());
-            return;
-        }
+            writeToViewModel(ing);
     }
 
-
+    /**
+     * snack bar message
+     * @param message error message to show
+     */
     private void showError(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
-
-        /**
-         * Implement the ingredient category dialog
-         */
+    /**
+     *  Callback function for category component.
+     *  Will update the associated view with the selected category.
+     */
     private void onIngCategoryClick(){
         CategorySelectPopup.SelectListener listener = new CategorySelectPopup.SelectListener() {
             @Override
@@ -197,28 +171,14 @@ public abstract class SaveIngredientFragment extends Fragment {
         };
         IngredientCategorySelectPopup selection = new IngredientCategorySelectPopup(listener,"Category");
         selection.show(getFragmentManager(), "");
-        selection.setTargetFragment(SaveIngredientFragment.this, 1);
+        selection.setTargetFragment(SaveIngredientStubFragment.this, 1);
     }
 
     /**
-     * Implement the ingredient location dialog
+     * dictates what happens when the fragment saves the ingredient. All writing to outside
+     * classes should be done in this method for child classes.
+     * @param ing the ingredient stub to write.
      */
-    private void onLocationCategoryClick(){
-        CategorySelectPopup.SelectListener listener = new CategorySelectPopup.SelectListener() {
-            @Override
-            public void send(String val) {
-                location.setText(val);
-            }
-        };
-        LocationCategorySelectPopup selection = new LocationCategorySelectPopup(listener, "Location");
-        selection.show(getFragmentManager(), "");
-        selection.setTargetFragment(SaveIngredientFragment.this, 1);
-    }
-
-    /**
-     * Pass in the data into view model
-     * @param ing
-     */
-    protected abstract void writeToViewModel(Ingredient ing);
+    public abstract void writeToViewModel(IngredientStub ing);
 
 }

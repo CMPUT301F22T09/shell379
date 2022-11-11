@@ -5,13 +5,9 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStore;
-import androidx.lifecycle.ViewModelStoreOwner;
-import androidx.lifecycle.ViewTreeViewModelStoreOwner;
 
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.MealPlan;
@@ -21,7 +17,6 @@ import com.cmput301f22t09.shell379.data.util.DatabaseManager;
 import com.cmput301f22t09.shell379.data.vm.collections.CategorySet;
 import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
 import com.cmput301f22t09.shell379.data.vm.infrastructure.Commitable;
-import com.cmput301f22t09.shell379.data.vm.collections.PartiallyEquableLiveCollection;
 
 import java.io.Serializable;
 
@@ -31,7 +26,7 @@ import java.io.Serializable;
  * The class is accessible from all fragments and does not change between fragments.
  */
 public class Environment extends ViewModel implements Serializable {
-    private PartiallyEquableLiveCollection<Ingredient> ingredients;
+    private LiveCollection<Ingredient> ingredients;
     private LiveCollection<Recipe> recipes;
     private LiveCollection<MealPlan> mealPlans;
     private ShoppingCart cart;
@@ -40,7 +35,7 @@ public class Environment extends ViewModel implements Serializable {
     private CategorySet locationCategories;
 
     public Environment() {
-        ingredients = new PartiallyEquableLiveCollection<Ingredient>();
+        ingredients = new LiveCollection<Ingredient>();
         recipes = new LiveCollection<Recipe>();
         cart = new ShoppingCart();
         ingredientCategories = new CategorySet();
@@ -120,7 +115,7 @@ public class Environment extends ViewModel implements Serializable {
         });
     }
 
-    public PartiallyEquableLiveCollection<Ingredient> getIngredients() {
+    public LiveCollection<Ingredient> getIngredients() {
         return ingredients;
     }
 

@@ -3,8 +3,6 @@ package com.cmput301f22t09.shell379.data;
 import android.os.Build;
 import androidx.annotation.RequiresApi;
 
-import com.cmput301f22t09.shell379.data.vm.collections.PartiallyEquable;
-
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -13,7 +11,7 @@ import java.util.Optional;
 /**
  * Ingredient class is a model for the ingredient used in the app
  */
-public class Ingredient implements Serializable, PartiallyEquable {
+public class Ingredient implements Serializable{
     private String description;
     private Date bestBefore;
     private String location;
@@ -104,8 +102,12 @@ public class Ingredient implements Serializable, PartiallyEquable {
      * @return best before date in a string as dd/mm/yyy
      */
     public String getBestBeforeFormatted() {
-        SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
-        return simpleDate.format(getBestBefore());
+        if(bestBefore != null){
+            SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
+            return simpleDate.format(getBestBefore());
+        }else{
+            return "Date not set";
+        }
     }
 
     /**
@@ -180,48 +182,18 @@ public class Ingredient implements Serializable, PartiallyEquable {
     @Override
     public boolean equals(Object o){
         Ingredient ing = (Ingredient) o;
-        if (ing.getDescription().equals( ing.description)){
-            if (ing.getCategory().equals(ing.category)){
-                if (ing.getLocation().equals(ing.location)){
-                    if (ing.getBestBefore().equals(bestBefore)){
-                        if (ing.getAmount().equals(ing.amount)){
-                            if (ing.getUnit().equals(ing.unit)){
+        if (this.description.equals( ing.description)){
+            if (this.category.equals(ing.category)){
+                if (this.unit.equals(ing.unit)){
+                    if (this.amount.equals(ing.amount)){
+                        if ((this.bestBefore == null && ing.bestBefore == null) || (this.bestBefore != null && this.getBestBefore().equals(ing.bestBefore))){
+                            if ((this.location== null && ing.location == null)  || (this.location != null && this.location.equals(ing.location))){
                                 return true;
                             }
                         }
                     }
                 }
             }
-        }
-        return false;
-    }
-
-    // Referenced the following website for how to implement custom equals
-    // url: https://stackoverflow.com/questions/15287842/filter-unique-objects-from-an-arraylist-based-on-property-value-of-the-contained
-    @Override
-    public boolean partialEquals(PartiallyEquable other) {
-        if (other == null || getClass() != other.getClass())
-            return false;
-
-        Ingredient otherIngredient = (Ingredient) other;
-
-        // Use description and category as a measure of equality between ingredients
-        if (otherIngredient.getDescription().equals(this.getDescription())) {
-            if (otherIngredient.getCategory().equals(this.getCategory())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isFull(){
-        if (description != "" &&
-            bestBefore != null &&
-            amount != null &&
-            location != null &&
-            unit != null &&
-            category != null ){
-            return true;
         }
         return false;
     }

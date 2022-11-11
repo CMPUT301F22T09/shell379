@@ -2,6 +2,7 @@ package com.cmput301f22t09.shell379.adapters;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +12,14 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.data.Recipe;
 
 import org.checkerframework.checker.units.qual.C;
@@ -32,9 +35,8 @@ import java.util.Date;
 public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeSelectIngredientsAdapter.RecipeSelectIngredientsViewHolder> {
 
     private ArrayList<Ingredient> ingredients;
-    private ArrayList<Ingredient> recipeIngredients;
-    // This contains "dupe" ingredients
-    private ArrayList<Ingredient> checkedIngredients;
+    // This contains "dupe" stub ingredients
+    private ArrayList<IngredientStub> checkedIngredients;
 
 
     /**
@@ -56,31 +58,24 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
             this.checkbox = (CheckBox) itemView.findViewById(R.id.rsi_checkBox);
             this.inputAmount = (EditText) itemView.findViewById(R.id.rsi_amount);
         }
-
-//        public Ingredient getDupeIngredient() {
-//            String description = this.description.getText().toString();
-//            String category = this.category.getText().toString();
-//            Integer amount;
-////            if (this.inputAmount.getText().toString().equals("")) {
-////                amount = -1;
-////            }
-////            else {
-////                amount = Integer.parseInt(this.inputAmount.getText().toString());
-////            }
-//            amount = Integer.parseInt(this.inputAmount.getText().toString());
-//
-//            Ingredient dupeIngredient = new Ingredient(description, null, amount, null, category);
-//            return dupeIngredient;
-//        }
     }
 
     public RecipeSelectIngredientsAdapter(ArrayList<Ingredient> ingredients, ArrayList<Ingredient> recipeIngredients) {
         this.ingredients = ingredients;
-        this.recipeIngredients = recipeIngredients;
         this.checkedIngredients = new ArrayList<>();
-        if (!recipeIngredients.isEmpty()) {
-            this.checkedIngredients = recipeIngredients;
+    }
+
+    /**
+     * Gives information on whether all ingredients have valid amount numbers
+     * @return true is all ingredients have non zero and non null amounts
+     */
+    public boolean selectedIngsHaveAmounts(){
+        for (int i = 0 ; i < checkedIngredients.size();i++){
+            if(checkedIngredients.get(i).getAmount() == null){
+              return false;
+            }
         }
+        return true;
     }
 
     @NonNull
@@ -97,17 +92,11 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
         TextView description = holder.description;
         TextView unit = holder.unit;
         TextView category = holder.category;
+        EditText inputAmount = holder.inputAmount;
 
         description.setText(ingredients.get(position).getDescription());
         category.setText(ingredients.get(position).getCategory());
         unit.setText(ingredients.get(position).getUnit());
-
-        for (int i = 0; i < recipeIngredients.size(); i++) {
-            if (createDupeIngredient(holder, ingredients.get(position)).partialEquals(recipeIngredients.get(i))) {
-                holder.checkbox.setChecked(true);
-                holder.inputAmount.setText(recipeIngredients.get(i).getAmount().toString(), TextView.BufferType.EDITABLE);
-            }
-        }
 
         // referenced for how to detect when a checkbox is clicked
         // url: https://stackoverflow.com/questions/51778606/android-how-to-check-if-a-checkbox-is-checked-in-an-item-of-a-recyclerview
@@ -116,32 +105,64 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b) {
                     String amount = holder.inputAmount.getText().toString();
-                    // Prevent the checkbox from being clicked if there is no amount entered
-                    if (amount == null || amount.length() == 0) {
-                        holder.checkbox.setChecked(false);
-                        return;
-                    }
                     System.out.println(amount);
                     Ingredient originalIngredient = ingredients.get(holder.getAdapterPosition());
-                    Ingredient dupeIngredient = createDupeIngredient(holder, originalIngredient);
+                    IngredientStub dupeIngredient = createDupeIngredient(holder, originalIngredient);
                     checkedIngredients.add(dupeIngredient);
                 }
                 else {
                     // get index of dupe ingredient and remove it
                     Ingredient originalIngredient = ingredients.get(holder.getAdapterPosition());
-                    Ingredient dupeIngredient = createDupeIngredient(holder, originalIngredient);
-                    //int dupeIngredientIndex = checkedIngredients.indexOf(dupeIngredient);
-                    //checkedIngredients.remove(dupeIngredientIndex);
+                    IngredientStub dupeIngredient = createDupeIngredient(holder, originalIngredient);
+
                     int removeIndex = -1;
                     for (int i = 0; i < checkedIngredients.size(); i++) {
-                        if (dupeIngredient.partialEquals(checkedIngredients.get(i))) {
+                        if (dupeIngredient.looseEquals(checkedIngredients.get(i))) {
                             removeIndex = i;
                             break;
                         }
                     }
+                    if(removeIndex == -1){
+                        throw new RuntimeException("ingredient is checked in UI but not checked for recipe in data model");
+                    }
                     checkedIngredients.remove(removeIndex);
                     holder.inputAmount.setText("", TextView.BufferType.EDITABLE);
                 }
+            }
+        });
+
+        // text listener template from jettimadhuChowdary, Aug 19, 2011
+        // https://stackoverflow.com/questions/7117209/how-to-know-key-presses-in-edittext
+        inputAmount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(holder.checkbox.isChecked()){
+                    Ingredient ingredient = ingredients.get(holder.getAdapterPosition());
+                    IngredientStub ingredientStub = new IngredientStub(
+                            ingredient.getDescription(),
+                            ingredient.getAmount(),
+                            ingredient.getUnit(),
+                            ingredient.getCategory());
+
+                    for (int i = 0;  i < checkedIngredients.size(); i++){
+                        if (ingredientStub.looseEquals(checkedIngredients.get(i))){
+                            checkedIngredients.get(i).setAmount(inputAmount.getText().toString().isEmpty()?
+                                    null: Integer.parseInt(inputAmount.getText().toString()));
+                        }
+                    }
+                }
+                else if(!inputAmount.getText().toString().isEmpty()){
+                    holder.checkbox.setChecked(true);
+                }
+
+            }
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // TODO Auto-generated method stub
+            }
+            @Override
+            public void afterTextChanged(Editable s) {
+                // TODO Auto-generated method stub
             }
         });
     }
@@ -151,23 +172,29 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
         return ingredients.size();
     }
 
-    public ArrayList<Ingredient> getCheckedIngredients() {
+    public ArrayList<IngredientStub> getCheckedIngredients() {
         return this.checkedIngredients;
     }
 
-    public Ingredient createDupeIngredient(RecipeSelectIngredientsViewHolder holder, Ingredient originalIngredient) {
+    /**
+     * creates a duplicate stub ingredient from an ingredient and the holder's current
+     * amount value. Copies the description, unit and category from the ingredient.
+     * @param holder holder to pull the amount from
+     * @param originalIngredient ingredient to pull unit, category and description from.
+     * @return
+     */
+    public IngredientStub createDupeIngredient(RecipeSelectIngredientsViewHolder holder, Ingredient originalIngredient) {
         String description = originalIngredient.getDescription();
-        String test = holder.inputAmount.getText().toString();
         Integer amount;
         if (!holder.inputAmount.getText().toString().isEmpty()) {
             amount = Integer.parseInt(holder.inputAmount.getText().toString());
         }
         else {
-            amount = 0;
+            amount = null;
         }
         String category = originalIngredient.getCategory();
 
-        Ingredient dupeIngredient = new Ingredient(description, null, amount, null, category);
+        IngredientStub dupeIngredient = new IngredientStub(description, amount, originalIngredient.getUnit(), category);
         return dupeIngredient;
     }
 }
