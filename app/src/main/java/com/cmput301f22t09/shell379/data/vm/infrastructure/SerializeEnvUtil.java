@@ -6,6 +6,7 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.MealPlan;
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.util.SerializeUtil;
 import com.cmput301f22t09.shell379.data.vm.Environment;
@@ -35,6 +36,7 @@ public class SerializeEnvUtil {
         data.put("ingredient_categories", SerializeUtil.serialize(env.getIngredientCategories().getCategories()));
         data.put("recipes_categories", SerializeUtil.serialize(env.getRecipeCategories().getCategories()));
         data.put("loc_categories", SerializeUtil.serialize(env.getLocationCategories().getCategories()));
+        data.put("meal_plans", SerializeUtil.serialize(env.getMealPlans().getList()));
         return data;
     }
 
@@ -63,6 +65,8 @@ public class SerializeEnvUtil {
                 env.getRecipeCategories().setCategories((HashSet<String>) SerializeUtil.deserialize(data.get("recipes_categories")));
             if (data.get("loc_categories").length()>0)
                 env.getLocationCategories().setCategories((HashSet<String>) SerializeUtil.deserialize(data.get("loc_categories")));
+            if (data.get("meal_plans").length()>0)
+                env.getMealPlans().setList((ArrayList<MealPlan>) SerializeUtil.deserialize(data.get("meal_plans")));
         }
         catch (NullPointerException e) {
         }
