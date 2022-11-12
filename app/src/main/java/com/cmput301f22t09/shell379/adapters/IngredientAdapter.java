@@ -138,6 +138,10 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
         Ingredient ingredient = ingredients.get(index);
         return ingredient;
     }
+
+    public ArrayList<Ingredient> getIngredients(){
+        return ingredients;
+    }
 }
 
 

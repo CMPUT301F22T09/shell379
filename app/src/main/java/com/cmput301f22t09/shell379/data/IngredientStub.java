@@ -4,7 +4,11 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.cmput301f22t09.shell379.data.util.ArraySortUtil;
+
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Partial ingredient that is missing date and location. Otherwise quite similar.
@@ -14,6 +18,7 @@ public class IngredientStub implements Serializable {
     private Integer amount;
     private String unit;
     private String category;
+    private static List<String> sortOptions = Arrays.asList("Description", "Category");
 
     /**
      * Construct the ingredient class
@@ -135,4 +140,40 @@ public class IngredientStub implements Serializable {
         }
         return false;
     }
+
+    /**
+     * returns the proper way to get the property we want to sort on
+     * based on what the user has selected as the sort.
+     */
+    public static ArraySortUtil.StringPropGetter getStringPropGetter(int selectedSortIndex){
+        if( selectedSortIndex == 0){
+            return new ArraySortUtil.StringPropGetter() {
+                @Override
+                public String getString(Object object) {
+                    return ((IngredientStub)object).getDescription();
+                }
+            };
+        }
+        else if( selectedSortIndex == 1){
+            return new ArraySortUtil.StringPropGetter() {
+                @Override
+                public String getString(Object object) {
+                    return ((IngredientStub)object).getCategory();
+                }
+            };
+        }
+        else{
+            throw new IllegalArgumentException( "No property to sort on is selected");
+        }
+    }
+
+    /**
+     *
+     * @return a list of sortable properties. Each index of each option corresponds
+     * to a StringPropGetter returned from the method "getStringPropGetter()"
+     */
+    public static List<String> getSortableProps(){
+        return sortOptions;
+    }
+
 }

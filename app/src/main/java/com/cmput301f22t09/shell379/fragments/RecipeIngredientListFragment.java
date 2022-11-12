@@ -4,8 +4,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,10 +25,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.RecipeIngredientsListAdapter;
 import com.cmput301f22t09.shell379.data.IngredientStub;
+import com.cmput301f22t09.shell379.data.util.ArraySortUtil;
 import com.cmput301f22t09.shell379.data.vm.EditRecipeViewModel;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Fragment for viewing selected ingredients for a recipe.
@@ -45,6 +52,7 @@ public class RecipeIngredientListFragment extends DialogFragment implements Reci
     Environment env;
     private NavController navController;
     private EditRecipeViewModel editRecipeViewModel;
+    int selectedSortIndex;
 
     public RecipeIngredientListFragment() {
         // Required empty public constructor
@@ -81,12 +89,47 @@ public class RecipeIngredientListFragment extends DialogFragment implements Reci
         final Observer<ArrayList<IngredientStub>> ingredientObserver = new Observer<ArrayList<IngredientStub>>() {
             @Override
             public void onChanged(@Nullable final ArrayList<IngredientStub> ingredients) {
-                rsiAdapter.updateList(editRecipeViewModel.getSelectedIngredients());
+                selectedSortIndex = ((Spinner) rootView.findViewById(R.id.rec_ing_selected_spinner)).getSelectedItemPosition();
+                rsiAdapter.updateList(
+                        ArraySortUtil.sortByStringProp(ingredients,
+                                IngredientStub.getStringPropGetter(selectedSortIndex))
+                );
             }
         };
         editRecipeViewModel.getLiveSelectedIngredients().observe(this, ingredientObserver);
 
         renderList(rootView);
+
+        // Implement the spinner option to sort the ingredient list
+        Spinner spinner = (Spinner) rootView.findViewById(R.id.rec_ing_selected_spinner);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
+                getActivity(),
+                android.R.layout.simple_spinner_item,
+                IngredientStub.getSortableProps()
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setSelection(0);
+        selectedSortIndex = 0;
+
+        // setting spinner events from khaled ben aissa, dec 21 2011
+        // https://stackoverflow.com/questions/8597582/get-the-position-of-a-spinner-in-android
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                // resorts the recycler view of ingredients
+                selectedSortIndex = ((Spinner) rootView.findViewById(R.id.rec_ing_selected_spinner)).getSelectedItemPosition();
+                rsiAdapter.updateList(
+                        ArraySortUtil.sortByStringProp(rsiAdapter.getIngredients(),
+                                IngredientStub.getStringPropGetter(selectedSortIndex))
+                );
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // do nothing
+            }
+        });
 
         botBackButton = rootView.findViewById(R.id.bot_back_button);
         botBackButton.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +165,8 @@ public class RecipeIngredientListFragment extends DialogFragment implements Reci
      * @param rootView
      */
     private void renderList(View rootView){
-        recipeIngredientList = editRecipeViewModel.getSelectedIngredients();
+        recipeIngredientList = ArraySortUtil.sortByStringProp(editRecipeViewModel.getSelectedIngredients(),
+            IngredientStub.getStringPropGetter(selectedSortIndex));
         // filtered ingredients list from environment
 
         layoutManager = new LinearLayoutManager(this.getActivity());

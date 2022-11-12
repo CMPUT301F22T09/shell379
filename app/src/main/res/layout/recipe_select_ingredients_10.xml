@@ -45,7 +45,7 @@
             android:layout_height="match_parent">
 
             <Spinner
-                android:id="@+id/spinner3"
+                android:id="@+id/select_rec_ing_sort_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginEnd="10dp"
