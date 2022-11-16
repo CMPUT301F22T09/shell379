@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.cmput301f22t09.shell379.R;
@@ -61,6 +62,14 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
                 }
         );
 
+
+        ((Button)rootView.findViewById(R.id.new_button)).setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        navController.navigate(MealPlanListFragmentDirections.actionMealPlanFragmentToCreateMealPlanFragment());
+                    }
+                }
+        );
 
         mealPlanList = envViewModel.getMealPlans().getList();
         layoutManager = new LinearLayoutManager(this.getActivity());
