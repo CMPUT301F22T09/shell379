@@ -18,14 +18,30 @@
         app:srcCompat="@drawable/ic_baseline_arrow_back_24"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        android:text="Ingredients"
-        android:textColor="@color/black"
-        android:textSize="25sp">
-    </TextView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="15dp"
+            android:text="Ingredients"
+            android:textColor="@color/black"
+            android:textSize="25sp"
+            android:layout_weight="2">
+        </TextView>
+
+        <Button
+            android:id="@+id/new_button"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:layout_weight="1"
+            android:text="NEW" />
+    </LinearLayout>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -35,23 +51,33 @@
         android:layout_marginEnd="25dp"
         android:orientation="horizontal">
 
+        <TextView
+            android:layout_width="110dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:text="Sort By"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textSize="20sp">
+        </TextView>
+
         <Spinner
             android:id="@+id/ingredient_sort_spinner"
             android:layout_width="220dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:spinnerMode="dropdown"
             android:background="@drawable/spinner_background"/>
 
-        <Button
-            android:id="@+id/new_button"
-            android:layout_width="80dp"
-            android:layout_height="50dp"
-            android:layout_margin="5dp"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:text="NEW" />
+<!--        <Button-->
+<!--            android:id="@+id/new_button"-->
+<!--            android:layout_width="80dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_margin="5dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="NEW" />-->
 
     </LinearLayout>
 
@@ -71,6 +97,22 @@
             android:visibility="visible" />
 
     </LinearLayout>
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:orientation="vertical">-->
+
+<!--        <Button-->
+<!--            android:id="@+id/new_button"-->
+<!--            android:layout_width="80dp"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:layout_margin="5dp"-->
+<!--            android:layout_weight="1"-->
+<!--            android:text="NEW" />-->
+
+<!--    </LinearLayout>-->
 </LinearLayout>
 
 
