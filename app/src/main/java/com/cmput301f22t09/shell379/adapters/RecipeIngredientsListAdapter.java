@@ -106,4 +106,8 @@ public class RecipeIngredientsListAdapter extends RecyclerView.Adapter<RecipeIng
     public int getItemCount() {
         return recipeIngredients.size();
     }
+
+    public ArrayList<IngredientStub> getIngredients(){
+        return recipeIngredients;
+    }
 }

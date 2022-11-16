@@ -83,6 +83,8 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
         TextView unit = holder.unit;
         TextView category = holder.category;
         EditText inputAmount = holder.inputAmount;
+        holder.checkbox.setChecked(false);
+        holder.inputAmount.setText("");
 
         description.setText(ingredients.get(position).getDescription());
         category.setText(ingredients.get(position).getCategory());
@@ -187,4 +189,18 @@ public class RecipeSelectIngredientsAdapter extends RecyclerView.Adapter<RecipeS
         IngredientStub dupeIngredient = new IngredientStub(description, amount, originalIngredient.getUnit(), category);
         return dupeIngredient;
     }
+
+    public ArrayList<Ingredient> getIngredients(){
+        return ingredients;
+    }
+
+    /**
+     * sets the adapter's ingredients
+     * @param newIngredient ingredients to update with
+     */
+    public void updateIngredient(ArrayList<Ingredient> newIngredient){
+        ingredients = newIngredient;
+        notifyDataSetChanged();
+    }
+
 }

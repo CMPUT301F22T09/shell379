@@ -54,11 +54,18 @@
         android:name="com.cmput301f22t09.shell379.fragments.ShoppingListFragment"
         android:label="fragment_shopping_list"
         tools:layout="@layout/fragment_shopping_list_20" />
+
     <fragment
         android:id="@+id/mealPlanListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.MealPlanListFragment"
         android:label="fragment_meal_plan"
         tools:layout="@layout/fragment_meal_plan_13">
+        <action
+            android:id="@+id/action_mealPlanFragment_to_createMealPlanFragment"
+            app:destination="@id/createMealPlanFragment" />
+        <action
+            android:id="@+id/action_mealPlanFragment_to_viewMealPlanFragment"
+            app:destination="@id/viewMealPlanFragment" />
     </fragment>
 
     <fragment
@@ -104,6 +111,35 @@
             android:name="ingredientIndex"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/createMealPlanFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.CreateMealPlanFragment"
+        android:label="fragment_new_mealPlan"
+        tools:layout="@layout/fragment_edit_meal_plan_15" />
+
+    <fragment
+        android:id="@+id/viewMealPlanFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.ViewMealPlanFragment"
+        android:label="fragment_view_mealPlan"
+        tools:layout="@layout/fragment_view_meal_plan_14" >
+        <argument
+            android:name="index"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_mealPlanFragment_to_viewMealPlanFragment"
+            app:destination="@id/editMealPlanFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editMealPlanFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.EditMealPlanFragment"
+        android:label="EditMealPlanFragment" >
+        <argument
+            android:name="MealPlanIndex"
+            app:argType="integer" />
+    </fragment>
+
+
 
     <dialog
         android:id="@+id/recipeSelectIngredientFragment"

@@ -105,4 +105,8 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
         Recipe recipe = recipes.get(index);
         return recipe;
     }
+
+    public ArrayList<Recipe> getRecipes(){
+        return recipes;
+    }
 }

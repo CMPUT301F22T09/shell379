@@ -5,10 +5,13 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.cmput301f22t09.shell379.data.util.ArraySortUtil;
 import com.cmput301f22t09.shell379.data.util.SerializeUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * The Recipe class is a model for potential recipes used in the app.
@@ -21,6 +24,7 @@ public class Recipe implements Serializable {
     private String comments;
     private String photograph; //this is a serialized photo
     private ArrayList<IngredientStub> ingredients = new ArrayList<>();
+    private static List<String> sortOptions = Arrays.asList("Title","Preparation Time", "Number of Servings", "Category");
 
     /**
      * Creates recipe object without image.
@@ -171,6 +175,57 @@ public class Recipe implements Serializable {
 
         return r.getTitle().equals(title) && r.getPreparationTime().equals(preparationTime) && r.getServings().equals(servings)
                 && r.getCategory().equals(category) && r.getComments().equals(comments);
+    }
+
+    /**
+     *
+     * @return a list of sortable properties. Each index of each option corresponds
+     * to a StringPropGetter returned from the method "getStringPropGetter()"
+     */
+    public static List<String> getSortableProps(){
+        return sortOptions;
+    }
+
+    /**
+     * returns the proper way to get the property we want to sort on
+     * based on what the user has selected as the sort.
+     */
+    public static ArraySortUtil.StringPropGetter getStringPropGetter(int selectedSortIndex){
+        if( selectedSortIndex == 0){
+            return new ArraySortUtil.StringPropGetter() {
+                @Override
+                public String getString(Object object) {
+                    return ((Recipe)object).getTitle();
+                }
+            };
+        }
+        else if( selectedSortIndex == 1){
+            return new ArraySortUtil.StringPropGetter() {
+                @Override
+                public String getString(Object object) {
+                    return ((Recipe)object).getPreparationTime().toString();
+                }
+            };
+        }
+        else if( selectedSortIndex == 2){
+            return new ArraySortUtil.StringPropGetter() {
+                @Override
+                public String getString(Object object) {
+                    return ((Recipe)object).getServings().toString();
+                }
+            };
+        }
+        else if( selectedSortIndex == 3){
+            return new ArraySortUtil.StringPropGetter() {
+                @Override
+                public String getString(Object object) {
+                    return ((Recipe)object).getCategory();
+                }
+            };
+        }
+        else{
+            throw new IllegalArgumentException( "No property to sort on is selected");
+        }
     }
 
 }
