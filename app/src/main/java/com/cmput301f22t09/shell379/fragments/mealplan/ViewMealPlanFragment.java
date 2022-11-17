@@ -16,14 +16,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.MealPlanAdapter;
+import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.MealPlan;
+import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
 import java.util.ArrayList;
 
 public class ViewMealPlanFragment extends Fragment {
-    private ArrayList<T> mealPlanList;
-    private RecyclerView mealPlan_recyclerView;
+    private ArrayList<Ingredient> ingredientsList;
+    private ArrayList<Recipe> recipesList;
+    private RecyclerView plan_recipes;
+    private RecyclerView plan_ingredients;
     private RecyclerView.LayoutManager layoutManager;
     private MealPlanAdapter mealPlanListAdapter;
     private Environment envViewModel;
