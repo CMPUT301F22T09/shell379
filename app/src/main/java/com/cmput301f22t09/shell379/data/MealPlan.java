@@ -150,11 +150,11 @@ public class MealPlan implements Serializable {
         }
     }
 
-    private ArrayList<MealPlanWrapper<Recipe>> convertRecipes(ArrayList<Recipe> recipes) {
+    private ArrayList convertRecipes(ArrayList<Recipe> recipes) {
         return recipes.stream().map(o->new MealPlanWrapper(o, new Date(), 0)).collect(Collectors.toCollection(ArrayList::new));
     }
 
-    private ArrayList<MealPlanWrapper<Ingredient>> convertIngredients(ArrayList<Ingredient> ingredients) {
+    private ArrayList convertIngredients(ArrayList<Ingredient> ingredients) {
         return ingredients.stream().map(o->new MealPlanWrapper(o, new Date(), 0)).collect(Collectors.toCollection(ArrayList::new));
     }
 }

@@ -1,7 +1,9 @@
 package com.cmput301f22t09.shell379.data.vm;
 
+import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.MealPlan;
@@ -16,6 +18,17 @@ import java.util.Date;
  */
 public class MealPlanViewModel extends ViewModel {
     // view model template code from https://developer.android.com/topic/libraries/architecture/viewmodel
+
+    public MealPlanViewModel() {
+        this.mealPlan.setValue(new MealPlan("", new ArrayList<Recipe>(),
+                new ArrayList<Ingredient>(), new Date(), new Date(), 0));
+    }
+
+    public static MealPlanViewModel of(MealPlan mealPlan, FragmentActivity activity) {
+        MealPlanViewModel mpViewModel = new ViewModelProvider(activity).get(MealPlanViewModel.class);
+        mpViewModel.mealPlan.setValue(mealPlan);
+        return mpViewModel;
+    }
 
     private MutableLiveData<MealPlan> mealPlan = new MutableLiveData<>();
 
@@ -68,11 +81,19 @@ public class MealPlanViewModel extends ViewModel {
         this.mealPlan.setValue(mealPlan);
     }
 
-    public void setIngredients(ArrayList<MealPlanWrapper<Ingredient>> newIngredients) {
+    public void setIngredientsRaw(ArrayList<MealPlanWrapper<Ingredient>> newIngredients) {
         this.mealPlan.getValue().setIngredientsRaw(newIngredients);
     }
 
-    public void setRecipes(ArrayList<MealPlanWrapper<Recipe>> recipes) {
+    public void setRecipesRaw(ArrayList<MealPlanWrapper<Recipe>> recipes) {
         this.mealPlan.getValue().setRecipesRaw(recipes);
+    }
+
+    public ArrayList<MealPlanWrapper<Recipe>> getRecipes() {
+        return mealPlan.getValue().getRecipes();
+    }
+
+    public ArrayList<MealPlanWrapper<Ingredient>> getIngredients() {
+        return mealPlan.getValue().getIngredients();
     }
 }

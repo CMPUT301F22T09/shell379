@@ -137,6 +137,9 @@
         <argument
             android:name="MealPlanIndex"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_editMealPlanFragment_to_viewMealPlanFragment"
+            app:destination="@id/viewMealPlanFragment" />
     </fragment>
 
 

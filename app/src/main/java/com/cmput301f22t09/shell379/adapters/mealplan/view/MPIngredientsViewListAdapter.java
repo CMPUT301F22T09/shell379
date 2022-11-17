@@ -19,7 +19,7 @@ import java.util.ArrayList;
 /**
  * Adapter for recycler view in view selected ingredients page for recipes.
  */
-public class MPViewListAdapter extends RecyclerView.Adapter<MPViewListAdapter.MPViewIngredientListViewHolder> {
+public class MPIngredientsViewListAdapter extends RecyclerView.Adapter<MPIngredientsViewListAdapter.MPViewIngredientListViewHolder> {
     private MealPlanViewModel viewModel;
 
     /**
@@ -42,7 +42,7 @@ public class MPViewListAdapter extends RecyclerView.Adapter<MPViewListAdapter.MP
         }
     }
 
-    public MPViewListAdapter(MealPlanViewModel viewModel) {
+    public MPIngredientsViewListAdapter(MealPlanViewModel viewModel) {
         this.viewModel = viewModel;
     }
 
@@ -51,7 +51,7 @@ public class MPViewListAdapter extends RecyclerView.Adapter<MPViewListAdapter.MP
      * @param newIngredients the new list of ingredients for the recycler view
      */
     public void updateIngredients(ArrayList<MealPlanWrapper<Ingredient>> newIngredients){
-        viewModel.setIngredients(newIngredients);
+        viewModel.setIngredientsRaw(newIngredients);
         notifyDataSetChanged();
     }
 
@@ -59,7 +59,7 @@ public class MPViewListAdapter extends RecyclerView.Adapter<MPViewListAdapter.MP
     @Override
     public MPViewIngredientListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recipe_ingredients_list_content_23, parent, false);
+                .inflate(R.layout.mealplan_view_list_item_14, parent, false);
         return new MPViewIngredientListViewHolder(view);
     }
 
@@ -72,32 +72,14 @@ public class MPViewListAdapter extends RecyclerView.Adapter<MPViewListAdapter.MP
         name.setText(viewModel.getIngredientAtIdx(position).getName());
         amount.setText(viewModel.getIngredientAtIdx(position).getServings());
         date.setText(viewModel.getIngredientAtIdx(position).getDisplayDate());
-        holder.getItemView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ingredientOnClick(holder.getAdapterPosition());
-            }
-        });
-    }
-
-    /**
-     *  Responds to an ingredient item being clicked in the recyclerView.
-     *  Navigates to viewing the ingredient
-     * @param i index of ingredient in the edit recipe view model
-     */
-    public void ingredientOnClick(int i) {
-        MealPlanWrapper a = ingredients.get(i);
-        ArrayList<IngredientStub> ingredients = viewModel.getSelectedIngredients();
-        int index = ingredients.indexOf(a);
-        recipeIngredientListListener.editRecipeIngredient(index);
     }
 
     @Override
     public int getItemCount() {
-        return ingredients.size();
+        return viewModel.getIngredients().size();
     }
 
-    public ArrayList<IngredientStub> getIngredients(){
-        return ingredients;
+    public ArrayList<MealPlanWrapper<Ingredient>> getIngredients(){
+        return viewModel.getIngredients();
     }
 }

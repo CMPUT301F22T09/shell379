@@ -19,6 +19,6 @@ public class MainActivity extends AppCompatActivity {
         // https://stackoverflow.com/questions/57175226/how-to-disable-night-mode-in-my-application-even-if-night-mode-is-enable-in-andr
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.fragment_view_meal_plan_14);
     }
 }
