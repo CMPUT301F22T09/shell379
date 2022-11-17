@@ -32,8 +32,8 @@ public class MPIngredientsEditListAdapter extends RecyclerView.Adapter<MPIngredi
         public MPEditIngredientListViewHolder(@NonNull View itemView) {
             super(itemView);
             this.name = (TextView) itemView.findViewById(R.id.mpv_name);
-            this.amount = (TextView) itemView.findViewById(R.id.mpv_servings_textView);
-            this.date = (TextView) itemView.findViewById(R.id.mpv_date_textView);
+            this.amount = (TextView) itemView.findViewById(R.id.mpv_servings_val);
+            this.date = (TextView) itemView.findViewById(R.id.mpv_date_val);
         }
 
         public View getItemView(){

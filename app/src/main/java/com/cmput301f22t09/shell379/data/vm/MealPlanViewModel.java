@@ -1,5 +1,7 @@
 package com.cmput301f22t09.shell379.data.vm;
 
+import android.util.Log;
+
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -18,6 +20,7 @@ import java.util.Date;
  */
 public class MealPlanViewModel extends ViewModel {
     // view model template code from https://developer.android.com/topic/libraries/architecture/viewmodel
+    private MutableLiveData<MealPlan> mealPlan = new MutableLiveData<>();
 
     public MealPlanViewModel() {
         this.mealPlan.setValue(new MealPlan("", new ArrayList<Recipe>(),
@@ -27,10 +30,9 @@ public class MealPlanViewModel extends ViewModel {
     public static MealPlanViewModel of(MealPlan mealPlan, FragmentActivity activity) {
         MealPlanViewModel mpViewModel = new ViewModelProvider(activity).get(MealPlanViewModel.class);
         mpViewModel.mealPlan.setValue(mealPlan);
+        Log.e("MP_ADAPTER_MPVM", mpViewModel.getIngredients().toString());
         return mpViewModel;
     }
-
-    private MutableLiveData<MealPlan> mealPlan = new MutableLiveData<>();
 
     public MutableLiveData<MealPlan> getLive() {
         return mealPlan;
