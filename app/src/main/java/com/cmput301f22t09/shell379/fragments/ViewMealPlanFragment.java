@@ -32,7 +32,6 @@ import java.util.Date;
 public class ViewMealPlanFragment extends Fragment {
     private ArrayList<Ingredient> ingredientsList;
     private ArrayList<Recipe> recipesList;
-//    private RecyclerView.LayoutManager layoutManager;
     private RecyclerView mpIngredientRecycler;
     private RecyclerView mpRecipeRecycler;
     private MPIngredientsViewListAdapter ingredientsAdapter;
@@ -87,6 +86,13 @@ public class ViewMealPlanFragment extends Fragment {
         mpRecipeRecycler.setItemAnimator(new DefaultItemAnimator());
 
         Log.e("MP_ADAPTER", ingredientsAdapter.getIngredients().toString());
+
+        rootView.findViewById(R.id.edit_plan).setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 navController.navigate(ViewMealPlanFragmentDirections.actionMealPlanFragmentToViewMealPlanFragment());
+             }
+         });
         return rootView;
     }
 
