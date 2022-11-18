@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mainMenuFragment">
+    app:startDestination="@id/checkoutIngredient">
     <fragment
         android:id="@+id/ingredientListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.IngredientListFragment"
@@ -53,7 +53,17 @@
         android:id="@+id/shoppingListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.ShoppingListFragment"
         android:label="fragment_shopping_list"
-        tools:layout="@layout/fragment_shopping_list_20" />
+        tools:layout="@layout/fragment_shopping_list_20" >
+        <action
+            android:id="@+id/action_shoppingListFragment_to_checkoutIngredient"
+            app:destination="@id/checkoutIngredient"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/checkoutIngredient"
+        android:name="com.cmput301f22t09.shell379.fragments.CheckoutIngredientFragment"
+        android:label="fragment_checkout_ingredient"
+        tools:layout="@layout/fragment_shopping_list_checkout_22"/>
 
     <fragment
         android:id="@+id/mealPlanListFragment"
