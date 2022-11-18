@@ -2,6 +2,7 @@ package com.cmput301f22t09.shell379.data.vm;
 
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -21,15 +22,29 @@ import java.util.Date;
 public class MealPlanViewModel extends ViewModel {
     // view model template code from https://developer.android.com/topic/libraries/architecture/viewmodel
     private MutableLiveData<MealPlan> mealPlan = new MutableLiveData<>();
+    private MutableLiveData<Integer> idx = new MutableLiveData<>();
 
     public MealPlanViewModel() {
         this.mealPlan.setValue(new MealPlan("", new ArrayList<Recipe>(),
                 new ArrayList<Ingredient>(), new Date(), new Date(), 0));
     }
 
+    public static MealPlanViewModel of(FragmentActivity activity) {
+        return new ViewModelProvider(activity).get(MealPlanViewModel.class);
+    }
+
     public static MealPlanViewModel of(MealPlan mealPlan, FragmentActivity activity) {
         MealPlanViewModel mpViewModel = new ViewModelProvider(activity).get(MealPlanViewModel.class);
         mpViewModel.mealPlan.setValue(mealPlan);
+        Log.e("MP_ADAPTER_MPVM", mpViewModel.getIngredients().toString());
+        return mpViewModel;
+    }
+
+    public static MealPlanViewModel of(int idx, FragmentActivity activity) {
+        Environment env = Environment.of((AppCompatActivity) activity);
+        MealPlanViewModel mpViewModel = new ViewModelProvider(activity).get(MealPlanViewModel.class);
+        mpViewModel.idx.setValue(idx);
+        mpViewModel.mealPlan.setValue(env.getMealPlans().getList().get(idx));
         Log.e("MP_ADAPTER_MPVM", mpViewModel.getIngredients().toString());
         return mpViewModel;
     }
