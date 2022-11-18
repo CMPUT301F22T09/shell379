@@ -89,21 +89,21 @@ public abstract class MPObjectWrapperListAdapter extends RecyclerView.Adapter<MP
         subServingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                subServings(position);
+                subServings(holder.getAdapterPosition());
                 notifyDataSetChanged();
             }
         });
         addServingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addServings(position);
+                addServings(holder.getAdapterPosition());
                 notifyDataSetChanged();
             }
         });
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                removeItem(position);
+                removeItem(holder.getAdapterPosition());
                 notifyDataSetChanged();
             }
         });
@@ -114,7 +114,7 @@ public abstract class MPObjectWrapperListAdapter extends RecyclerView.Adapter<MP
                         editDate.getYear(),
                         editDate.getMonth(),
                         editDate.getDayOfMonth()).getTime();
-                updateDate(position,newDate);
+                updateDate(holder.getAdapterPosition(),newDate);
                 notifyDataSetChanged();
             }
         });
@@ -124,6 +124,15 @@ public abstract class MPObjectWrapperListAdapter extends RecyclerView.Adapter<MP
         name.setText(item.getName());
         amount.setText(item.getServings());
         date.setText(item.getDisplayDate());
+        Calendar cal = Calendar.getInstance(TimeZone.getDefault());
+        cal.setTime(item.getDate());
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        editDate.updateDate(
+                year,
+                month,
+                day);
     }
 
 
