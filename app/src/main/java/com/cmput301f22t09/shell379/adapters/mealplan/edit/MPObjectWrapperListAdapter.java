@@ -104,7 +104,7 @@ public abstract class MPObjectWrapperListAdapter extends RecyclerView.Adapter<MP
                 notifyDataSetChanged();
             }
         });
-        date.setOnClickListener(new View.OnClickListener() {
+        editDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Date newDate = new GregorianCalendar(
