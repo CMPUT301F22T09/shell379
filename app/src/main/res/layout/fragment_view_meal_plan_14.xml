@@ -45,15 +45,23 @@
 
 
             <TextView
-                android:id="@+id/plan_comments"
+                android:id="@+id/mpv_comments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
-                android:text="Comment"
+                android:text="Comments"
                 android:textSize="20dp" />
 
             <TextView
-                android:id="@+id/plan_start"
+                android:id="@+id/mpv_comments_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:text="Comment Data"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/mpv_start"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -61,12 +69,28 @@
                 android:textSize="20dp" />
 
             <TextView
-                android:id="@+id/plan_end"
+                android:id="@+id/mpv_start_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:text="Start Date Data"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/mpv_end"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
                 android:text="End Date"
                 android:textSize="20dp" />
+
+            <TextView
+                android:id="@+id/mpv_end_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:text="End Date Data"
+                android:textSize="16sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"

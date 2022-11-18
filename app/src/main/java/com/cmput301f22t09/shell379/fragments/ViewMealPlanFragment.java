@@ -30,8 +30,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ViewMealPlanFragment extends Fragment {
-    private ArrayList<Ingredient> ingredientsList;
-    private ArrayList<Recipe> recipesList;
     private RecyclerView mpIngredientRecycler;
     private RecyclerView mpRecipeRecycler;
     private MPIngredientsViewListAdapter ingredientsAdapter;
@@ -70,8 +68,6 @@ public class ViewMealPlanFragment extends Fragment {
                 }
         );
 
-//        layoutManager = new LinearLayoutManager(this.getActivity());
-
         mpIngredientRecycler = (RecyclerView) rootView.findViewById(R.id.plan_ingredients);
         mpRecipeRecycler = (RecyclerView) rootView.findViewById(R.id.plan_recipes);
 
@@ -86,13 +82,8 @@ public class ViewMealPlanFragment extends Fragment {
         mpRecipeRecycler.setItemAnimator(new DefaultItemAnimator());
 
         Log.e("MP_ADAPTER", ingredientsAdapter.getIngredients().toString());
+        navListeners(rootView);
 
-        rootView.findViewById(R.id.edit_plan).setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 navController.navigate(ViewMealPlanFragmentDirections.actionMealPlanFragmentToViewMealPlanFragment());
-             }
-         });
         return rootView;
     }
 
@@ -103,13 +94,17 @@ public class ViewMealPlanFragment extends Fragment {
         navController.popBackStack();
     }
 
-    public void navigateToViewMealPlan(int index){
-        //    to-do
-//        MealPlanListFragmentDirections.
+    private void navListeners(View rootView){
+        rootView.findViewById(R.id.edit_plan).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(ViewMealPlanFragmentDirections.actionMealPlanFragmentToViewMealPlanFragment());
+            }
+        });
+    }
 
-//        IngredientListFragmentDirections.ActionIngredientListFragmentToViewIngredientFragment action
-//                = IngredientListFragmentDirections.actionIngredientListFragmentToViewIngredientFragment(index);
-//        navController.navigate(action);
+    private void fillFields(View rootView) {
+//        rootView.findViewById(R.id.mpv_comments_data).set;
     }
 
     private MealPlan testMP() {
