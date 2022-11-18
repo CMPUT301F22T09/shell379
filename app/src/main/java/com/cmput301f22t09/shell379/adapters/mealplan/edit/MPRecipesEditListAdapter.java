@@ -70,7 +70,7 @@ public class MPRecipesEditListAdapter extends RecyclerView.Adapter<MPRecipesEdit
         TextView date = holder.date;
 
         name.setText(viewModel.getIngredientAtIdx(position).getName());
-        amount.setText(viewModel.getIngredientAtIdx(position).getServings());
+        amount.setText(viewModel.getIngredientAtIdx(position).getServings().toString());
         date.setText(viewModel.getIngredientAtIdx(position).getDisplayDate());
 //        holder.getItemView().setOnClickListener(new View.OnClickListener() {
 //            @Override
