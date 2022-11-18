@@ -33,7 +33,6 @@ public abstract class MPObjectWrapperListAdapter extends RecyclerView.Adapter<MP
     public class MPEditIngredientListViewHolder extends RecyclerView.ViewHolder {
         TextView name;
         TextView amount;
-        TextView date;
         TextView remove;
         Button addServingsButton;
         Button subServingsButton;
@@ -43,7 +42,6 @@ public abstract class MPObjectWrapperListAdapter extends RecyclerView.Adapter<MP
             super(itemView);
             this.name = (TextView) itemView.findViewById(R.id.mpv_name);
             this.amount = (TextView) itemView.findViewById(R.id.mpv_servings_textView);
-            this.date = (TextView) itemView.findViewById(R.id.mpv_date_textView);
             this.remove = (TextView) itemView.findViewById(R.id.mpv_remove);
             this.addServingsButton = (Button) itemView.findViewById(R.id.mpe_add_btn);
             this.subServingsButton = (Button) itemView.findViewById(R.id.mpe_sub_btn);
@@ -80,7 +78,6 @@ public abstract class MPObjectWrapperListAdapter extends RecyclerView.Adapter<MP
     public void onBindViewHolder(@NonNull MPEditIngredientListViewHolder holder, int position) {
         TextView name = holder.name;
         TextView amount = holder.amount;
-        TextView date = holder.date;
         TextView remove = holder.remove;
         Button subServingButton = holder.subServingsButton;
         Button addServingButton = holder.addServingsButton;
@@ -123,7 +120,6 @@ public abstract class MPObjectWrapperListAdapter extends RecyclerView.Adapter<MP
 
         name.setText(item.getName());
         amount.setText(item.getServings());
-        date.setText(item.getDisplayDate());
         Calendar cal = Calendar.getInstance(TimeZone.getDefault());
         cal.setTime(item.getDate());
         int year = cal.get(Calendar.YEAR);

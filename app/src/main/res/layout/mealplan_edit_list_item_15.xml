@@ -98,24 +98,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginBottom="8dp"
-            android:text="Date (tap to modify)"
+            android:text="Date"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mpv_servings_label"
             app:layout_constraintVertical_bias="0.53" />
-
-        <TextView
-            android:id="@+id/mpv_date_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="108dp"
-            android:text="(date)"
-            android:textAlignment="textEnd"
-            android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/mpv_date"
-            app:layout_constraintTop_toTopOf="@+id/mpv_date" />
 
         <DatePicker
             android:id="@+id/edit_mpv_date"
@@ -126,7 +115,6 @@
             android:layout_weight="1"
             android:calendarViewShown="false"
             android:datePickerMode="calendar"
-            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mpv_date"
             tools:visibility="visible" />
