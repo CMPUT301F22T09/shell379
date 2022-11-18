@@ -51,7 +51,7 @@
             app:layout_constraintTop_toBottomOf="@+id/mpv_servings_label" />
 
         <TextView
-            android:id="@+id/mpv_servings_textView"
+            android:id="@+id/mpv_servings_val"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="40dp"
@@ -59,10 +59,10 @@
             android:textAlignment="textEnd"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            tools:layout_editor_absoluteY="73dp" />
+            app:layout_constraintTop_toTopOf="@+id/mpv_servings_label" />
 
         <TextView
-            android:id="@+id/mpv_date_textView"
+            android:id="@+id/mpv_date_val"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
@@ -73,6 +73,6 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/mpv_servings_textView" />
+            app:layout_constraintTop_toBottomOf="@+id/mpv_servings_val" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.cardview.widget.CardView>

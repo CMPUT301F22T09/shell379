@@ -33,8 +33,8 @@ public class MPRecipesViewListAdapter extends RecyclerView.Adapter<MPRecipesView
         public MPViewRecipeListViewHolder(@NonNull View itemView) {
             super(itemView);
             this.name = (TextView) itemView.findViewById(R.id.mpv_name);
-            this.amount = (TextView) itemView.findViewById(R.id.mpv_servings_textView);
-            this.date = (TextView) itemView.findViewById(R.id.mpv_date_textView);
+            this.amount = (TextView) itemView.findViewById(R.id.mpv_servings_val);
+            this.date = (TextView) itemView.findViewById(R.id.mpv_date_val);
         }
 
         public View getItemView(){
@@ -70,7 +70,7 @@ public class MPRecipesViewListAdapter extends RecyclerView.Adapter<MPRecipesView
         TextView date = holder.date;
 
         name.setText(viewModel.getIngredientAtIdx(position).getName());
-        amount.setText(viewModel.getIngredientAtIdx(position).getServings());
+        amount.setText(viewModel.getIngredientAtIdx(position).getServings().toString());
         date.setText(viewModel.getIngredientAtIdx(position).getDisplayDate());
     }
 

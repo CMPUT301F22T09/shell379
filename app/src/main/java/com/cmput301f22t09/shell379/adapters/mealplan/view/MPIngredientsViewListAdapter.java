@@ -1,5 +1,6 @@
 package com.cmput301f22t09.shell379.adapters.mealplan.view;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
-import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.data.vm.MealPlanViewModel;
 import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
 
@@ -33,8 +33,8 @@ public class MPIngredientsViewListAdapter extends RecyclerView.Adapter<MPIngredi
         public MPViewIngredientListViewHolder(@NonNull View itemView) {
             super(itemView);
             this.name = (TextView) itemView.findViewById(R.id.mpv_name);
-            this.amount = (TextView) itemView.findViewById(R.id.mpv_servings_textView);
-            this.date = (TextView) itemView.findViewById(R.id.mpv_date_textView);
+            this.amount = (TextView) itemView.findViewById(R.id.mpv_servings_val);
+            this.date = (TextView) itemView.findViewById(R.id.mpv_date_val);
         }
 
         public View getItemView(){
@@ -69,8 +69,9 @@ public class MPIngredientsViewListAdapter extends RecyclerView.Adapter<MPIngredi
         TextView amount = holder.amount;
         TextView date = holder.date;
 
+        Log.e("MP_ADAPTER_ITEM", viewModel.getIngredientAtIdx(position).getName());
         name.setText(viewModel.getIngredientAtIdx(position).getName());
-        amount.setText(viewModel.getIngredientAtIdx(position).getServings());
+        amount.setText(viewModel.getIngredientAtIdx(position).getServings().toString());
         date.setText(viewModel.getIngredientAtIdx(position).getDisplayDate());
     }
 

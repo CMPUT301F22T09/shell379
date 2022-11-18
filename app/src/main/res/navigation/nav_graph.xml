@@ -134,9 +134,6 @@
         android:id="@+id/editMealPlanFragment"
         android:name="com.cmput301f22t09.shell379.fragments.EditMealPlanFragment"
         android:label="EditMealPlanFragment" >
-        <argument
-            android:name="MealPlanIndex"
-            app:argType="integer" />
         <action
             android:id="@+id/action_editMealPlanFragment_to_viewMealPlanFragment"
             app:destination="@id/viewMealPlanFragment" />

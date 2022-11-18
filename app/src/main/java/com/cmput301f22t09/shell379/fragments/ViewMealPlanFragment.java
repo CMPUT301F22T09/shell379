@@ -1,4 +1,4 @@
-package com.cmput301f22t09.shell379.fragments.mealplan;
+package com.cmput301f22t09.shell379.fragments;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -32,7 +32,6 @@ import java.util.Date;
 public class ViewMealPlanFragment extends Fragment {
     private ArrayList<Ingredient> ingredientsList;
     private ArrayList<Recipe> recipesList;
-    private RecyclerView.LayoutManager layoutManager;
     private RecyclerView mpIngredientRecycler;
     private RecyclerView mpRecipeRecycler;
     private MPIngredientsViewListAdapter ingredientsAdapter;
@@ -71,23 +70,29 @@ public class ViewMealPlanFragment extends Fragment {
                 }
         );
 
-        layoutManager = new LinearLayoutManager(this.getActivity());
+//        layoutManager = new LinearLayoutManager(this.getActivity());
 
         mpIngredientRecycler = (RecyclerView) rootView.findViewById(R.id.plan_ingredients);
         mpRecipeRecycler = (RecyclerView) rootView.findViewById(R.id.plan_recipes);
 
-        mpIngredientRecycler.setLayoutManager(layoutManager);
-        mpRecipeRecycler.setLayoutManager(layoutManager);
-
         ingredientsAdapter = new MPIngredientsViewListAdapter(mpViewModel);
+        mpIngredientRecycler.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         mpIngredientRecycler.setAdapter(ingredientsAdapter);
         mpIngredientRecycler.setItemAnimator(new DefaultItemAnimator());
 
         recipesAdapter = new MPRecipesViewListAdapter(mpViewModel);
+        mpRecipeRecycler.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         mpRecipeRecycler.setAdapter(recipesAdapter);
         mpRecipeRecycler.setItemAnimator(new DefaultItemAnimator());
 
         Log.e("MP_ADAPTER", ingredientsAdapter.getIngredients().toString());
+
+        rootView.findViewById(R.id.edit_plan).setOnClickListener(new View.OnClickListener() {
+             @Override
+             public void onClick(View view) {
+                 navController.navigate(ViewMealPlanFragmentDirections.actionMealPlanFragmentToViewMealPlanFragment());
+             }
+         });
         return rootView;
     }
 
@@ -109,12 +114,13 @@ public class ViewMealPlanFragment extends Fragment {
 
     private MealPlan testMP() {
         ArrayList<Ingredient> ingList = new ArrayList<Ingredient>();
-        ingList.add(new Ingredient("test1", new Date(), "yes", 1, "kg", "yes"));
-        ingList.add(new Ingredient("test2", new Date(), "yes", 1, "kg", "yes"));
-        ingList.add(new Ingredient("test3", new Date(), "yes", 1, "kg", "yes"));
-        ingList.add(new Ingredient("test4", new Date(), "yes", 1, "kg", "yes"));
-        ingList.add(new Ingredient("test5", new Date(), "yes", 1, "kg", "yes"));
-        ingList.add(new Ingredient("test6", new Date(), "yes", 1, "kg", "yes"));
+        Date date = new Date((new Date()).getTime()+1000000);
+        ingList.add(new Ingredient("test1", date, "yes", 1, "kg", "yes"));
+        ingList.add(new Ingredient("test2", date, "yes", 1, "kg", "yes"));
+        ingList.add(new Ingredient("test3", date, "yes", 1, "kg", "yes"));
+        ingList.add(new Ingredient("test4", date, "yes", 1, "kg", "yes"));
+        ingList.add(new Ingredient("test5", date, "yes", 1, "kg", "yes"));
+        ingList.add(new Ingredient("test6", date, "yes", 1, "kg", "yes"));
 
         ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
         recipeList.add(new Recipe("test1", 100L, 1, "yes", "yes"));
@@ -124,6 +130,6 @@ public class ViewMealPlanFragment extends Fragment {
         recipeList.add(new Recipe("test5", 100L, 1, "yes", "yes"));
         recipeList.add(new Recipe("test6", 100L, 1, "yes", "yes"));
 
-        return new MealPlan("testPlan", recipeList, ingList, new Date(), new Date(), 10);
+        return new MealPlan("testPlan", recipeList, ingList, date, date, 10);
     }
 }
