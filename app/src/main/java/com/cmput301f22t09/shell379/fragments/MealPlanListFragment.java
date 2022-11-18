@@ -2,8 +2,10 @@ package com.cmput301f22t09.shell379.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -18,6 +20,7 @@ import android.widget.ImageView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.MealPlanAdapter;
+import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.MealPlan;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -44,6 +47,17 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
         navController = NavHostFragment.findNavController(this);
         envViewModel = Environment.of((AppCompatActivity) requireActivity());
 
+        final Observer<ArrayList<MealPlan>> mealPlanObserver = new Observer<ArrayList<MealPlan>>() {
+            @Override
+            public void onChanged(@Nullable final ArrayList<MealPlan> mealPlans) {
+                // Update the UI, in this case, a TextView.
+//                ingredient_recyclerView.setText(newName);
+                if (mealPlanListAdapter != null){
+                    mealPlanListAdapter.updateMealPlan(envViewModel.getMealPlans().getList());
+                }
+            }
+        };
+        envViewModel.getMealPlans().getListLive().observe(this, mealPlanObserver);
     }
 
     @Override
@@ -71,6 +85,7 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
                 }
         );
 
+
         mealPlanList = envViewModel.getMealPlans().getList();
         layoutManager = new LinearLayoutManager(this.getActivity());
         mealPlan_recyclerView = (RecyclerView) rootView.findViewById(R.id.meal_plan_recyclerView);
@@ -92,10 +107,9 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
 
     public void navigateToViewMealPlan(int index){
     //    to-do
-//        MealPlanListFragmentDirections.
+        MealPlanListFragmentDirections.ActionMealPlanFragmentToViewMealPlanFragment action
+                = MealPlanListFragmentDirections.actionMealPlanFragmentToViewMealPlanFragment(index);
+        navController.navigate(action);
 
-//        IngredientListFragmentDirections.ActionIngredientListFragmentToViewIngredientFragment action
-//                = IngredientListFragmentDirections.actionIngredientListFragmentToViewIngredientFragment(index);
-//        navController.navigate(action);
     }
 }
