@@ -11,18 +11,39 @@
         android:layout_width="match_parent"
         android:layout_height="183dp">
 
-        <TextView
-            android:id="@+id/mpv_name"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:elevation="8dp"
-            android:text="Name"
-            android:textSize="23sp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="20dp"
+            >
+            <TextView
+                android:id="@+id/mpv_name"
+                android:layout_width="wrap_content"
+                android:layout_gravity="left"
+                android:layout_height="wrap_content"
+                android:elevation="8dp"
+                android:text="Name"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                 />
+            <TextView
+                android:id="@+id/mpv_remove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="8dp"
+                android:text="x"
+                android:layout_gravity="left"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                />
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/mpv_servings_label"
@@ -97,12 +118,13 @@
             app:layout_constraintTop_toTopOf="@+id/mpv_date" />
 
         <DatePicker
-            android:id="@+id/editPlanStart2"
+            android:id="@+id/edit_mpv_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="16dp"
             android:layout_weight="1"
+            android:calendarViewShown="false"
             android:datePickerMode="calendar"
             android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
