@@ -1,5 +1,6 @@
 package com.cmput301f22t09.shell379.adapters.mealplan.edit;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
@@ -41,7 +43,7 @@ public abstract class MPObjectWrapperListAdapter extends RecyclerView.Adapter<MP
         public MPEditIngredientListViewHolder(@NonNull View itemView) {
             super(itemView);
             this.name = (TextView) itemView.findViewById(R.id.mpv_name);
-            this.amount = (TextView) itemView.findViewById(R.id.mpv_servings_textView);
+            this.amount = (TextView) itemView.findViewById(R.id.mpv_servings_val);
             this.remove = (TextView) itemView.findViewById(R.id.mpv_remove);
             this.addServingsButton = (Button) itemView.findViewById(R.id.mpe_add_btn);
             this.subServingsButton = (Button) itemView.findViewById(R.id.mpe_sub_btn);
@@ -70,10 +72,11 @@ public abstract class MPObjectWrapperListAdapter extends RecyclerView.Adapter<MP
     @Override
     public MPEditIngredientListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.mealplan_view_list_item_14, parent, false);
+                .inflate(R.layout.mealplan_edit_list_item_15, parent, false);
         return new MPEditIngredientListViewHolder(view);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onBindViewHolder(@NonNull MPEditIngredientListViewHolder holder, int position) {
         TextView name = holder.name;
@@ -104,9 +107,9 @@ public abstract class MPObjectWrapperListAdapter extends RecyclerView.Adapter<MP
                 notifyDataSetChanged();
             }
         });
-        editDate.setOnClickListener(new View.OnClickListener() {
+        editDate.setOnDateChangedListener(new DatePicker.OnDateChangedListener() {
             @Override
-            public void onClick(View view) {
+            public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
                 Date newDate = new GregorianCalendar(
                         editDate.getYear(),
                         editDate.getMonth(),
@@ -119,7 +122,7 @@ public abstract class MPObjectWrapperListAdapter extends RecyclerView.Adapter<MP
         MealPlanWrapper item = getItemAtIndex(position);
 
         name.setText(item.getName());
-        amount.setText(item.getServings());
+        amount.setText(item.getServings().toString());
         Calendar cal = Calendar.getInstance(TimeZone.getDefault());
         cal.setTime(item.getDate());
         int year = cal.get(Calendar.YEAR);
@@ -134,7 +137,7 @@ public abstract class MPObjectWrapperListAdapter extends RecyclerView.Adapter<MP
 
     @Override
     public int getItemCount() {
-        return viewModel.getIngredients().size();
+        return getSizeInternal();
     }
 
     public ArrayList<MealPlanWrapper<Ingredient>> getIngredients(){
@@ -172,4 +175,6 @@ public abstract class MPObjectWrapperListAdapter extends RecyclerView.Adapter<MP
      * @return item at index
      */
     protected abstract MealPlanWrapper getItemAtIndex(int index);
+
+    protected abstract int getSizeInternal();
 }

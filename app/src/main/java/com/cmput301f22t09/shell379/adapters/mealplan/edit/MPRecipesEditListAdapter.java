@@ -29,7 +29,7 @@ public class MPRecipesEditListAdapter extends MPObjectWrapperListAdapter {
     @Override
     protected void removeItem(int index) {
         viewModel.getRecipes().remove(index);
-        viewModel.notify();
+        viewModel.forceNotify();
     }
 
     /**
@@ -42,6 +42,7 @@ public class MPRecipesEditListAdapter extends MPObjectWrapperListAdapter {
         int recipeServes = ((Recipe)recipe.getObj()).getServings();
         int currentServingMultiplier = recipe.getServings()/recipeServes;
         recipe.setServings(recipeServes * (currentServingMultiplier + 1));
+        viewModel.forceNotify();
     }
 
     /**
@@ -54,6 +55,7 @@ public class MPRecipesEditListAdapter extends MPObjectWrapperListAdapter {
         int recipeServes = ((Recipe)recipe.getObj()).getServings();
         int currentServingMultiplier = recipe.getServings()/recipeServes;
         recipe.setServings(recipeServes * (currentServingMultiplier - 1));
+        viewModel.forceNotify();
     }
 
 
@@ -61,10 +63,16 @@ public class MPRecipesEditListAdapter extends MPObjectWrapperListAdapter {
     protected void updateDate(int index, Date newDate) {
         MealPlanWrapper recipe = viewModel.getRecipeAtIdx(index);
         recipe.setDate(newDate);
+        viewModel.forceNotify();
     }
 
     @Override
     protected MealPlanWrapper getItemAtIndex(int index) {
         return viewModel.getRecipeAtIdx(index);
+    }
+
+    @Override
+    protected int getSizeInternal() {
+        return  viewModel.getRecipes().size();
     }
 }
