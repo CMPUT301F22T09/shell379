@@ -54,7 +54,10 @@ public class MPRecipesEditListAdapter extends MPObjectWrapperListAdapter {
         MealPlanWrapper recipe =  viewModel.getRecipeAtIdx(index);
         int recipeServes = ((Recipe)recipe.getObj()).getServings();
         int currentServingMultiplier = recipe.getServings()/recipeServes;
-        recipe.setServings(recipeServes * (currentServingMultiplier - 1));
+        if(currentServingMultiplier > 1){
+            recipe.setServings(recipeServes * (currentServingMultiplier - 1));
+        }
+
         viewModel.forceNotify();
     }
 
