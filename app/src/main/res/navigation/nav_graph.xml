@@ -114,7 +114,7 @@
     <fragment
         android:id="@+id/createMealPlanFragment"
         android:name="com.cmput301f22t09.shell379.fragments.CreateMealPlanFragment"
-        android:label="fragment_new_mealPlan"
+        android:label="fragment_save_mealPlan"
         tools:layout="@layout/fragment_edit_meal_plan_15" />
 
     <fragment
@@ -141,6 +141,7 @@
             android:id="@+id/action_editMealPlanFragment_to_viewMealPlanFragment"
             app:destination="@id/viewMealPlanFragment" />
     </fragment>
+
 
 
 
