@@ -1,6 +1,7 @@
 package com.cmput301f22t09.shell379.data.util;
 
-import android.util.Pair;
+
+import androidx.core.util.Pair;
 
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.IngredientStub;
@@ -33,7 +34,7 @@ public class IngredientDiffUtil {
      *              with the same description in this MealPlan
      *      unit = No change
      *      category = "placeholder"
-     * TODO: Testing
+     * TODO: Testing Donw
      * @param mp: MealPlan object
      * @return: A HashMap of ingredients, unique with the description (lower case) being the key.
      */
@@ -55,7 +56,7 @@ public class IngredientDiffUtil {
                 // put ingredients into hashmap if not previously existing.
                 // Two ingredients are the same (in this case) if the descriptions match
                 if (!totalIngs.containsKey(ingDescription.toLowerCase())) {
-                    totalIngs.put(ingDescription, new Ingredient(
+                    totalIngs.put(ingDescription.toLowerCase(), new Ingredient(
                             ingDescription,
                             mp.getEndDate(),
                             "Placeholder",
@@ -185,9 +186,7 @@ public class IngredientDiffUtil {
 
                 // This is the ingredient that we have, guaranteed to be
                 // within the expiry date.
-                Ingredient haveValid = IngredientDiffUtil.coalesce(
-                        Objects.requireNonNull(needed.get(need)),
-                        Objects.requireNonNull(have.get(need)));
+                Ingredient haveValid = IngredientDiffUtil.coalesce(needed.get(need), have.get(need));
 
 
                 // need_amount - have_amount
@@ -203,12 +202,12 @@ public class IngredientDiffUtil {
                     subtractFromInventory.add(haveValid);
 
                     putIntoShoppingCart.add(new Ingredient(
-                            haveValid.getDescription(),
+                            needed.get(need).getDescription(),
                             new Date(),
-                            haveValid.getLocation(),
+                            needed.get(need).getLocation(),
                             diff, // Amount
-                            haveValid.getUnit(),
-                            haveValid.getCategory()
+                            needed.get(need).getUnit(),
+                            needed.get(need).getCategory()
                     ));
                 }
                 // if we have more than we need,
@@ -227,7 +226,8 @@ public class IngredientDiffUtil {
             }
 
         }
-        return new Pair<>(subtractFromInventory, putIntoShoppingCart);
+        Pair<ArrayList<Ingredient>, ArrayList<Ingredient> > res = Pair.create(subtractFromInventory, putIntoShoppingCart);
+        return res;
     }
 
     /**
