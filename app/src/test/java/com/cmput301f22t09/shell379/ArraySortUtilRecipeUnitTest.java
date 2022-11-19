@@ -1,10 +1,7 @@
 package com.cmput301f22t09.shell379;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.cmput301f22t09.shell379.data.Ingredient;
-import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.util.ArraySortUtil;
 
@@ -13,92 +10,67 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ArraySortUtilIngredientsUnitTest {
+public class ArraySortUtilRecipeUnitTest {
 
-    ArrayList<Ingredient> testIngs;
-    ArrayList<IngredientStub> testIngStubs;
     ArrayList<Recipe> testRecipes;
 
-    void clearTestIngs(){
-        testIngs = new ArrayList<Ingredient>();
-        Ingredient milkIng =  new Ingredient("Milk",new Date(123,1,12),"Fridge",1,"Litres","Liquid");
-        Ingredient bearIng = new Ingredient("Bear",new Date(399,1,12),"Store",30,"Kg","Meat");
-        Ingredient popIng = new Ingredient("Pop",new Date(399,12,12),"Pantry",22,"G","Junk");
-        testIngs.add(milkIng);
-        testIngs.add(bearIng);
-        testIngs.add(popIng);
+    void clearTestRecipes(){
+        testRecipes = new ArrayList<Recipe>();
+        Recipe milkIng =  new Recipe("Milk",new Long(20),3,"Fun","A");
+        Recipe bearIng = new Recipe("Bear",new Long(1),1,"Fast","C");
+        Recipe popIng = new Recipe("Pop",new Long(3),2,"Bad","B");
+        testRecipes.add(milkIng);
+        testRecipes.add(bearIng);
+        testRecipes.add(popIng);
     }
 
     /**
-     * Test the description sort of ingredients
+     * Test the title sort of recipe
      */
     @Test
-    void testDescriptionSortIngredients() {
-        clearTestIngs();
-        ArraySortUtil.sortByStringProp(testIngs, Ingredient.getStringPropGetter(0));
-        assertEquals(testIngs.get(0).getDescription(),"Bear");
-        assertEquals(testIngs.get(1).getDescription(),"Milk");
-        assertEquals(testIngs.get(2).getDescription(),"Pop");
+    void testTitleSortRecipes() {
+        clearTestRecipes();
+        ArraySortUtil.sortByStringProp(testRecipes, Recipe.getStringPropGetter(0));
+        assertEquals(testRecipes.get(0).getTitle(),"Bear");
+        assertEquals(testRecipes.get(1).getTitle(),"Milk");
+        assertEquals(testRecipes.get(2).getTitle(),"Pop");
     }
 
     /**
-     * Test the Date sort of ingredients
+     * Test the time sort of recipes
      */
     @Test
-    void testDateSortIngredients() {
-        clearTestIngs();
-        ArraySortUtil.sortByStringProp(testIngs, Ingredient.getStringPropGetter(1));
-        assertEquals(testIngs.get(0).getDescription(),"Pop");
-        assertEquals(testIngs.get(1).getDescription(),"Bear");
-        assertEquals(testIngs.get(2).getDescription(),"Milk");
+    void testTimeSortRecipes() {
+        clearTestRecipes();
+        ArraySortUtil.sortByStringProp(testRecipes, Recipe.getStringPropGetter(1));
+        assertEquals(java.util.Optional.ofNullable(testRecipes.get(0).getPreparationTime()),1);
+        assertEquals(java.util.Optional.ofNullable(testRecipes.get(1).getPreparationTime()),3);
+        assertEquals(java.util.Optional.ofNullable(testRecipes.get(2).getPreparationTime()),20);
     }
 
     /**
-     * Test the location sort of ingredients
+     * Test the Category sort of recipes
      */
     @Test
-    void testLocationSortIngredients() {
-        clearTestIngs();
-        ArraySortUtil.sortByStringProp(testIngs, Ingredient.getStringPropGetter(1));
-        assertEquals(testIngs.get(0).getLocation(),"Fridge");
-        assertEquals(testIngs.get(1).getLocation(),"Pantry");
-        assertEquals(testIngs.get(2).getLocation(),"Store");
+    void testCategorySortRecipes() {
+        clearTestRecipes();
+        ArraySortUtil.sortByStringProp(testRecipes, Recipe.getStringPropGetter(2));
+        assertEquals(testRecipes.get(0).getCategory(),"Bad");
+        assertEquals(testRecipes.get(1).getCategory(),"Fast");
+        assertEquals(testRecipes.get(2).getCategory(),"Fun");
     }
 
     /**
-     * Test the amount sort of ingredients
+     * Test the comment sort of recipes
      */
     @Test
-    void testAmountSortIngredients() {
-        clearTestIngs();
-        ArraySortUtil.sortByStringProp(testIngs, Ingredient.getStringPropGetter(1));
-        assertEquals(java.util.Optional.ofNullable(testIngs.get(0).getAmount()),1);
-        assertEquals(java.util.Optional.ofNullable(testIngs.get(1).getAmount()),22);
-        assertEquals(java.util.Optional.ofNullable(testIngs.get(2).getAmount()),30);
+    void testAmountSortRecipes() {
+        clearTestRecipes();
+        ArraySortUtil.sortByStringProp(testRecipes, Recipe.getStringPropGetter(3));
+        assertEquals(java.util.Optional.ofNullable(testRecipes.get(0).getCategory()),"A");
+        assertEquals(java.util.Optional.ofNullable(testRecipes.get(1).getCategory()),"B");
+        assertEquals(java.util.Optional.ofNullable(testRecipes.get(2).getCategory()),"C");
     }
 
-    /**
-     * Test the unit sort of ingredients
-     */
-    @Test
-    void testUnitSortIngredients() {
-        clearTestIngs();
-        ArraySortUtil.sortByStringProp(testIngs, Ingredient.getStringPropGetter(1));
-        assertEquals(testIngs.get(0).getUnit(),"G");
-        assertEquals(testIngs.get(1).getUnit(),"Kg");
-        assertEquals(testIngs.get(2).getUnit(),"Litres");
-    }
-
-    /**
-     * Test the category sort of ingredients
-     */
-    @Test
-    void testCategorySortIngredients() {
-        clearTestIngs();
-        ArraySortUtil.sortByStringProp(testIngs, Ingredient.getStringPropGetter(1));
-        assertEquals(testIngs.get(0).getUnit(),"Junk");
-        assertEquals(testIngs.get(1).getUnit(),"Meat");
-        assertEquals(testIngs.get(2).getUnit(),"Liquid");
-    }
 }
 

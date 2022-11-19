@@ -59,7 +59,7 @@ public class ArraySortUtilIngredientsUnitTest {
     @Test
     void testLocationSortIngredients() {
         clearTestIngs();
-        ArraySortUtil.sortByStringProp(testIngs, Ingredient.getStringPropGetter(1));
+        ArraySortUtil.sortByStringProp(testIngs, Ingredient.getStringPropGetter(2));
         assertEquals(testIngs.get(0).getLocation(),"Fridge");
         assertEquals(testIngs.get(1).getLocation(),"Pantry");
         assertEquals(testIngs.get(2).getLocation(),"Store");
@@ -71,10 +71,10 @@ public class ArraySortUtilIngredientsUnitTest {
     @Test
     void testAmountSortIngredients() {
         clearTestIngs();
-        ArraySortUtil.sortByStringProp(testIngs, Ingredient.getStringPropGetter(1));
-        assertEquals(testIngs.get(0).getAmount(),1);
-        assertEquals(testIngs.get(1).getAmount(),22);
-        assertEquals(testIngs.get(2).getAmount(),30);
+        ArraySortUtil.sortByStringProp(testIngs, Ingredient.getStringPropGetter(3));
+        assertEquals(java.util.Optional.ofNullable(testIngs.get(0).getAmount()),1);
+        assertEquals(java.util.Optional.ofNullable(testIngs.get(1).getAmount()),22);
+        assertEquals(java.util.Optional.ofNullable(testIngs.get(2).getAmount()),30);
     }
 
     /**
@@ -83,7 +83,7 @@ public class ArraySortUtilIngredientsUnitTest {
     @Test
     void testUnitSortIngredients() {
         clearTestIngs();
-        ArraySortUtil.sortByStringProp(testIngs, Ingredient.getStringPropGetter(1));
+        ArraySortUtil.sortByStringProp(testIngs, Ingredient.getStringPropGetter(4));
         assertEquals(testIngs.get(0).getUnit(),"G");
         assertEquals(testIngs.get(1).getUnit(),"Kg");
         assertEquals(testIngs.get(2).getUnit(),"Litres");
@@ -95,7 +95,7 @@ public class ArraySortUtilIngredientsUnitTest {
     @Test
     void testCategorySortIngredients() {
         clearTestIngs();
-        ArraySortUtil.sortByStringProp(testIngs, Ingredient.getStringPropGetter(1));
+        ArraySortUtil.sortByStringProp(testIngs, Ingredient.getStringPropGetter(5));
         assertEquals(testIngs.get(0).getUnit(),"Junk");
         assertEquals(testIngs.get(1).getUnit(),"Meat");
         assertEquals(testIngs.get(2).getUnit(),"Liquid");
