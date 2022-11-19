@@ -93,7 +93,7 @@ public class EditRecipeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         this.navController = NavHostFragment.findNavController(this);
         this.selectedIngredients = new ArrayList<>();
-        editRecipeViewModel =  new ViewModelProvider(requireActivity()).get(EditRecipeViewModel.class);
+        editRecipeViewModel = new ViewModelProvider(requireActivity()).get(EditRecipeViewModel.class);
         recipeIndex = getArguments().getInt("recipeIndex");
         env = Environment.of((AppCompatActivity) requireActivity());
 
