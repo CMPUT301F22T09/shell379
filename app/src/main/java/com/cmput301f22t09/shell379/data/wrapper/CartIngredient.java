@@ -16,12 +16,14 @@ public class CartIngredient implements Serializable {
     private String category;
     private Integer amount;
     private Ingredient ingredient;
+    private String description;
 
-    public CartIngredient(String category, Integer amount) {
+    public CartIngredient(String description, String category, Integer amount) {
         this.isPickedUp = false;
         this.detailsFilled = false;
         this.category = category;
         this.amount = amount;
+        this.description = description;
     }
 
     public Boolean getPickedUp() {
@@ -63,5 +65,13 @@ public class CartIngredient implements Serializable {
     public void setIngredient(Ingredient ingredient) {
         this.ingredient = ingredient;
         this.detailsFilled = true;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String newDescription) {
+        this.description = newDescription;
     }
 }

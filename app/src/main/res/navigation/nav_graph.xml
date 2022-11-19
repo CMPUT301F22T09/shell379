@@ -63,7 +63,14 @@
         android:id="@+id/checkoutIngredient"
         android:name="com.cmput301f22t09.shell379.fragments.CheckoutIngredientFragment"
         android:label="fragment_checkout_ingredient"
-        tools:layout="@layout/fragment_shopping_list_checkout_22"/>
+        tools:layout="@layout/fragment_shopping_list_checkout_22">
+        <argument
+            android:name="ingredientIndex"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_checkoutIngredient_to_shoppingListFragment"
+            app:destination="@id/shoppingListFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/mealPlanListFragment"

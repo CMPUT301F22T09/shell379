@@ -25,7 +25,6 @@ import com.cmput301f22t09.shell379.data.Unit;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.wrapper.CartIngredient;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -35,7 +34,10 @@ public class CheckoutIngredientFragment extends Fragment {
     protected Environment envViewModel;
     private EditText category;
     private EditText location;
-    private ArrayList<CartIngredient> pickedUpIngredients;
+    private int ingredientIndex;
+    private EditText description;
+    private CartIngredient theCartIngredient;
+    private EditText amount;
 
     public CheckoutIngredientFragment() {
         // Required empty public constructor
@@ -46,13 +48,7 @@ public class CheckoutIngredientFragment extends Fragment {
         super.onCreate(savedInstanceState);
         navController = NavHostFragment.findNavController(this);
         envViewModel = Environment.of((AppCompatActivity) requireActivity());
-
-        ArrayList<CartIngredient> ingredients = envViewModel.getCart().getList();
-        for (int i = 0; i < ingredients.size(); i++) {
-            if (ingredients.get(i).getPickedUp()) {
-                pickedUpIngredients.add(ingredients.get(i));
-            }
-        }
+        ingredientIndex = getArguments().getInt("ingredientIndex");
     }
 
     @Override
@@ -62,7 +58,13 @@ public class CheckoutIngredientFragment extends Fragment {
         rootView = inflater.inflate(R.layout.fragment_shopping_list_checkout_22, container, false);
         category = ((EditText) rootView.findViewById(R.id.editCategory));
         location = ((EditText) rootView.findViewById(R.id.editLocation));
+        description = ((EditText) rootView.findViewById(R.id.editDescription));
+        amount = ((EditText) rootView.findViewById(R.id.editAmount));
 
+        theCartIngredient = envViewModel.getCart().getList().get(ingredientIndex);
+        description.setText(theCartIngredient.getDescription());
+        category.setText(theCartIngredient.getCategory());
+        amount.setText(theCartIngredient.getAmount().toString());
 
 
         // Populate spinner options.
@@ -107,7 +109,7 @@ public class CheckoutIngredientFragment extends Fragment {
     }
 
     private void back(){
-        navController.popBackStack();
+        navController.navigate(CheckoutIngredientFragmentDirections.actionCheckoutIngredientToShoppingListFragment());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -148,13 +150,6 @@ public class CheckoutIngredientFragment extends Fragment {
 
             Ingredient newIng = new Ingredient(description, bestBeforeDate, location, amount, unit, category);
 
-            ArrayList<Ingredient> ingredients = envViewModel.getIngredients().getList();
-            for (int i = 0; i < ingredients.size(); i++) {
-                if (ingredients.get(i).equals(newIng)) {
-                    throw new IllegalArgumentException("Ingredient Already Exists");
-                }
-            }
-
             writeToViewModel(newIng);
             navController.popBackStack();
         } catch(Exception e){
@@ -188,8 +183,10 @@ public class CheckoutIngredientFragment extends Fragment {
      * @param ing
      */
     protected void writeToViewModel(Ingredient ing){
-//        envViewModel.getIngredients().getList().set(ingredientIndex,ing);
-//        envViewModel.getIngredients().commit();
+        theCartIngredient.setDetailsFilled(true);
+        theCartIngredient.setIngredient(ing);
+        envViewModel.getCart().getList().set(ingredientIndex, theCartIngredient);
+        envViewModel.getCart().commit();
     }
 }
 
