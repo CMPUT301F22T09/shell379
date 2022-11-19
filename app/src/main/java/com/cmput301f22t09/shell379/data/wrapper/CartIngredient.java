@@ -17,13 +17,15 @@ public class CartIngredient implements Serializable {
     private Integer amount;
     private Ingredient ingredient;
     private String description;
+    private String unit;
 
-    public CartIngredient(String description, String category, Integer amount) {
+    public CartIngredient(String description, String category, Integer amount, String unit) {
         this.isPickedUp = false;
         this.detailsFilled = false;
         this.category = category;
         this.amount = amount;
         this.description = description;
+        this.unit = unit;
     }
 
     public Boolean getPickedUp() {
@@ -73,5 +75,13 @@ public class CartIngredient implements Serializable {
 
     public void setDescription(String newDescription) {
         this.description = newDescription;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 }

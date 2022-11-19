@@ -25,6 +25,8 @@ import com.cmput301f22t09.shell379.data.Unit;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.wrapper.CartIngredient;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -65,6 +67,9 @@ public class CheckoutIngredientFragment extends Fragment {
         description.setText(theCartIngredient.getDescription());
         category.setText(theCartIngredient.getCategory());
         amount.setText(theCartIngredient.getAmount().toString());
+        ArrayList<Unit> units = new ArrayList<Unit>(Arrays.asList(Unit.values()));
+        int unitSelectionIndex = units.indexOf(Unit.getFromString(theCartIngredient.getUnit()));
+        ((Spinner)rootView.findViewById(R.id.editUnit)).setSelection(unitSelectionIndex);
 
 
         // Populate spinner options.
