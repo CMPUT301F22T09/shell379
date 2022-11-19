@@ -16,14 +16,16 @@ public class MealPlan implements Serializable {
     private String endDate;
     private Integer activeDays;
     private String mealPlanName;
+    private String comments;
     private static final SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");
 
-    public MealPlan(String mealPlanName, ArrayList<Recipe> recipes, ArrayList<Ingredient> ingredients, Date startDate, Date endDate, Integer activeDays) {
+    public MealPlan(String mealPlanName, ArrayList<Recipe> recipes, ArrayList<Ingredient> ingredients, Date startDate, Date endDate, String comments, Integer activeDays) {
         this.mealPlanName = mealPlanName;
         this.recipes = convertRecipes(recipes);
         this.ingredients = convertIngredients(ingredients);
         this.startDate = formatter.format(startDate);
         this.endDate = formatter.format(endDate);
+        this.comments = comments;
         this.activeDays = activeDays;
     }
 
@@ -100,6 +102,14 @@ public class MealPlan implements Serializable {
         this.activeDays = activeDays;
     }
 
+    public String getComments() {
+        return comments;
+    }
+
+    public void setComments(String comments) {
+        this.comments = comments;
+    }
+
     public void addIngredient(Ingredient ingredient) {
         this.ingredients.add(new MealPlanWrapper<>(ingredient, new Date(), 0));
     }
@@ -148,6 +158,10 @@ public class MealPlan implements Serializable {
         }else{
             return "Date not set";
         }
+    }
+
+    public void setMealPlanName(String mealPlanName) {
+        this.mealPlanName = mealPlanName;
     }
 
     private ArrayList convertRecipes(ArrayList<Recipe> recipes) {

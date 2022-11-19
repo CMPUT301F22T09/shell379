@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -83,6 +84,7 @@ public class ViewMealPlanFragment extends Fragment {
 
         Log.e("MP_ADAPTER", ingredientsAdapter.getIngredients().toString());
         navListeners(rootView);
+        fillFields(rootView);
 
         return rootView;
     }
@@ -104,7 +106,12 @@ public class ViewMealPlanFragment extends Fragment {
     }
 
     private void fillFields(View rootView) {
-//        rootView.findViewById(R.id.mpv_comments_data).set;
+        ((TextView) rootView.findViewById(R.id.mpv_comments_data))
+                .setText(mpViewModel.getMealPlan().getComments());
+        ((TextView) rootView.findViewById(R.id.mpv_start_data))
+                .setText(mpViewModel.getMealPlan().getStartDateFormatted());
+        ((TextView) rootView.findViewById(R.id.mpv_end_data))
+                .setText(mpViewModel.getMealPlan().getEndDateFormatted());
     }
 
     private MealPlan testMP() {
@@ -125,6 +132,7 @@ public class ViewMealPlanFragment extends Fragment {
         recipeList.add(new Recipe("test5", 100L, 1, "yes", "yes"));
         recipeList.add(new Recipe("test6", 100L, 1, "yes", "yes"));
 
-        return new MealPlan("testPlan", recipeList, ingList, date, date, 10);
+        return new MealPlan("testPlan", recipeList, ingList, date, date, "test comments test comments test comments test comments" +
+                "test comments test comments test comments test comments test comments test comments", 10);
     }
 }
