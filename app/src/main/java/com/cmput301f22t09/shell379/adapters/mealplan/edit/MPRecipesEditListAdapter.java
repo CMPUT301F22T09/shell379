@@ -15,86 +15,67 @@ import com.cmput301f22t09.shell379.data.vm.MealPlanViewModel;
 import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Adapter for recycler view in view selected ingredients page for recipes.
  */
-public class MPRecipesEditListAdapter extends RecyclerView.Adapter<MPRecipesEditListAdapter.MPEditRecipeListViewHolder> {
-    private MealPlanViewModel viewModel;
-
-    /**
-     * Custom view holder for describing each ingredient's view
-     */
-    public class MPEditRecipeListViewHolder extends RecyclerView.ViewHolder {
-        TextView name;
-        TextView amount;
-        TextView date;
-
-        public MPEditRecipeListViewHolder(@NonNull View itemView) {
-            super(itemView);
-            this.name = (TextView) itemView.findViewById(R.id.mpv_name);
-            this.amount = (TextView) itemView.findViewById(R.id.mpv_servings_val);
-            this.date = (TextView) itemView.findViewById(R.id.mpv_date_val);
-        }
-
-        public View getItemView(){
-            return itemView;
-        }
-    }
+public class MPRecipesEditListAdapter extends MPObjectWrapperListAdapter {
 
     public MPRecipesEditListAdapter(MealPlanViewModel viewModel) {
-        this.viewModel = viewModel;
+        super(viewModel);
+    }
+
+    @Override
+    protected void removeItem(int index) {
+        viewModel.getRecipes().remove(index);
+        viewModel.forceNotify();
     }
 
     /**
-     * Updates the recycler view and re-renders it
-     * @param newRecipes the new list of recipes for the recycler view
+     * adds a multiple of the base recipes servings
+     * @param index index of the item
      */
-    public void updateRecipes(ArrayList<MealPlanWrapper<Recipe>> newRecipes){
-        viewModel.setRecipesRaw(newRecipes);
-        notifyDataSetChanged();
-    }
-
-    @NonNull
     @Override
-    public MPEditRecipeListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.mealplan_view_list_item_14, parent, false);
-        return new MPEditRecipeListViewHolder(view);
+    protected void addServings(int index) {
+        MealPlanWrapper recipe =  viewModel.getRecipeAtIdx(index);
+        int recipeServes = ((Recipe)recipe.getObj()).getServings();
+        int currentServingMultiplier = recipe.getServings()/recipeServes;
+        recipe.setServings(recipeServes * (currentServingMultiplier + 1));
+        viewModel.forceNotify();
     }
 
+    /**
+     * removes a multiple of the base recipes servings
+     * @param index index of the item
+     */
     @Override
-    public void onBindViewHolder(@NonNull MPEditRecipeListViewHolder holder, int position) {
-        TextView name = holder.name;
-        TextView amount = holder.amount;
-        TextView date = holder.date;
+    protected void subServings(int index) {
+        MealPlanWrapper recipe =  viewModel.getRecipeAtIdx(index);
+        int recipeServes = ((Recipe)recipe.getObj()).getServings();
+        int currentServingMultiplier = recipe.getServings()/recipeServes;
+        if(currentServingMultiplier > 1){
+            recipe.setServings(recipeServes * (currentServingMultiplier - 1));
+        }
 
-        name.setText(viewModel.getIngredientAtIdx(position).getName());
-        amount.setText(viewModel.getIngredientAtIdx(position).getServings().toString());
-        date.setText(viewModel.getIngredientAtIdx(position).getDisplayDate());
-//        holder.getItemView().setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                itemOnClick(holder.getAdapterPosition());
-//            }
-//        });
+        viewModel.forceNotify();
     }
-//
-//    /**
-//     *  Responds to an ingredient item being clicked in the recyclerView.
-//     *  Navigates to viewing the ingredient
-//     * @param i index of ingredient in the edit recipe view model
-//     */
-//    public void itemOnClick(int i) {
-//        MealPlanWrapper<Ingredient> a = viewModel.getIngredientAtIdx(i);
-//    }
+
 
     @Override
-    public int getItemCount() {
-        return viewModel.getIngredients().size();
+    protected void updateDate(int index, Date newDate) {
+        MealPlanWrapper recipe = viewModel.getRecipeAtIdx(index);
+        recipe.setDate(newDate);
+        viewModel.forceNotify();
     }
 
-    public ArrayList<MealPlanWrapper<Ingredient>> getIngredients(){
-        return viewModel.getIngredients();
+    @Override
+    protected MealPlanWrapper getItemAtIndex(int index) {
+        return viewModel.getRecipeAtIdx(index);
+    }
+
+    @Override
+    protected int getSizeInternal() {
+        return  viewModel.getRecipes().size();
     }
 }

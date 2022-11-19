@@ -19,11 +19,15 @@ import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.mealplan.edit.MPIngredientsEditListAdapter;
 import com.cmput301f22t09.shell379.adapters.mealplan.edit.MPRecipesEditListAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.MealPlan;
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.MealPlanViewModel;
 
+import org.checkerframework.checker.units.qual.A;
+
 import java.util.ArrayList;
+import java.util.Date;
 
 public class EditMealPlanFragment extends Fragment {
     private ArrayList<Ingredient> ingredientsList;
@@ -48,6 +52,16 @@ public class EditMealPlanFragment extends Fragment {
         navController = NavHostFragment.findNavController(this);
         envViewModel = Environment.of((AppCompatActivity) requireActivity());
         mpViewModel = MealPlanViewModel.of(requireActivity());
+
+        // test data
+//        MealPlan testMp = new MealPlan();
+//        ArrayList<Ingredient> testI = new ArrayList<Ingredient>();
+//        testI.add(new Ingredient("test",new Date(), "place",10, "kg", "kg"));
+//        testMp.setIngredients(testI);
+//        ArrayList<Recipe> testR = new ArrayList<Recipe>();
+//        testR.add(new Recipe("e",new Long(1),10,"e","e"));
+//        testMp.setRecipes(testR);
+//        mpViewModel.setMealPlan(testMp);
     }
 
     @Override
