@@ -56,10 +56,12 @@ public class ShoppingListFragment extends Fragment {
         // TEMPORARY TESTING DATA
         shoppingList = new ShoppingCart();
         ArrayList<CartIngredient> tempList = new ArrayList<>();
-        tempList.add(new CartIngredient( new Ingredient("Milk", new Date(), "pantry", 10, "mL", "Dairy")));
-        tempList.add(new CartIngredient( new Ingredient("Milk2", new Date(), "pantry", 10, "mL", "Dairy")));
-        tempList.add(new CartIngredient( new Ingredient("Milk3", new Date(), "pantry", 10, "mL", "Dairy")));
-        tempList.add(new CartIngredient( new Ingredient("Milk4", new Date(), "pantry", 10, "mL", "Dairy")));
+        CartIngredient testCartIngredient = new CartIngredient("Milk", "Dairy", 2, "L");
+        testCartIngredient.setIngredient(new Ingredient("Milk","Fridge", 2, "L", "Dairy"));
+        tempList.add(testCartIngredient);
+//        tempList.add(new CartIngredient());
+//        tempList.add(new CartIngredient());
+//        tempList.add(new CartIngredient());
         shoppingList.setList(tempList);
         // END OF TEMPORARY TESTING DATA
 
