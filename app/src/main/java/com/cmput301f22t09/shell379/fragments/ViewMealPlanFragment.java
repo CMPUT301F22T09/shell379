@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -30,8 +31,6 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ViewMealPlanFragment extends Fragment {
-    private ArrayList<Ingredient> ingredientsList;
-    private ArrayList<Recipe> recipesList;
     private RecyclerView mpIngredientRecycler;
     private RecyclerView mpRecipeRecycler;
     private MPIngredientsViewListAdapter ingredientsAdapter;
@@ -70,8 +69,6 @@ public class ViewMealPlanFragment extends Fragment {
                 }
         );
 
-//        layoutManager = new LinearLayoutManager(this.getActivity());
-
         mpIngredientRecycler = (RecyclerView) rootView.findViewById(R.id.plan_ingredients);
         mpRecipeRecycler = (RecyclerView) rootView.findViewById(R.id.plan_recipes);
 
@@ -86,13 +83,9 @@ public class ViewMealPlanFragment extends Fragment {
         mpRecipeRecycler.setItemAnimator(new DefaultItemAnimator());
 
         Log.e("MP_ADAPTER", ingredientsAdapter.getIngredients().toString());
+        navListeners(rootView);
+        fillFields(rootView);
 
-        rootView.findViewById(R.id.edit_plan).setOnClickListener(new View.OnClickListener() {
-             @Override
-             public void onClick(View view) {
-                 navController.navigate(ViewMealPlanFragmentDirections.actionMealPlanFragmentToViewMealPlanFragment());
-             }
-         });
         return rootView;
     }
 
@@ -103,13 +96,22 @@ public class ViewMealPlanFragment extends Fragment {
         navController.popBackStack();
     }
 
-    public void navigateToViewMealPlan(int index){
-        //    to-do
-//        MealPlanListFragmentDirections.
+    private void navListeners(View rootView){
+        rootView.findViewById(R.id.edit_plan).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(ViewMealPlanFragmentDirections.actionMealPlanFragmentToViewMealPlanFragment());
+            }
+        });
+    }
 
-//        IngredientListFragmentDirections.ActionIngredientListFragmentToViewIngredientFragment action
-//                = IngredientListFragmentDirections.actionIngredientListFragmentToViewIngredientFragment(index);
-//        navController.navigate(action);
+    private void fillFields(View rootView) {
+        ((TextView) rootView.findViewById(R.id.mpv_comments_data))
+                .setText(mpViewModel.getMealPlan().getComments());
+        ((TextView) rootView.findViewById(R.id.mpv_start_data))
+                .setText(mpViewModel.getMealPlan().getStartDateFormatted());
+        ((TextView) rootView.findViewById(R.id.mpv_end_data))
+                .setText(mpViewModel.getMealPlan().getEndDateFormatted());
     }
 
     private MealPlan testMP() {
@@ -130,6 +132,7 @@ public class ViewMealPlanFragment extends Fragment {
         recipeList.add(new Recipe("test5", 100L, 1, "yes", "yes"));
         recipeList.add(new Recipe("test6", 100L, 1, "yes", "yes"));
 
-        return new MealPlan("testPlan", recipeList, ingList, date, date, 10);
+        return new MealPlan("testPlan", recipeList, ingList, date, date, "test comments test comments test comments test comments" +
+                "test comments test comments test comments test comments test comments test comments", 10);
     }
 }

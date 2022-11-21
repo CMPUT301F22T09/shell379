@@ -138,6 +138,9 @@
         <action
             android:id="@+id/action_editMealPlanFragment_to_viewMealPlanFragment"
             app:destination="@id/viewMealPlanFragment" />
+        <action
+            android:id="@+id/action_editMealPlanFragment_to_mealPlanListFragment"
+            app:destination="@id/mealPlanListFragment" />
     </fragment>
 
 
