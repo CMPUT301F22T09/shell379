@@ -119,7 +119,7 @@ public class RecipeMealPlanPickDateFragment extends Fragment {
                 RecipeDatePicker.getMonth(),
                 RecipeDatePicker.getDayOfMonth()).getTime();
 
-        MealPlanWrapper<Recipe> newRecipe = new MealPlanWrapper<Recipe>(obj, recipeDate, serving);
+        MealPlanWrapper<Recipe> newRecipe = new MealPlanWrapper<Recipe>(, recipeDate, serving);
         writeToViewModel(newRecipe);
 
     }
