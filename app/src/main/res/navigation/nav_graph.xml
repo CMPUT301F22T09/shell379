@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/editMealPlanFragment">
+    app:startDestination="@id/mealPlanListFragment"
+    tools:ignore="ExtraText">
     <fragment
         android:id="@+id/ingredientListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.IngredientListFragment"
@@ -113,8 +114,8 @@
     </fragment>
     <fragment
         android:id="@+id/createMealPlanFragment"
-        android:name="com.cmput301f22t09.shell379.fragments.CreateMealPlanFragment"
-        android:label="fragment_new_mealPlan"
+        android:name="com.cmput301f22t09.shell379.fragments.EditMealPlanFragment"
+        android:label="fragment_save_mealPlan"
         tools:layout="@layout/fragment_edit_meal_plan_15" />
 
     <fragment
@@ -138,6 +139,7 @@
             android:id="@+id/action_editMealPlanFragment_to_viewMealPlanFragment"
             app:destination="@id/viewMealPlanFragment" />
     </fragment>
+
 
 
 
