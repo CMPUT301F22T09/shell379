@@ -81,15 +81,7 @@ public class RecipeMealPlanPickDateFragment extends Fragment {
                 }
         );
         // date extraction from https://stackoverflow.com/questions/9474121/i-want-to-get-year-month-day-etc-from-java-date-to-compare-with-gregorian-cal
-        Calendar cal = Calendar.getInstance(TimeZone.getDefault());
-        cal.setTime(recipe.getDate());
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-        ((DatePicker) rootView.findViewById(R.id.editRecipeDate)).updateDate(
-                year,
-                month,
-                day);
+
 
         return rootView;
     }
@@ -107,15 +99,27 @@ public class RecipeMealPlanPickDateFragment extends Fragment {
 
     private void save(){
 //        we dont have these 2 in the UI 17
-//        String obj = ((TextView) rootView.findViewById(R.id.recipe_name)).getText().toString();
-//        String serving =
+        String obj = ((TextView) rootView.findViewById(R.id.recipe_name)).getText().toString();
+        String serving = ((TextView) rootView.findViewById(R.id.rli_servings_textView)).getText().toString();
 
-        DatePicker bestBeforeDatePicker = rootView.findViewById(R.id.editRecipeDate);
+
+        Calendar cal = Calendar.getInstance(TimeZone.getDefault());
+        cal.setTime(recipe.getDate());
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        DatePicker RecipeDatePicker = rootView.findViewById(R.id.editRecipeDate);
+        RecipeDatePicker.updateDate(
+                year,
+                month,
+                day);
+
         Date recipeDate = new GregorianCalendar(
-                bestBeforeDatePicker.getYear(),
-                bestBeforeDatePicker.getMonth(),
-                bestBeforeDatePicker.getDayOfMonth()).getTime();
-        MealPlanWrapper<Recipe> newRecipe = new MealPlanWrapper<>(obj, date, recipe.getServings())
+                RecipeDatePicker.getYear(),
+                RecipeDatePicker.getMonth(),
+                RecipeDatePicker.getDayOfMonth()).getTime();
+
+        MealPlanWrapper<Recipe> newRecipe = new MealPlanWrapper<Recipe>(obj, recipeDate, serving);
         writeToViewModel(newRecipe);
 
     }
