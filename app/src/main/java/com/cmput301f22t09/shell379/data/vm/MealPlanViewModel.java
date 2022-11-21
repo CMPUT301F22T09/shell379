@@ -26,11 +26,13 @@ public class MealPlanViewModel extends ViewModel {
 
     public MealPlanViewModel() {
         this.mealPlan.setValue(new MealPlan("", new ArrayList<Recipe>(),
-                new ArrayList<Ingredient>(), new Date(), new Date(), 0));
+                new ArrayList<Ingredient>(), new Date(), new Date(), "", 0));
     }
 
     public static MealPlanViewModel of(FragmentActivity activity) {
-        return new ViewModelProvider(activity).get(MealPlanViewModel.class);
+        MealPlanViewModel viewModel = new ViewModelProvider(activity).get(MealPlanViewModel.class);
+        if (viewModel==null) viewModel = new MealPlanViewModel();
+        return viewModel;
     }
 
     public static MealPlanViewModel of(MealPlan mealPlan, FragmentActivity activity) {
@@ -63,7 +65,7 @@ public class MealPlanViewModel extends ViewModel {
     public MealPlan getMealPlan(){
         if (mealPlan.getValue() == null){
             MealPlan mp = new MealPlan("", new ArrayList<Recipe>(),
-                    new ArrayList<Ingredient>(), new Date(), new Date(), 0);
+                    new ArrayList<Ingredient>(), new Date(), new Date(),"testing comments", 0);
             mealPlan.setValue(mp);
             return mealPlan.getValue();
         }
@@ -114,6 +116,13 @@ public class MealPlanViewModel extends ViewModel {
         return mealPlan.getValue().getIngredients();
     }
 
+    public void setIdx(MutableLiveData<Integer> idx) {
+        this.idx = idx;
+    }
+
+    public MutableLiveData<Integer> getIdx() {
+        return idx;
+        
     /**
      * Notifies all listeners to the meal plan of a change
      */
@@ -127,6 +136,5 @@ public class MealPlanViewModel extends ViewModel {
         }catch(Exception e){
 
         }
-
     }
 }

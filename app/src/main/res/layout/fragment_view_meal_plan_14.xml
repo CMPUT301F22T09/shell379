@@ -34,39 +34,96 @@
                 app:srcCompat="@drawable/ic_baseline_arrow_back_24"
                 tools:ignore="SpeakableTextPresentCheck" />
 
-            <EditText
+            <TextView
                 android:id="@+id/plan_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
 
-                android:hint="Meal Plan Name"
-                android:maxWidth="320dp"
-                android:textSize="25dp"/>
+                android:layout_margin="3dp"
+                android:text="Meal Plan Name"
+                android:textSize="25dp" />
 
 
             <TextView
-                android:id="@+id/plan_comments"
+                android:id="@+id/mpv_comments"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
-                android:text="Comment"
+                android:text="Comments"
                 android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/plan_start"
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:text="Start Date"
-                android:textSize="20dp" />
+                android:layout_height="match_parent"
+                app:cardCornerRadius="4dp"
+                app:cardElevation="2dp"
+                app:contentPadding="8sp">
 
-            <TextView
-                android:id="@+id/plan_end"
+                <TextView
+                    android:id="@+id/mpv_comments_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:text="Comment Data"
+                    android:textSize="16sp" />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="3dp"
-                android:text="End Date"
-                android:textSize="20dp" />
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/mpv_start"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:layout_marginStart="3dp"
+                    android:layout_marginTop="3dp"
+                    android:text="Start Date"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/mpv_start_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="Start Date Data"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/mpv_start" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/mpv_end"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="2dp"
+                    android:text="End Date"
+                    android:textSize="20dp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/mpv_end_data"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="3dp"
+                    android:layout_marginEnd="8dp"
+                    android:text="End Date Data"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/mpv_end" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"

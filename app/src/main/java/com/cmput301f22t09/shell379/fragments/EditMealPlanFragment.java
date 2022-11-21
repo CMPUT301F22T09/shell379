@@ -5,7 +5,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.DatePicker;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -27,6 +29,7 @@ import com.cmput301f22t09.shell379.data.vm.MealPlanViewModel;
 import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class EditMealPlanFragment extends Fragment {
@@ -96,6 +99,25 @@ public class EditMealPlanFragment extends Fragment {
         mpRecipeRecycler.setItemAnimator(new DefaultItemAnimator());
 
         Log.e("MP_ADAPTER", ingredientsAdapter.getIngredients().toString());
+        fillFields(rootView);
+
+        rootView.findViewById(R.id.mpe_save_plan).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                collectData(rootView);
+                navController.popBackStack();
+                navController.popBackStack();
+            }
+        });
+
+        rootView.findViewById(R.id.mpe_cancel_plan).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.popBackStack();
+                navController.popBackStack();
+//                navController.navigate(EditMealPlanFragmentDirections.actionEditMealPlanFragmentToMealPlanListFragment());
+            }
+        });
         return rootView;
     }
 
@@ -104,6 +126,39 @@ public class EditMealPlanFragment extends Fragment {
      */
     private void back(){
         navController.popBackStack();
+    }
+
+    private void fillFields(View rootView) {
+        Date startDate = mpViewModel.getMealPlan().getStartDate();
+        Date endDate = mpViewModel.getMealPlan().getEndDate();
+        ((TextView) rootView.findViewById(R.id.plan_edit_comment_txt))
+                .setText(mpViewModel.getMealPlan().getComments());
+        ((DatePicker) rootView.findViewById(R.id.editPlanStart))
+                .updateDate(startDate.getYear(), startDate.getMonth(), startDate.getDay());
+        ((DatePicker) rootView.findViewById(R.id.editPlanEnd))
+                .updateDate(endDate.getYear(), endDate.getMonth(), endDate.getDay());
+        ((TextView) rootView.findViewById(R.id.plan_edit_name))
+                .setText(mpViewModel.getMealPlan().getMealPlanName());
+    }
+
+    private void collectData(View rootView) {
+        mpViewModel.getMealPlan().setMealPlanName(
+                ((TextView) rootView.findViewById(R.id.plan_edit_name)).getText().toString()
+        );
+        mpViewModel.getMealPlan().setComments(
+                ((TextView) rootView.findViewById(R.id.plan_edit_comment_txt)).getText().toString()
+        );
+
+        Calendar cal = Calendar.getInstance();
+        DatePicker picker = rootView.findViewById(R.id.editPlanStart);
+        cal.set(picker.getYear(), picker.getMonth(), picker.getDayOfMonth());
+        mpViewModel.getMealPlan().setStartDate(cal.getTime());
+
+        picker = rootView.findViewById(R.id.editPlanEnd);
+        cal.set(picker.getYear(), picker.getMonth(), picker.getDayOfMonth());
+        mpViewModel.getMealPlan().setEndDate(cal.getTime());
+
+        envViewModel.getMealPlans().setAtIdxOrAdd(mpViewModel.getIdx().getValue(), mpViewModel.getMealPlan());
     }
 
     public void navigateToViewMealPlan(int index){
