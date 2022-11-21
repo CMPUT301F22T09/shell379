@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,6 +20,7 @@ import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.ShoppingCart;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.wrapper.CartIngredient;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -34,6 +36,7 @@ public class ShoppingListFragment extends Fragment {
     private RecyclerView shoppingList_recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private ShoppingListAdapter shoppingListAdapter;
+    private FloatingActionButton backButton;
 
     public ShoppingListFragment() {
         // Required empty public constructor
@@ -42,6 +45,8 @@ public class ShoppingListFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        env = Environment.of((AppCompatActivity) requireActivity());
+        navController = NavHostFragment.findNavController(this);
     }
 
     @Override
@@ -50,7 +55,7 @@ public class ShoppingListFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_shopping_list_20, container, false);
 
-        env = Environment.of((AppCompatActivity) requireActivity());
+        backButton = rootView.findViewById(R.id.floatingActionButton5);
         // shoppingList = env.getCart();
 
         // TEMPORARY TESTING DATA
@@ -73,6 +78,13 @@ public class ShoppingListFragment extends Fragment {
         shoppingListAdapter = new ShoppingListAdapter(shoppingList, this);
         shoppingList_recyclerView.setAdapter(shoppingListAdapter);
         shoppingList_recyclerView.setItemAnimator(new DefaultItemAnimator());
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(ShoppingListFragmentDirections.actionShoppingListFragmentToMainMenuFragment());
+            }
+        });
 
         return rootView;
     }

@@ -1,5 +1,6 @@
 package com.cmput301f22t09.shell379.adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,12 +9,15 @@ import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.ShoppingCart;
 import com.cmput301f22t09.shell379.data.wrapper.CartIngredient;
 import com.cmput301f22t09.shell379.fragments.ShoppingListFragment;
+import com.cmput301f22t09.shell379.fragments.ShoppingListFragmentDirections;
 
 import java.util.ArrayList;
 
@@ -24,7 +28,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
 
     private ShoppingCart shoppingList;
     private ShoppingListFragment shoppingListFragment;
-    // private NavController navController;
+    private NavController navController;
 
     /**
      * Custom ViewHolder to describe each shopping list item's view.
@@ -53,6 +57,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
     public ShoppingListAdapter(ShoppingCart shoppingList, ShoppingListFragment shoppingListFragment) {
         this.shoppingList = shoppingList;
         this.shoppingListFragment = shoppingListFragment;
+        this.navController = NavHostFragment.findNavController(shoppingListFragment);
     }
 
     @NonNull
@@ -83,16 +88,16 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
 
         // TODO: need both an if/else and an onCheckListener
 
-        // TODO: create getter (and setter?) for CartIngredient isPickedUp and detailsFilled
-        //***
-         if (cartIngredient.getPickedUp() && !cartIngredient.getDetailsFilled()) {
-             detailsCompleteMsg.setVisibility(View.GONE);
-             fillOutDetailsMsg.setVisibility(View.VISIBLE);
-         }
-         else if (cartIngredient.getPickedUp() && cartIngredient.getDetailsFilled()) {
-             detailsCompleteMsg.setVisibility(View.VISIBLE);
-             fillOutDetailsMsg.setVisibility(View.GONE);
-         }
+        if (cartIngredient.getPickedUp() && !cartIngredient.getDetailsFilled()) {
+            detailsCompleteMsg.setVisibility(View.GONE);
+            fillOutDetailsMsg.setVisibility(View.VISIBLE);
+        }
+        else if (cartIngredient.getPickedUp() && cartIngredient.getDetailsFilled()) {
+            detailsCompleteMsg.setVisibility(View.VISIBLE);
+            fillOutDetailsMsg.setVisibility(View.GONE);
+        }
+
+        setItemOnClickListener(holder);
 
         setCheckBoxOnClickListener(holder, position);
     }
@@ -100,6 +105,19 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
     @Override
     public int getItemCount() {
         return shoppingList.getList().size();
+    }
+
+    public void setItemOnClickListener(ShoppingListViewHolder holder) {
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int ingredientIndex = holder.getAdapterPosition();
+                if (shoppingList.getList().get(ingredientIndex).getPickedUp() == true) {
+                    Log.e("debug", "clicked ingredient in shopping list");
+                    navController.navigate(ShoppingListFragmentDirections.actionShoppingListFragmentToCheckoutIngredient(ingredientIndex));
+                }
+            }
+        });
     }
 
     public void setCheckBoxOnClickListener(ShoppingListViewHolder holder, int position) {
