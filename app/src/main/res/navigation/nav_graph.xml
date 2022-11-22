@@ -57,6 +57,9 @@
         <action
             android:id="@+id/action_shoppingListFragment_to_checkoutIngredient"
             app:destination="@id/checkoutIngredient"/>
+        <action
+            android:id="@+id/action_shoppingListFragment_to_mainMenuFragment"
+            app:destination="@id/mainMenuFragment" />
     </fragment>
 
     <fragment
