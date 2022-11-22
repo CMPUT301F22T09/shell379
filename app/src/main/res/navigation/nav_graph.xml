@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/checkoutIngredient">
+    app:startDestination="@id/mainMenuFragment">
     <fragment
         android:id="@+id/ingredientListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.IngredientListFragment"
@@ -57,6 +57,9 @@
         <action
             android:id="@+id/action_shoppingListFragment_to_checkoutIngredient"
             app:destination="@id/checkoutIngredient"/>
+        <action
+            android:id="@+id/action_shoppingListFragment_to_mainMenuFragment"
+            app:destination="@id/mainMenuFragment" />
     </fragment>
 
     <fragment
