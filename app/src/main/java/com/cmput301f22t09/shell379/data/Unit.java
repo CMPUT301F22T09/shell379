@@ -24,8 +24,6 @@ public enum Unit {
                 return "liters";
             case ML:
                 return "milliliters";
-            case TEASPOON:
-                return "tea spoons";
         }
         return "invalid unit";
     }
@@ -45,8 +43,6 @@ public enum Unit {
                 return L;
             case "milliliters":
                 return ML;
-            case "tea spoons":
-                return TEASPOON;
         }
         return null;
     }
