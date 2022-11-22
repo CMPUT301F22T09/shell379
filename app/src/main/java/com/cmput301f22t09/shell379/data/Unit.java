@@ -6,8 +6,7 @@ public enum Unit {
     KG,
     G,
     L,
-    ML,
-    TEASPOON;
+    ML;
 
     /**
      * returns the associated string for each ENUM
@@ -24,8 +23,6 @@ public enum Unit {
                 return "liters";
             case ML:
                 return "milliliters";
-            case TEASPOON:
-                return "tea spoons";
         }
         return "invalid unit";
     }
@@ -45,8 +42,6 @@ public enum Unit {
                 return L;
             case "milliliters":
                 return ML;
-            case "tea spoons":
-                return TEASPOON;
         }
         return null;
     }
