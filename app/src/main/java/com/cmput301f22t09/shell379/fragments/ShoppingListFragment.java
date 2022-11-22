@@ -59,15 +59,18 @@ public class ShoppingListFragment extends Fragment {
         // shoppingList = env.getCart();
 
         // TEMPORARY TESTING DATA
-        shoppingList = new ShoppingCart();
-        ArrayList<CartIngredient> tempList = new ArrayList<>();
+//        shoppingList = new ShoppingCart();
+//        ArrayList<CartIngredient> tempList = new ArrayList<>();
         CartIngredient testCartIngredient = new CartIngredient("Milk", "Dairy", 2, "L");
         testCartIngredient.setIngredient(new Ingredient("Milk","Fridge", 2, "L", "Dairy"));
-        tempList.add(testCartIngredient);
+        env.getCart().getList().add(testCartIngredient);
+        env.getCart().commit();
+//        tempList.add(testCartIngredient);
 //        tempList.add(new CartIngredient());
 //        tempList.add(new CartIngredient());
 //        tempList.add(new CartIngredient());
-        shoppingList.setList(tempList);
+        // shoppingList.setList(tempList);
+        shoppingList = env.getCart();
         // END OF TEMPORARY TESTING DATA
 
         // Set up recycler view for displaying shopping list items

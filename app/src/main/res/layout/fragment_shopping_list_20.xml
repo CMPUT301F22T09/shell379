@@ -85,7 +85,7 @@
         android:layout_centerInParent="true"
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="52dp"
-        android:text="Checkout" />
+        android:text="Add picked-up Ingredients to storage" />
 
 </RelativeLayout>
 
