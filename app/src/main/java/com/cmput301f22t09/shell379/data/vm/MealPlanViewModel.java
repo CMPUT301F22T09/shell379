@@ -31,7 +31,7 @@ public class MealPlanViewModel extends ViewModel {
 
     public static MealPlanViewModel of(FragmentActivity activity) {
         MealPlanViewModel viewModel = new ViewModelProvider(activity).get(MealPlanViewModel.class);
-        if (viewModel==null) viewModel = new MealPlanViewModel();
+        if (viewModel == null) viewModel = new MealPlanViewModel();
         return viewModel;
     }
 
@@ -58,14 +58,14 @@ public class MealPlanViewModel extends ViewModel {
     /**
      * notifies all listeners of the ingredient stubs of a change
      */
-    public void forceSignalUpdate(){
+    public void forceSignalUpdate() {
         mealPlan.setValue(mealPlan.getValue());
     }
 
-    public MealPlan getMealPlan(){
-        if (mealPlan.getValue() == null){
+    public MealPlan getMealPlan() {
+        if (mealPlan.getValue() == null) {
             MealPlan mp = new MealPlan("", new ArrayList<Recipe>(),
-                    new ArrayList<Ingredient>(), new Date(), new Date(),"testing comments", 0);
+                    new ArrayList<Ingredient>(), new Date(), new Date(), "testing comments", 0);
             mealPlan.setValue(mp);
             return mealPlan.getValue();
         }
@@ -96,7 +96,7 @@ public class MealPlanViewModel extends ViewModel {
         return getMealPlan().getRecipes().get(idx);
     }
 
-    public void setMealPlan(MealPlan mealPlan){
+    public void setMealPlan(MealPlan mealPlan) {
         this.mealPlan.setValue(mealPlan);
     }
 
@@ -122,19 +122,21 @@ public class MealPlanViewModel extends ViewModel {
 
     public MutableLiveData<Integer> getIdx() {
         return idx;
-        
-    /**
-     * Notifies all listeners to the meal plan of a change
-     */
-    public void forceNotify(){
-
-        this.setMealPlan(this.getMealPlan());
-
-        // For tests, remove later
-        try{
-            Log.e("test",getMealPlan().getIngredients().get(0).getDisplayDate());
-        }catch(Exception e){
-
-        }
     }
+
+        /**
+         * Notifies all listeners to the meal plan of a change
+         */
+        public void forceNotify () {
+
+            this.setMealPlan(this.getMealPlan());
+
+            // For tests, remove later
+            try {
+                Log.e("test", getMealPlan().getIngredients().get(0).getDisplayDate());
+            } catch (Exception e) {
+
+            }
+        }
+
 }

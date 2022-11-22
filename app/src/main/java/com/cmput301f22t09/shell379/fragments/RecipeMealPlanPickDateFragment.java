@@ -7,23 +7,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.cmput301f22t09.shell379.R;
-import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
-import com.cmput301f22t09.shell379.data.vm.EditRecipeViewModel;
-import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.MealPlanViewModel;
 import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
 
@@ -38,6 +32,8 @@ public class RecipeMealPlanPickDateFragment extends Fragment {
     protected MealPlanViewModel mealPlanViewModel;
     private MealPlanWrapper<Recipe> recipe;
     private int recipeIdx;
+    private Recipe recipe1;
+    private Integer serving1;
 
     public RecipeMealPlanPickDateFragment() {
 
@@ -55,7 +51,7 @@ public class RecipeMealPlanPickDateFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.mealplan_recipe_date_17, container, false);
-
+        // back button to go back
         ((ImageView)rootView.findViewById(R.id.back_button)).setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
@@ -63,7 +59,7 @@ public class RecipeMealPlanPickDateFragment extends Fragment {
                     }
                 }
         );
-
+        // cancel button to go back
         ((Button)rootView.findViewById(R.id.cancel_button)).setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
@@ -98,7 +94,7 @@ public class RecipeMealPlanPickDateFragment extends Fragment {
     }
 
     private void save(){
-//        we dont have these 2 in the UI 17
+//        we dont have these 2 in the UI screen 17; those 2 are edited/save in previous screen
         String obj = ((TextView) rootView.findViewById(R.id.recipe_name)).getText().toString();
         String serving = ((TextView) rootView.findViewById(R.id.rli_servings_textView)).getText().toString();
 
@@ -119,7 +115,7 @@ public class RecipeMealPlanPickDateFragment extends Fragment {
                 RecipeDatePicker.getMonth(),
                 RecipeDatePicker.getDayOfMonth()).getTime();
 
-        MealPlanWrapper<Recipe> newRecipe = new MealPlanWrapper<Recipe>(, recipeDate, serving);
+        MealPlanWrapper<Recipe> newRecipe = new MealPlanWrapper<Recipe>(recipe1, recipeDate, serving1);
         writeToViewModel(newRecipe);
 
     }

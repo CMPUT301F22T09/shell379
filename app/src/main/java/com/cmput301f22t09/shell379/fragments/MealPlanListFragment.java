@@ -6,6 +6,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -22,7 +23,9 @@ import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.MealPlanAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.MealPlan;
+import com.cmput301f22t09.shell379.data.vm.EditRecipeViewModel;
 import com.cmput301f22t09.shell379.data.vm.Environment;
+import com.cmput301f22t09.shell379.data.vm.MealPlanViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -34,6 +37,7 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
     private MealPlanAdapter mealPlanListAdapter;
     private Environment envViewModel;
     private NavController navController;
+    private MealPlanViewModel mealPlanViewModel;
 //    private FloatingActionButton backButton;
 
 
@@ -46,6 +50,7 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
         super.onCreate(savedInstanceState);
         navController = NavHostFragment.findNavController(this);
         envViewModel = Environment.of((AppCompatActivity) requireActivity());
+        mealPlanViewModel =  new ViewModelProvider(requireActivity()).get(MealPlanViewModel.class);
 
         final Observer<ArrayList<MealPlan>> mealPlanObserver = new Observer<ArrayList<MealPlan>>() {
             @Override
