@@ -6,8 +6,7 @@ public enum Unit {
     KG,
     G,
     L,
-    ML,
-    TEASPOON;
+    ML;
 
     /**
      * returns the associated string for each ENUM
