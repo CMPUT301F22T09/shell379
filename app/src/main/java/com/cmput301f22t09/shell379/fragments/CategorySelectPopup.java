@@ -63,6 +63,7 @@ public abstract class CategorySelectPopup extends DialogFragment {
         HashSet<String> hashset = categorySet.getCategories();
 
         ((TextView)view.findViewById(R.id.title_text)).setText(title);
+        ((EditText)(view.findViewById(R.id.textInputEditText))).setHint("Enter New " + title);
 
 
         // Create adapter passing in the sample user data
