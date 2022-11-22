@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.ShoppingListAdapter;
@@ -37,6 +38,7 @@ public class ShoppingListFragment extends Fragment {
     private RecyclerView.LayoutManager layoutManager;
     private ShoppingListAdapter shoppingListAdapter;
     private FloatingActionButton backButton;
+    private Button submitButton;
 
     public ShoppingListFragment() {
         // Required empty public constructor
@@ -55,7 +57,8 @@ public class ShoppingListFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_shopping_list_20, container, false);
 
-        backButton = rootView.findViewById(R.id.floatingActionButton5);
+        backButton = rootView.findViewById(R.id.back);
+        submitButton = rootView.findViewById(R.id.submit_button);
         // shoppingList = env.getCart();
 
         // TEMPORARY TESTING DATA
@@ -89,6 +92,16 @@ public class ShoppingListFragment extends Fragment {
             }
         });
 
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                submit();
+            }
+        });
         return rootView;
+    }
+
+    private void submit() {
+        navController.navigate(ShoppingListFragmentDirections.actionShoppingListFragmentToShoppingListSuccessFragment());
     }
 }
