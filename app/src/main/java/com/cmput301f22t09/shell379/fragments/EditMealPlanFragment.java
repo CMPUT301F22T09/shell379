@@ -42,7 +42,7 @@ public class EditMealPlanFragment extends Fragment {
     private Environment envViewModel;
     private NavController navController;
     private MealPlanViewModel mpViewModel;
-//    private FloatingActionButton backButton;
+    // private FloatingActionButton backButton;
 
 
     public EditMealPlanFragment() {
@@ -106,14 +106,12 @@ public class EditMealPlanFragment extends Fragment {
             public void onClick(View view) {
                 collectData(rootView);
                 navController.popBackStack();
-                navController.popBackStack();
             }
         });
 
         rootView.findViewById(R.id.mpe_cancel_plan).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                navController.popBackStack();
                 navController.popBackStack();
 //                navController.navigate(EditMealPlanFragmentDirections.actionEditMealPlanFragmentToMealPlanListFragment());
             }
@@ -159,6 +157,7 @@ public class EditMealPlanFragment extends Fragment {
         mpViewModel.getMealPlan().setEndDate(cal.getTime());
 
         envViewModel.getMealPlans().setAtIdxOrAdd(mpViewModel.getIdx().getValue(), mpViewModel.getMealPlan());
+        envViewModel.getMealPlans().commit();
     }
 
     public void navigateToViewMealPlan(int index){
