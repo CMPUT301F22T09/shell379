@@ -11,6 +11,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
@@ -25,6 +26,8 @@ import com.cmput301f22t09.shell379.data.Unit;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.wrapper.CartIngredient;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -34,12 +37,13 @@ public class CheckoutIngredientFragment extends Fragment {
     protected View rootView;
     private NavController navController;
     protected Environment envViewModel;
-    private EditText category;
+    private TextView category;
     private EditText location;
     private int ingredientIndex;
-    private EditText description;
+    private TextView description;
     private CartIngredient theCartIngredient;
     private EditText amount;
+    private TextView unit;
 
     public CheckoutIngredientFragment() {
         // Required empty public constructor
@@ -58,30 +62,17 @@ public class CheckoutIngredientFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.fragment_shopping_list_checkout_22, container, false);
-        category = ((EditText) rootView.findViewById(R.id.editCategory));
+        category = ((TextView) rootView.findViewById(R.id.editCategory));
         location = ((EditText) rootView.findViewById(R.id.editLocation));
-        description = ((EditText) rootView.findViewById(R.id.editDescription));
+        description = ((TextView) rootView.findViewById(R.id.editDescription));
         amount = ((EditText) rootView.findViewById(R.id.editAmount));
+        unit = ((TextView) rootView.findViewById(R.id.editUnit));
 
         theCartIngredient = envViewModel.getCart().getList().get(ingredientIndex);
         description.setText(theCartIngredient.getDescription());
         category.setText(theCartIngredient.getCategory());
         amount.setText(theCartIngredient.getAmount().toString());
-        ArrayList<Unit> units = new ArrayList<Unit>(Arrays.asList(Unit.values()));
-        int unitSelectionIndex = units.indexOf(Unit.getFromString(theCartIngredient.getUnit()));
-        ((Spinner)rootView.findViewById(R.id.editUnit)).setSelection(unitSelectionIndex);
-
-
-        // Populate spinner options.
-        // Spinner template code from https://developer.android.com/develop/ui/views/components/spinner
-        Spinner spinner = (Spinner) rootView.findViewById(R.id.editUnit);
-        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
-                getActivity(),
-                android.R.layout.simple_spinner_item,
-                Unit.getAllValuesAsStrings()// NEEDS TO BE CHANGED
-        );
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        unit.setText(theCartIngredient.getUnit());
 
         ((ImageView) rootView.findViewById(R.id.back)).setOnClickListener(
                 new View.OnClickListener() {
@@ -122,11 +113,11 @@ public class CheckoutIngredientFragment extends Fragment {
         try {
 
             // Load data from Views
-            String description = ((EditText) rootView.findViewById(R.id.editDescription)).getText().toString();
+            String description = ((TextView) rootView.findViewById(R.id.editDescription)).getText().toString();
             String location = ((EditText) rootView.findViewById(R.id.editLocation)).getText().toString();
             String strAmount = ((EditText) rootView.findViewById(R.id.editAmount)).getText().toString();
-            String category = ((EditText) rootView.findViewById(R.id.editCategory)).getText().toString();
-            String unit = ((Spinner) rootView.findViewById(R.id.editUnit)).getSelectedItem().toString();
+            String category = ((TextView) rootView.findViewById(R.id.editCategory)).getText().toString();
+            String unit = ((TextView) rootView.findViewById(R.id.editUnit)).toString();
 
             // validate
             if (description.isEmpty() ||

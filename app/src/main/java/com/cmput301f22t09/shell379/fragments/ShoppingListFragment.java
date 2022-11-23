@@ -102,6 +102,12 @@ public class ShoppingListFragment extends Fragment {
     }
 
     private void submit() {
+//        ArrayList<CartIngredient> shoppingArray = shoppingList.getList();
+//        for (int i = 0; i < shoppingArray.size(); i++) {
+//            Ingredient theIngredient = shoppingArray.get(i).getIngredient();
+//            env.getIngredients().add(theIngredient);
+//
+//        }
         navController.navigate(ShoppingListFragmentDirections.actionShoppingListFragmentToShoppingListSuccessFragment());
     }
 }
