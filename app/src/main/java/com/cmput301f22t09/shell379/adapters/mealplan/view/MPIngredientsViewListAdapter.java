@@ -69,6 +69,8 @@ public class MPIngredientsViewListAdapter extends RecyclerView.Adapter<MPIngredi
         TextView amount = holder.amount;
         TextView date = holder.date;
 
+        String units = ((Ingredient)viewModel.getIngredientAtIdx(position).getObj()).getUnit();
+        holder.amount.setText("Amount ( "+units+" )");
         Log.e("MP_ADAPTER_ITEM", viewModel.getIngredientAtIdx(position).getName());
         name.setText(viewModel.getIngredientAtIdx(position).getName());
         amount.setText(viewModel.getIngredientAtIdx(position).getServings().toString());

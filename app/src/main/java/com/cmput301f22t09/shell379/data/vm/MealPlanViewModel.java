@@ -122,6 +122,7 @@ public class MealPlanViewModel extends ViewModel {
 
     public MutableLiveData<Integer> getIdx() {
         return idx;
+    }
         
     /**
      * Notifies all listeners to the meal plan of a change
