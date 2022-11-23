@@ -14,7 +14,6 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
-import com.cmput301f22t09.shell379.data.ShoppingCart;
 import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
 import com.cmput301f22t09.shell379.data.wrapper.CartIngredient;
 import com.cmput301f22t09.shell379.fragments.ShoppingListFragment;
@@ -38,7 +37,9 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
 
         TextView description;
         TextView category;
-        TextView amount;
+        TextView amount_required;
+        TextView amount_purchased_label;
+        TextView amount_purchased;
         TextView detailsCompleteMsg;
         TextView fillOutDetailsMsg;
         CheckBox checkbox;
@@ -47,7 +48,9 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             super(itemView);
             this.description = itemView.findViewById(R.id.shop_description);
             this.category = itemView.findViewById(R.id.shop_category);
-            this.amount = itemView.findViewById(R.id.shop_amount);
+            this.amount_required = itemView.findViewById(R.id.shop_amount_req);
+            this.amount_purchased_label = itemView.findViewById(R.id.shop_amount_pur_label);
+            this.amount_purchased = itemView.findViewById(R.id.shop_amount_pur);
             this.detailsCompleteMsg = itemView.findViewById(R.id.shop_complete_msg);
             this.fillOutDetailsMsg = itemView.findViewById(R.id.shop_incomplete_msg);
             this.checkbox = itemView.findViewById(R.id.shop_checkBox);
@@ -74,7 +77,9 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
     public void onBindViewHolder(@NonNull ShoppingListViewHolder holder, int position) {
         TextView description = holder.description;
         TextView category = holder.category;
-        TextView amount = holder.amount;
+        TextView amount_required = holder.amount_required;
+        TextView amount_purchased_label = holder.amount_purchased_label;
+        TextView amount_purchased = holder.amount_purchased;
         TextView detailsCompleteMsg = holder.detailsCompleteMsg;
         TextView fillOutDetailsMsg = holder.fillOutDetailsMsg;
         CheckBox checkbox = holder.checkbox;
@@ -83,9 +88,18 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
 
         description.setText(cartIngredient.getDescription());
         category.setText(cartIngredient.getCategory());
-        amount.setText(cartIngredient.getAmount().toString() + " " + cartIngredient.getUnit());
+        amount_required.setText(cartIngredient.getAmount().toString() + " " + cartIngredient.getUnit());
+
         detailsCompleteMsg.setVisibility(View.GONE);
         fillOutDetailsMsg.setVisibility(View.GONE);
+        amount_purchased_label.setVisibility(View.GONE);
+        amount_purchased.setVisibility(View.GONE);
+
+        if (cartIngredient.getIngredient() != null) {
+            amount_purchased.setText(cartIngredient.getIngredient().getAmount().toString() + " " + cartIngredient.getUnit());
+            amount_purchased_label.setVisibility(View.VISIBLE);
+            amount_purchased.setVisibility(View.VISIBLE);
+        }
 
         // TODO: need both an if/else and an onCheckListener
 
@@ -147,6 +161,8 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
                     shoppingList.getList().get(holder.getAdapterPosition()).setIngredient(null);
                     holder.fillOutDetailsMsg.setVisibility(View.GONE);
                     holder.detailsCompleteMsg.setVisibility(View.GONE);
+                    holder.amount_purchased_label.setVisibility(View.GONE);
+                    holder.amount_purchased.setVisibility(View.GONE);
                 }
             }
         });
