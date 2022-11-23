@@ -1,6 +1,7 @@
 package com.cmput301f22t09.shell379;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.util.ArraySortUtil;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Optional;
 
 public class ArraySortUtilRecipeUnitTest {
 
@@ -43,9 +45,9 @@ public class ArraySortUtilRecipeUnitTest {
     void testTimeSortRecipes() {
         clearTestRecipes();
         ArraySortUtil.sortByStringProp(testRecipes, Recipe.getStringPropGetter(1));
-        assertEquals(java.util.Optional.ofNullable(testRecipes.get(0).getPreparationTime()),1);
-        assertEquals(java.util.Optional.ofNullable(testRecipes.get(1).getPreparationTime()),3);
-        assertEquals(java.util.Optional.ofNullable(testRecipes.get(2).getPreparationTime()),20);
+        assertTrue(java.util.Optional.ofNullable(testRecipes.get(0).getPreparationTime()).equals( Optional.of(1)));
+        assertTrue(java.util.Optional.ofNullable(testRecipes.get(1).getPreparationTime()).equals( Optional.of(3)));
+        assertTrue(java.util.Optional.ofNullable(testRecipes.get(2).getPreparationTime()).equals(Optional.of(20)));
     }
 
     /**
