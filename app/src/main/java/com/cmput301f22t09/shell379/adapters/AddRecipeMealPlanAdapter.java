@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
+import com.cmput301f22t09.shell379.data.MealPlan;
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.MealPlanViewModel;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 
 public class AddRecipeMealPlanAdapter extends RecyclerView.Adapter<AddRecipeMealPlanAdapter.AddRecipeMealPlanViewHolder>{
 
-    private ArrayList<MealPlanWrapper<Recipe>> RecipeinMealPlan;
+    private ArrayList<Recipe> RecipeinMealPlan;
     private RecipeInMealPlanListener recipeInMealPlanListener;
     private MealPlanViewModel mealPlanViewModel;
 
@@ -52,7 +53,7 @@ public class AddRecipeMealPlanAdapter extends RecyclerView.Adapter<AddRecipeMeal
         }
     }
 
-    public AddRecipeMealPlanAdapter(ArrayList<MealPlanWrapper<Recipe>> RecipeinMealPlan, RecipeInMealPlanListener recipeInMealPlanListener, MealPlanViewModel mealPlanViewModel){
+    public AddRecipeMealPlanAdapter(ArrayList<Recipe> RecipeinMealPlan, RecipeInMealPlanListener recipeInMealPlanListener, MealPlanViewModel mealPlanViewModel){
         this.mealPlanViewModel = mealPlanViewModel;
         this.RecipeinMealPlan = RecipeinMealPlan;
         this.recipeInMealPlanListener = recipeInMealPlanListener;
@@ -77,10 +78,10 @@ public class AddRecipeMealPlanAdapter extends RecyclerView.Adapter<AddRecipeMeal
         TextView category = holder.category;
 
 //        recipeName.setText(RecipeinMealPlan.get(holder.getAdapterPosition()).getTitle());
-        recipeName.setText(RecipeinMealPlan.get(holder.getAdapterPosition()).getObj().getTitle());
-        prepTime.setText(RecipeinMealPlan.get(holder.getAdapterPosition()).getObj().getPreparationTime().toString());
-        servings.setText(RecipeinMealPlan.get(holder.getAdapterPosition()).getObj().getServings().toString());
-        category.setText(RecipeinMealPlan.get(holder.getAdapterPosition()).getObj().getCategory());
+        recipeName.setText(RecipeinMealPlan.get(holder.getAdapterPosition()).getTitle());
+        prepTime.setText(RecipeinMealPlan.get(holder.getAdapterPosition()).getPreparationTime().toString());
+        servings.setText(RecipeinMealPlan.get(holder.getAdapterPosition()).getServings().toString());
+        category.setText(RecipeinMealPlan.get(holder.getAdapterPosition()).getCategory());
 
         holder.getItemView().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,7 +101,7 @@ public class AddRecipeMealPlanAdapter extends RecyclerView.Adapter<AddRecipeMeal
      * @param i index of recipe in the view model
      */
     public void recipeOnClick(int i) {
-        MealPlanWrapper<Recipe> a = RecipeinMealPlan.get(i);
+        Recipe a = RecipeinMealPlan.get(i);
         ArrayList<MealPlanWrapper<Recipe>> recipes = mealPlanViewModel.getRecipes();
         int index = recipes.indexOf(a);
         recipeInMealPlanListener.editRecipeInMP(index);

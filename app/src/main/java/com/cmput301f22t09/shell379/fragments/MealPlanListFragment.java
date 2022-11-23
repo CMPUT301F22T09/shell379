@@ -26,6 +26,7 @@ import com.cmput301f22t09.shell379.data.MealPlan;
 import com.cmput301f22t09.shell379.data.vm.EditRecipeViewModel;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.MealPlanViewModel;
+import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -85,6 +86,7 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
         ((Button)rootView.findViewById(R.id.new_button)).setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
+                        MealPlanViewModel.of(new MealPlan(), requireActivity());
                         navController.navigate(MealPlanListFragmentDirections.actionMealPlanFragmentToCreateMealPlanFragment());
                     }
                 }
@@ -96,7 +98,7 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
         mealPlan_recyclerView = (RecyclerView) rootView.findViewById(R.id.meal_plan_recyclerView);
         mealPlan_recyclerView.setLayoutManager(layoutManager);
 
-        mealPlanListAdapter = new MealPlanAdapter(mealPlanList, envViewModel,this);
+        mealPlanListAdapter = new MealPlanAdapter(mealPlanList, envViewModel,this, requireActivity());
         mealPlan_recyclerView.setAdapter(mealPlanListAdapter);
         mealPlan_recyclerView.setItemAnimator(new DefaultItemAnimator());
 

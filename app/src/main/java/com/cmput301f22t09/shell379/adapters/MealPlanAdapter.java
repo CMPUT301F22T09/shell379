@@ -6,11 +6,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.MealPlan;
 import com.cmput301f22t09.shell379.data.vm.Environment;
+import com.cmput301f22t09.shell379.data.vm.MealPlanViewModel;
 import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MealPl
     private ArrayList<MealPlan> mealPlans;
     private Environment envViewModel;
     private MealPlanAdapter.AdaptorListener mealPlanListener;
+    private FragmentActivity activity;
 
     public interface AdaptorListener {
         public void navigateToViewMealPlan(int index);
@@ -42,16 +45,17 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MealPl
         public MealPlanViewHolder(@NonNull View itemView) {
             super(itemView);
             this.mealPlantName = (TextView) itemView.findViewById(R.id.meal_name);
-            this.endDate = (TextView) itemView.findViewById(R.id.end_date);
-            this.startDate = (TextView) itemView.findViewById(R.id.start_date);
+            this.endDate = (TextView) itemView.findViewById(R.id.end_date_textView);
+            this.startDate = (TextView) itemView.findViewById(R.id.start_date_textView);
 
         }
     }
 
-    public MealPlanAdapter(ArrayList<MealPlan> data, Environment envViewModel, AdaptorListener mealPlanListener){
+    public MealPlanAdapter(ArrayList<MealPlan> data, Environment envViewModel, AdaptorListener mealPlanListener, FragmentActivity activity){
         this.envViewModel = envViewModel;
         this.mealPlans = data;
         this.mealPlanListener = mealPlanListener;
+        this.activity = activity;
     }
 
 
@@ -102,14 +106,11 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MealPl
         MealPlan m = mealPlans.get(i);
         LiveCollection<MealPlan> mealPlanCollection = envViewModel.getMealPlans();
         mealPlanCollection.getList().indexOf(m);
+        MealPlanViewModel.of(i, activity);
         mealPlanListener.navigateToViewMealPlan(i);
     }
 
-// maybe dont need this (only for testing purpose)
-//    public MealPlan getMealPlan(int index){
-//        MealPlan mealPlan = mealPlans.get(index);
-//        return mealPlan;
-//    }
+
 }
 
 

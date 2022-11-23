@@ -145,14 +145,16 @@ public class EditMealPlanFragment extends Fragment {
     }
 
     private void fillFields(View rootView) {
-        Date startDate = mpViewModel.getMealPlan().getStartDate();
-        Date endDate = mpViewModel.getMealPlan().getEndDate();
+        Calendar startDate = Calendar.getInstance();
+        startDate.setTime(mpViewModel.getMealPlan().getStartDate());
+        Calendar endDate = Calendar.getInstance();
+        endDate.setTime(mpViewModel.getMealPlan().getEndDate());
         ((TextView) rootView.findViewById(R.id.plan_edit_comment_txt))
                 .setText(mpViewModel.getMealPlan().getComments());
         ((DatePicker) rootView.findViewById(R.id.editPlanStart))
-                .updateDate(startDate.getYear(), startDate.getMonth(), startDate.getDay());
+                .updateDate(startDate.get(Calendar.YEAR), startDate.get(Calendar.MONTH), startDate.get(Calendar.DAY_OF_MONTH));
         ((DatePicker) rootView.findViewById(R.id.editPlanEnd))
-                .updateDate(endDate.getYear(), endDate.getMonth(), endDate.getDay());
+                .updateDate(endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH), endDate.get(Calendar.DAY_OF_MONTH));
         ((TextView) rootView.findViewById(R.id.plan_edit_name))
                 .setText(mpViewModel.getMealPlan().getMealPlanName());
     }
@@ -174,7 +176,7 @@ public class EditMealPlanFragment extends Fragment {
         cal.set(picker.getYear(), picker.getMonth(), picker.getDayOfMonth());
         mpViewModel.getMealPlan().setEndDate(cal.getTime());
 
-        envViewModel.getMealPlans().setAtIdxOrAdd(mpViewModel.getIdx().getValue(), mpViewModel.getMealPlan());
+        envViewModel.getMealPlans().setAtIdxOrAdd(mpViewModel.getIdx(), mpViewModel.getMealPlan());
         envViewModel.getMealPlans().commit();
     }
 
