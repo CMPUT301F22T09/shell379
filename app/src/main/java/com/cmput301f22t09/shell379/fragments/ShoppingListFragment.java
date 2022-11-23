@@ -19,9 +19,11 @@ import android.widget.Button;
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.ShoppingListAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
+
 import com.cmput301f22t09.shell379.data.MealPlan;
 import com.cmput301f22t09.shell379.data.ShoppingCart;
 import com.cmput301f22t09.shell379.data.util.IngredientDiffUtil;
+
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
 import com.cmput301f22t09.shell379.data.wrapper.CartIngredient;
@@ -36,7 +38,7 @@ public class ShoppingListFragment extends Fragment {
     // data variables
     private Environment env;
     private NavController navController;
-    private ShoppingCart shoppingList;
+    private LiveCollection<CartIngredient> shoppingList;
 
     // UI variables
     private RecyclerView shoppingList_recyclerView;
@@ -67,6 +69,9 @@ public class ShoppingListFragment extends Fragment {
         // shoppingList = env.getCart();
 
         // TEMPORARY TESTING DATA
+
+//        shoppingList = new LiveCollection<CartIngredient>();
+//        ArrayList<CartIngredient> tempList = new ArrayList<>();
         CartIngredient testCartIngredient = new CartIngredient("Milk", "Dairy", 2, "L");
         testCartIngredient.setIngredient(new Ingredient("Milk","Fridge", 2, "L", "Dairy"));
         testCartIngredient.setDetailsFilled(false);

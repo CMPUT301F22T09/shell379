@@ -2,8 +2,11 @@ package com.cmput301f22t09.shell379.fragments;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -13,12 +16,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.MealPlanAdapter;
+import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.MealPlan;
+import com.cmput301f22t09.shell379.data.vm.EditRecipeViewModel;
 import com.cmput301f22t09.shell379.data.vm.Environment;
+import com.cmput301f22t09.shell379.data.vm.MealPlanViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -30,6 +37,7 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
     private MealPlanAdapter mealPlanListAdapter;
     private Environment envViewModel;
     private NavController navController;
+    private MealPlanViewModel mealPlanViewModel;
 //    private FloatingActionButton backButton;
 
 
@@ -42,7 +50,19 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
         super.onCreate(savedInstanceState);
         navController = NavHostFragment.findNavController(this);
         envViewModel = Environment.of((AppCompatActivity) requireActivity());
+        mealPlanViewModel =  new ViewModelProvider(requireActivity()).get(MealPlanViewModel.class);
 
+        final Observer<ArrayList<MealPlan>> mealPlanObserver = new Observer<ArrayList<MealPlan>>() {
+            @Override
+            public void onChanged(@Nullable final ArrayList<MealPlan> mealPlans) {
+                // Update the UI, in this case, a TextView.
+//                ingredient_recyclerView.setText(newName);
+                if (mealPlanListAdapter != null){
+                    mealPlanListAdapter.updateMealPlan(envViewModel.getMealPlans().getList());
+                }
+            }
+        };
+        envViewModel.getMealPlans().getListLive().observe(this, mealPlanObserver);
     }
 
     @Override
@@ -57,6 +77,15 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         back();
+                    }
+                }
+        );
+
+
+        ((Button)rootView.findViewById(R.id.new_button)).setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+                        navController.navigate(MealPlanListFragmentDirections.actionMealPlanFragmentToCreateMealPlanFragment());
                     }
                 }
         );
@@ -83,10 +112,9 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
 
     public void navigateToViewMealPlan(int index){
     //    to-do
-//        MealPlanListFragmentDirections.
+        MealPlanListFragmentDirections.ActionMealPlanFragmentToViewMealPlanFragment action
+                = MealPlanListFragmentDirections.actionMealPlanFragmentToViewMealPlanFragment(index);
+        navController.navigate(action);
 
-//        IngredientListFragmentDirections.ActionIngredientListFragmentToViewIngredientFragment action
-//                = IngredientListFragmentDirections.actionIngredientListFragmentToViewIngredientFragment(index);
-//        navController.navigate(action);
     }
 }
