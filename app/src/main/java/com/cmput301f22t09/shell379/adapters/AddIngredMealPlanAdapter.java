@@ -98,12 +98,10 @@ public class AddIngredMealPlanAdapter extends RecyclerView.Adapter<AddIngredMeal
 
 
 
-
-
         /**
-         *  Responds to an recipe item being clicked in the recyclerView.
-         *  Navigates to viewing the recipe
-         * @param i index of recipe in the view model
+         *  Responds to an ingredient item being clicked in the recyclerView.
+         *  Navigates to viewing the ingredient
+         * @param i index of Ingredient in the view model
          */
         public void ingredOnClick(int i) {
             MealPlanWrapper<Ingredient> a = IngredinMealPlan.get(i);
