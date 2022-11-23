@@ -19,8 +19,6 @@ import com.cmput301f22t09.shell379.data.wrapper.CartIngredient;
 import com.cmput301f22t09.shell379.fragments.ShoppingListFragment;
 import com.cmput301f22t09.shell379.fragments.ShoppingListFragmentDirections;
 
-import java.util.ArrayList;
-
 /**
  * This class is a custom RecyclerView adapter which helps display Shopping List data.
  */
@@ -64,7 +62,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
     @Override
     public ShoppingListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.shopping_list_content_22, parent, false);
+                .inflate(R.layout.shopping_list_content_20, parent, false);
         ShoppingListViewHolder shoppingListViewHolder = new ShoppingListViewHolder(view);
         return shoppingListViewHolder;
     }
@@ -91,10 +89,15 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         if (cartIngredient.getPickedUp() && !cartIngredient.getDetailsFilled()) {
             detailsCompleteMsg.setVisibility(View.GONE);
             fillOutDetailsMsg.setVisibility(View.VISIBLE);
+            if (fillOutDetailsMsg.getText() == "") {
+                fillOutDetailsMsg.setText("Click on this card to fill out details");
+            }
         }
         else if (cartIngredient.getPickedUp() && cartIngredient.getDetailsFilled()) {
+            checkbox.setChecked(true);
             detailsCompleteMsg.setVisibility(View.VISIBLE);
-            fillOutDetailsMsg.setVisibility(View.GONE);
+            fillOutDetailsMsg.setVisibility(View.VISIBLE);
+            fillOutDetailsMsg.setText("");
         }
 
         setItemOnClickListener(holder);
