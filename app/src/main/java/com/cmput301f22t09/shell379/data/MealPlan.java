@@ -30,7 +30,11 @@ public class MealPlan implements Serializable {
     }
 
     public MealPlan() {
-
+        this.mealPlanName = "";
+        this.startDate = formatter.format(new Date());
+        this.endDate = formatter.format(new Date());
+        this.comments = "";
+        this.activeDays = 0;
     }
 
 //    public MealPlan(Date startDate, Date endDate, Integer activeDays) {
@@ -165,10 +169,10 @@ public class MealPlan implements Serializable {
     }
 
     private ArrayList convertRecipes(ArrayList<Recipe> recipes) {
-        return recipes.stream().map(o->new MealPlanWrapper(o, new Date(), 0)).collect(Collectors.toCollection(ArrayList::new));
+        return recipes.stream().map(o->new MealPlanWrapper(o, new Date(), 1)).collect(Collectors.toCollection(ArrayList::new));
     }
 
     private ArrayList convertIngredients(ArrayList<Ingredient> ingredients) {
-        return ingredients.stream().map(o->new MealPlanWrapper(o, new Date(), 0)).collect(Collectors.toCollection(ArrayList::new));
+        return ingredients.stream().map(o->new MealPlanWrapper(o, new Date(), 1)).collect(Collectors.toCollection(ArrayList::new));
     }
 }

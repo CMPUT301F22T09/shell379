@@ -50,7 +50,8 @@ public class ViewMealPlanFragment extends Fragment {
         super.onCreate(savedInstanceState);
         navController = NavHostFragment.findNavController(this);
         envViewModel = Environment.of((AppCompatActivity) requireActivity());
-        mpViewModel = MealPlanViewModel.of(testMP(), requireActivity());
+//        mpViewModel = MealPlanViewModel.of(testMP(), requireActivity());
+        mpViewModel = MealPlanViewModel.of(requireActivity());
     }
 
     @Override
@@ -103,6 +104,13 @@ public class ViewMealPlanFragment extends Fragment {
                 navController.navigate(ViewMealPlanFragmentDirections.actionMealPlanFragmentToViewMealPlanFragment());
             }
         });
+        rootView.findViewById(R.id.delete_plan).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                envViewModel.getMealPlans().removeAtIdx(mpViewModel.getIdx());
+                navController.popBackStack();
+            }
+        });
     }
 
     private void fillFields(View rootView) {
@@ -112,6 +120,8 @@ public class ViewMealPlanFragment extends Fragment {
                 .setText(mpViewModel.getMealPlan().getStartDateFormatted());
         ((TextView) rootView.findViewById(R.id.mpv_end_data))
                 .setText(mpViewModel.getMealPlan().getEndDateFormatted());
+        ((TextView) rootView.findViewById(R.id.plan_name))
+                .setText(mpViewModel.getMealPlan().getMealPlanName());
     }
 
     private MealPlan testMP() {

@@ -5,55 +5,25 @@
       <map>
         <entry key="..\:/CMPUT 301/shell379/app/src/main/res/layout/category_content.xml" value="0.2" />
         <entry key="..\:/CMPUT 301/shell379/app/src/main/res/layout/fragment_edit_recipe_9.xml" value="0.264" />
-        <entry key="..\:/CMPUT 301/shell379/app/src/main/res/layout/fragment_ingredient_list_2.xml" value="0.264" />
         <entry key="..\:/CMPUT 301/shell379/app/src/main/res/layout/fragment_recipe_list.xml" value="0.25416666666666665" />
         <entry key="..\:/CMPUT 301/shell379/app/src/main/res/layout/fragment_recipe_select_ingredient.xml" value="0.25416666666666665" />
-        <entry key="..\:/CMPUT 301/shell379/app/src/main/res/layout/fragment_save_ingredient_5_6.xml" value="0.264" />
-        <entry key="..\:/CMPUT 301/shell379/app/src/main/res/layout/fragment_shopping_list_20.xml" value="0.264" />
-        <entry key="..\:/CMPUT 301/shell379/app/src/main/res/layout/fragment_view_ingredient.xml" value="0.25416666666666665" />
         <entry key="..\:/CMPUT 301/shell379/app/src/main/res/layout/ingredient_content.xml" value="0.4" />
         <entry key="..\:/CMPUT 301/shell379/app/src/main/res/layout/ingredients_in_recipe_9.xml" value="0.264" />
         <entry key="..\:/CMPUT 301/shell379/app/src/main/res/layout/recipe_list_item.xml" value="0.264" />
         <entry key="..\:/CMPUT 301/shell379/app/src/main/res/layout/recipe_new_ingredient.xml" value="0.25416666666666665" />
         <entry key="..\:/CMPUT 301/shell379/app/src/main/res/layout/recipe_select_ingredients.xml" value="0.264" />
         <entry key="..\:/CMPUT 301/shell379/app/src/main/res/layout/recipe_select_ingredients_content.xml" value="0.4" />
+<<<<<<< HEAD
         <entry key="..\:/CMPUT 301/shell379/app/src/main/res/layout/recipe_select_ingredients_content_10.xml" value="0.4" />
         <entry key="..\:/CMPUT 301/shell379/app/src/main/res/layout/shopping_list_content_22.xml" value="0.4" />
+        <entry key="..\:/CMPUT 301/shell379/app/src/main/res/layout/shopping_list_success_23.xml" value="0.264" />
+=======
+>>>>>>> dev
         <entry key="..\:/Users/blizw/Documents/Assignments/CMPUT 301/GroupProject/shell379/app/src/main/res/layout/category_content.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/blizw/Documents/Assignments/CMPUT 301/GroupProject/shell379/app/src/main/res/layout/fragment_categories_select.xml" value="0.12239583333333333" />
-
-        <entry key="..\:/Users/blizw/Documents/Assignments/CMPUT 301/GroupProject/shell379/app/src/main/res/layout/fragment_main_menu.xml" value="0.11302083333333333" />
-        <entry key="..\:/Users/blizw/Documents/Assignments/CMPUT 301/GroupProject/shell379/app/src/main/res/layout/fragment_save_ingredient.xml" value="0.33" />
-        <entry key="..\:/Users/blizw/Documents/Assignments/CMPUT 301/GroupProject/shell379/app/src/main/res/layout/fragment_view_ingredient.xml" value="0.20572916666666666" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/activity_main.xml" value="0.10989583333333333" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/cart_list_item.xml" value="0.25" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/category_content.xml" value="0.10989583333333333" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/entity_detail_row.xml" value="0.10989583333333333" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/fragment_cart.xml" value="0.25" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/fragment_cart_edit.xml" value="0.25" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/fragment_cart_view.xml" value="0.25" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/fragment_create_ingredient_stub.xml" value="0.25" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/fragment_edit_meal_plan.xml" value="0.25" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/fragment_edit_meal_plan_15.xml" value="0.1" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/fragment_edit_recipe.xml" value="0.25" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/fragment_edit_recipe_9.xml" value="0.264" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/fragment_main_menu.xml" value="0.25" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/fragment_meal_plans.xml" value="0.25" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/fragment_recipe_list.xml" value="0.25" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/fragment_view_ingredient.xml" value="0.25" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/fragment_view_meal_plan.xml" value="0.25" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/fragment_view_meal_plan_14.xml" value="0.2" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/ingredient_content.xml" value="0.25" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/ingredient_content_2.xml" value="0.17291666666666666" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/ingredients_in_recipe.xml" value="0.25" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/meal_plan_list_item.xml" value="0.25" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/mealplan_edit_list_item_15.xml" value="0.25" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/mealplan_view_list_item_14.xml" value="0.2" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/mp_edit_list_item.xml" value="0.4" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/mp_recipe_view_list_item.xml" value="0.4" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/mp_view_list_item.xml" value="0.25" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/recipe_list_item.xml" value="0.25" />
-        <entry key="..\:/Users/qasim/code/y4/cmput301/shell379/app/src/main/res/layout/recipe_new_ingredient.xml" value="0.25" />
+        <entry key="..\:/Users/blizw/Documents/Assignments/CMPUT 301/GroupProject/shell379/app/src/main/res/layout/mealplan_edit_list_item_15.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/blizw/Documents/Assignments/CMPUT 301/GroupProject/shell379/app/src/main/res/layout/mealplan_ingredient_date_19.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/blizw/Documents/Assignments/CMPUT 301/GroupProject/shell379/app/src/main/res/layout/mealplan_view_list_item_14.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

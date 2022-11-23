@@ -96,7 +96,7 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
         mealPlan_recyclerView = (RecyclerView) rootView.findViewById(R.id.meal_plan_recyclerView);
         mealPlan_recyclerView.setLayoutManager(layoutManager);
 
-        mealPlanListAdapter = new MealPlanAdapter(mealPlanList, envViewModel,this);
+        mealPlanListAdapter = new MealPlanAdapter(mealPlanList, envViewModel,this, requireActivity());
         mealPlan_recyclerView.setAdapter(mealPlanListAdapter);
         mealPlan_recyclerView.setItemAnimator(new DefaultItemAnimator());
 

@@ -1,11 +1,13 @@
 package com.cmput301f22t09.shell379.adapters.mealplan.edit;
 
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
@@ -39,9 +41,8 @@ public class MPRecipesEditListAdapter extends MPObjectWrapperListAdapter {
     @Override
     protected void addServings(int index) {
         MealPlanWrapper recipe =  viewModel.getRecipeAtIdx(index);
-        int recipeServes = ((Recipe)recipe.getObj()).getServings();
-        int currentServingMultiplier = recipe.getServings()/recipeServes;
-        recipe.setServings(recipeServes * (currentServingMultiplier + 1));
+        int currentServingMultiplier = recipe.getServings();
+        recipe.setServings(currentServingMultiplier + 1);
         viewModel.forceNotify();
     }
 
@@ -52,10 +53,9 @@ public class MPRecipesEditListAdapter extends MPObjectWrapperListAdapter {
     @Override
     protected void subServings(int index) {
         MealPlanWrapper recipe =  viewModel.getRecipeAtIdx(index);
-        int recipeServes = ((Recipe)recipe.getObj()).getServings();
-        int currentServingMultiplier = recipe.getServings()/recipeServes;
+        int currentServingMultiplier = recipe.getServings();
         if(currentServingMultiplier > 1){
-            recipe.setServings(recipeServes * (currentServingMultiplier - 1));
+            recipe.setServings(currentServingMultiplier - 1);
         }
 
         viewModel.forceNotify();
@@ -77,5 +77,14 @@ public class MPRecipesEditListAdapter extends MPObjectWrapperListAdapter {
     @Override
     protected int getSizeInternal() {
         return  viewModel.getRecipes().size();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void onBindViewHolder(@NonNull MPEditIngredientListViewHolder holder, int position) {
+        super.onBindViewHolder(holder,position);
+        int recipeServings = ((Recipe)getItemAtIndex(position).getObj()).getServings();
+        int wrapperServings = getItemAtIndex(position).getServings();
+        holder.amount.setText( Integer.toString(wrapperServings*recipeServings) );
     }
 }
