@@ -55,7 +55,6 @@
             android:id="@+id/add_recipe_to_mealPlan_recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/black"
             />
     </LinearLayout>
 
