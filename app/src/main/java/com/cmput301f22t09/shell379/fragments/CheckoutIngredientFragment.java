@@ -5,12 +5,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,14 +20,9 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
-import com.cmput301f22t09.shell379.data.Unit;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.wrapper.CartIngredient;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -42,7 +35,8 @@ public class CheckoutIngredientFragment extends Fragment {
     private int ingredientIndex;
     private TextView description;
     private CartIngredient theCartIngredient;
-    private EditText amount;
+    private TextView amountRequired;
+    private EditText amountPurchased;
     private TextView unit;
 
     public CheckoutIngredientFragment() {
@@ -65,13 +59,14 @@ public class CheckoutIngredientFragment extends Fragment {
         category = ((TextView) rootView.findViewById(R.id.editCategory));
         location = ((EditText) rootView.findViewById(R.id.editLocation));
         description = ((TextView) rootView.findViewById(R.id.editDescription));
-        amount = ((EditText) rootView.findViewById(R.id.editAmount));
+        amountRequired = ((TextView) rootView.findViewById(R.id.amountRequired));
         unit = ((TextView) rootView.findViewById(R.id.editUnit));
+        amountPurchased = ((EditText) rootView.findViewById(R.id.editAmount));
 
         theCartIngredient = envViewModel.getCart().getList().get(ingredientIndex);
         description.setText(theCartIngredient.getDescription());
         category.setText(theCartIngredient.getCategory());
-        amount.setText(theCartIngredient.getAmount().toString());
+        amountRequired.setText(theCartIngredient.getAmount().toString());
         unit.setText(theCartIngredient.getUnit());
 
         ((ImageView) rootView.findViewById(R.id.back)).setOnClickListener(
