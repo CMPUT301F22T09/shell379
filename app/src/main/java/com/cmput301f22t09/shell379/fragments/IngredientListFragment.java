@@ -31,14 +31,11 @@ import com.cmput301f22t09.shell379.data.util.ArraySortUtil;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Fragment for ingredient list which implements the listener
  */
-public class IngredientListFragment extends Fragment implements IngredientAdapter.AdaptorListener{
+public class IngredientListFragment extends Fragment implements IngredientAdapter.AdapterListener {
     ArrayList<Ingredient> ingredientList;
     RecyclerView ingredient_recyclerView;
     RecyclerView.LayoutManager layoutManager;

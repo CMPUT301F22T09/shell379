@@ -22,13 +22,13 @@ import java.util.ArrayList;
  * Adapter for the recycler view in the ingredient list fragment
  */
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.IngredientViewHolder>  {
-    public interface AdaptorListener{
+    public interface AdapterListener {
         public void navigateToViewIngredient(int index);
     }
 
     private ArrayList<Ingredient> ingredients;
     private Environment envViewModel;
-    private AdaptorListener ingredientListener;
+    private AdapterListener ingredientListener;
     private int ingredientIndex;
 
     /**
@@ -64,7 +64,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.In
      * @param envViewModel
      * @param ingredientListener
      */
-    public IngredientAdapter(ArrayList<Ingredient> data, Environment envViewModel, AdaptorListener ingredientListener){
+    public IngredientAdapter(ArrayList<Ingredient> data, Environment envViewModel, AdapterListener ingredientListener){
         this.envViewModel = envViewModel;
         this.ingredients = data;
         this.ingredientListener = ingredientListener;

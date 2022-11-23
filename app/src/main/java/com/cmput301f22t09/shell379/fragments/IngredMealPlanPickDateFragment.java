@@ -17,6 +17,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
 import com.cmput301f22t09.shell379.R;
+import com.cmput301f22t09.shell379.adapters.MealPlanAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.vm.MealPlanViewModel;
 import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
@@ -29,7 +30,7 @@ import java.util.TimeZone;
 //public class IngredMealPlanPickDateFragment {
 
 
-public class IngredMealPlanPickDateFragment extends Fragment {
+public class IngredMealPlanPickDateFragment extends Fragment{
     protected View rootView;
     protected NavController navController;
     protected MealPlanViewModel mealPlanViewModel;
@@ -88,6 +89,8 @@ public class IngredMealPlanPickDateFragment extends Fragment {
     private void back(){
         navController.popBackStack();
     }
+
+
 
     protected void writeToViewModel(MealPlanWrapper<Ingredient> ingredient) {
 //        envViewModel.getIngredients().getList().set(ingredientIndex, ing);

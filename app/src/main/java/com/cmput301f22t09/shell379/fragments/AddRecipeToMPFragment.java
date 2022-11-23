@@ -28,7 +28,7 @@ import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
 
 import java.util.ArrayList;
 
-public class AddRecipeToMPFragment extends DialogFragment implements AddRecipeMealPlanAdapter.RecipeInMealPlanListener {
+public class AddRecipeToMPFragment extends DialogFragment implements AddRecipeMealPlanAdapter.RecipeInMealPlanListener  {
     private Environment env;
     private NavController navController;
     private MealPlanViewModel mealPlanViewModel;
@@ -81,6 +81,14 @@ public class AddRecipeToMPFragment extends DialogFragment implements AddRecipeMe
 
     private void back(){
         navController.popBackStack();
+    }
+
+    public void navigateToPickDate(int index){
+        //    to-do
+        AddRecipeToMPFragmentDirections.ActionAddRecipetoMealPlanFragmentToAddDatetoRecipeFragment action
+                =  AddRecipeToMPFragmentDirections.actionAddRecipetoMealPlanFragmentToAddDatetoRecipeFragment(index);
+        navController.navigate(action);
+//        navController.navigate(RecipeMealPlanPickDateFragment);
     }
 
     /**
