@@ -42,4 +42,13 @@ public class LiveCollection<T> extends Commitable {
     public void setList(ArrayList<T> lst) {
         this.lst.setValue(lst);
     }
+
+    public void setAtIdxOrAdd(Integer idx, T obj) {
+        if (idx==null || idx<0 || idx >= lst.getValue().size()) {
+            lst.getValue().add(obj);
+        }
+        else {
+            lst.getValue().set(idx, obj);
+        }
+    }
 }

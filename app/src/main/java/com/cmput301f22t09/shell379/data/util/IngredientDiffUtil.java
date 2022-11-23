@@ -1,13 +1,17 @@
 package com.cmput301f22t09.shell379.data.util;
 
-import android.util.Pair;
+
+import androidx.core.util.Pair;
 
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.data.MealPlan;
 import com.cmput301f22t09.shell379.data.Recipe;
+import com.cmput301f22t09.shell379.data.ShoppingCart;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
+import com.cmput301f22t09.shell379.data.wrapper.CartIngredient;
+import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
 
 import org.checkerframework.checker.units.qual.A;
 
@@ -16,9 +20,11 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 public class IngredientDiffUtil {
 
@@ -33,14 +39,18 @@ public class IngredientDiffUtil {
      *              with the same description in this MealPlan
      *      unit = No change
      *      category = "placeholder"
-     * TODO: Testing
+     * TODO: Testing Donw
      * @param mp: MealPlan object
      * @return: A HashMap of ingredients, unique with the description (lower case) being the key.
      */
     public static HashMap<String, Ingredient> getIngredientsNeeded(MealPlan mp) {
         HashMap<String, Ingredient> totalIngs = new HashMap<String, Ingredient>();
-        ArrayList<Recipe> allRecipes = mp.getRecipes();
-        ArrayList<Ingredient> ingsFromMP = mp.getIngredients();
+        ArrayList<Recipe> allRecipes = mp.getRecipes().stream()
+                .map(MealPlanWrapper::convertToRecipe)
+                .collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<Ingredient> ingsFromMP = mp.getIngredients().stream()
+                .map(MealPlanWrapper::convertToIngredient)
+                .collect(Collectors.toCollection(ArrayList::new));
 
         // Loop through all recipes, get all ingredients
         for (int i = 0; i < allRecipes.size(); i++) {
@@ -55,7 +65,7 @@ public class IngredientDiffUtil {
                 // put ingredients into hashmap if not previously existing.
                 // Two ingredients are the same (in this case) if the descriptions match
                 if (!totalIngs.containsKey(ingDescription.toLowerCase())) {
-                    totalIngs.put(ingDescription, new Ingredient(
+                    totalIngs.put(ingDescription.toLowerCase(), new Ingredient(
                             ingDescription,
                             mp.getEndDate(),
                             "Placeholder",
@@ -185,9 +195,7 @@ public class IngredientDiffUtil {
 
                 // This is the ingredient that we have, guaranteed to be
                 // within the expiry date.
-                Ingredient haveValid = IngredientDiffUtil.coalesce(
-                        Objects.requireNonNull(needed.get(need)),
-                        Objects.requireNonNull(have.get(need)));
+                Ingredient haveValid = IngredientDiffUtil.coalesce(needed.get(need), have.get(need));
 
 
                 // need_amount - have_amount
@@ -203,12 +211,12 @@ public class IngredientDiffUtil {
                     subtractFromInventory.add(haveValid);
 
                     putIntoShoppingCart.add(new Ingredient(
-                            haveValid.getDescription(),
+                            needed.get(need).getDescription(),
                             new Date(),
-                            haveValid.getLocation(),
+                            needed.get(need).getLocation(),
                             diff, // Amount
-                            haveValid.getUnit(),
-                            haveValid.getCategory()
+                            needed.get(need).getUnit(),
+                            needed.get(need).getCategory()
                     ));
                 }
                 // if we have more than we need,
@@ -227,7 +235,8 @@ public class IngredientDiffUtil {
             }
 
         }
-        return new Pair<>(subtractFromInventory, putIntoShoppingCart);
+        Pair<ArrayList<Ingredient>, ArrayList<Ingredient> > res = Pair.create(subtractFromInventory, putIntoShoppingCart);
+        return res;
     }
 
     /**
@@ -245,5 +254,54 @@ public class IngredientDiffUtil {
         return res;
     }
 
+
+    public static void commitShoppingCart(Environment env, ArrayList<Ingredient> addToShoppingCart) {
+//        HashMap<String, Integer> inCart = new HashMap<>();
+//        ShoppingCart sc = env.getCart();
+//        ArrayList<CartIngredient> cartIngs = sc.getList();
+//        for (int i = 0; i < cartIngs.size(); i++) {
+//            inCart.put(cartIngs.get(i).getDescription().toLowerCase(), cartIngs.get(i).getAmount());
+//        }
+//        for (int i = 0; i < addToShoppingCart.size(); i++) {
+//            // if not in shopping cart, add the whole ingredient
+//            if (!inCart.containsKey(addToShoppingCart.get(i).getDescription().toLowerCase())) {
+//                sc.add(new CartIngredient(
+//                        addToShoppingCart.get(i).getDescription(),
+//                        addToShoppingCart.get(i).getCategory(),
+//                        addToShoppingCart.get(i).getAmount(),
+//                        addToShoppingCart.get(i).getUnit()
+//                ));
+//            }
+//            // otherwise, if the ingredient is in shopping cart...
+//            else {
+//                // if what we need to add is more than what is already in the cart
+//                if (addToShoppingCart.get(i).getAmount() > inCart.get(addToShoppingCart.get(i).getDescription().toLowerCase())) {
+//                    // compute the difference (to_add - in_cart)
+//                    int diff = addToShoppingCart.get(i).getAmount() - inCart.get(addToShoppingCart.get(i).getDescription().toLowerCase());
+//                    sc.add(new CartIngredient(
+//                            addToShoppingCart.get(i).getDescription(),
+//                            addToShoppingCart.get(i).getCategory(),
+//                            diff,
+//                            addToShoppingCart.get(i).getUnit()));
+//
+//                }
+//            }
+//        }
+
+        // naive algo
+        LiveCollection<CartIngredient> sc = env.getCart();
+        for (int i = 0; i < addToShoppingCart.size(); i++) {
+
+            sc.add(new CartIngredient(
+                addToShoppingCart.get(i).getDescription(),
+                addToShoppingCart.get(i).getCategory(),
+                addToShoppingCart.get(i).getAmount(),
+                addToShoppingCart.get(i).getUnit()
+            ));
+
+        }
+        // end naive algo
+        sc.commit();
+    }
 
 }

@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/floatingActionButton5"
+            android:id="@+id/back"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="3dp"
@@ -29,13 +30,21 @@
             android:textSize="25sp"></TextView>
 
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="25dp"
             android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/shopping_list_sort_label"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Sort By"
+                android:textSize="18sp" />
 
             <Spinner
                 android:id="@+id/shopping_list_sort_spinner"
@@ -46,26 +55,17 @@
                 android:spinnerMode="dropdown"
                 android:background="@drawable/spinner_background"/>
 
-            <Button
-                android:id="@+id/new_button"
-                android:layout_width="80dp"
-                android:layout_height="50dp"
-                android:layout_margin="5dp"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:text="NEW" />
-
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="446dp"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/shopping_list_recyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="444dp"
                 android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -78,14 +78,14 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/save_recipe"
+        android:id="@+id/submit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerInParent="true"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="74dp"
-        android:text="Checkout" />
+        android:layout_marginBottom="52dp"
+        android:text="Add picked-up Ingredients to storage" />
 
 </RelativeLayout>
 

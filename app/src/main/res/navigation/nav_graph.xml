@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
+    tools:ignore="ExtraText"
     app:startDestination="@id/mainMenuFragment">
     <fragment
         android:id="@+id/ingredientListFragment"
@@ -53,7 +54,30 @@
         android:id="@+id/shoppingListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.ShoppingListFragment"
         android:label="fragment_shopping_list"
-        tools:layout="@layout/fragment_shopping_list_20" />
+        tools:layout="@layout/fragment_shopping_list_20" >
+        <action
+            android:id="@+id/action_shoppingListFragment_to_checkoutIngredient"
+            app:destination="@id/checkoutIngredient"/>
+        <action
+            android:id="@+id/action_shoppingListFragment_to_mainMenuFragment"
+            app:destination="@id/mainMenuFragment" />
+        <action
+            android:id="@+id/action_shoppingListFragment_to_shoppingListSuccessFragment"
+            app:destination="@id/shoppingListSuccessFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/checkoutIngredient"
+        android:name="com.cmput301f22t09.shell379.fragments.CheckoutIngredientFragment"
+        android:label="fragment_checkout_ingredient"
+        tools:layout="@layout/fragment_shopping_list_checkout_22">
+        <argument
+            android:name="ingredientIndex"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_checkoutIngredient_to_shoppingListFragment"
+            app:destination="@id/shoppingListFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/mealPlanListFragment"
@@ -113,8 +137,8 @@
     </fragment>
     <fragment
         android:id="@+id/createMealPlanFragment"
-        android:name="com.cmput301f22t09.shell379.fragments.CreateMealPlanFragment"
-        android:label="fragment_new_mealPlan"
+        android:name="com.cmput301f22t09.shell379.fragments.EditMealPlanFragment"
+        android:label="fragment_save_mealPlan"
         tools:layout="@layout/fragment_edit_meal_plan_15" />
 
     <fragment
@@ -131,13 +155,36 @@
     </fragment>
 
     <fragment
+        android:id="@+id/addRecipetoMealPlanFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.AddRecipeToMPFragment"
+        android:label="AddRecipetoMealPlan"/>
+
+    <fragment
+        android:id="@+id/addIngredtoMealPlanFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.AddIngredientToMPFragment"
+        android:label="AddIngredienttoMealPlan" />
+
+    <fragment
         android:id="@+id/editMealPlanFragment"
         android:name="com.cmput301f22t09.shell379.fragments.EditMealPlanFragment"
         android:label="EditMealPlanFragment" >
-        <argument
-            android:name="MealPlanIndex"
-            app:argType="integer" />
+        <action
+            android:id="@+id/action_editMealPlanFragment_to_viewMealPlanFragment"
+            app:destination="@id/viewMealPlanFragment" />
+        <action
+            android:id="@+id/action_editMealPlanFragment_to_mealPlanListFragment"
+            app:destination="@id/mealPlanListFragment" />
+        <action
+            android:id="@+id/action_editMealPlanFragment_to_addRecipetoMealPlanFragment"
+            app:destination="@id/addRecipetoMealPlanFragment" />
+        <action
+            android:id="@+id/action_editMealPlanFragment_to_addIngredtoMealPlanFragment"
+            app:destination="@id/addIngredtoMealPlanFragment" />
+
     </fragment>
+
+
+
 
 
 
@@ -199,4 +246,12 @@
             app:destination="@id/recipeSelectIngredientFragment" />
 
     </dialog>
+    <fragment
+        android:id="@+id/shoppingListSuccessFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.ShoppingListSuccessFragment"
+        android:label="ShoppingListSuccessFragment" >
+        <action
+            android:id="@+id/action_shoppingListSuccessFragment_to_shoppingListFragment"
+            app:destination="@id/shoppingListFragment" />
+    </fragment>
 </navigation>
