@@ -54,7 +54,27 @@
         android:id="@+id/shoppingListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.ShoppingListFragment"
         android:label="fragment_shopping_list"
-        tools:layout="@layout/fragment_shopping_list_20" />
+        tools:layout="@layout/fragment_shopping_list_20" >
+        <action
+            android:id="@+id/action_shoppingListFragment_to_checkoutIngredient"
+            app:destination="@id/checkoutIngredient"/>
+        <action
+            android:id="@+id/action_shoppingListFragment_to_mainMenuFragment"
+            app:destination="@id/mainMenuFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/checkoutIngredient"
+        android:name="com.cmput301f22t09.shell379.fragments.CheckoutIngredientFragment"
+        android:label="fragment_checkout_ingredient"
+        tools:layout="@layout/fragment_shopping_list_checkout_22">
+        <argument
+            android:name="ingredientIndex"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_checkoutIngredient_to_shoppingListFragment"
+            app:destination="@id/shoppingListFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/mealPlanListFragment"
