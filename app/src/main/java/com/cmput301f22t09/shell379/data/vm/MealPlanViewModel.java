@@ -31,7 +31,12 @@ public class MealPlanViewModel extends ViewModel {
 
     public static MealPlanViewModel of(FragmentActivity activity) {
         MealPlanViewModel viewModel = new ViewModelProvider(activity).get(MealPlanViewModel.class);
-        if (viewModel.mealPlan == null) viewModel = new MealPlanViewModel();
+        Log.e("DEBUG_PT", viewModel.getMealPlan().getStartDateFormatted());
+        Log.e("DEBUG_PT", viewModel.getMealPlan().getEndDateFormatted());
+        if (viewModel.mealPlan == null) {
+            viewModel.setMealPlan(new MealPlan());
+            viewModel.setIdx(-1);
+        }
         return viewModel;
     }
 
@@ -116,8 +121,8 @@ public class MealPlanViewModel extends ViewModel {
         return mealPlan.getValue().getIngredients();
     }
 
-    public void setIdx(MutableLiveData<Integer> idx) {
-        this.idx = idx;
+    public void setIdx(Integer idx) {
+        this.idx.setValue(idx);
     }
 
     public Integer getIdx() {
