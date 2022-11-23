@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class AddIngredMealPlanAdapter extends RecyclerView.Adapter<AddIngredMealPlanAdapter.AddIngredMealPlanViewHolder>{
 
-        private ArrayList<MealPlanWrapper<Ingredient>> IngredinMealPlan;
+        private ArrayList<Ingredient> IngredinMealPlan;
         private AddIngredMealPlanAdapter.IngredInMealPlanListener ingredInMealPlanListener;
         private MealPlanViewModel mealPlanViewModel;
 
@@ -53,7 +53,7 @@ public class AddIngredMealPlanAdapter extends RecyclerView.Adapter<AddIngredMeal
             }
         }
 
-    public AddIngredMealPlanAdapter(ArrayList<MealPlanWrapper<Ingredient>> IngredinMealPlan, AddIngredMealPlanAdapter.IngredInMealPlanListener ingredInMealPlanListener, MealPlanViewModel mealPlanViewModel){
+    public AddIngredMealPlanAdapter(ArrayList<Ingredient> IngredinMealPlan, AddIngredMealPlanAdapter.IngredInMealPlanListener ingredInMealPlanListener, MealPlanViewModel mealPlanViewModel){
         this.IngredinMealPlan = IngredinMealPlan;
         this.ingredInMealPlanListener = ingredInMealPlanListener;
         this.mealPlanViewModel = mealPlanViewModel;
@@ -79,10 +79,10 @@ public class AddIngredMealPlanAdapter extends RecyclerView.Adapter<AddIngredMeal
         TextView location = holder.location;
         TextView category = holder.category;
 
-        ingredientName.setText(IngredinMealPlan.get(position).getObj().getDescription());
-        bestBefore.setText(IngredinMealPlan.get(position).getObj().getBestBeforeFormatted());
-        category.setText(IngredinMealPlan.get(position).getObj().getCategory());
-        location.setText(IngredinMealPlan.get(position).getObj().getLocation());
+        ingredientName.setText(IngredinMealPlan.get(position).getDescription());
+        bestBefore.setText(IngredinMealPlan.get(position).getBestBeforeFormatted());
+        category.setText(IngredinMealPlan.get(position).getCategory());
+        location.setText(IngredinMealPlan.get(position).getLocation());
 
 
         holder.getItemView().setOnClickListener(new View.OnClickListener() {
@@ -104,7 +104,7 @@ public class AddIngredMealPlanAdapter extends RecyclerView.Adapter<AddIngredMeal
          * @param i index of Ingredient in the view model
          */
         public void ingredOnClick(int i) {
-            MealPlanWrapper<Ingredient> a = IngredinMealPlan.get(i);
+            Ingredient a = IngredinMealPlan.get(i);
             ArrayList<MealPlanWrapper<Ingredient>> ingredients = mealPlanViewModel.getIngredients();
             int index = ingredients.indexOf(a);
             ingredInMealPlanListener.editIngredInMP(index);
