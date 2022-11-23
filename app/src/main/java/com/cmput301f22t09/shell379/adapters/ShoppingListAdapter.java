@@ -20,6 +20,8 @@ import com.cmput301f22t09.shell379.data.wrapper.CartIngredient;
 import com.cmput301f22t09.shell379.fragments.ShoppingListFragment;
 import com.cmput301f22t09.shell379.fragments.ShoppingListFragmentDirections;
 
+import java.util.ArrayList;
+
 /**
  * This class is a custom RecyclerView adapter which helps display Shopping List data.
  */
@@ -88,6 +90,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         // TODO: need both an if/else and an onCheckListener
 
         if (cartIngredient.getPickedUp() && !cartIngredient.getDetailsFilled()) {
+            checkbox.setChecked(true);
             detailsCompleteMsg.setVisibility(View.GONE);
             fillOutDetailsMsg.setVisibility(View.VISIBLE);
         }
@@ -96,6 +99,8 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             detailsCompleteMsg.setVisibility(View.VISIBLE);
             fillOutDetailsMsg.setVisibility(View.VISIBLE);
             fillOutDetailsMsg.setText("");
+        }else{
+            checkbox.setChecked(false);
         }
 
         setItemOnClickListener(holder);
@@ -147,4 +152,12 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         });
     }
 
+    public ArrayList<CartIngredient> getShoppingList(){
+        return shoppingList.getList();
+    }
+
+    public void updateShoppingList(ArrayList<CartIngredient> newIngredients){
+        shoppingList.setList(newIngredients);
+        notifyDataSetChanged();
+    }
 }

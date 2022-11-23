@@ -46,8 +46,8 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MealPl
         public MealPlanViewHolder(@NonNull View itemView) {
             super(itemView);
             this.mealPlantName = (TextView) itemView.findViewById(R.id.meal_name);
-            this.endDate = (TextView) itemView.findViewById(R.id.end_date);
-            this.startDate = (TextView) itemView.findViewById(R.id.start_date);
+            this.endDate = (TextView) itemView.findViewById(R.id.end_date_textView);
+            this.startDate = (TextView) itemView.findViewById(R.id.start_date_textView);
 
         }
     }
