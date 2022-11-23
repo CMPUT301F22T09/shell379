@@ -16,6 +16,7 @@ import com.cmput301f22t09.shell379.data.util.IngredientDiffUtil;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.collections.CategorySet;
 import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
+import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
 
 import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Test;
@@ -59,6 +60,8 @@ public class IngredientDiffUtilTest {
                 new Date(2030, 1, 3),
                 "",
                 0);
+
+
 
         HashMap<String, Ingredient> result = IngredientDiffUtil.getIngredientsNeeded(mp);
 
@@ -197,6 +200,55 @@ public class IngredientDiffUtilTest {
 
 
 
+    @Test
+    public void testComputeDiff() {
+        ArrayList<IngredientStub> recIngs = new ArrayList<>();
+        ArrayList<Ingredient> mpIngs = new ArrayList<>();
+
+        // these are multiplied by 3, so 120 celery and 600 broccoli
+        recIngs.add(new IngredientStub("Celery", 40,  "kg", "shell"));
+        recIngs.add(new IngredientStub("Broccoli",200, "g", "shell"));
+
+        // These are all multiplied by 2, so 100 celeries
+        mpIngs.add(new Ingredient("Celery", "Pantry", 40,  "kg", "shell"));
+        mpIngs.add(new Ingredient("Celery","Pantry", 10, "kg", "shell"));
+
+        Recipe r = new Recipe("Rec1", 20L, 13, "Veg", "");
+        r.setIngredients(recIngs);
+        ArrayList<Recipe> recs = new ArrayList<>();
+        recs.add(r);
+
+        MealPlan mp = new MealPlan("", recs, mpIngs, new Date(2020, 12, 31), new Date(2022, 12, 31), "String comments", 3);
+
+        ArrayList<MealPlanWrapper<Ingredient>> ingWrapper = mp.getIngredients();
+        for (int i = 0; i < ingWrapper.size(); i++) {
+            MealPlanWrapper unitIng = ingWrapper.get(i);
+            unitIng.setServings(2);
+            ingWrapper.set(i, unitIng);
+        };
+
+        ArrayList<MealPlanWrapper<Recipe>> recWrapper = mp.getRecipes();
+        for (int i = 0; i < recWrapper.size(); i++) {
+            MealPlanWrapper unitRec = recWrapper.get(i);
+            unitRec.setServings(3);
+            recWrapper.set(i, unitRec);
+        };
+
+        // TOTAL: NEED 220 celery, 600 broccoli
+        mp.setIngredientsRaw(ingWrapper);
+        mp.setRecipesRaw(recWrapper);
+
+        // WE HAVE: 200 broccoli, 100 celery
+        Environment env = new EnvironmentMock();
+
+        
+        // we should have  100 celery 200 broccoli to be deleted, 120 celery 400 broccoli in shopping cart
+        Pair<ArrayList<Ingredient>, ArrayList<Ingredient>> result = IngredientDiffUtil.computeDiff(mp, env);
+
+
+    }
+
+
 
     @Test
     public void testMPHasEnoughIngredients () {
@@ -239,6 +291,8 @@ public class IngredientDiffUtilTest {
         for (int i = 0; i < subFromInv.size(); i++) {
             Ingredient ing = subFromInv.get(i);
         }
+
+
 
 
     }
