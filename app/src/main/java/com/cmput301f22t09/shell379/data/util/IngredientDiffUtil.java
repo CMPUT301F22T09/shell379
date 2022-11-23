@@ -256,37 +256,51 @@ public class IngredientDiffUtil {
 
 
     public static void commitShoppingCart(Environment env, ArrayList<Ingredient> addToShoppingCart) {
-        HashMap<String, Integer> inCart = new HashMap<>();
-        ShoppingCart sc = env.getCart();
-        ArrayList<CartIngredient> cartIngs = sc.getList();
-        for (int i = 0; i < cartIngs.size(); i++) {
-            inCart.put(cartIngs.get(i).getDescription().toLowerCase(), cartIngs.get(i).getAmount());
-        }
-        for (int i = 0; i < addToShoppingCart.size(); i++) {
-            // if not in shopping cart, add the whole ingredient
-            if (!inCart.containsKey(addToShoppingCart.get(i).getDescription().toLowerCase())) {
-                sc.add(new CartIngredient(
-                        addToShoppingCart.get(i).getDescription(),
-                        addToShoppingCart.get(i).getCategory(),
-                        addToShoppingCart.get(i).getAmount(),
-                        addToShoppingCart.get(i).getUnit()
-                ));
-            }
-            // otherwise, if the ingredient is in shopping cart...
-            else {
-                // if what we need to add is more than what is already in the cart
-                if (addToShoppingCart.get(i).getAmount() > inCart.get(addToShoppingCart.get(i).getDescription().toLowerCase())) {
-                    // compute the difference (to_add - in_cart)
-                    int diff = addToShoppingCart.get(i).getAmount() - inCart.get(addToShoppingCart.get(i).getDescription().toLowerCase());
-                    sc.add(new CartIngredient(
-                            addToShoppingCart.get(i).getDescription(),
-                            addToShoppingCart.get(i).getCategory(),
-                            diff,
-                            addToShoppingCart.get(i).getUnit()));
+//        HashMap<String, Integer> inCart = new HashMap<>();
+//        ShoppingCart sc = env.getCart();
+//        ArrayList<CartIngredient> cartIngs = sc.getList();
+//        for (int i = 0; i < cartIngs.size(); i++) {
+//            inCart.put(cartIngs.get(i).getDescription().toLowerCase(), cartIngs.get(i).getAmount());
+//        }
+//        for (int i = 0; i < addToShoppingCart.size(); i++) {
+//            // if not in shopping cart, add the whole ingredient
+//            if (!inCart.containsKey(addToShoppingCart.get(i).getDescription().toLowerCase())) {
+//                sc.add(new CartIngredient(
+//                        addToShoppingCart.get(i).getDescription(),
+//                        addToShoppingCart.get(i).getCategory(),
+//                        addToShoppingCart.get(i).getAmount(),
+//                        addToShoppingCart.get(i).getUnit()
+//                ));
+//            }
+//            // otherwise, if the ingredient is in shopping cart...
+//            else {
+//                // if what we need to add is more than what is already in the cart
+//                if (addToShoppingCart.get(i).getAmount() > inCart.get(addToShoppingCart.get(i).getDescription().toLowerCase())) {
+//                    // compute the difference (to_add - in_cart)
+//                    int diff = addToShoppingCart.get(i).getAmount() - inCart.get(addToShoppingCart.get(i).getDescription().toLowerCase());
+//                    sc.add(new CartIngredient(
+//                            addToShoppingCart.get(i).getDescription(),
+//                            addToShoppingCart.get(i).getCategory(),
+//                            diff,
+//                            addToShoppingCart.get(i).getUnit()));
+//
+//                }
+//            }
+//        }
 
-                }
-            }
+        // naive algo
+        ShoppingCart sc = env.getCart();
+        for (int i = 0; i < addToShoppingCart.size(); i++) {
+
+            sc.add(new CartIngredient(
+                addToShoppingCart.get(i).getDescription(),
+                addToShoppingCart.get(i).getCategory(),
+                addToShoppingCart.get(i).getAmount(),
+                addToShoppingCart.get(i).getUnit()
+            ));
+
         }
+        // end naive algo
         sc.commit();
     }
 
