@@ -7,8 +7,10 @@ import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.data.MealPlan;
 import com.cmput301f22t09.shell379.data.Recipe;
+import com.cmput301f22t09.shell379.data.ShoppingCart;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
+import com.cmput301f22t09.shell379.data.wrapper.CartIngredient;
 import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
 
 import org.checkerframework.checker.units.qual.A;
@@ -252,5 +254,40 @@ public class IngredientDiffUtil {
         return res;
     }
 
+
+    public static void commitShoppingCart(Environment env, ArrayList<Ingredient> addToShoppingCart) {
+        HashMap<String, Integer> inCart = new HashMap<>();
+        ShoppingCart sc = env.getCart();
+        ArrayList<CartIngredient> cartIngs = sc.getList();
+        for (int i = 0; i < cartIngs.size(); i++) {
+            inCart.put(cartIngs.get(i).getDescription().toLowerCase(), cartIngs.get(i).getAmount());
+        }
+        for (int i = 0; i < addToShoppingCart.size(); i++) {
+            // if not in shopping cart, add the whole ingredient
+            if (!inCart.containsKey(addToShoppingCart.get(i).getDescription().toLowerCase())) {
+                sc.add(new CartIngredient(
+                        addToShoppingCart.get(i).getDescription(),
+                        addToShoppingCart.get(i).getCategory(),
+                        addToShoppingCart.get(i).getAmount(),
+                        addToShoppingCart.get(i).getUnit()
+                ));
+            }
+            // otherwise, if the ingredient is in shopping cart...
+            else {
+                // if what we need to add is more than what is already in the cart
+                if (addToShoppingCart.get(i).getAmount() > inCart.get(addToShoppingCart.get(i).getDescription().toLowerCase())) {
+                    // compute the difference (to_add - in_cart)
+                    int diff = addToShoppingCart.get(i).getAmount() - inCart.get(addToShoppingCart.get(i).getDescription().toLowerCase());
+                    sc.add(new CartIngredient(
+                            addToShoppingCart.get(i).getDescription(),
+                            addToShoppingCart.get(i).getCategory(),
+                            diff,
+                            addToShoppingCart.get(i).getUnit()));
+
+                }
+            }
+        }
+        sc.commit();
+    }
 
 }
