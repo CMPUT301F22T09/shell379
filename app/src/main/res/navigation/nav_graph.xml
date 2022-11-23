@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/mealPlanListFragment"
-    tools:ignore="ExtraText">
+    tools:ignore="ExtraText"
+    app:startDestination="@id/mainMenuFragment">
     <fragment
         android:id="@+id/ingredientListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.IngredientListFragment"
@@ -54,7 +54,30 @@
         android:id="@+id/shoppingListFragment"
         android:name="com.cmput301f22t09.shell379.fragments.ShoppingListFragment"
         android:label="fragment_shopping_list"
-        tools:layout="@layout/fragment_shopping_list_20" />
+        tools:layout="@layout/fragment_shopping_list_20" >
+        <action
+            android:id="@+id/action_shoppingListFragment_to_checkoutIngredient"
+            app:destination="@id/checkoutIngredient"/>
+        <action
+            android:id="@+id/action_shoppingListFragment_to_mainMenuFragment"
+            app:destination="@id/mainMenuFragment" />
+        <action
+            android:id="@+id/action_shoppingListFragment_to_shoppingListSuccessFragment"
+            app:destination="@id/shoppingListSuccessFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/checkoutIngredient"
+        android:name="com.cmput301f22t09.shell379.fragments.CheckoutIngredientFragment"
+        android:label="fragment_checkout_ingredient"
+        tools:layout="@layout/fragment_shopping_list_checkout_22">
+        <argument
+            android:name="ingredientIndex"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_checkoutIngredient_to_shoppingListFragment"
+            app:destination="@id/shoppingListFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/mealPlanListFragment"
@@ -204,4 +227,12 @@
             app:destination="@id/recipeSelectIngredientFragment" />
 
     </dialog>
+    <fragment
+        android:id="@+id/shoppingListSuccessFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.ShoppingListSuccessFragment"
+        android:label="ShoppingListSuccessFragment" >
+        <action
+            android:id="@+id/action_shoppingListSuccessFragment_to_shoppingListFragment"
+            app:destination="@id/shoppingListFragment" />
+    </fragment>
 </navigation>

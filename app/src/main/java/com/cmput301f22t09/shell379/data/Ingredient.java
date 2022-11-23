@@ -40,9 +40,6 @@ public class Ingredient implements Serializable{
         this.description = description;
 
         this.bestBefore = bestBefore;
-        if (bestBefore != null && bestBefore.before(new Date())) {
-            throw new IllegalArgumentException("Best Before Date shall not be before today upon construction!");
-        }
 
         this.location = location;
 
