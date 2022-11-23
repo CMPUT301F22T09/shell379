@@ -89,9 +89,6 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         if (cartIngredient.getPickedUp() && !cartIngredient.getDetailsFilled()) {
             detailsCompleteMsg.setVisibility(View.GONE);
             fillOutDetailsMsg.setVisibility(View.VISIBLE);
-            if (fillOutDetailsMsg.getText() == "") {
-                fillOutDetailsMsg.setText("Click on this card to fill out details");
-            }
         }
         else if (cartIngredient.getPickedUp() && cartIngredient.getDetailsFilled()) {
             checkbox.setChecked(true);
@@ -133,11 +130,15 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
                     shoppingList.getList().get(holder.getAdapterPosition()).setPickedUp(true);
                     holder.fillOutDetailsMsg.setVisibility(View.VISIBLE);
                     holder.detailsCompleteMsg.setVisibility(View.GONE);
+                    if (holder.fillOutDetailsMsg.getText().equals("")) {
+                        holder.fillOutDetailsMsg.setText("Click on this card to fill out details");
+                    }
                 }
                 // Checkbox is un-checked
                 else {
                     // TODO: set isPickedUp to false, and hide both messages
                     shoppingList.getList().get(holder.getAdapterPosition()).setPickedUp(false);
+                    shoppingList.getList().get(holder.getAdapterPosition()).setIngredient(null);
                     holder.fillOutDetailsMsg.setVisibility(View.GONE);
                     holder.detailsCompleteMsg.setVisibility(View.GONE);
                 }
