@@ -109,6 +109,9 @@ public class ShoppingListFragment extends Fragment {
             if (neededIngredient.getIngredient() != null) {
                 int neededAmount = neededIngredient.getAmount();
                 int amount = neededIngredient.getIngredient().getAmount();
+
+                // if amount is less than needed, keep the cartIngredient in the shopping list but
+                // change the amount
                 if (neededAmount > amount) {
                     neededIngredient.setAmount(neededAmount-amount);
                 } else {
