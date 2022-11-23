@@ -73,10 +73,11 @@ public class ShoppingListFragment extends Fragment {
 //        shoppingList = new LiveCollection<CartIngredient>();
 //        ArrayList<CartIngredient> tempList = new ArrayList<>();
         CartIngredient testCartIngredient = new CartIngredient("Milk", "Dairy", 2, "L");
-        testCartIngredient.setIngredient(new Ingredient("Milk","Fridge", 2, "L", "Dairy"));
-        testCartIngredient.setDetailsFilled(false);
+//        testCartIngredient.setIngredient(new Ingredient("Milk","Fridge", 2, "L", "Dairy"));
+//        testCartIngredient.setDetailsFilled(false);
         env.getCart().getList().add(testCartIngredient);
         shoppingList = env.getCart();
+//        shoppingList.setList(new ArrayList<>());
         shoppingList.commit();
         // END OF TEMPORARY TESTING DATA
 
