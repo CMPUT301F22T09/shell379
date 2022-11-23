@@ -41,9 +41,8 @@ public class MPRecipesEditListAdapter extends MPObjectWrapperListAdapter {
     @Override
     protected void addServings(int index) {
         MealPlanWrapper recipe =  viewModel.getRecipeAtIdx(index);
-        int recipeServes = ((Recipe)recipe.getObj()).getServings();
-        int currentServingMultiplier = recipe.getServings()/recipeServes;
-        recipe.setServings(recipeServes * (currentServingMultiplier + 1));
+        int currentServingMultiplier = recipe.getServings();
+        recipe.setServings(currentServingMultiplier + 1);
         viewModel.forceNotify();
     }
 
@@ -54,10 +53,9 @@ public class MPRecipesEditListAdapter extends MPObjectWrapperListAdapter {
     @Override
     protected void subServings(int index) {
         MealPlanWrapper recipe =  viewModel.getRecipeAtIdx(index);
-        int recipeServes = ((Recipe)recipe.getObj()).getServings();
-        int currentServingMultiplier = recipe.getServings()/recipeServes;
+        int currentServingMultiplier = recipe.getServings();
         if(currentServingMultiplier > 1){
-            recipe.setServings(recipeServes * (currentServingMultiplier - 1));
+            recipe.setServings(currentServingMultiplier - 1);
         }
 
         viewModel.forceNotify();
@@ -81,4 +79,12 @@ public class MPRecipesEditListAdapter extends MPObjectWrapperListAdapter {
         return  viewModel.getRecipes().size();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    public void onBindViewHolder(@NonNull MPEditIngredientListViewHolder holder, int position) {
+        super.onBindViewHolder(holder,position);
+        int recipeServings = ((Recipe)getItemAtIndex(position).getObj()).getServings();
+        int wrapperServings = getItemAtIndex(position).getServings();
+        holder.amount.setText( Integer.toString(wrapperServings*recipeServings) );
+    }
 }

@@ -6,11 +6,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.MealPlan;
 import com.cmput301f22t09.shell379.data.vm.Environment;
+import com.cmput301f22t09.shell379.data.vm.MealPlanViewModel;
 import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
 
 import java.util.ArrayList;
@@ -20,6 +22,7 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MealPl
     private ArrayList<MealPlan> mealPlans;
     private Environment envViewModel;
     private MealPlanAdapter.AdaptorListener mealPlanListener;
+    private FragmentActivity activity;
 
     public interface AdaptorListener {
         public void navigateToViewMealPlan(int index);
@@ -48,10 +51,11 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MealPl
         }
     }
 
-    public MealPlanAdapter(ArrayList<MealPlan> data, Environment envViewModel, AdaptorListener mealPlanListener){
+    public MealPlanAdapter(ArrayList<MealPlan> data, Environment envViewModel, AdaptorListener mealPlanListener, FragmentActivity activity){
         this.envViewModel = envViewModel;
         this.mealPlans = data;
         this.mealPlanListener = mealPlanListener;
+        this.activity = activity;
     }
 
 
@@ -102,6 +106,7 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MealPl
         MealPlan m = mealPlans.get(i);
         LiveCollection<MealPlan> mealPlanCollection = envViewModel.getMealPlans();
         mealPlanCollection.getList().indexOf(m);
+        MealPlanViewModel.of(i, activity);
         mealPlanListener.navigateToViewMealPlan(i);
     }
 
