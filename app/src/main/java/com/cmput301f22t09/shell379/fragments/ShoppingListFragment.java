@@ -69,8 +69,10 @@ public class ShoppingListFragment extends Fragment {
         // TEMPORARY TESTING DATA
         CartIngredient testCartIngredient = new CartIngredient("Milk", "Dairy", 2, "L");
         testCartIngredient.setIngredient(new Ingredient("Milk","Fridge", 2, "L", "Dairy"));
+        testCartIngredient.setDetailsFilled(false);
         env.getCart().getList().add(testCartIngredient);
         shoppingList = env.getCart();
+        shoppingList.commit();
         // END OF TEMPORARY TESTING DATA
 
         // Set up recycler view for displaying shopping list items
