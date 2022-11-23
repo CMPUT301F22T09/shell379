@@ -73,4 +73,16 @@ public class MealPlanWrapper<T> implements Serializable {
     public void setObj(T obj) {
         this.obj = obj;
     }
+
+    public static Recipe convertToRecipe(MealPlanWrapper<Recipe> wrapper) {
+        Recipe r = wrapper.getObj();
+        r.setServings(r.getServings()* wrapper.getServings());
+        return r;
+    }
+
+    public static Ingredient convertToIngredient(MealPlanWrapper<Ingredient> wrapper) {
+        Ingredient r = wrapper.getObj();
+        r.setAmount(r.getAmount()* wrapper.getServings());
+        return r;
+    }
 }

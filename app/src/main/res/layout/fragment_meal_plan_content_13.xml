@@ -9,14 +9,15 @@ android:elevation="12dp">
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingVertical="20dp">
 
     <TextView
         android:id="@+id/meal_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="0dp"
         android:elevation="8dp"
         android:text="MealName"
         android:textSize="23sp"
