@@ -87,7 +87,7 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
                 new View.OnClickListener() {
                     public void onClick(View v) {
                         MealPlanViewModel.of(new MealPlan(), requireActivity());
-                        navController.navigate(MealPlanListFragmentDirections.actionMealPlanFragmentToCreateMealPlanFragment());
+                        navController.navigate(MealPlanListFragmentDirections.actionMealPlanFragmentToEditMealPlanFragment());
                     }
                 }
         );
