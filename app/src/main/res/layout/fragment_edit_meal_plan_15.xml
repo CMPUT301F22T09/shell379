@@ -25,7 +25,7 @@
             tools:layout_editor_absoluteY="1dp">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/back_button"
+                android:id="@+id/mpe_back_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
@@ -187,7 +187,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/save_plan"
+                    android:id="@+id/mpe_save_plan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -195,7 +195,7 @@
                     android:text="Save" />
 
                 <Button
-                    android:id="@+id/cancel_plan"
+                    android:id="@+id/mpe_cancel_plan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"

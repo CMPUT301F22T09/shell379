@@ -9,20 +9,41 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="183dp">
+        android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/mpv_name"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
-            android:elevation="8dp"
-            android:text="Name"
-            android:textSize="23sp"
-            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp"
+            android:paddingTop="20dp"
+            >
+            <TextView
+                android:id="@+id/mpv_name"
+                android:layout_width="wrap_content"
+                android:layout_gravity="left"
+                android:layout_height="wrap_content"
+                android:elevation="8dp"
+                android:text="Name"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                 />
+            <TextView
+                android:id="@+id/mpv_remove"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="8dp"
+                android:text="x"
+                android:layout_gravity="left"
+                android:textSize="26sp"
+                android:textStyle="bold"
+                />
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/mpv_servings_label"
@@ -54,7 +75,7 @@
                 app:cornerRadius="50dp" />
 
             <TextView
-                android:id="@+id/mpv_servings_textView"
+                android:id="@+id/mpv_servings_val"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="0dp"
@@ -77,34 +98,23 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
             android:layout_marginBottom="8dp"
-            android:text="Date (tap to modify)"
+            android:text="Date"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mpv_servings_label"
-            app:layout_constraintVertical_bias="0.53" />
-
-        <TextView
-            android:id="@+id/mpv_date_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="108dp"
-            android:text="(date)"
-            android:textAlignment="textEnd"
-            android:textSize="18sp"
-            app:layout_constraintStart_toEndOf="@+id/mpv_date"
-            app:layout_constraintTop_toTopOf="@+id/mpv_date" />
+            app:layout_constraintVertical_bias="0.05" />
 
         <DatePicker
-            android:id="@+id/editPlanStart2"
+            android:id="@+id/edit_mpv_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
+            android:layout_marginHorizontal="40dp"
             android:layout_marginTop="16dp"
             android:layout_weight="1"
-            android:datePickerMode="calendar"
-            android:visibility="gone"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mpv_date"
             tools:visibility="visible" />

@@ -75,7 +75,7 @@ public class SerializeUtil {
     public static String serializeImg(Bitmap img) {
         Log.d("SER_UTIL", "SERIALIZING IMG");
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        img.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        img.compress(Bitmap.CompressFormat.PNG, 10, baos);
 
         byte[] bytes = baos.toByteArray();
         return Base64.getEncoder().encodeToString(bytes);
