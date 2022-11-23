@@ -127,7 +127,7 @@ public class CheckoutIngredientFragment extends Fragment {
             String locationIngredient = location.getText().toString();
             String strAmountIngredient = amountPurchased.getText().toString();
             String categoryIngredient = category.getText().toString();
-            String unitIngredient = unit.toString();
+            String unitIngredient = unit.getText().toString();
 
             // validate
             if (descriptionIngredient.isEmpty() ||
