@@ -122,6 +122,7 @@ public class ShoppingListFragment extends Fragment {
                     neededIngredient.setAmount(neededAmount-amount);
                     neededIngredient.setPickedUp(false);
                     neededIngredient.setIngredient(null);
+                    neededIngredient.setDetailsFilled(false);
                 } else {
                     toBeRemoved.add(i);
                 }
