@@ -40,6 +40,7 @@ public class AddIngredientToMPFragment extends Fragment {
         ((ImageView)rootView.findViewById(R.id.back_button)).setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
+
                         back();
                     }
                 }
