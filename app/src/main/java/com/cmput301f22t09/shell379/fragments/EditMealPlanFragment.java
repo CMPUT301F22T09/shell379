@@ -83,6 +83,15 @@ public class EditMealPlanFragment extends Fragment {
                 }
         );
 
+        rootView.findViewById(R.id.plan_edit_add_recipes_btn).setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        navController.navigate(EditMealPlanFragmentDirections.actionEditMealPlanFragmentToAddRecipetoMealPlanFragment());
+                    }
+                }
+        );
+
 //        layoutManager = new LinearLayoutManager(this.getActivity());
 
         mpIngredientRecycler = (RecyclerView) rootView.findViewById(R.id.plan_edit_ingredients);
