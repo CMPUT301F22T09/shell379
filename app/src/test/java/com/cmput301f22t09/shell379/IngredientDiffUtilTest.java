@@ -57,6 +57,7 @@ public class IngredientDiffUtilTest {
                 mpIngs,
                 new Date(2020, 12, 31),
                 new Date(2030, 1, 3),
+                "",
                 0);
 
         HashMap<String, Ingredient> result = IngredientDiffUtil.getIngredientsNeeded(mp);
@@ -223,6 +224,7 @@ public class IngredientDiffUtilTest {
                 mpIngs,
                 new Date(2020, 12, 31),
                 new Date(2022, 1, 3),
+                "",
                 0);
 
         Environment env = new EnvironmentMock();

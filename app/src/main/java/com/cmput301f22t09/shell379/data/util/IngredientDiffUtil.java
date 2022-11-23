@@ -9,6 +9,7 @@ import com.cmput301f22t09.shell379.data.MealPlan;
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
+import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
 
 import org.checkerframework.checker.units.qual.A;
 
@@ -20,6 +21,7 @@ import java.util.Locale;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 public class IngredientDiffUtil {
 
@@ -40,8 +42,12 @@ public class IngredientDiffUtil {
      */
     public static HashMap<String, Ingredient> getIngredientsNeeded(MealPlan mp) {
         HashMap<String, Ingredient> totalIngs = new HashMap<String, Ingredient>();
-        ArrayList<Recipe> allRecipes = mp.getRecipes();
-        ArrayList<Ingredient> ingsFromMP = mp.getIngredients();
+        ArrayList<Recipe> allRecipes = mp.getRecipes().stream()
+                .map(MealPlanWrapper::getObj)
+                .collect(Collectors.toCollection(ArrayList::new));
+        ArrayList<Ingredient> ingsFromMP = mp.getIngredients().stream()
+                .map(MealPlanWrapper::getObj)
+                .collect(Collectors.toCollection(ArrayList::new));
 
         // Loop through all recipes, get all ingredients
         for (int i = 0; i < allRecipes.size(); i++) {
