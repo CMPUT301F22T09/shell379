@@ -15,6 +15,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
@@ -69,6 +70,9 @@ public class AddRecipeToMPFragment extends DialogFragment implements AddRecipeMe
         );
 
         RecyclerView recipeRecyclerView =(rootView.findViewById(R.id.add_recipe_to_mealPlan_recyclerView));
+
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
+        recipeRecyclerView.setLayoutManager(layoutManager);
 
         addRecipeMealPlanAdapter = new AddRecipeMealPlanAdapter(env.getRecipes().getList(), this, mealPlanViewModel);
         recipeRecyclerView.setAdapter(addRecipeMealPlanAdapter);
