@@ -106,7 +106,7 @@ public class ShoppingListFragment extends Fragment {
         ArrayList<Integer> toBeRemoved = new ArrayList<>();
         for (int i = 0; i < shoppingArray.size(); i++) {
             CartIngredient neededIngredient = shoppingArray.get(i);
-            if (neededIngredient.getIngredient() != null) {
+            if (neededIngredient.getPickedUp() && neededIngredient.getDetailsFilled()) {
                 int neededAmount = neededIngredient.getAmount();
                 int amount = neededIngredient.getIngredient().getAmount();
 
@@ -118,7 +118,10 @@ public class ShoppingListFragment extends Fragment {
                     toBeRemoved.add(i);
                 }
                 env.getIngredients().add(neededIngredient.getIngredient());
+            } else if (neededIngredient.getPickedUp() && !neededIngredient.getDetailsFilled()) {
+                neededIngredient.setPickedUp(false);
             }
+
         }
 
         for (int i = 0; i < toBeRemoved.size(); i++) {
