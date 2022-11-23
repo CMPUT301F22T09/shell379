@@ -157,12 +157,29 @@
     <fragment
         android:id="@+id/addRecipetoMealPlanFragment"
         android:name="com.cmput301f22t09.shell379.fragments.AddRecipeToMPFragment"
-        android:label="AddRecipetoMealPlan"/>
+        android:label="AddRecipetoMealPlan">
+        <action
+            android:id="@+id/action_addRecipetoMealPlanFragment_to_addDatetoRecipeFragment"
+            app:destination="@id/addDatetoRecipeFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/addIngredtoMealPlanFragment"
         android:name="com.cmput301f22t09.shell379.fragments.AddIngredientToMPFragment"
-        android:label="AddIngredienttoMealPlan" />
+        android:label="AddIngredienttoMealPlan" >
+        <action
+            android:id="@+id/action_addIngredtoMealPlanFragment_to_addDatetoIngredFragment"
+            app:destination="@id/addDatetoIngredFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addDatetoRecipeFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.RecipeMealPlanPickDateFragment"
+        android:label="AddDatetoRecipe" />
+    <fragment
+        android:id="@+id/addDatetoIngredFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.IngredMealPlanPickDateFragment"
+        android:label="AddDatetoIngred" />
+
 
     <fragment
         android:id="@+id/editMealPlanFragment"

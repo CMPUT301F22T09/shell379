@@ -61,8 +61,6 @@ public class AddIngredMealPlanAdapter extends RecyclerView.Adapter<AddIngredMeal
 
 
 
-
-
     @NonNull
         @Override
         public AddIngredMealPlanAdapter.AddIngredMealPlanViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
