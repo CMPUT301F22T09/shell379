@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
@@ -43,10 +44,10 @@ public class IngredientDiffUtil {
     public static HashMap<String, Ingredient> getIngredientsNeeded(MealPlan mp) {
         HashMap<String, Ingredient> totalIngs = new HashMap<String, Ingredient>();
         ArrayList<Recipe> allRecipes = mp.getRecipes().stream()
-                .map(MealPlanWrapper::getObj)
+                .map(MealPlanWrapper::convertToRecipe)
                 .collect(Collectors.toCollection(ArrayList::new));
         ArrayList<Ingredient> ingsFromMP = mp.getIngredients().stream()
-                .map(MealPlanWrapper::getObj)
+                .map(MealPlanWrapper::convertToIngredient)
                 .collect(Collectors.toCollection(ArrayList::new));
 
         // Loop through all recipes, get all ingredients
