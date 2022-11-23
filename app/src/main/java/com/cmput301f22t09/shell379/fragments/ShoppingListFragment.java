@@ -3,6 +3,7 @@ package com.cmput301f22t09.shell379.fragments;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -18,6 +19,11 @@ import android.widget.Button;
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.ShoppingListAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
+
+import com.cmput301f22t09.shell379.data.MealPlan;
+import com.cmput301f22t09.shell379.data.ShoppingCart;
+import com.cmput301f22t09.shell379.data.util.IngredientDiffUtil;
+
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
 import com.cmput301f22t09.shell379.data.wrapper.CartIngredient;
@@ -25,6 +31,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 public class ShoppingListFragment extends Fragment {
 
@@ -62,18 +69,15 @@ public class ShoppingListFragment extends Fragment {
         // shoppingList = env.getCart();
 
         // TEMPORARY TESTING DATA
+
 //        shoppingList = new LiveCollection<CartIngredient>();
 //        ArrayList<CartIngredient> tempList = new ArrayList<>();
         CartIngredient testCartIngredient = new CartIngredient("Milk", "Dairy", 2, "L");
         testCartIngredient.setIngredient(new Ingredient("Milk","Fridge", 2, "L", "Dairy"));
+        testCartIngredient.setDetailsFilled(false);
         env.getCart().getList().add(testCartIngredient);
-        env.getCart().commit();
-//        tempList.add(testCartIngredient);
-//        tempList.add(new CartIngredient());
-//        tempList.add(new CartIngredient());
-//        tempList.add(new CartIngredient());
-        // shoppingList.setList(tempList);
         shoppingList = env.getCart();
+        shoppingList.commit();
         // END OF TEMPORARY TESTING DATA
 
         // Set up recycler view for displaying shopping list items
@@ -102,6 +106,36 @@ public class ShoppingListFragment extends Fragment {
     }
 
     private void submit() {
+        ArrayList<CartIngredient> shoppingArray = shoppingList.getList();
+//        ArrayList<CartIngredient> shoppingArray = env.getCart().getList();
+                ArrayList<Integer> toBeRemoved = new ArrayList<>();
+        for (int i = 0; i < shoppingArray.size(); i++) {
+            CartIngredient neededIngredient = shoppingArray.get(i);
+            if (neededIngredient.getPickedUp() && neededIngredient.getDetailsFilled()) {
+                int neededAmount = neededIngredient.getAmount();
+                int amount = neededIngredient.getIngredient().getAmount();
+
+                // if amount is less than needed, keep the cartIngredient in the shopping list but
+                // change the amount
+                if (neededAmount > amount) {
+                    neededIngredient.setAmount(neededAmount-amount);
+                } else {
+                    toBeRemoved.add(i);
+                }
+                env.getIngredients().add(neededIngredient.getIngredient());
+            } else if (neededIngredient.getPickedUp() && !neededIngredient.getDetailsFilled()) {
+                neededIngredient.setPickedUp(false);
+            }
+
+        }
+
+        for (int i = 0; i < toBeRemoved.size(); i++) {
+            shoppingArray.remove(toBeRemoved.get(i).intValue());
+        }
+        env.getCart().setList(shoppingArray);
+        
+        env.getIngredients().commit();
+        env.getCart().commit();
         navController.navigate(ShoppingListFragmentDirections.actionShoppingListFragmentToShoppingListSuccessFragment());
     }
 }
