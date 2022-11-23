@@ -179,7 +179,6 @@ public class CheckoutIngredientFragment extends Fragment {
      * @param ing
      */
     protected void writeToViewModel(Ingredient ing){
-        theCartIngredient.setDetailsFilled(true);
         theCartIngredient.setIngredient(ing);
         envViewModel.getCart().getList().set(ingredientIndex, theCartIngredient);
         envViewModel.getCart().commit();

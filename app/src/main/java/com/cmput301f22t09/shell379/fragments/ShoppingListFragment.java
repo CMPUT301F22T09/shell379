@@ -102,12 +102,28 @@ public class ShoppingListFragment extends Fragment {
     }
 
     private void submit() {
-//        ArrayList<CartIngredient> shoppingArray = shoppingList.getList();
-//        for (int i = 0; i < shoppingArray.size(); i++) {
-//            Ingredient theIngredient = shoppingArray.get(i).getIngredient();
-//            env.getIngredients().add(theIngredient);
-//
-//        }
+        ArrayList<CartIngredient> shoppingArray = shoppingList.getList();
+        ArrayList<Integer> toBeRemoved = new ArrayList<>();
+        for (int i = 0; i < shoppingArray.size(); i++) {
+            CartIngredient neededIngredient = shoppingArray.get(i);
+            if (neededIngredient.getIngredient() != null) {
+                int neededAmount = neededIngredient.getAmount();
+                int amount = neededIngredient.getIngredient().getAmount();
+                if (neededAmount > amount) {
+                    neededIngredient.setAmount(neededAmount-amount);
+                } else {
+                    toBeRemoved.add(i);
+                }
+                env.getIngredients().add(neededIngredient.getIngredient());
+            }
+        }
+
+        for (int i = 0; i < toBeRemoved.size(); i++) {
+            shoppingArray.remove(toBeRemoved.get(i));
+        }
+        
+        env.getIngredients().commit();
+        env.getCart().commit();
         navController.navigate(ShoppingListFragmentDirections.actionShoppingListFragmentToShoppingListSuccessFragment());
     }
 }
