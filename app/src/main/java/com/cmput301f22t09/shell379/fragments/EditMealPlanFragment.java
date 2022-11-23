@@ -180,12 +180,5 @@ public class EditMealPlanFragment extends Fragment {
         envViewModel.getMealPlans().commit();
     }
 
-    public void navigateToViewMealPlan(int index){
-        //    to-do
-//        MealPlanListFragmentDirections.
 
-//        IngredientListFragmentDirections.ActionIngredientListFragmentToViewIngredientFragment action
-//                = IngredientListFragmentDirections.actionIngredientListFragmentToViewIngredientFragment(index);
-//        navController.navigate(action);
-    }
 }

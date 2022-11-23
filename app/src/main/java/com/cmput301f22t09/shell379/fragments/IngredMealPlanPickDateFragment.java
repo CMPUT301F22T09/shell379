@@ -18,7 +18,7 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.MealPlanAdapter;
-import com.cmput301f22t09.shell379.data.Recipe;
+import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.vm.MealPlanViewModel;
 import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
 
@@ -27,16 +27,19 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-public class RecipeMealPlanPickDateFragment extends Fragment{
+//public class IngredMealPlanPickDateFragment {
+
+
+public class IngredMealPlanPickDateFragment extends Fragment{
     protected View rootView;
     protected NavController navController;
     protected MealPlanViewModel mealPlanViewModel;
-    private MealPlanWrapper<Recipe> recipe;
-    private int recipeIdx;
-    private Recipe recipe1;
+    private MealPlanWrapper<Ingredient> ingredient;
+    private int ingredIdx;
+    private Ingredient ingredient1;
     private Integer serving1;
 
-    public RecipeMealPlanPickDateFragment() {
+    public IngredMealPlanPickDateFragment() {
 
     }
 
@@ -51,7 +54,7 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.mealplan_recipe_date_17, container, false);
+        rootView = inflater.inflate(R.layout.mealplan_ingredient_date_19, container, false);
         // back button to go back
         ((ImageView)rootView.findViewById(R.id.back_button)).setOnClickListener(
                 new View.OnClickListener() {
@@ -89,39 +92,36 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
 
 
 
-    protected void writeToViewModel(MealPlanWrapper<Recipe> recipe) {
-//        envViewModel.getIngredients().getList().set(ingredientIndex, ing);
-//        envViewModel.getIngredients().commit();
-        mealPlanViewModel.addRecipe(recipe);
+    protected void writeToViewModel(MealPlanWrapper<Ingredient> ingredient) {
+        mealPlanViewModel.addIngredient(ingredient);
     }
 
     private void save(){
 //        we dont have these 2 in the UI screen 17; those 2 are edited/save in previous screen
-        String obj = ((TextView) rootView.findViewById(R.id.recipe_name)).getText().toString();
+        String obj = ((TextView) rootView.findViewById(R.id.Ingredient_name)).getText().toString();
         String serving = ((TextView) rootView.findViewById(R.id.rli_servings_textView)).getText().toString();
 
 
         Calendar cal = Calendar.getInstance(TimeZone.getDefault());
-        cal.setTime(recipe.getDate());
+        cal.setTime(ingredient.getDate());
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);
-        DatePicker RecipeDatePicker = rootView.findViewById(R.id.editRecipeDate);
-        RecipeDatePicker.updateDate(
+        DatePicker IngredDatePicker = rootView.findViewById(R.id.editIngredientDate);
+        IngredDatePicker.updateDate(
                 year,
                 month,
                 day);
 
-        Date recipeDate = new GregorianCalendar(
-                RecipeDatePicker.getYear(),
-                RecipeDatePicker.getMonth(),
-                RecipeDatePicker.getDayOfMonth()).getTime();
+        Date ingredDate = new GregorianCalendar(
+                IngredDatePicker.getYear(),
+                IngredDatePicker.getMonth(),
+                IngredDatePicker.getDayOfMonth()).getTime();
+//        MealPlanWrapper<Recipe>(ingredient1, recipeDate, serving1);
+        MealPlanWrapper<Ingredient> newIngredient = new MealPlanWrapper<>(ingredient1,ingredDate,serving1);
 
-        MealPlanWrapper<Recipe> newRecipe = new MealPlanWrapper<Recipe>(recipe1, recipeDate, serving1);
-
-        writeToViewModel(newRecipe);
+        writeToViewModel(newIngredient);
 
     }
-
 
 }

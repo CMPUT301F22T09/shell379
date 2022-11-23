@@ -119,4 +119,5 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
         navController.navigate(action);
 
     }
+
 }

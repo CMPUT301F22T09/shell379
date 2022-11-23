@@ -78,6 +78,14 @@ public class AddIngredientToMPFragment extends DialogFragment implements AddIngr
         navController.popBackStack();
     }
 
+    public void navigateToPickDate(int index){
+        //    to-do
+        AddIngredientToMPFragmentDirections.ActionAddIngredtoMealPlanFragmentToAddDatetoIngredFragment action
+                =  AddIngredientToMPFragmentDirections.actionAddIngredtoMealPlanFragmentToAddDatetoIngredFragment(index);
+        navController.navigate(action);
+//        navController.navigate(RecipeMealPlanPickDateFragment);
+    }
+
 
     @Override
     public void editIngredInMP(int index) {

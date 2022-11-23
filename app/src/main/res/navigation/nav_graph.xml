@@ -157,12 +157,46 @@
     <fragment
         android:id="@+id/addRecipetoMealPlanFragment"
         android:name="com.cmput301f22t09.shell379.fragments.AddRecipeToMPFragment"
-        android:label="AddRecipetoMealPlan"/>
+        android:label="AddRecipetoMealPlan"
+        tools:layout="@layout/fragment_add_recipe_meal_plan_16" >
+        <action
+            android:id="@+id/action_addRecipetoMealPlanFragment_to_addDatetoRecipeFragment"
+            app:destination="@id/addDatetoRecipeFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/addIngredtoMealPlanFragment"
         android:name="com.cmput301f22t09.shell379.fragments.AddIngredientToMPFragment"
-        android:label="AddIngredienttoMealPlan" />
+        android:label="AddIngredienttoMealPlan"
+        tools:layout="@layout/fragment_add_ingredient_meal_plan_18" >
+        <action
+            android:id="@+id/action_addIngredtoMealPlanFragment_to_addDatetoIngredFragment"
+            app:destination="@id/addDatetoIngredFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addDatetoRecipeFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.RecipeMealPlanPickDateFragment"
+        android:label="AddDatetoRecipe"
+        tools:layout="@layout/mealplan_recipe_date_17">
+        <argument
+            android:name="index"
+            app:argType="integer" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/addDatetoIngredFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.IngredMealPlanPickDateFragment"
+        android:label="AddDatetoIngred"
+        tools:layout="@layout/mealplan_ingredient_date_19" >
+    <argument
+        android:name="index"
+        app:argType="integer" />
+
+</fragment>
+
+
+
 
     <fragment
         android:id="@+id/editMealPlanFragment"

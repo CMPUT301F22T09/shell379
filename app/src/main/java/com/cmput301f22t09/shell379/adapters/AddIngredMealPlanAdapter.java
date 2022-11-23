@@ -26,6 +26,8 @@ public class AddIngredMealPlanAdapter extends RecyclerView.Adapter<AddIngredMeal
         public interface IngredInMealPlanListener{
             //         to-do (implement the editRecipeMealplan function)
             public void editIngredInMP(int index);
+
+            public void navigateToPickDate(int index);
         }
 
 
@@ -58,8 +60,6 @@ public class AddIngredMealPlanAdapter extends RecyclerView.Adapter<AddIngredMeal
         this.ingredInMealPlanListener = ingredInMealPlanListener;
         this.mealPlanViewModel = mealPlanViewModel;
         }
-
-
 
 
 
