@@ -109,7 +109,7 @@ public class ShoppingListFragment extends Fragment {
     private void submit() {
         ArrayList<CartIngredient> shoppingArray = shoppingList.getList();
 //        ArrayList<CartIngredient> shoppingArray = env.getCart().getList();
-                ArrayList<Integer> toBeRemoved = new ArrayList<>();
+        ArrayList<Integer> toBeRemoved = new ArrayList<>();
         for (int i = 0; i < shoppingArray.size(); i++) {
             CartIngredient neededIngredient = shoppingArray.get(i);
             if (neededIngredient.getPickedUp() && neededIngredient.getDetailsFilled()) {
@@ -120,6 +120,8 @@ public class ShoppingListFragment extends Fragment {
                 // change the amount
                 if (neededAmount > amount) {
                     neededIngredient.setAmount(neededAmount-amount);
+                    neededIngredient.setPickedUp(false);
+                    neededIngredient.setIngredient(null);
                 } else {
                     toBeRemoved.add(i);
                 }
