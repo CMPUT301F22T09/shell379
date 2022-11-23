@@ -80,9 +80,9 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
 
         CartIngredient cartIngredient = shoppingList.getList().get(holder.getAdapterPosition());
 
-        description.setText(cartIngredient.getIngredient().getDescription());
+        description.setText(cartIngredient.getDescription());
         category.setText(cartIngredient.getCategory());
-        amount.setText(cartIngredient.getAmount().toString() + " " + cartIngredient.getIngredient().getUnit());
+        amount.setText(cartIngredient.getAmount().toString() + " " + cartIngredient.getUnit());
         detailsCompleteMsg.setVisibility(View.GONE);
         fillOutDetailsMsg.setVisibility(View.GONE);
 
