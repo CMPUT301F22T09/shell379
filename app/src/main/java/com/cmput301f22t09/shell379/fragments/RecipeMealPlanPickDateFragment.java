@@ -92,8 +92,7 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
     protected void writeToViewModel(MealPlanWrapper<Recipe> recipe) {
 //        envViewModel.getIngredients().getList().set(ingredientIndex, ing);
 //        envViewModel.getIngredients().commit();
-        mealPlanViewModel.getRecipeAtIdx(recipeIdx);
-//        mealPlanViewModel.getRecipes().commit();
+        mealPlanViewModel.addRecipe(recipe);
     }
 
     private void save(){
@@ -119,6 +118,7 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
                 RecipeDatePicker.getDayOfMonth()).getTime();
 
         MealPlanWrapper<Recipe> newRecipe = new MealPlanWrapper<Recipe>(recipe1, recipeDate, serving1);
+
         writeToViewModel(newRecipe);
 
     }
