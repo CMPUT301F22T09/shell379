@@ -14,10 +14,12 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.AddRecipeMealPlanAdapter;
+import com.cmput301f22t09.shell379.adapters.RecipeIngredientsListAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.Environment;
@@ -65,6 +67,12 @@ public class AddRecipeToMPFragment extends DialogFragment implements AddRecipeMe
                     }
                 }
         );
+
+        RecyclerView recipeRecyclerView =(rootView.findViewById(R.id.add_recipe_to_mealPlan_recyclerView));
+
+        addRecipeMealPlanAdapter = new AddRecipeMealPlanAdapter(env.getRecipes().getList(), this, mealPlanViewModel);
+        recipeRecyclerView.setAdapter(addRecipeMealPlanAdapter);
+        recipeRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         //        To-do sorting
 

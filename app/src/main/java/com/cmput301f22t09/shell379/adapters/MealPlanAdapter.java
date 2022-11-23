@@ -110,11 +110,7 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MealPl
         mealPlanListener.navigateToViewMealPlan(i);
     }
 
-// maybe dont need this (only for testing purpose)
-//    public MealPlan getMealPlan(int index){
-//        MealPlan mealPlan = mealPlans.get(index);
-//        return mealPlan;
-//    }
+
 }
 
 
