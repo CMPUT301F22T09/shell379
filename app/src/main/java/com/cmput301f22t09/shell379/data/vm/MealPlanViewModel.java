@@ -31,7 +31,7 @@ public class MealPlanViewModel extends ViewModel {
 
     public static MealPlanViewModel of(FragmentActivity activity) {
         MealPlanViewModel viewModel = new ViewModelProvider(activity).get(MealPlanViewModel.class);
-        if (viewModel == null) viewModel = new MealPlanViewModel();
+        if (viewModel.mealPlan == null) viewModel = new MealPlanViewModel();
         return viewModel;
     }
 
@@ -120,8 +120,8 @@ public class MealPlanViewModel extends ViewModel {
         this.idx = idx;
     }
 
-    public MutableLiveData<Integer> getIdx() {
-        return idx;
+    public Integer getIdx() {
+        return idx.getValue();
     }
         /**
          * Notifies all listeners to the meal plan of a change

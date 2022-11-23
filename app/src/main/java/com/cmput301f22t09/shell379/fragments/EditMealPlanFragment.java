@@ -174,7 +174,7 @@ public class EditMealPlanFragment extends Fragment {
         cal.set(picker.getYear(), picker.getMonth(), picker.getDayOfMonth());
         mpViewModel.getMealPlan().setEndDate(cal.getTime());
 
-        envViewModel.getMealPlans().setAtIdxOrAdd(mpViewModel.getIdx().getValue(), mpViewModel.getMealPlan());
+        envViewModel.getMealPlans().setAtIdxOrAdd(mpViewModel.getIdx(), mpViewModel.getMealPlan());
         envViewModel.getMealPlans().commit();
     }
 

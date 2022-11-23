@@ -30,7 +30,11 @@ public class MealPlan implements Serializable {
     }
 
     public MealPlan() {
-
+        this.mealPlanName = "";
+        this.startDate = formatter.format(new Date());
+        this.endDate = formatter.format(new Date());
+        this.comments = "";
+        this.activeDays = 0;
     }
 
 //    public MealPlan(Date startDate, Date endDate, Integer activeDays) {
