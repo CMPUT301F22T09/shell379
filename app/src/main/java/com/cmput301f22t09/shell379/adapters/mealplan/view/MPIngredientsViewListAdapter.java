@@ -29,12 +29,14 @@ public class MPIngredientsViewListAdapter extends RecyclerView.Adapter<MPIngredi
         TextView name;
         TextView amount;
         TextView date;
+        TextView amountLabel;
 
         public MPViewIngredientListViewHolder(@NonNull View itemView) {
             super(itemView);
             this.name = (TextView) itemView.findViewById(R.id.mpv_name);
             this.amount = (TextView) itemView.findViewById(R.id.mpv_servings_val);
             this.date = (TextView) itemView.findViewById(R.id.mpv_date_val);
+            this.amountLabel = (TextView)  itemView.findViewById(R.id.mpv_servings_label);
         }
 
         public View getItemView(){
@@ -70,7 +72,7 @@ public class MPIngredientsViewListAdapter extends RecyclerView.Adapter<MPIngredi
         TextView date = holder.date;
 
         String units = ((Ingredient)viewModel.getIngredientAtIdx(position).getObj()).getUnit();
-        holder.amount.setText("Amount ( "+units+" )");
+        holder.amountLabel.setText("Amount ( "+units+" )");
         Log.e("MP_ADAPTER_ITEM", viewModel.getIngredientAtIdx(position).getName());
         name.setText(viewModel.getIngredientAtIdx(position).getName());
         amount.setText(viewModel.getIngredientAtIdx(position).getServings().toString());

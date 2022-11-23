@@ -17,6 +17,7 @@ import com.cmput301f22t09.shell379.data.util.DatabaseManager;
 import com.cmput301f22t09.shell379.data.vm.collections.CategorySet;
 import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
 import com.cmput301f22t09.shell379.data.vm.infrastructure.Commitable;
+import com.cmput301f22t09.shell379.data.wrapper.CartIngredient;
 
 import java.io.Serializable;
 
@@ -29,7 +30,7 @@ public class Environment extends ViewModel implements Serializable {
     private LiveCollection<Ingredient> ingredients;
     private LiveCollection<Recipe> recipes;
     private LiveCollection<MealPlan> mealPlans;
-    private ShoppingCart cart;
+    private LiveCollection<CartIngredient> cart;
     private CategorySet ingredientCategories;
     private CategorySet recipeCategories;
     private CategorySet locationCategories;
@@ -37,7 +38,7 @@ public class Environment extends ViewModel implements Serializable {
     public Environment() {
         ingredients = new LiveCollection<Ingredient>();
         recipes = new LiveCollection<Recipe>();
-        cart = new ShoppingCart();
+        cart = new LiveCollection<CartIngredient>();
         mealPlans = new LiveCollection<MealPlan>();
         ingredientCategories = new CategorySet();
         recipeCategories = new CategorySet();
@@ -54,11 +55,12 @@ public class Environment extends ViewModel implements Serializable {
         try {
             env.ingredients.setList(envPulled.ingredients.getList());
             env.cart.setList(envPulled.cart.getList());
-            env.cart.setActiveDays(envPulled.cart.getActiveDays());
             env.recipes.setList(envPulled.recipes.getList());
             env.ingredientCategories.setCategories(envPulled.ingredientCategories.getCategories());
             env.recipeCategories.setCategories(envPulled.recipeCategories.getCategories());
             env.locationCategories.setCategories(envPulled.locationCategories.getCategories());
+            env.mealPlans.setList(envPulled.mealPlans.getList());
+            env.cart.setList(envPulled.cart.getList());
 
             setupObservers(owner, env);
         } catch (NullPointerException e) {
@@ -91,6 +93,8 @@ public class Environment extends ViewModel implements Serializable {
         observeForCommits(owner, env, env.getIngredientCategories());
         observeForCommits(owner, env, env.getRecipeCategories());
         observeForCommits(owner, env, env.getLocationCategories());
+        observeForCommits(owner, env, env.getMealPlans());
+        observeForCommits(owner, env, env.getCart());
     }
 
     /**
@@ -124,7 +128,7 @@ public class Environment extends ViewModel implements Serializable {
         return recipes;
     }
 
-    public ShoppingCart getCart() {
+    public LiveCollection<CartIngredient> getCart() {
         return cart;
     }
 

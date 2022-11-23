@@ -39,6 +39,7 @@ public abstract class MPObjectWrapperListAdapter extends RecyclerView.Adapter<MP
         Button addServingsButton;
         Button subServingsButton;
         DatePicker editDatePicker;
+        TextView amountLabel;
 
         public MPEditIngredientListViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -48,6 +49,7 @@ public abstract class MPObjectWrapperListAdapter extends RecyclerView.Adapter<MP
             this.addServingsButton = (Button) itemView.findViewById(R.id.mpe_add_btn);
             this.subServingsButton = (Button) itemView.findViewById(R.id.mpe_sub_btn);
             this.editDatePicker = (DatePicker) itemView.findViewById(R.id.edit_mpv_date);
+            this.amountLabel = (TextView)  itemView.findViewById(R.id.mpv_servings_label);
         }
 
         public View getItemView(){
@@ -115,7 +117,11 @@ public abstract class MPObjectWrapperListAdapter extends RecyclerView.Adapter<MP
                         editDate.getMonth(),
                         editDate.getDayOfMonth()).getTime();
                 updateDate(holder.getAdapterPosition(),newDate);
-                notifyDataSetChanged();
+                try{
+                    notifyDataSetChanged();
+                }catch(Exception e){
+
+                }
             }
         });
 

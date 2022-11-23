@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.ShoppingCart;
+import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
 import com.cmput301f22t09.shell379.data.wrapper.CartIngredient;
 import com.cmput301f22t09.shell379.fragments.ShoppingListFragment;
 import com.cmput301f22t09.shell379.fragments.ShoppingListFragmentDirections;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
  */
 public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapter.ShoppingListViewHolder> {
 
-    private ShoppingCart shoppingList;
+    private LiveCollection<CartIngredient> shoppingList;
     private ShoppingListFragment shoppingListFragment;
     private NavController navController;
 
@@ -54,7 +55,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
 
     }
 
-    public ShoppingListAdapter(ShoppingCart shoppingList, ShoppingListFragment shoppingListFragment) {
+    public ShoppingListAdapter(LiveCollection<CartIngredient> shoppingList, ShoppingListFragment shoppingListFragment) {
         this.shoppingList = shoppingList;
         this.shoppingListFragment = shoppingListFragment;
         this.navController = NavHostFragment.findNavController(shoppingListFragment);

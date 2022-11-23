@@ -81,11 +81,4 @@ public class MPRecipesEditListAdapter extends MPObjectWrapperListAdapter {
         return  viewModel.getRecipes().size();
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    @Override
-    public void onBindViewHolder(@NonNull MPEditIngredientListViewHolder holder, int position) {
-        super.onBindViewHolder( holder, position);
-        String units = ((Ingredient)getItemAtIndex(position).getObj()).getUnit();
-        holder.amount.setText("Amount ( "+units+" )");
-    }
 }
