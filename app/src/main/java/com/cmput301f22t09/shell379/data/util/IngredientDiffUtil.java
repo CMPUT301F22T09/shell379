@@ -289,7 +289,7 @@ public class IngredientDiffUtil {
 //        }
 
         // naive algo
-        ShoppingCart sc = env.getCart();
+        LiveCollection<CartIngredient> sc = env.getCart();
         for (int i = 0; i < addToShoppingCart.size(); i++) {
 
             sc.add(new CartIngredient(
