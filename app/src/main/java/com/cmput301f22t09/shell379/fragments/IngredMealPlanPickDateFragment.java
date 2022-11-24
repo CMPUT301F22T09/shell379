@@ -7,10 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -19,6 +21,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.MealPlanAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.MealPlanViewModel;
 import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
 
@@ -36,8 +39,7 @@ public class IngredMealPlanPickDateFragment extends Fragment{
     protected MealPlanViewModel mealPlanViewModel;
     private MealPlanWrapper<Ingredient> ingredient;
     private int ingredIdx;
-    private Ingredient ingredient1;
-    private Integer serving1;
+    private Ingredient newIngredient;
 
     public IngredMealPlanPickDateFragment() {
 
@@ -55,6 +57,11 @@ public class IngredMealPlanPickDateFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.mealplan_ingredient_date_19, container, false);
+
+        ingredIdx = getArguments().getInt("index");
+        newIngredient = Environment.of((AppCompatActivity) getActivity())
+                .getIngredients().getList().get(ingredIdx);
+
         // back button to go back
         ((ImageView)rootView.findViewById(R.id.back_button)).setOnClickListener(
                 new View.OnClickListener() {
@@ -99,28 +106,20 @@ public class IngredMealPlanPickDateFragment extends Fragment{
     private void save(){
 //        we dont have these 2 in the UI screen 17; those 2 are edited/save in previous screen
         String obj = ((TextView) rootView.findViewById(R.id.Ingredient_name)).getText().toString();
-        String serving = ((TextView) rootView.findViewById(R.id.rli_servings_textView)).getText().toString();
+        String serving = ((EditText) rootView.findViewById(R.id.serving_edittext)).getText().toString();
 
-
-        Calendar cal = Calendar.getInstance(TimeZone.getDefault());
-        cal.setTime(ingredient.getDate());
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
         DatePicker IngredDatePicker = rootView.findViewById(R.id.editIngredientDate);
-        IngredDatePicker.updateDate(
-                year,
-                month,
-                day);
-
         Date ingredDate = new GregorianCalendar(
                 IngredDatePicker.getYear(),
                 IngredDatePicker.getMonth(),
                 IngredDatePicker.getDayOfMonth()).getTime();
 //        MealPlanWrapper<Recipe>(ingredient1, recipeDate, serving1);
-        MealPlanWrapper<Ingredient> newIngredient = new MealPlanWrapper<>(ingredient1,ingredDate,serving1);
+        MealPlanWrapper<Ingredient> WrapperIngredient = new MealPlanWrapper<Ingredient>(newIngredient,ingredDate,Integer.parseInt(serving));
 
-        writeToViewModel(newIngredient);
+        writeToViewModel(WrapperIngredient);
+        navController.popBackStack();
+        navController.popBackStack();
+
 
     }
 
