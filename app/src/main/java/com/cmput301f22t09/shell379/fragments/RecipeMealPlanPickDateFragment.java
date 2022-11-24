@@ -58,6 +58,8 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
         recipeIndex = getArguments().getInt("index");
         newRecipe = Environment.of((AppCompatActivity) getActivity())
                 .getRecipes().getList().get(recipeIndex);
+        ((TextView) rootView.findViewById(R.id.recipe_name))
+                .setText(newRecipe.getTitle());
 
 
         // back button to go back
@@ -107,8 +109,6 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
 //        we dont have these 2 in the UI screen 17; those 2 are edited/save in previous screen
         String obj = ((TextView) rootView.findViewById(R.id.recipe_name)).getText().toString();
         String serving = ((EditText) rootView.findViewById(R.id.serving_edittext)).getText().toString();
-
-
 
         DatePicker RecipeDatePicker = rootView.findViewById(R.id.editRecipeDate);
         Date recipeDate = new GregorianCalendar(

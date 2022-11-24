@@ -66,10 +66,9 @@
 
 
         <TextView
-            style="@style/QuestionHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Date" />
+            android:text="What date will you eat this?" />
 
         <DatePicker
             android:id="@+id/editRecipeDate"
