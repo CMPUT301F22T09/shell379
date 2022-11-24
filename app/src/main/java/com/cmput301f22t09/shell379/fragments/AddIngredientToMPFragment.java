@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
@@ -65,6 +66,9 @@ public class AddIngredientToMPFragment extends DialogFragment implements AddIngr
 
         RecyclerView ingredRecyclerView = (rootView.findViewById(R.id.add_ingredient_to_mealPlan_recyclerView));
 
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this.getActivity());
+        ingredRecyclerView.setLayoutManager(layoutManager);
+
         addIngredMealPlanAdapter = new AddIngredMealPlanAdapter(env.getIngredients().getList(), this, mealPlanViewModel);
         ingredRecyclerView.setAdapter(addIngredMealPlanAdapter);
         ingredRecyclerView.setItemAnimator(new DefaultItemAnimator());
@@ -76,6 +80,14 @@ public class AddIngredientToMPFragment extends DialogFragment implements AddIngr
 
     private void back(){
         navController.popBackStack();
+    }
+
+    public void navigateToPickDate(int index){
+        //    to-do
+        AddIngredientToMPFragmentDirections.ActionAddIngredtoMealPlanFragmentToAddDatetoIngredFragment action
+                =  AddIngredientToMPFragmentDirections.actionAddIngredtoMealPlanFragmentToAddDatetoIngredFragment(index);
+        navController.navigate(action);
+//        navController.navigate(RecipeMealPlanPickDateFragment);
     }
 
 

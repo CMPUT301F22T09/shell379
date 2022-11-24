@@ -26,6 +26,8 @@ public class AddIngredMealPlanAdapter extends RecyclerView.Adapter<AddIngredMeal
         public interface IngredInMealPlanListener{
             //         to-do (implement the editRecipeMealplan function)
             public void editIngredInMP(int index);
+
+            public void navigateToPickDate(int index);
         }
 
 
@@ -61,8 +63,6 @@ public class AddIngredMealPlanAdapter extends RecyclerView.Adapter<AddIngredMeal
 
 
 
-
-
     @NonNull
         @Override
         public AddIngredMealPlanAdapter.AddIngredMealPlanViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -88,11 +88,11 @@ public class AddIngredMealPlanAdapter extends RecyclerView.Adapter<AddIngredMeal
         holder.getItemView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ingredOnClick(holder.getAdapterPosition());
+                ingredInMealPlanListener.navigateToPickDate(holder.getAdapterPosition());
+
             }
-//                int recipePosition = holder.getAdapterPosition();
-//                navController.navigate(RecipeListFragmentDirections.actionRecipeListFragmentToEditRecipe(recipePosition));
-                                                }
+
+        }
         );
     }
 

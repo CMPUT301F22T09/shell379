@@ -24,9 +24,11 @@ public class AddRecipeMealPlanAdapter extends RecyclerView.Adapter<AddRecipeMeal
     private MealPlanViewModel mealPlanViewModel;
 
 
-    public interface RecipeInMealPlanListener{
-//         to-do (implement the editRecipeMealplan function)
+    public interface RecipeInMealPlanListener {
+        //         to-do (implement the editRecipeMealplan function)
         public void editRecipeInMP(int index);
+
+        public void navigateToPickDate(int index);
     }
 
 
@@ -86,11 +88,9 @@ public class AddRecipeMealPlanAdapter extends RecyclerView.Adapter<AddRecipeMeal
         holder.getItemView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                recipeOnClick(holder.getAdapterPosition());
+                recipeInMealPlanListener.navigateToPickDate(holder.getAdapterPosition());
             }
-//                int recipePosition = holder.getAdapterPosition();
-//                navController.navigate(RecipeListFragmentDirections.actionRecipeListFragmentToEditRecipe(recipePosition));
-            }
+        }
         );
     }
 

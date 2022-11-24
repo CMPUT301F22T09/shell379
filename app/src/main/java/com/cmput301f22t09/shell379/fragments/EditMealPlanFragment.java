@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -123,7 +124,6 @@ public class EditMealPlanFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 collectData(rootView);
-                navController.popBackStack();
             }
         });
 
@@ -160,6 +160,22 @@ public class EditMealPlanFragment extends Fragment {
     }
 
     private void collectData(View rootView) {
+        // validate
+        if ( ((TextView) rootView.findViewById(R.id.plan_edit_comment_txt)).getText().toString().isEmpty()){
+            showError("Comments not filled");
+            return;
+        }else if( ((TextView) rootView.findViewById(R.id.plan_edit_name)).getText().toString().isEmpty()){
+            showError("Name not filled");
+            return;
+        }
+
+        int amount = 0;
+        if (mpViewModel.getIngredients().size() <= 0 && mpViewModel.getRecipes().size() <= 0) {
+            showError("Choose some recipes or ingredients!");
+            return;
+        }
+
+
         mpViewModel.getMealPlan().setMealPlanName(
                 ((TextView) rootView.findViewById(R.id.plan_edit_name)).getText().toString()
         );
@@ -178,14 +194,10 @@ public class EditMealPlanFragment extends Fragment {
 
         envViewModel.getMealPlans().setAtIdxOrAdd(mpViewModel.getIdx(), mpViewModel.getMealPlan());
         envViewModel.getMealPlans().commit();
+
+        navController.popBackStack();
     }
-
-    public void navigateToViewMealPlan(int index){
-        //    to-do
-//        MealPlanListFragmentDirections.
-
-//        IngredientListFragmentDirections.ActionIngredientListFragmentToViewIngredientFragment action
-//                = IngredientListFragmentDirections.actionIngredientListFragmentToViewIngredientFragment(index);
-//        navController.navigate(action);
+    private void showError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 }

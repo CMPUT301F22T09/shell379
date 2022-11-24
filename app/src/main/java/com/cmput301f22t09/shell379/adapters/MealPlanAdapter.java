@@ -26,6 +26,7 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MealPl
 
     public interface AdaptorListener {
         public void navigateToViewMealPlan(int index);
+//        public void navigateToPickDate(int index);
     }
 //    private int mealPlanIndex;
 

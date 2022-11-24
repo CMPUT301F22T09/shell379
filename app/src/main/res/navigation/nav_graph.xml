@@ -85,8 +85,8 @@
         android:label="fragment_meal_plan"
         tools:layout="@layout/fragment_meal_plan_13">
         <action
-            android:id="@+id/action_mealPlanFragment_to_createMealPlanFragment"
-            app:destination="@id/createMealPlanFragment" />
+            android:id="@+id/action_mealPlanFragment_to_editMealPlanFragment"
+            app:destination="@id/editMealPlanFragment" />
         <action
             android:id="@+id/action_mealPlanFragment_to_viewMealPlanFragment"
             app:destination="@id/viewMealPlanFragment" />
@@ -135,11 +135,6 @@
             android:name="ingredientIndex"
             app:argType="integer" />
     </fragment>
-    <fragment
-        android:id="@+id/createMealPlanFragment"
-        android:name="com.cmput301f22t09.shell379.fragments.EditMealPlanFragment"
-        android:label="fragment_save_mealPlan"
-        tools:layout="@layout/fragment_edit_meal_plan_15" />
 
     <fragment
         android:id="@+id/viewMealPlanFragment"
@@ -157,12 +152,46 @@
     <fragment
         android:id="@+id/addRecipetoMealPlanFragment"
         android:name="com.cmput301f22t09.shell379.fragments.AddRecipeToMPFragment"
-        android:label="AddRecipetoMealPlan"/>
+        android:label="AddRecipetoMealPlan"
+        tools:layout="@layout/fragment_add_recipe_meal_plan_16" >
+        <action
+            android:id="@+id/action_addRecipetoMealPlanFragment_to_addDatetoRecipeFragment"
+            app:destination="@id/addDatetoRecipeFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/addIngredtoMealPlanFragment"
         android:name="com.cmput301f22t09.shell379.fragments.AddIngredientToMPFragment"
-        android:label="AddIngredienttoMealPlan" />
+        android:label="AddIngredienttoMealPlan"
+        tools:layout="@layout/fragment_add_ingredient_meal_plan_18" >
+        <action
+            android:id="@+id/action_addIngredtoMealPlanFragment_to_addDatetoIngredFragment"
+            app:destination="@id/addDatetoIngredFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addDatetoRecipeFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.RecipeMealPlanPickDateFragment"
+        android:label="AddDatetoRecipe"
+        tools:layout="@layout/mealplan_recipe_date_17">
+        <argument
+            android:name="index"
+            app:argType="integer" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/addDatetoIngredFragment"
+        android:name="com.cmput301f22t09.shell379.fragments.IngredMealPlanPickDateFragment"
+        android:label="AddDatetoIngred"
+        tools:layout="@layout/mealplan_ingredient_date_19" >
+    <argument
+        android:name="index"
+        app:argType="integer" />
+
+</fragment>
+
+
+
 
     <fragment
         android:id="@+id/editMealPlanFragment"
