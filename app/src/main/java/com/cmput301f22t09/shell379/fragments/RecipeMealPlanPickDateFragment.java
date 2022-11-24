@@ -132,8 +132,6 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
         String obj = ((TextView) rootView.findViewById(R.id.recipe_name)).getText().toString();
         String serving = ((TextView) rootView.findViewById(R.id.mpar_servings_val)).getText().toString();
 
-
-
         DatePicker RecipeDatePicker = rootView.findViewById(R.id.editRecipeDate);
         Date recipeDate = new GregorianCalendar(
                 RecipeDatePicker.getYear(),

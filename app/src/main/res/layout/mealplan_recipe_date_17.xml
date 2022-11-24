@@ -102,7 +102,7 @@
             android:paddingTop="20dp"
             android:paddingBottom="10dp"
             android:paddingHorizontal="20dp"
-            android:text="When are you eating this?" />
+            android:text="What date will you eat this?" />
 
         <DatePicker
             android:id="@+id/editRecipeDate"
