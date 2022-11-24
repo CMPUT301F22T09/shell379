@@ -50,8 +50,8 @@ public class ViewMealPlanFragment extends Fragment {
         super.onCreate(savedInstanceState);
         navController = NavHostFragment.findNavController(this);
         envViewModel = Environment.of((AppCompatActivity) requireActivity());
-//        mpViewModel = MealPlanViewModel.of(testMP(), requireActivity());
-        mpViewModel = MealPlanViewModel.of(requireActivity());
+        mpViewModel = MealPlanViewModel.of(testMP(), requireActivity());
+//        mpViewModel = MealPlanViewModel.of(requireActivity());
     }
 
     @Override

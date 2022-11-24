@@ -8,6 +8,7 @@ import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.util.ArraySortUtil;
 
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.Arrays;
 import java.util.List;
 
@@ -91,6 +92,27 @@ public class CartIngredient implements Serializable {
         this.unit = unit;
     }
 
+    public static CartIngredient convertIngredient(Ingredient ingredient) {
+        return new CartIngredient(
+                ingredient.getDescription(),
+                ingredient.getCategory(),
+                ingredient.getAmount(),
+                ingredient.getUnit());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CartIngredient)) return false;
+        CartIngredient that = (CartIngredient) o;
+        return isPickedUp.equals(that.isPickedUp) && detailsFilled.equals(that.detailsFilled) && description.equals(that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(isPickedUp, detailsFilled, description);
+    }
+    
     /**
      * returns the proper way to get the property we want to sort on
      * based on what the user has selected as the sort.
