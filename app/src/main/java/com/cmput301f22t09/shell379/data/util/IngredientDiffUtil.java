@@ -321,6 +321,7 @@ public class IngredientDiffUtil {
     }
 
     public static ArrayList<CartIngredient> runCheckedOutSubtraction(Environment env) {
+        if (env.getCart().getList()==null) env.getCart().setList(new ArrayList<>());
         Set<CartIngredient> cartSet = env.getCart().getList().stream()
                 .filter(e->e.getDetailsFilled()||e.getPickedUp())
                 .collect(Collectors.toSet());
