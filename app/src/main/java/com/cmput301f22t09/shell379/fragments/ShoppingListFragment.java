@@ -108,11 +108,13 @@ public class ShoppingListFragment extends Fragment {
 
 //        shoppingList = new LiveCollection<CartIngredient>();
 //        ArrayList<CartIngredient> tempList = new ArrayList<>();
-        CartIngredient testCartIngredient = new CartIngredient("ABC", "Test", 2, "L");
-        testCartIngredient.setIngredient(new Ingredient("Milk","Fridge", 2, "L", "Dairy"));
-        testCartIngredient.setDetailsFilled(false);
+
+        CartIngredient testCartIngredient = new CartIngredient("Milk", "Dairy", 2, "L");
+//        testCartIngredient.setIngredient(new Ingredient("Milk","Fridge", 2, "L", "Dairy"));
+//        testCartIngredient.setDetailsFilled(false);
         env.getCart().getList().add(testCartIngredient);
         shoppingList = env.getCart();
+//        shoppingList.setList(new ArrayList<>());
         shoppingList.commit();
         // END OF TEMPORARY TESTING DATA
 
@@ -144,7 +146,7 @@ public class ShoppingListFragment extends Fragment {
     private void submit() {
         ArrayList<CartIngredient> shoppingArray = shoppingList.getList();
 //        ArrayList<CartIngredient> shoppingArray = env.getCart().getList();
-                ArrayList<Integer> toBeRemoved = new ArrayList<>();
+        ArrayList<Integer> toBeRemoved = new ArrayList<>();
         for (int i = 0; i < shoppingArray.size(); i++) {
             CartIngredient neededIngredient = shoppingArray.get(i);
             if (neededIngredient.getPickedUp() && neededIngredient.getDetailsFilled()) {
@@ -155,6 +157,9 @@ public class ShoppingListFragment extends Fragment {
                 // change the amount
                 if (neededAmount > amount) {
                     neededIngredient.setAmount(neededAmount-amount);
+                    neededIngredient.setPickedUp(false);
+                    neededIngredient.setIngredient(null);
+                    neededIngredient.setDetailsFilled(false);
                 } else {
                     toBeRemoved.add(i);
                 }

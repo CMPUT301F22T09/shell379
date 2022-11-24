@@ -88,11 +88,11 @@ public class AddIngredMealPlanAdapter extends RecyclerView.Adapter<AddIngredMeal
         holder.getItemView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ingredOnClick(holder.getAdapterPosition());
+                ingredInMealPlanListener.navigateToPickDate(holder.getAdapterPosition());
+
             }
-//                int recipePosition = holder.getAdapterPosition();
-//                navController.navigate(RecipeListFragmentDirections.actionRecipeListFragmentToEditRecipe(recipePosition));
-                                                }
+
+        }
         );
     }
 
