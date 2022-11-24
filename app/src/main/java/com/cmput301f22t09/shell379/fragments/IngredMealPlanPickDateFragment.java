@@ -58,10 +58,14 @@ public class IngredMealPlanPickDateFragment extends Fragment{
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.mealplan_ingredient_date_19, container, false);
 
+
         ingredIdx = getArguments().getInt("index");
         newIngredient = Environment.of((AppCompatActivity) getActivity())
                 .getIngredients().getList().get(ingredIdx);
 
+        ((TextView) rootView.findViewById(R.id.Ingredient_name))
+                .setText(newIngredient.getDescription());
+        
         // back button to go back
         ((ImageView)rootView.findViewById(R.id.back_button)).setOnClickListener(
                 new View.OnClickListener() {

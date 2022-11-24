@@ -58,6 +58,8 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
         recipeIndex = getArguments().getInt("index");
         newRecipe = Environment.of((AppCompatActivity) getActivity())
                 .getRecipes().getList().get(recipeIndex);
+        ((TextView) rootView.findViewById(R.id.recipe_name))
+                .setText(newRecipe.getTitle());
 
 
         // back button to go back
