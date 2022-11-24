@@ -44,6 +44,28 @@
             />
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Serving"
+            android:textSize="20dp"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            android:id="@+id/serving_text"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""
+            android:textSize="20dp"
+            android:inputType="number"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            android:id="@+id/serving_edittext"
+            />
+
+
+        <TextView
             style="@style/QuestionHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

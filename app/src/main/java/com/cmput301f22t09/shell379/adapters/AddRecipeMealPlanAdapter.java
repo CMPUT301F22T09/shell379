@@ -88,11 +88,9 @@ public class AddRecipeMealPlanAdapter extends RecyclerView.Adapter<AddRecipeMeal
         holder.getItemView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                recipeOnClick(holder.getAdapterPosition());
+                recipeInMealPlanListener.navigateToPickDate(holder.getAdapterPosition());
             }
-//                int recipePosition = holder.getAdapterPosition();
-//                navController.navigate(RecipeListFragmentDirections.actionRecipeListFragmentToEditRecipe(recipePosition));
-            }
+        }
         );
     }
 
