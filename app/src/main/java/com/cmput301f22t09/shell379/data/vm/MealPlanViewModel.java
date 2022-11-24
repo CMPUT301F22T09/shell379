@@ -31,8 +31,6 @@ public class MealPlanViewModel extends ViewModel {
 
     public static MealPlanViewModel of(FragmentActivity activity) {
         MealPlanViewModel viewModel = new ViewModelProvider(activity).get(MealPlanViewModel.class);
-        Log.e("DEBUG_PT", viewModel.getMealPlan().getStartDateFormatted());
-        Log.e("DEBUG_PT", viewModel.getMealPlan().getEndDateFormatted());
         if (viewModel.mealPlan == null) {
             viewModel.setMealPlan(new MealPlan());
             viewModel.setIdx(-1);

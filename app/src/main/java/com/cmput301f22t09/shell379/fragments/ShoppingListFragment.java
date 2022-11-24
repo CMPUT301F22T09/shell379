@@ -3,7 +3,6 @@ package com.cmput301f22t09.shell379.fragments;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -20,18 +19,13 @@ import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.ShoppingListAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
 
-import com.cmput301f22t09.shell379.data.MealPlan;
-import com.cmput301f22t09.shell379.data.ShoppingCart;
 import com.cmput301f22t09.shell379.data.util.IngredientDiffUtil;
-
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
 import com.cmput301f22t09.shell379.data.wrapper.CartIngredient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 
 public class ShoppingListFragment extends Fragment {
 
@@ -56,6 +50,7 @@ public class ShoppingListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         env = Environment.of((AppCompatActivity) requireActivity());
         navController = NavHostFragment.findNavController(this);
+        IngredientDiffUtil.prepareCart(env);
     }
 
     @Override
