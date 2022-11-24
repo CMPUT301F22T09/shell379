@@ -34,9 +34,10 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
     protected View rootView;
     protected NavController navController;
     protected MealPlanViewModel mealPlanViewModel;
-    private MealPlanWrapper<Recipe> recipe;
     private int recipeIndex;
     private Recipe newRecipe;
+    private TextView servingText;
+    private TextView recipeNameText;
 
     public RecipeMealPlanPickDateFragment() {
 
@@ -58,6 +59,10 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
         recipeIndex = getArguments().getInt("index");
         newRecipe = Environment.of((AppCompatActivity) getActivity())
                 .getRecipes().getList().get(recipeIndex);
+        recipeNameText =(TextView) rootView.findViewById(R.id.recipe_name);
+        recipeNameText.setText(newRecipe.getTitle());
+        servingText = (TextView) rootView.findViewById(R.id.mpar_servings_val);
+        servingText.setText(newRecipe.getServings().toString());
 
 
         // back button to go back
@@ -85,6 +90,25 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
                     }
                 }
         );
+        Button subServingButton = rootView.findViewById(R.id.mpar_sub_btn);
+        Button addServingButton = rootView.findViewById(R.id.mpar_add_btn);
+        subServingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Integer servings = Integer.parseInt((servingText).getText().toString());
+                if(servings/newRecipe.getServings() >= 1){
+                    servingText.setText(Integer.toString(newRecipe.getServings()*((servings/newRecipe.getServings())-1)));
+                }
+            }
+        });
+        addServingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Integer servings = Integer.parseInt((servingText).getText().toString());
+                servingText.setText(Integer.toString(newRecipe.getServings()*((servings/newRecipe.getServings())+1)));
+            }
+        });
         // date extraction from https://stackoverflow.com/questions/9474121/i-want-to-get-year-month-day-etc-from-java-date-to-compare-with-gregorian-cal
 
 
@@ -106,7 +130,7 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
     private void save(){
 //        we dont have these 2 in the UI screen 17; those 2 are edited/save in previous screen
         String obj = ((TextView) rootView.findViewById(R.id.recipe_name)).getText().toString();
-        String serving = ((EditText) rootView.findViewById(R.id.serving_edittext)).getText().toString();
+        String serving = ((TextView) rootView.findViewById(R.id.mpar_servings_val)).getText().toString();
 
 
 
@@ -116,7 +140,8 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
                 RecipeDatePicker.getMonth(),
                 RecipeDatePicker.getDayOfMonth()).getTime();
 
-        MealPlanWrapper<Recipe> WrapperRecipe = new MealPlanWrapper<Recipe>(newRecipe, recipeDate, Integer.parseInt(serving));
+        MealPlanWrapper<Recipe> WrapperRecipe
+                = new MealPlanWrapper<Recipe>(newRecipe, recipeDate, Integer.parseInt(serving)/newRecipe.getServings());
 
         writeToViewModel(WrapperRecipe);
         navController.popBackStack();
