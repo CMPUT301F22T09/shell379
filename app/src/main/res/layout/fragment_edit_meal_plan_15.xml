@@ -49,8 +49,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="3dp"
+                android:paddingTop="15dp"
+                android:textSize="30dp"
                 android:text="Comment"
-                android:textSize="20dp" />
+                />
 
             <EditText
                 android:id="@+id/plan_edit_comment_txt"
@@ -73,7 +75,8 @@
                     android:layout_margin="3dp"
                     android:layout_weight="1"
                     android:text="Start Date"
-                    android:textSize="20dp" />
+                    android:paddingTop="15dp"
+                    android:textSize="30dp" />
 
                 <DatePicker
                     android:id="@+id/editPlanStart"
@@ -95,7 +98,8 @@
                     android:layout_margin="3dp"
                     android:layout_weight="1"
                     android:text="End Date"
-                    android:textSize="20dp" />
+                    android:paddingTop="15dp"
+                    android:textSize="30dp" />
 
                 <DatePicker
                     android:id="@+id/editPlanEnd"
@@ -107,7 +111,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="55dp"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
@@ -117,7 +121,8 @@
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:text="Recipes"
-                    android:textSize="20dp" />
+                    android:paddingTop="15dp"
+                    android:textSize="30dp"  />
 
                 <Button
                     android:id="@+id/plan_edit_add_recipes_btn"
@@ -155,7 +160,8 @@
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:text="Ingredients"
-                    android:textSize="20dp" />
+                    android:paddingTop="15dp"
+                    android:textSize="30dp"  />
 
                 <Button
                     android:id="@+id/plan_edit_add_ingr_btn"

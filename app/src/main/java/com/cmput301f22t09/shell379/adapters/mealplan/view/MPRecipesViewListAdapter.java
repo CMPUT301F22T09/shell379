@@ -77,7 +77,7 @@ public class MPRecipesViewListAdapter extends RecyclerView.Adapter<MPRecipesView
 
     @Override
     public int getItemCount() {
-        return viewModel.getIngredients().size();
+        return viewModel.getRecipes().size();
     }
 
     public ArrayList<MealPlanWrapper<Ingredient>> getIngredients(){

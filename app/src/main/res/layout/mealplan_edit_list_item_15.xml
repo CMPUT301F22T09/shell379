@@ -49,8 +49,8 @@
             android:id="@+id/mpv_servings_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="73dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="76dp"
             android:text="Servings"
             android:textSize="18sp"
             android:textStyle="bold"
@@ -61,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="-10dp"
-            android:layout_marginEnd="40dp"
+            android:layout_marginEnd="16dp"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/mpv_servings_label">
@@ -96,7 +96,7 @@
             android:id="@+id/mpv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="40dp"
+            android:layout_marginStart="12dp"
             android:layout_marginBottom="8dp"
             android:text="Date"
             android:textSize="18sp"
@@ -104,7 +104,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mpv_servings_label"
-            app:layout_constraintVertical_bias="0.05" />
+            app:layout_constraintVertical_bias="0.049" />
 
         <DatePicker
             android:id="@+id/edit_mpv_date"

@@ -7,10 +7,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
@@ -19,6 +21,7 @@ import androidx.navigation.fragment.NavHostFragment;
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.MealPlanAdapter;
 import com.cmput301f22t09.shell379.data.Recipe;
+import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.MealPlanViewModel;
 import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
 
@@ -31,10 +34,10 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
     protected View rootView;
     protected NavController navController;
     protected MealPlanViewModel mealPlanViewModel;
-    private MealPlanWrapper<Recipe> recipe;
-    private int recipeIdx;
-    private Recipe recipe1;
-    private Integer serving1;
+    private int recipeIndex;
+    private Recipe newRecipe;
+    private TextView servingText;
+    private TextView recipeNameText;
 
     public RecipeMealPlanPickDateFragment() {
 
@@ -52,6 +55,16 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.mealplan_recipe_date_17, container, false);
+
+        recipeIndex = getArguments().getInt("index");
+        newRecipe = Environment.of((AppCompatActivity) getActivity())
+                .getRecipes().getList().get(recipeIndex);
+        recipeNameText =(TextView) rootView.findViewById(R.id.recipe_name);
+        recipeNameText.setText(newRecipe.getTitle());
+        servingText = (TextView) rootView.findViewById(R.id.mpar_servings_val);
+        servingText.setText(newRecipe.getServings().toString());
+
+
         // back button to go back
         ((ImageView)rootView.findViewById(R.id.back_button)).setOnClickListener(
                 new View.OnClickListener() {
@@ -77,6 +90,25 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
                     }
                 }
         );
+        Button subServingButton = rootView.findViewById(R.id.mpar_sub_btn);
+        Button addServingButton = rootView.findViewById(R.id.mpar_add_btn);
+        subServingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Integer servings = Integer.parseInt((servingText).getText().toString());
+                if(servings/newRecipe.getServings() >= 1){
+                    servingText.setText(Integer.toString(newRecipe.getServings()*((servings/newRecipe.getServings())-1)));
+                }
+            }
+        });
+        addServingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Integer servings = Integer.parseInt((servingText).getText().toString());
+                servingText.setText(Integer.toString(newRecipe.getServings()*((servings/newRecipe.getServings())+1)));
+            }
+        });
         // date extraction from https://stackoverflow.com/questions/9474121/i-want-to-get-year-month-day-etc-from-java-date-to-compare-with-gregorian-cal
 
 
@@ -98,28 +130,20 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
     private void save(){
 //        we dont have these 2 in the UI screen 17; those 2 are edited/save in previous screen
         String obj = ((TextView) rootView.findViewById(R.id.recipe_name)).getText().toString();
-        String serving = ((TextView) rootView.findViewById(R.id.rli_servings_textView)).getText().toString();
+        String serving = ((TextView) rootView.findViewById(R.id.mpar_servings_val)).getText().toString();
 
-
-        Calendar cal = Calendar.getInstance(TimeZone.getDefault());
-        cal.setTime(recipe.getDate());
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
         DatePicker RecipeDatePicker = rootView.findViewById(R.id.editRecipeDate);
-        RecipeDatePicker.updateDate(
-                year,
-                month,
-                day);
-
         Date recipeDate = new GregorianCalendar(
                 RecipeDatePicker.getYear(),
                 RecipeDatePicker.getMonth(),
                 RecipeDatePicker.getDayOfMonth()).getTime();
 
-        MealPlanWrapper<Recipe> newRecipe = new MealPlanWrapper<Recipe>(recipe1, recipeDate, serving1);
+        MealPlanWrapper<Recipe> WrapperRecipe
+                = new MealPlanWrapper<Recipe>(newRecipe, recipeDate, Integer.parseInt(serving)/newRecipe.getServings());
 
-        writeToViewModel(newRecipe);
+        writeToViewModel(WrapperRecipe);
+        navController.popBackStack();
+        navController.popBackStack();
 
     }
 
