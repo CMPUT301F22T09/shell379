@@ -82,6 +82,10 @@ public class AddIngredientToMPFragment extends DialogFragment implements AddIngr
         navController.popBackStack();
     }
 
+    /**
+     * Navigate from add Ingredient page to pick the specific date for the ingredient
+     * @param index
+     */
     public void navigateToPickDate(int index){
         //    to-do
         AddIngredientToMPFragmentDirections.ActionAddIngredtoMealPlanFragmentToAddDatetoIngredFragment action

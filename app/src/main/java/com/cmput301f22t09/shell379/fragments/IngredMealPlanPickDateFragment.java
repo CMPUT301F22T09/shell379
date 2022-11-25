@@ -10,6 +10,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,6 +41,7 @@ public class IngredMealPlanPickDateFragment extends Fragment{
     private MealPlanWrapper<Ingredient> ingredient;
     private int ingredIdx;
     private Ingredient newIngredient;
+    private TextView ingredNameText;
 
     public IngredMealPlanPickDateFragment() {
 
@@ -63,8 +65,8 @@ public class IngredMealPlanPickDateFragment extends Fragment{
         newIngredient = Environment.of((AppCompatActivity) getActivity())
                 .getIngredients().getList().get(ingredIdx);
 
-        ((TextView) rootView.findViewById(R.id.Ingredient_name))
-                .setText(newIngredient.getDescription());
+        ingredNameText = (TextView) rootView.findViewById(R.id.Ingredient_name);
+        ingredNameText.setText(newIngredient.getDescription());
         
         // back button to go back
         ((ImageView)rootView.findViewById(R.id.back_button)).setOnClickListener(
@@ -103,6 +105,9 @@ public class IngredMealPlanPickDateFragment extends Fragment{
     protected void writeToViewModel(MealPlanWrapper<Ingredient> ingredient) {
         mealPlanViewModel.addIngredient(ingredient);
     }
+    private void showError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+    }
 
     /**
      * This method save the date and serving enter by users
@@ -111,13 +116,23 @@ public class IngredMealPlanPickDateFragment extends Fragment{
     private void save(){
         String obj = ((TextView) rootView.findViewById(R.id.Ingredient_name)).getText().toString();
         String serving = ((EditText) rootView.findViewById(R.id.serving_edittext)).getText().toString();
+//        String serving_check;
+
+        if(serving.isEmpty() || serving == null){
+            showError("Please fill all fields");
+            return;
+        }
 
         DatePicker IngredDatePicker = rootView.findViewById(R.id.editIngredientDate);
         Date ingredDate = new GregorianCalendar(
                 IngredDatePicker.getYear(),
                 IngredDatePicker.getMonth(),
                 IngredDatePicker.getDayOfMonth()).getTime();
-
+//
+//        if (serving!=null&& !serving.equals("")){{
+//            serving_check = Integer.parseInt(serving);
+//
+//        }
         MealPlanWrapper<Ingredient> WrapperIngredient = new MealPlanWrapper<Ingredient>(newIngredient,ingredDate,Integer.parseInt(serving));
 
         writeToViewModel(WrapperIngredient);
