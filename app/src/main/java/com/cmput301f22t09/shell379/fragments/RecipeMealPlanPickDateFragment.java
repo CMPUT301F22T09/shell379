@@ -118,11 +118,14 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
     }
 
 
-
     protected void writeToViewModel(MealPlanWrapper<Recipe> recipe) {
         mealPlanViewModel.addRecipe(recipe);
     }
 
+    /**
+     * This method save the date and serving enter by users
+     * and navigate back to the edit meal plan page
+     */
     private void save(){
         String obj = ((TextView) rootView.findViewById(R.id.recipe_name)).getText().toString();
         String serving = ((TextView) rootView.findViewById(R.id.mpar_servings_val)).getText().toString();

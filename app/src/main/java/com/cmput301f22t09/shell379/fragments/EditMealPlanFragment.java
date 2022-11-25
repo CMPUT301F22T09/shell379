@@ -43,7 +43,6 @@ public class EditMealPlanFragment extends Fragment {
     private Environment envViewModel;
     private NavController navController;
     private MealPlanViewModel mpViewModel;
-    // private FloatingActionButton backButton;
 
 
     public EditMealPlanFragment() {

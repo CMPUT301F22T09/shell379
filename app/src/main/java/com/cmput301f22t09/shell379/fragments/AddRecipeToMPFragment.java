@@ -94,10 +94,4 @@ public class AddRecipeToMPFragment extends DialogFragment implements AddRecipeMe
         navController.navigate(action);
     }
 
-    /**
-     *  Moves to the edit recipe in meal plan fragment
-     */
-    public void editRecipeInMP(int index){
-//        navController.navigate(AddRecipeToMPFragment);
-    };
 }

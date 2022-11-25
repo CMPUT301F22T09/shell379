@@ -24,9 +24,6 @@ public class AddIngredMealPlanAdapter extends RecyclerView.Adapter<AddIngredMeal
 
 
         public interface IngredInMealPlanListener{
-            //         to-do (implement the editRecipeMealplan function)
-            public void editIngredInMP(int index);
-
             public void navigateToPickDate(int index);
         }
 
@@ -98,17 +95,17 @@ public class AddIngredMealPlanAdapter extends RecyclerView.Adapter<AddIngredMeal
 
 
 
-        /**
-         *  Responds to an ingredient item being clicked in the recyclerView.
-         *  Navigates to viewing the ingredient
-         * @param i index of Ingredient in the view model
-         */
-        public void ingredOnClick(int i) {
-            Ingredient a = IngredinMealPlan.get(i);
-            ArrayList<MealPlanWrapper<Ingredient>> ingredients = mealPlanViewModel.getIngredients();
-            int index = ingredients.indexOf(a);
-            ingredInMealPlanListener.editIngredInMP(index);
-        }
+//        /**
+//         *  Responds to an ingredient item being clicked in the recyclerView.
+//         *  Navigates to viewing the ingredient
+//         * @param i index of Ingredient in the view model
+//         */
+//        public void ingredOnClick(int i) {
+//            Ingredient a = IngredinMealPlan.get(i);
+//            ArrayList<MealPlanWrapper<Ingredient>> ingredients = mealPlanViewModel.getIngredients();
+//            int index = ingredients.indexOf(a);
+//            ingredInMealPlanListener.editIngredInMP(index);
+//        }
 
     @Override
         public int getItemCount() {

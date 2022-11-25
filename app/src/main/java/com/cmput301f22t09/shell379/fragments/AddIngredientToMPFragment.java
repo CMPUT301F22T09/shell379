@@ -89,9 +89,4 @@ public class AddIngredientToMPFragment extends DialogFragment implements AddIngr
         navController.navigate(action);
     }
 
-
-    @Override
-    public void editIngredInMP(int index) {
-
-    }
 }

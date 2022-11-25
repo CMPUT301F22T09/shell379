@@ -25,7 +25,6 @@ public class AddRecipeMealPlanAdapter extends RecyclerView.Adapter<AddRecipeMeal
 
 
     public interface RecipeInMealPlanListener {
-        public void editRecipeInMP(int index);
         public void navigateToPickDate(int index);
     }
 
@@ -93,17 +92,17 @@ public class AddRecipeMealPlanAdapter extends RecyclerView.Adapter<AddRecipeMeal
     }
 
 
-    /**
-     *  Responds to an recipe item being clicked in the recyclerView.
-     *  Navigates to viewing the recipe
-     * @param i index of recipe in the view model
-     */
-    public void recipeOnClick(int i) {
-        Recipe a = RecipeinMealPlan.get(i);
-        ArrayList<MealPlanWrapper<Recipe>> recipes = mealPlanViewModel.getRecipes();
-        int index = recipes.indexOf(a);
-        recipeInMealPlanListener.editRecipeInMP(index);
-    }
+//    /**
+//     *  Responds to an recipe item being clicked in the recyclerView.
+//     *  Navigates to viewing the recipe
+//     * @param i index of recipe in the view model
+//     */
+//    public void recipeOnClick(int i) {
+//        Recipe a = RecipeinMealPlan.get(i);
+//        ArrayList<MealPlanWrapper<Recipe>> recipes = mealPlanViewModel.getRecipes();
+//        int index = recipes.indexOf(a);
+//        recipeInMealPlanListener.editRecipeInMP(index);
+//    }
 
 
     @Override

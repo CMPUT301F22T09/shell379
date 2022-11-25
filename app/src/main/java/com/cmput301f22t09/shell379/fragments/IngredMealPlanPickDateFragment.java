@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-//public class IngredMealPlanPickDateFragment {
+
 
 
 public class IngredMealPlanPickDateFragment extends Fragment{
@@ -91,9 +91,6 @@ public class IngredMealPlanPickDateFragment extends Fragment{
                     }
                 }
         );
-        // date extraction from https://stackoverflow.com/questions/9474121/i-want-to-get-year-month-day-etc-from-java-date-to-compare-with-gregorian-cal
-
-
         return rootView;
     }
 
@@ -107,8 +104,11 @@ public class IngredMealPlanPickDateFragment extends Fragment{
         mealPlanViewModel.addIngredient(ingredient);
     }
 
+    /**
+     * This method save the date and serving enter by users
+     * and navigate back to the edit meal plan page
+     */
     private void save(){
-//        we dont have these 2 in the UI screen 17; those 2 are edited/save in previous screen
         String obj = ((TextView) rootView.findViewById(R.id.Ingredient_name)).getText().toString();
         String serving = ((EditText) rootView.findViewById(R.id.serving_edittext)).getText().toString();
 
@@ -117,7 +117,7 @@ public class IngredMealPlanPickDateFragment extends Fragment{
                 IngredDatePicker.getYear(),
                 IngredDatePicker.getMonth(),
                 IngredDatePicker.getDayOfMonth()).getTime();
-//        MealPlanWrapper<Recipe>(ingredient1, recipeDate, serving1);
+
         MealPlanWrapper<Ingredient> WrapperIngredient = new MealPlanWrapper<Ingredient>(newIngredient,ingredDate,Integer.parseInt(serving));
 
         writeToViewModel(WrapperIngredient);
