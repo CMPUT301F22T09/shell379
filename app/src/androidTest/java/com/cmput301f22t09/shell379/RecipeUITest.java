@@ -103,12 +103,17 @@ public class RecipeUITest {
         // action 14
         onView(withId(R.id.select_category)).perform(scrollTo(), click());
         onView(withId(R.id.textInputEditText)).perform(replaceText("Cat1"));
+        onView(withId(R.id.addButton)).perform(click());
+
 
         // action 15
-        onView(withId(R.id.addButton)).perform(click());
         onView(withId(R.id.prepare_text)).perform(scrollTo(), replaceText("123"));
         onView(withId(R.id.serving_text)).perform(scrollTo(), replaceText("456"));
         onView(withId(R.id.comment_text)).perform(scrollTo(), replaceText("This is a comment"));
+
+
+        // TODO: need to add ingredients
+
 
         // action 12
         onView(withId(R.id.save_recipe)).perform(scrollTo(), click());
