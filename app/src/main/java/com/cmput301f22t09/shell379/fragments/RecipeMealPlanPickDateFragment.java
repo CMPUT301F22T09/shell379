@@ -109,8 +109,6 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
                 servingText.setText(Integer.toString(newRecipe.getServings()*((servings/newRecipe.getServings())+1)));
             }
         });
-        // date extraction from https://stackoverflow.com/questions/9474121/i-want-to-get-year-month-day-etc-from-java-date-to-compare-with-gregorian-cal
-
 
         return rootView;
     }
@@ -122,13 +120,10 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
 
 
     protected void writeToViewModel(MealPlanWrapper<Recipe> recipe) {
-//        envViewModel.getIngredients().getList().set(ingredientIndex, ing);
-//        envViewModel.getIngredients().commit();
         mealPlanViewModel.addRecipe(recipe);
     }
 
     private void save(){
-//        we dont have these 2 in the UI screen 17; those 2 are edited/save in previous screen
         String obj = ((TextView) rootView.findViewById(R.id.recipe_name)).getText().toString();
         String serving = ((TextView) rootView.findViewById(R.id.mpar_servings_val)).getText().toString();
 

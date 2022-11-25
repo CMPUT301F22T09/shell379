@@ -25,9 +25,7 @@ public class AddRecipeMealPlanAdapter extends RecyclerView.Adapter<AddRecipeMeal
 
 
     public interface RecipeInMealPlanListener {
-        //         to-do (implement the editRecipeMealplan function)
         public void editRecipeInMP(int index);
-
         public void navigateToPickDate(int index);
     }
 

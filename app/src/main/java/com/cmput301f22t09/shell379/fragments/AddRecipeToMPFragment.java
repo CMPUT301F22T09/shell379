@@ -88,11 +88,10 @@ public class AddRecipeToMPFragment extends DialogFragment implements AddRecipeMe
     }
 
     public void navigateToPickDate(int index){
-        //    to-do
+
         AddRecipeToMPFragmentDirections.ActionAddRecipetoMealPlanFragmentToAddDatetoRecipeFragment action
                 =  AddRecipeToMPFragmentDirections.actionAddRecipetoMealPlanFragmentToAddDatetoRecipeFragment(index);
         navController.navigate(action);
-//        navController.navigate(RecipeMealPlanPickDateFragment);
     }
 
     /**

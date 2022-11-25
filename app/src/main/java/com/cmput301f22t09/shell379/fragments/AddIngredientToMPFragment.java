@@ -87,7 +87,6 @@ public class AddIngredientToMPFragment extends DialogFragment implements AddIngr
         AddIngredientToMPFragmentDirections.ActionAddIngredtoMealPlanFragmentToAddDatetoIngredFragment action
                 =  AddIngredientToMPFragmentDirections.actionAddIngredtoMealPlanFragmentToAddDatetoIngredFragment(index);
         navController.navigate(action);
-//        navController.navigate(RecipeMealPlanPickDateFragment);
     }
 
 
