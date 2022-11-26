@@ -105,7 +105,7 @@ public class CartIngredient implements Serializable {
         if (this == o) return true;
         if (!(o instanceof CartIngredient)) return false;
         CartIngredient that = (CartIngredient) o;
-        return isPickedUp.equals(that.isPickedUp) && detailsFilled.equals(that.detailsFilled) && description.equals(that.description);
+        return description.equals(that.description);
     }
 
     @Override
