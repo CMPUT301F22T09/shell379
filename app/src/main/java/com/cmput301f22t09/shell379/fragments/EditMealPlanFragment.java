@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.TimeZone;
 
 public class EditMealPlanFragment extends Fragment {
     private ArrayList<Ingredient> ingredientsList;
@@ -156,8 +157,6 @@ public class EditMealPlanFragment extends Fragment {
         ((TextView) rootView.findViewById(R.id.plan_edit_comment_txt))
                 .setText(mpViewModel.getMealPlan().getComments());
 
-
-
         ((TextView) rootView.findViewById(R.id.plan_edit_name))
                 .setText(mpViewModel.getMealPlan().getMealPlanName());
 
@@ -188,14 +187,33 @@ public class EditMealPlanFragment extends Fragment {
                 ((TextView) rootView.findViewById(R.id.plan_edit_comment_txt)).getText().toString()
         );
 
-        Calendar cal = Calendar.getInstance();
-        DatePicker picker = rootView.findViewById(R.id.editPlanStart);
-        cal.set(picker.getYear(), picker.getMonth(), picker.getDayOfMonth());
-        mpViewModel.getMealPlan().setStartDate(cal.getTime());
+        Calendar cal = Calendar.getInstance(TimeZone.getDefault());
+        DatePicker startDatePicker = rootView.findViewById(R.id.editPlanStart);
+        Date startdate = new GregorianCalendar(
+                startDatePicker.getYear(),
+                startDatePicker.getMonth(),
+                startDatePicker.getDayOfMonth()).getTime();
 
-        picker = rootView.findViewById(R.id.editPlanEnd);
-        cal.set(picker.getYear(), picker.getMonth(), picker.getDayOfMonth());
-        mpViewModel.getMealPlan().setEndDate(cal.getTime());
+        cal.set(startDatePicker.getYear(), startDatePicker.getMonth(), startDatePicker.getDayOfMonth());
+//        mpViewModel.getMealPlan().setStartDate(cal.getTime());
+        mpViewModel.getMealPlan().setStartDate(startdate);
+
+        DatePicker endDatePicker = rootView.findViewById(R.id.editPlanEnd);
+        cal.set(endDatePicker.getYear(), endDatePicker.getMonth(), endDatePicker.getDayOfMonth());
+        Date enddate = new GregorianCalendar(
+                endDatePicker.getYear(),
+                endDatePicker.getMonth(),
+                endDatePicker.getDayOfMonth()).getTime();
+
+        mpViewModel.getMealPlan().setEndDate(enddate);
+//        Date enddate = new GregorianCalendar(
+//                picker.getYear(),
+//                picker.getMonth(),
+//                picker.getDayOfMonth()).getTime();
+        if (enddate.compareTo(startdate) <0){
+            showError("Please choose correct start and end date");
+            return;
+        }
 
         envViewModel.getMealPlans().setAtIdxOrAdd(mpViewModel.getIdx(), mpViewModel.getMealPlan());
         envViewModel.getMealPlans().commit();
