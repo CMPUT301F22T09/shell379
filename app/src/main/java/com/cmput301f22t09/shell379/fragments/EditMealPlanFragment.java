@@ -206,10 +206,8 @@ public class EditMealPlanFragment extends Fragment {
                 endDatePicker.getDayOfMonth()).getTime();
 
         mpViewModel.getMealPlan().setEndDate(enddate);
-//        Date enddate = new GregorianCalendar(
-//                picker.getYear(),
-//                picker.getMonth(),
-//                picker.getDayOfMonth()).getTime();
+
+        // check if the enda date is smaller than the start date
         if (enddate.compareTo(startdate) <0){
             showError("Please choose correct start and end date");
             return;
