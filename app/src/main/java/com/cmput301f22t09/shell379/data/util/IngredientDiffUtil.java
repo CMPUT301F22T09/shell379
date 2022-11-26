@@ -15,7 +15,9 @@ import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class IngredientDiffUtil {
@@ -322,15 +324,22 @@ public class IngredientDiffUtil {
 
     public static ArrayList<CartIngredient> runCheckedOutSubtraction(Environment env) {
         if (env.getCart().getList()==null) env.getCart().setList(new ArrayList<>());
-        Set<CartIngredient> cartSet = env.getCart().getList().stream()
+        Map<String, CartIngredient> cartMap = env.getCart().getList().stream()
                 .filter(e->e.getDetailsFilled()||e.getPickedUp())
-                .collect(Collectors.toSet());
-        return env.getMealPlans().getList().stream()
+                .collect(Collectors.toMap(CartIngredient::getDescription, Function.identity()));
+        env.getMealPlans().getList().stream()
                 .map(e->IngredientDiffUtil.computeDiffBase(e, env).second)
                 .flatMap(ArrayList<Ingredient>::stream)
                 .map(CartIngredient::convertIngredient)
-                .flatMap(e->subtractCheckedOut(cartSet, e).stream())
-                .collect(Collectors.toCollection(ArrayList::new));
+                .forEach(e -> {
+                    if (cartMap.containsKey(e.getDescription())) {
+                        CartIngredient cartIngredient = cartMap.get(e.getDescription());
+                        cartIngredient.setAmount(e.getAmount()+cartIngredient.getAmount());
+                    } else {
+                        cartMap.put(e.getDescription(),e);
+                    }
+                });
+        return new ArrayList<>(cartMap.values());
     }
 
     public static ArrayList<CartIngredient> computeCleanedCart(ShoppingCart shoppingCart) {
