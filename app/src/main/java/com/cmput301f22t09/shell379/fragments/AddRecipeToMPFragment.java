@@ -87,18 +87,14 @@ public class AddRecipeToMPFragment extends DialogFragment implements AddRecipeMe
         navController.popBackStack();
     }
 
+    /**
+     * Navigate from add recipe page to pick the specific date for the recipe
+     * @param index
+     */
     public void navigateToPickDate(int index){
-        //    to-do
         AddRecipeToMPFragmentDirections.ActionAddRecipetoMealPlanFragmentToAddDatetoRecipeFragment action
                 =  AddRecipeToMPFragmentDirections.actionAddRecipetoMealPlanFragmentToAddDatetoRecipeFragment(index);
         navController.navigate(action);
-//        navController.navigate(RecipeMealPlanPickDateFragment);
     }
 
-    /**
-     *  Moves to the edit recipe in meal plan fragment
-     */
-    public void editRecipeInMP(int index){
-//        navController.navigate(AddRecipeToMPFragment);
-    };
 }

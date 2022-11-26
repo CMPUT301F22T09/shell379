@@ -2,6 +2,7 @@ package com.cmput301f22t09.shell379.fragments;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,7 +32,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-//public class IngredMealPlanPickDateFragment {
+
 
 
 public class IngredMealPlanPickDateFragment extends Fragment{
@@ -40,6 +42,7 @@ public class IngredMealPlanPickDateFragment extends Fragment{
     private MealPlanWrapper<Ingredient> ingredient;
     private int ingredIdx;
     private Ingredient newIngredient;
+    private TextView ingredNameText;
 
     public IngredMealPlanPickDateFragment() {
 
@@ -63,8 +66,8 @@ public class IngredMealPlanPickDateFragment extends Fragment{
         newIngredient = Environment.of((AppCompatActivity) getActivity())
                 .getIngredients().getList().get(ingredIdx);
 
-        ((TextView) rootView.findViewById(R.id.Ingredient_name))
-                .setText(newIngredient.getDescription());
+        ingredNameText = (TextView) rootView.findViewById(R.id.Ingredient_name);
+        ingredNameText.setText(newIngredient.getDescription());
         
         // back button to go back
         ((ImageView)rootView.findViewById(R.id.back_button)).setOnClickListener(
@@ -91,9 +94,6 @@ public class IngredMealPlanPickDateFragment extends Fragment{
                     }
                 }
         );
-        // date extraction from https://stackoverflow.com/questions/9474121/i-want-to-get-year-month-day-etc-from-java-date-to-compare-with-gregorian-cal
-
-
         return rootView;
     }
 
@@ -106,18 +106,43 @@ public class IngredMealPlanPickDateFragment extends Fragment{
     protected void writeToViewModel(MealPlanWrapper<Ingredient> ingredient) {
         mealPlanViewModel.addIngredient(ingredient);
     }
+    private void showError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+    }
 
+    /**
+     * This method save the date and serving enter by users
+     * and navigate back to the edit meal plan page
+     */
     private void save(){
-//        we dont have these 2 in the UI screen 17; those 2 are edited/save in previous screen
         String obj = ((TextView) rootView.findViewById(R.id.Ingredient_name)).getText().toString();
         String serving = ((EditText) rootView.findViewById(R.id.serving_edittext)).getText().toString();
+//        String serving_check;
+
+        if(serving.isEmpty() || serving == null){
+            showError("Please fill all fields");
+            return;
+        }
+
 
         DatePicker IngredDatePicker = rootView.findViewById(R.id.editIngredientDate);
         Date ingredDate = new GregorianCalendar(
                 IngredDatePicker.getYear(),
                 IngredDatePicker.getMonth(),
                 IngredDatePicker.getDayOfMonth()).getTime();
-//        MealPlanWrapper<Recipe>(ingredient1, recipeDate, serving1);
+
+        // check if the date user picked is less than today
+        Calendar todayDate = Calendar.getInstance();
+        todayDate.set(Calendar.MILLISECOND, 0);
+        todayDate.set(Calendar.SECOND, 0);
+        todayDate.set(Calendar.MINUTE, 0);
+        todayDate.set(Calendar.HOUR_OF_DAY, 0);
+        Date today = todayDate.getTime();
+        if (ingredDate.compareTo(today)<0){
+            showError("Please choose a date greater than or equal to today");
+            return;
+        }
+
         MealPlanWrapper<Ingredient> WrapperIngredient = new MealPlanWrapper<Ingredient>(newIngredient,ingredDate,Integer.parseInt(serving));
 
         writeToViewModel(WrapperIngredient);

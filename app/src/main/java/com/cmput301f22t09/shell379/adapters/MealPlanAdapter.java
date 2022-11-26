@@ -35,7 +35,7 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MealPl
             return itemView;
         }
 
-        private TextView mealPlantName;
+        private TextView mealPlanName;
         private TextView startDate;
         private TextView endDate;
 
@@ -45,7 +45,7 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MealPl
          */
         public MealPlanViewHolder(@NonNull View itemView) {
             super(itemView);
-            this.mealPlantName = (TextView) itemView.findViewById(R.id.meal_name);
+            this.mealPlanName = (TextView) itemView.findViewById(R.id.meal_name);
             this.endDate = (TextView) itemView.findViewById(R.id.end_date_textView);
             this.startDate = (TextView) itemView.findViewById(R.id.start_date_textView);
 
@@ -71,7 +71,7 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MealPl
 
     @Override
     public void onBindViewHolder(@NonNull MealPlanViewHolder holder, int position) {
-        TextView mealPlanName = holder.mealPlantName;
+        TextView mealPlanName = holder.mealPlanName;
         TextView  startDate = holder.startDate;
         TextView endDate = holder.endDate;
 

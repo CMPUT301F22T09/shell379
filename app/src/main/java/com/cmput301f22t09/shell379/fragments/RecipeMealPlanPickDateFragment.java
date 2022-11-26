@@ -10,6 +10,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -109,8 +110,6 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
                 servingText.setText(Integer.toString(newRecipe.getServings()*((servings/newRecipe.getServings())+1)));
             }
         });
-        // date extraction from https://stackoverflow.com/questions/9474121/i-want-to-get-year-month-day-etc-from-java-date-to-compare-with-gregorian-cal
-
 
         return rootView;
     }
@@ -120,15 +119,20 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
     }
 
 
-
     protected void writeToViewModel(MealPlanWrapper<Recipe> recipe) {
-//        envViewModel.getIngredients().getList().set(ingredientIndex, ing);
-//        envViewModel.getIngredients().commit();
         mealPlanViewModel.addRecipe(recipe);
     }
 
+    private void showError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+    }
+
+
+    /**
+     * This method save the date and serving enter by users
+     * and navigate back to the edit meal plan page
+     */
     private void save(){
-//        we dont have these 2 in the UI screen 17; those 2 are edited/save in previous screen
         String obj = ((TextView) rootView.findViewById(R.id.recipe_name)).getText().toString();
         String serving = ((TextView) rootView.findViewById(R.id.mpar_servings_val)).getText().toString();
 
@@ -137,6 +141,19 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
                 RecipeDatePicker.getYear(),
                 RecipeDatePicker.getMonth(),
                 RecipeDatePicker.getDayOfMonth()).getTime();
+
+        // check if the date user picked is less than today
+        Calendar todayDate = Calendar.getInstance();
+        todayDate.set(Calendar.MILLISECOND, 0);
+        todayDate.set(Calendar.SECOND, 0);
+        todayDate.set(Calendar.MINUTE, 0);
+        todayDate.set(Calendar.HOUR_OF_DAY, 0);
+        Date today = todayDate.getTime();
+
+        if (recipeDate.compareTo(today)<0){
+            showError("Please choose a date greater than or equal to today");
+            return;
+        }
 
         MealPlanWrapper<Recipe> WrapperRecipe
                 = new MealPlanWrapper<Recipe>(newRecipe, recipeDate, Integer.parseInt(serving)/newRecipe.getServings());

@@ -32,6 +32,7 @@ import org.checkerframework.checker.units.qual.A;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class EditMealPlanFragment extends Fragment {
     private ArrayList<Ingredient> ingredientsList;
@@ -43,7 +44,6 @@ public class EditMealPlanFragment extends Fragment {
     private Environment envViewModel;
     private NavController navController;
     private MealPlanViewModel mpViewModel;
-    // private FloatingActionButton backButton;
 
 
     public EditMealPlanFragment() {
@@ -147,16 +147,21 @@ public class EditMealPlanFragment extends Fragment {
     private void fillFields(View rootView) {
         Calendar startDate = Calendar.getInstance();
         startDate.setTime(mpViewModel.getMealPlan().getStartDate());
+//        Date start_date = startDate.getTime();
+
         Calendar endDate = Calendar.getInstance();
         endDate.setTime(mpViewModel.getMealPlan().getEndDate());
+//        Date end_date = endDate.getTime();
+
         ((TextView) rootView.findViewById(R.id.plan_edit_comment_txt))
                 .setText(mpViewModel.getMealPlan().getComments());
-        ((DatePicker) rootView.findViewById(R.id.editPlanStart))
-                .updateDate(startDate.get(Calendar.YEAR), startDate.get(Calendar.MONTH), startDate.get(Calendar.DAY_OF_MONTH));
-        ((DatePicker) rootView.findViewById(R.id.editPlanEnd))
-                .updateDate(endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH), endDate.get(Calendar.DAY_OF_MONTH));
+
+
+
         ((TextView) rootView.findViewById(R.id.plan_edit_name))
                 .setText(mpViewModel.getMealPlan().getMealPlanName());
+
+
     }
 
     private void collectData(View rootView) {
