@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -31,6 +32,7 @@ import org.checkerframework.checker.units.qual.A;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class EditMealPlanFragment extends Fragment {
     private ArrayList<Ingredient> ingredientsList;
@@ -42,7 +44,6 @@ public class EditMealPlanFragment extends Fragment {
     private Environment envViewModel;
     private NavController navController;
     private MealPlanViewModel mpViewModel;
-    // private FloatingActionButton backButton;
 
 
     public EditMealPlanFragment() {
@@ -123,7 +124,6 @@ public class EditMealPlanFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 collectData(rootView);
-                navController.popBackStack();
             }
         });
 
@@ -145,19 +145,42 @@ public class EditMealPlanFragment extends Fragment {
     }
 
     private void fillFields(View rootView) {
-        Date startDate = mpViewModel.getMealPlan().getStartDate();
-        Date endDate = mpViewModel.getMealPlan().getEndDate();
+        Calendar startDate = Calendar.getInstance();
+        startDate.setTime(mpViewModel.getMealPlan().getStartDate());
+//        Date start_date = startDate.getTime();
+
+        Calendar endDate = Calendar.getInstance();
+        endDate.setTime(mpViewModel.getMealPlan().getEndDate());
+//        Date end_date = endDate.getTime();
+
         ((TextView) rootView.findViewById(R.id.plan_edit_comment_txt))
                 .setText(mpViewModel.getMealPlan().getComments());
-        ((DatePicker) rootView.findViewById(R.id.editPlanStart))
-                .updateDate(startDate.getYear(), startDate.getMonth(), startDate.getDay());
-        ((DatePicker) rootView.findViewById(R.id.editPlanEnd))
-                .updateDate(endDate.getYear(), endDate.getMonth(), endDate.getDay());
+
+
+
         ((TextView) rootView.findViewById(R.id.plan_edit_name))
                 .setText(mpViewModel.getMealPlan().getMealPlanName());
+
+
     }
 
     private void collectData(View rootView) {
+        // validate
+        if ( ((TextView) rootView.findViewById(R.id.plan_edit_comment_txt)).getText().toString().isEmpty()){
+            showError("Comments not filled");
+            return;
+        }else if( ((TextView) rootView.findViewById(R.id.plan_edit_name)).getText().toString().isEmpty()){
+            showError("Name not filled");
+            return;
+        }
+
+        int amount = 0;
+        if (mpViewModel.getIngredients().size() <= 0 && mpViewModel.getRecipes().size() <= 0) {
+            showError("Choose some recipes or ingredients!");
+            return;
+        }
+
+
         mpViewModel.getMealPlan().setMealPlanName(
                 ((TextView) rootView.findViewById(R.id.plan_edit_name)).getText().toString()
         );
@@ -174,16 +197,12 @@ public class EditMealPlanFragment extends Fragment {
         cal.set(picker.getYear(), picker.getMonth(), picker.getDayOfMonth());
         mpViewModel.getMealPlan().setEndDate(cal.getTime());
 
-        envViewModel.getMealPlans().setAtIdxOrAdd(mpViewModel.getIdx().getValue(), mpViewModel.getMealPlan());
+        envViewModel.getMealPlans().setAtIdxOrAdd(mpViewModel.getIdx(), mpViewModel.getMealPlan());
         envViewModel.getMealPlans().commit();
+
+        navController.popBackStack();
     }
-
-    public void navigateToViewMealPlan(int index){
-        //    to-do
-//        MealPlanListFragmentDirections.
-
-//        IngredientListFragmentDirections.ActionIngredientListFragmentToViewIngredientFragment action
-//                = IngredientListFragmentDirections.actionIngredientListFragmentToViewIngredientFragment(index);
-//        navController.navigate(action);
+    private void showError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 }

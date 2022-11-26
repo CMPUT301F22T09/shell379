@@ -69,14 +69,15 @@ public class MPRecipesViewListAdapter extends RecyclerView.Adapter<MPRecipesView
         TextView amount = holder.amount;
         TextView date = holder.date;
 
-        name.setText(viewModel.getIngredientAtIdx(position).getName());
-        amount.setText(viewModel.getIngredientAtIdx(position).getServings().toString());
-        date.setText(viewModel.getIngredientAtIdx(position).getDisplayDate());
+        name.setText(viewModel.getRecipeAtIdx(position).getName());
+        amount.setText(Integer.toString(viewModel.getRecipeAtIdx(position).getServings()
+                *((Recipe)viewModel.getRecipeAtIdx(position).getObj()).getServings()));
+        date.setText(viewModel.getRecipeAtIdx(position).getDisplayDate());
     }
 
     @Override
     public int getItemCount() {
-        return viewModel.getIngredients().size();
+        return viewModel.getRecipes().size();
     }
 
     public ArrayList<MealPlanWrapper<Ingredient>> getIngredients(){

@@ -31,7 +31,10 @@ public class MealPlanViewModel extends ViewModel {
 
     public static MealPlanViewModel of(FragmentActivity activity) {
         MealPlanViewModel viewModel = new ViewModelProvider(activity).get(MealPlanViewModel.class);
-        if (viewModel == null) viewModel = new MealPlanViewModel();
+        if (viewModel.mealPlan == null) {
+            viewModel.setMealPlan(new MealPlan());
+            viewModel.setIdx(-1);
+        }
         return viewModel;
     }
 
@@ -107,6 +110,19 @@ public class MealPlanViewModel extends ViewModel {
     public void setRecipesRaw(ArrayList<MealPlanWrapper<Recipe>> recipes) {
         this.mealPlan.getValue().setRecipesRaw(recipes);
     }
+    public void addRecipe(MealPlanWrapper<Recipe> recipe){
+        ArrayList<MealPlanWrapper<Recipe>> recipes = mealPlan.getValue().getRecipes();
+        recipes.add(recipe);
+        mealPlan.getValue().setRecipesRaw(recipes);
+        forceNotify();
+    }
+
+    public void addIngredient(MealPlanWrapper<Ingredient> ingredient){
+        ArrayList<MealPlanWrapper<Ingredient>> ingredients = mealPlan.getValue().getIngredients();
+        ingredients.add(ingredient);
+        mealPlan.getValue().setIngredientsRaw(ingredients);
+        forceNotify();
+    }
 
     public ArrayList<MealPlanWrapper<Recipe>> getRecipes() {
         return mealPlan.getValue().getRecipes();
@@ -116,12 +132,13 @@ public class MealPlanViewModel extends ViewModel {
         return mealPlan.getValue().getIngredients();
     }
 
-    public void setIdx(MutableLiveData<Integer> idx) {
-        this.idx = idx;
+    public void setIdx(Integer idx) {
+        this.idx.setValue(idx);
     }
 
-    public MutableLiveData<Integer> getIdx() {
-        return idx;
+
+    public Integer getIdx() {
+        return idx.getValue();
     }
         /**
          * Notifies all listeners to the meal plan of a change

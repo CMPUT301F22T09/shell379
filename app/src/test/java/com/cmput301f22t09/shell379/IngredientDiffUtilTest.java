@@ -2,8 +2,6 @@ package com.cmput301f22t09.shell379;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import android.util.Log;
-
 
 import androidx.core.util.Pair;
 
@@ -11,18 +9,16 @@ import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.data.MealPlan;
 import com.cmput301f22t09.shell379.data.Recipe;
-import com.cmput301f22t09.shell379.data.ShoppingCart;
 import com.cmput301f22t09.shell379.data.util.IngredientDiffUtil;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.collections.CategorySet;
 import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
+import com.cmput301f22t09.shell379.data.vm.collections.ShoppingCart;
 import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
 
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -191,15 +187,34 @@ public class IngredientDiffUtilTest {
         have.put("celery", celery);
         have.put("yogurt", yogurt);
 
+        HashMap<String, Integer> removeFromInvAnswers = new HashMap<String, Integer>();
+        removeFromInvAnswers.put("celery", 100);
+        removeFromInvAnswers.put("broccoli", 50);
+        removeFromInvAnswers.put("yogurt", 100);
+
+        HashMap<String, Integer> addToCartAnswers = new HashMap<String, Integer>();
+        addToCartAnswers.put("yogurt", 100);
+        addToCartAnswers.put("bread", 200);
+
         Pair<ArrayList<Ingredient>, ArrayList<Ingredient>> result
                 = IngredientDiffUtil.computeSubtractAndBuyList(needed, have);
 
+        for (int i = 0; i < result.first.size(); i++) {
+            assertEquals(result.first.get(i).getAmount(), removeFromInvAnswers.get(result.first.get(i).getDescription().toLowerCase()));
+        }
+        for (int i = 0; i < result.second.size(); i++) {
+            assertEquals(result.second.get(i).getAmount(), addToCartAnswers.get(result.second.get(i).getDescription().toLowerCase()));
+        }
 
 
     }
 
 
-
+    /**
+     * This function tests the integration of getIngredientsNeeded, getIngredientsInStock,
+     * coalesce, and computeSubtractAndBuyList. Also tests the newly implemented MealPlanWrapper
+     * used to multiply the ingredient amounts
+     */
     @Test
     public void testComputeDiff() {
         ArrayList<IngredientStub> recIngs = new ArrayList<>();
@@ -241,61 +256,74 @@ public class IngredientDiffUtilTest {
         // WE HAVE: 200 broccoli, 100 celery
         Environment env = new EnvironmentMock();
 
-        
+        HashMap<String, Integer> removeFromInvAnswers = new HashMap<String, Integer>();
+        removeFromInvAnswers.put("celery", 100);
+        removeFromInvAnswers.put("broccoli", 200);
+
+        HashMap<String, Integer> addToCartAnswers = new HashMap<String, Integer>();
+        addToCartAnswers.put("celery", 120);
+        addToCartAnswers.put("broccoli", 400);
+
         // we should have  100 celery 200 broccoli to be deleted, 120 celery 400 broccoli in shopping cart
         Pair<ArrayList<Ingredient>, ArrayList<Ingredient>> result = IngredientDiffUtil.computeDiff(mp, env);
 
-
-    }
-
-
-
-    @Test
-    public void testMPHasEnoughIngredients () {
-
-
-        ArrayList<IngredientStub> recIngs = new ArrayList<>();
-        ArrayList<Ingredient> mpIngs = new ArrayList<>();
-
-
-        recIngs.add(new IngredientStub("Celery", 40,  "kg", "shell"));
-        recIngs.add(new IngredientStub("Broccoli",200, "g", "shell"));
-
-        mpIngs.add(new Ingredient("Celery", "Pantry", 40,  "kg", "shell"));
-        mpIngs.add(new Ingredient("Celery","Pantry", 10, "kg", "shell"));
-
-
-        Recipe r = new Recipe("Rec1", 20L, 13, "Veg", "");
-        r.setIngredients(recIngs);
-        ArrayList<Recipe> recs = new ArrayList<>();
-        recs.add(r);
-
-
-        MealPlan mp = new MealPlan("Test1",
-                recs,
-                mpIngs,
-                new Date(2020, 12, 31),
-                new Date(2022, 1, 3),
-                "",
-                0);
-
-        Environment env = new EnvironmentMock();
-
-
-
-        Pair<ArrayList<Ingredient>, ArrayList<Ingredient>> variableName
-                = IngredientDiffUtil.computeDiff(mp, env);
-
-        ArrayList<Ingredient> subFromInv = variableName.first;
-
-        for (int i = 0; i < subFromInv.size(); i++) {
-            Ingredient ing = subFromInv.get(i);
+        for (int i = 0; i < result.first.size(); i++) {
+            assertEquals(result.first.get(i).getAmount(), removeFromInvAnswers.get(result.first.get(i).getDescription().toLowerCase()));
+        }
+        for (int i = 0; i < result.second.size(); i++) {
+            assertEquals(result.second.get(i).getAmount(), addToCartAnswers.get(result.second.get(i).getDescription().toLowerCase()));
         }
 
-
-
-
     }
+
+
+
+//    @Test
+//    public void testMPHasEnoughIngredients () {
+//
+//
+//        ArrayList<IngredientStub> recIngs = new ArrayList<>();
+//        ArrayList<Ingredient> mpIngs = new ArrayList<>();
+//
+//
+//        recIngs.add(new IngredientStub("Celery", 40,  "kg", "shell"));
+//        recIngs.add(new IngredientStub("Broccoli",200, "g", "shell"));
+//
+//        mpIngs.add(new Ingredient("Celery", "Pantry", 40,  "kg", "shell"));
+//        mpIngs.add(new Ingredient("Celery","Pantry", 10, "kg", "shell"));
+//
+//
+//        Recipe r = new Recipe("Rec1", 20L, 13, "Veg", "");
+//        r.setIngredients(recIngs);
+//        ArrayList<Recipe> recs = new ArrayList<>();
+//        recs.add(r);
+//
+//
+//        MealPlan mp = new MealPlan("Test1",
+//                recs,
+//                mpIngs,
+//                new Date(2020, 12, 31),
+//                new Date(2022, 1, 3),
+//                "",
+//                0);
+//
+//        Environment env = new EnvironmentMock();
+//
+//
+//
+//        Pair<ArrayList<Ingredient>, ArrayList<Ingredient>> variableName
+//                = IngredientDiffUtil.computeDiff(mp, env);
+//
+//        ArrayList<Ingredient> subFromInv = variableName.first;
+//
+//        for (int i = 0; i < subFromInv.size(); i++) {
+//            Ingredient ing = subFromInv.get(i);
+//        }
+//
+//
+//
+//
+//    }
 
 
 

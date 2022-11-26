@@ -3,7 +3,6 @@ package com.cmput301f22t09.shell379.fragments;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -14,24 +13,25 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.adapters.ShoppingListAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
 
 import com.cmput301f22t09.shell379.data.MealPlan;
-import com.cmput301f22t09.shell379.data.ShoppingCart;
+//import com.cmput301f22t09.shell379.data.ShoppingCart;
+import com.cmput301f22t09.shell379.data.util.ArraySortUtil;
 import com.cmput301f22t09.shell379.data.util.IngredientDiffUtil;
-
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
 import com.cmput301f22t09.shell379.data.wrapper.CartIngredient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 
 public class ShoppingListFragment extends Fragment {
 
@@ -46,6 +46,7 @@ public class ShoppingListFragment extends Fragment {
     private ShoppingListAdapter shoppingListAdapter;
     private FloatingActionButton backButton;
     private Button submitButton;
+    private int selectedSortIndex;
 
     public ShoppingListFragment() {
         // Required empty public constructor
@@ -56,6 +57,7 @@ public class ShoppingListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         env = Environment.of((AppCompatActivity) requireActivity());
         navController = NavHostFragment.findNavController(this);
+        IngredientDiffUtil.prepareCart(env);
     }
 
     @Override
@@ -66,12 +68,44 @@ public class ShoppingListFragment extends Fragment {
 
         backButton = rootView.findViewById(R.id.back);
         submitButton = rootView.findViewById(R.id.submit_button);
-        // shoppingList = env.getCart();
+        shoppingList = env.getCart();
+
+        // Implement the spinner option to sort the ingredient list
+        Spinner spinner = (Spinner) rootView.findViewById(R.id.shopping_list_sort_spinner);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
+                getActivity(),
+                android.R.layout.simple_spinner_item,
+                CartIngredient.getSortableProps()
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setSelection(0);
+        selectedSortIndex = 0;
+
+        // setting spinner events from khaled ben aissa, dec 21 2011
+        // https://stackoverflow.com/questions/8597582/get-the-position-of-a-spinner-in-android
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                // resorts the recycler view of ingredients
+                selectedSortIndex = ((Spinner) rootView.findViewById(R.id.shopping_list_sort_spinner)).getSelectedItemPosition();
+                shoppingListAdapter.updateShoppingList(
+                        ArraySortUtil.sortByStringProp(shoppingListAdapter.getShoppingList(),
+                                CartIngredient.getStringPropGetter(selectedSortIndex))
+                );
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // do nothing
+            }
+        });
 
         // TEMPORARY TESTING DATA
 
 //        shoppingList = new LiveCollection<CartIngredient>();
 //        ArrayList<CartIngredient> tempList = new ArrayList<>();
+
         CartIngredient testCartIngredient = new CartIngredient("Milk", "Dairy", 2, "L");
 //        testCartIngredient.setIngredient(new Ingredient("Milk","Fridge", 2, "L", "Dairy"));
 //        testCartIngredient.setDetailsFilled(false);
@@ -109,7 +143,7 @@ public class ShoppingListFragment extends Fragment {
     private void submit() {
         ArrayList<CartIngredient> shoppingArray = shoppingList.getList();
 //        ArrayList<CartIngredient> shoppingArray = env.getCart().getList();
-                ArrayList<Integer> toBeRemoved = new ArrayList<>();
+        ArrayList<Integer> toBeRemoved = new ArrayList<>();
         for (int i = 0; i < shoppingArray.size(); i++) {
             CartIngredient neededIngredient = shoppingArray.get(i);
             if (neededIngredient.getPickedUp() && neededIngredient.getDetailsFilled()) {
@@ -120,6 +154,9 @@ public class ShoppingListFragment extends Fragment {
                 // change the amount
                 if (neededAmount > amount) {
                     neededIngredient.setAmount(neededAmount-amount);
+                    neededIngredient.setPickedUp(false);
+                    neededIngredient.setIngredient(null);
+                    neededIngredient.setDetailsFilled(false);
                 } else {
                     toBeRemoved.add(i);
                 }
