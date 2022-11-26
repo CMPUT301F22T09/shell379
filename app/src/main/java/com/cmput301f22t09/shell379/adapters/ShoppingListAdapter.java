@@ -148,6 +148,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
                 if (b) {
                     // TODO: set isPickedUp to true, and display the incomplete message
                     shoppingList.getList().get(holder.getAdapterPosition()).setPickedUp(true);
+                    shoppingList.commit();
                     holder.fillOutDetailsMsg.setVisibility(View.VISIBLE);
                     holder.detailsCompleteMsg.setVisibility(View.GONE);
                     if (holder.fillOutDetailsMsg.getText().equals("")) {

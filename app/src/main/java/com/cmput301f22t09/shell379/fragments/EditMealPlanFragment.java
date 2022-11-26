@@ -195,9 +195,14 @@ public class EditMealPlanFragment extends Fragment {
 
         picker = rootView.findViewById(R.id.editPlanEnd);
         cal.set(picker.getYear(), picker.getMonth(), picker.getDayOfMonth());
+
+        Log.d("FBK_DATE_END", cal.getTime().toString());
         mpViewModel.getMealPlan().setEndDate(cal.getTime());
+        Log.d("FBK_DATE_END", cal.getTime().toString());
+        Log.d("FBK_DATE_END_MP", mpViewModel.getMealPlan().getEndDateFormatted());
 
         envViewModel.getMealPlans().setAtIdxOrAdd(mpViewModel.getIdx(), mpViewModel.getMealPlan());
+        Log.d("FBK_DATE_END_END", mpViewModel.getMealPlan().getEndDateFormatted());
         envViewModel.getMealPlans().commit();
 
         navController.popBackStack();
