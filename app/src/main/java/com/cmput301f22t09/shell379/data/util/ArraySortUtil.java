@@ -103,17 +103,45 @@ public class ArraySortUtil {
      * A null param is always considered smaller than a non null param.
      */
     private static <T> boolean isSmallerString(T left,T right,StringPropGetter stringPropGetter){
-        String leftValue = stringPropGetter.getString(left);
-        String rightValue = stringPropGetter.getString(right);
+        if(isNumeric(stringPropGetter.getString(left))){
+            Double leftValue = Double.parseDouble( stringPropGetter.getString(left));
+            Double rightValue = Double.parseDouble(stringPropGetter.getString(right));
 
-        if (left == null && right == null ||
-                left != null && right == null){
-            return false;
-        }else if(left == null && right != null ||
-                leftValue.compareTo(rightValue) < 0){
-            return true;
+
+            if (left == null && right == null ||
+                    left != null && right == null){
+                return false;
+            }else if(left == null && right != null ||
+                    leftValue.compareTo(rightValue) < 0){
+                return true;
+            }else{
+                return  false;
+            }
         }else{
-            return  false;
+            String leftValue = stringPropGetter.getString(left);
+            String rightValue = stringPropGetter.getString(right);
+
+
+            if (left == null && right == null ||
+                    left != null && right == null){
+                return false;
+            }else if(left == null && right != null ||
+                    leftValue.compareTo(rightValue) < 0){
+                return true;
+            }else{
+                return  false;
+            }
         }
+    }
+
+    /**
+     * Checks whether the value is numeric
+     * @param str to test if is numeric
+     * @return
+     */
+    private static boolean isNumeric(String str) {
+        // Function from d1snin at
+        // https://stackoverflow.com/questions/1102891/how-to-check-if-a-string-is-numeric-in-java
+        return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
     }
 }
