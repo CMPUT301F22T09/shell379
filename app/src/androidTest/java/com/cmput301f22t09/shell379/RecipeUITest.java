@@ -21,9 +21,11 @@ import androidx.test.espresso.PerformException;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
 import com.cmput301f22t09.shell379.adapters.IngredientAdapter;
+import com.cmput301f22t09.shell379.adapters.IngredientInRecipeAdapter;
 import com.cmput301f22t09.shell379.adapters.RecipeListAdapter;
 import com.cmput301f22t09.shell379.adapters.fragmentadapters.CategoriesSelectRecViewAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
@@ -33,6 +35,8 @@ import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+
+import java.util.ArrayList;
 
 /**
  * Branches to be covered:  10  11  12  13  14  15  16
@@ -68,7 +72,7 @@ public class RecipeUITest {
      *          is a Recipe object with the fields shown above
      */
     @Test
-    public void test_10_11_14_15_12() {
+    public void test_10_11_14_15_18_22_25_27_28_12() {
 
 
 
@@ -94,6 +98,14 @@ public class RecipeUITest {
                 }
             }
         }
+
+        activityRule.getScenario().onActivity(activity -> {
+            // use 'activity'.
+            Environment.of(activity, new Environment());
+
+        });
+
+
         onView(withText("Recipes")).check(matches(isDisplayed()));
 
         // action 11
@@ -114,24 +126,82 @@ public class RecipeUITest {
 
         // TODO: need to add ingredients
 
+        // Action 18
+        onView(withId(R.id.edit_ings_button)).perform(scrollTo(), click());
+        onView(withText("Selected Ingredients")).check(matches(isDisplayed()));
+
+        // action 22
+        onView(withId(R.id.new_ingredient_stub_button)).perform(click());
+        onView(withText("Add Ingredient")).check(matches(isDisplayed()));
+
+        // action 25
+        onView(withId(R.id.new_button)).perform(click());
+
+        onView(withId(R.id.editDescription)).perform(replaceText("newIng"));
+        onView(withId(R.id.editAmount)).perform( replaceText("2"));
+        onView(withId(R.id.editCategory)).perform( click());
+        onView(withId(R.id.textInputEditText)).perform( replaceText("newCat"));
+        onView(withId(R.id.addButton)).perform(click());
+
+        // action 27
+        onView(withId(R.id.save_button)).perform(click());
+        onView(withText("Selected Ingredients")).check(matches(isDisplayed()));
+
+        // action 28
+        onView(withId(R.id.bot_back_button)).perform(click());
+        onView(withId(R.id.ingredientsInRep)).perform(scrollTo());
+
+        final int[] pos = new int[1];
+        onView(withId(R.id.ingredientsInRep)).check(matches(new TypeSafeMatcher<View>() {
+            @Override
+            protected boolean matchesSafely(View item) {
+                RecyclerView recyclerView = (RecyclerView) item;
+                IngredientInRecipeAdapter ingListAdapter = (IngredientInRecipeAdapter) recyclerView.getAdapter();
+                ArrayList<IngredientStub> ings = ingListAdapter.getIngredients();
+                pos[0] = ingListAdapter.getItemCount()-1;
+                IngredientStub ing = ings.get(pos[0]);
+
+                assertTrue(ing.getDescription().equals("newIng"));
+                assertTrue(ing.getCategory().equals("newCat"));
+                assertTrue(ing.getAmount().equals(2));
+                return true;
+            }
+
+            @Override
+            public void describeTo(Description description) {
+
+            }
+        }));
+
+
+
+
 
         // action 12
         onView(withId(R.id.save_recipe)).perform(scrollTo(), click());
 
-        final int[] pos = new int[1];
+        final int[] pos2 = new int[1];
         onView(withId(R.id.recipe_list_recyclerView)).check(matches(new TypeSafeMatcher<View>() {
             @Override
             protected boolean matchesSafely(View item) {
                 RecyclerView recyclerView = (RecyclerView) item;
                 RecipeListAdapter recipeListAdapter = (RecipeListAdapter) recyclerView.getAdapter();
                 Recipe rec = recipeListAdapter.getRecipe(recipeListAdapter.getItemCount() - 1);
-                pos[0] = recipeListAdapter.getItemCount()-1;
+                pos2[0] = recipeListAdapter.getItemCount()-1;
 
                 assertTrue(rec.getTitle().equals("Rec1"));
                 assertTrue(rec.getCategory().equals("Cat1"));
                 assertTrue(rec.getPreparationTime() == 123);
                 assertTrue(rec.getServings() == 456);
                 assertTrue(rec.getComments().equals("This is a comment"));
+
+                ArrayList<IngredientStub> ings = rec.getIngredients();
+
+                IngredientStub ing = ings.get(ings.size()-1);
+                assertTrue(ing.getDescription().equals("newIng"));
+                assertTrue(ing.getCategory().equals("newCat"));
+                assertTrue(ing.getAmount().equals(2));
+
                 return true;
             }
 
