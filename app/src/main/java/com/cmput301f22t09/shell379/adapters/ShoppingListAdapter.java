@@ -148,6 +148,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
                 if (b) {
                     // TODO: set isPickedUp to true, and display the incomplete message
                     shoppingList.getList().get(holder.getAdapterPosition()).setPickedUp(true);
+                    shoppingList.commit();
                     holder.fillOutDetailsMsg.setVisibility(View.VISIBLE);
                     holder.detailsCompleteMsg.setVisibility(View.GONE);
                     if (holder.fillOutDetailsMsg.getText().equals("")) {
@@ -159,6 +160,7 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
                     // TODO: set isPickedUp to false, and hide both messages
                     shoppingList.getList().get(holder.getAdapterPosition()).setPickedUp(false);
                     shoppingList.getList().get(holder.getAdapterPosition()).setIngredient(null);
+                    shoppingList.commit();
                     holder.fillOutDetailsMsg.setVisibility(View.GONE);
                     holder.detailsCompleteMsg.setVisibility(View.GONE);
                     holder.amount_purchased_label.setVisibility(View.GONE);
