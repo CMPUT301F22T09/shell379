@@ -10,6 +10,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
@@ -122,6 +123,11 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
         mealPlanViewModel.addRecipe(recipe);
     }
 
+    private void showError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+    }
+
+
     /**
      * This method save the date and serving enter by users
      * and navigate back to the edit meal plan page
@@ -135,6 +141,19 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
                 RecipeDatePicker.getYear(),
                 RecipeDatePicker.getMonth(),
                 RecipeDatePicker.getDayOfMonth()).getTime();
+
+        // check if the date user picked is less than today
+        Calendar todayDate = Calendar.getInstance();
+        todayDate.set(Calendar.MILLISECOND, 0);
+        todayDate.set(Calendar.SECOND, 0);
+        todayDate.set(Calendar.MINUTE, 0);
+        todayDate.set(Calendar.HOUR_OF_DAY, 0);
+        Date today = todayDate.getTime();
+
+        if (recipeDate.compareTo(today)<0){
+            showError("Please choose a date greater than or equal to today");
+            return;
+        }
 
         MealPlanWrapper<Recipe> WrapperRecipe
                 = new MealPlanWrapper<Recipe>(newRecipe, recipeDate, Integer.parseInt(serving)/newRecipe.getServings());

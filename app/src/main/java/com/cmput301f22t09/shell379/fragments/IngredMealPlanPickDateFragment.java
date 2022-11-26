@@ -2,6 +2,7 @@ package com.cmput301f22t09.shell379.fragments;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -123,16 +124,25 @@ public class IngredMealPlanPickDateFragment extends Fragment{
             return;
         }
 
+
         DatePicker IngredDatePicker = rootView.findViewById(R.id.editIngredientDate);
         Date ingredDate = new GregorianCalendar(
                 IngredDatePicker.getYear(),
                 IngredDatePicker.getMonth(),
                 IngredDatePicker.getDayOfMonth()).getTime();
-//
-//        if (serving!=null&& !serving.equals("")){{
-//            serving_check = Integer.parseInt(serving);
-//
-//        }
+
+        // check if the date user picked is less than today
+        Calendar todayDate = Calendar.getInstance();
+        todayDate.set(Calendar.MILLISECOND, 0);
+        todayDate.set(Calendar.SECOND, 0);
+        todayDate.set(Calendar.MINUTE, 0);
+        todayDate.set(Calendar.HOUR_OF_DAY, 0);
+        Date today = todayDate.getTime();
+        if (ingredDate.compareTo(today)<0){
+            showError("Please choose a date greater than or equal to today");
+            return;
+        }
+
         MealPlanWrapper<Ingredient> WrapperIngredient = new MealPlanWrapper<Ingredient>(newIngredient,ingredDate,Integer.parseInt(serving));
 
         writeToViewModel(WrapperIngredient);
