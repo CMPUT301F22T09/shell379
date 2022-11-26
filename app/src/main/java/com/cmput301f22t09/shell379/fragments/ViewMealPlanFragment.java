@@ -72,7 +72,6 @@ public class ViewMealPlanFragment extends Fragment {
 
         mpIngredientRecycler = (RecyclerView) rootView.findViewById(R.id.plan_ingredients);
         mpRecipeRecycler = (RecyclerView) rootView.findViewById(R.id.plan_recipes);
-
         ingredientsAdapter = new MPIngredientsViewListAdapter(mpViewModel);
         mpIngredientRecycler.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         mpIngredientRecycler.setAdapter(ingredientsAdapter);
@@ -114,6 +113,7 @@ public class ViewMealPlanFragment extends Fragment {
     }
 
     private void fillFields(View rootView) {
+        Log.d("FBK_DATE_END_VIEW", mpViewModel.getMealPlan().getEndDateFormatted());
         ((TextView) rootView.findViewById(R.id.mpv_comments_data))
                 .setText(mpViewModel.getMealPlan().getComments());
         ((TextView) rootView.findViewById(R.id.mpv_start_data))

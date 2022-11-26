@@ -1,5 +1,7 @@
 package com.cmput301f22t09.shell379.data;
 
+import android.util.Log;
+
 import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
 
 import java.io.Serializable;
@@ -12,27 +14,27 @@ import java.util.stream.Collectors;
 public class MealPlan implements Serializable {
     private ArrayList<MealPlanWrapper<Recipe>> recipes = new ArrayList<>();
     private ArrayList<MealPlanWrapper<Ingredient>> ingredients = new ArrayList<>();
-    private String startDate;
-    private String endDate;
+    private Date startDate;
+    private Date endDate;
     private Integer activeDays;
     private String mealPlanName;
     private String comments;
-    private static final SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-DD");
+    private static final SimpleDateFormat formatter = new SimpleDateFormat("YYYY-MM-dd");
 
     public MealPlan(String mealPlanName, ArrayList<Recipe> recipes, ArrayList<Ingredient> ingredients, Date startDate, Date endDate, String comments, Integer activeDays) {
         this.mealPlanName = mealPlanName;
         this.recipes = convertRecipes(recipes);
         this.ingredients = convertIngredients(ingredients);
-        this.startDate = formatter.format(startDate);
-        this.endDate = formatter.format(endDate);
+        this.startDate = startDate;
+        this.endDate = endDate;
         this.comments = comments;
         this.activeDays = activeDays;
     }
 
     public MealPlan() {
         this.mealPlanName = "";
-        this.startDate = formatter.format(new Date());
-        this.endDate = formatter.format(new Date());
+        this.startDate = new Date();
+        this.endDate = new Date();
         this.comments = "";
         this.activeDays = 0;
     }
@@ -73,30 +75,26 @@ public class MealPlan implements Serializable {
     }
 
     public Date getStartDate() {
-        try {
-            return formatter.parse(this.startDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return new Date();
+        return this.startDate;
     }
 
     public void setStartDate(Date startDate) {
+<<<<<<< HEAD
         this.startDate = formatter.format(startDate);
 //        this.startDate=startDate;
+=======
+        this.startDate = startDate;
+>>>>>>> dev
     }
 
     public Date getEndDate() {
-        try {
-            return formatter.parse(this.endDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return new Date();
+        return this.endDate;
     }
 
     public void setEndDate(Date endDate) {
-        this.endDate = formatter.format(endDate);
+        Log.e("FBK_DATE_END_SETTER", endDate.toString());
+        this.endDate = endDate;
+        Log.e("FBK_DATE_END_SETTER", this.endDate.toString());
     }
 
     public Integer getActiveDays() {
@@ -149,7 +147,7 @@ public class MealPlan implements Serializable {
 
     public String getStartDateFormatted() {
         if(startDate != null){
-            SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat simpleDate = formatter;
             return simpleDate.format(getStartDate());
         }else{
             return "Date not set";
@@ -158,7 +156,7 @@ public class MealPlan implements Serializable {
 
     public String getEndDateFormatted() {
         if(endDate != null){
-            SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat simpleDate = formatter;
             return simpleDate.format(getEndDate());
         }else{
             return "Date not set";

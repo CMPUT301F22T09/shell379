@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -23,6 +24,7 @@ import com.cmput301f22t09.shell379.adapters.AddRecipeMealPlanAdapter;
 import com.cmput301f22t09.shell379.adapters.RecipeIngredientsListAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
+import com.cmput301f22t09.shell379.data.util.ArraySortUtil;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.MealPlanViewModel;
 import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
@@ -33,12 +35,9 @@ public class AddRecipeToMPFragment extends DialogFragment implements AddRecipeMe
     private Environment env;
     private NavController navController;
     private MealPlanViewModel mealPlanViewModel;
-    AddRecipeMealPlanAdapter addRecipeMealPlanAdapter;
-    ArrayList<MealPlanWrapper<Recipe>> RecipeinMealPlan;
- //    RecyclerView addRecipeToMP_recyclerView;
-//    RecyclerView.LayoutManager layoutManager;
-//    int selectedSortIndex;
-
+    private AddRecipeMealPlanAdapter addRecipeMealPlanAdapter;
+    private ArrayList<MealPlanWrapper<Recipe>> RecipeinMealPlan;
+    private int selectedSortIndex;
 
     public AddRecipeToMPFragment(){
 
@@ -78,7 +77,31 @@ public class AddRecipeToMPFragment extends DialogFragment implements AddRecipeMe
         recipeRecyclerView.setAdapter(addRecipeMealPlanAdapter);
         recipeRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        //        To-do sorting
+        // Sort spinner setup
+        Spinner spinner = rootView.findViewById(R.id.add_recipe_toMP_sort_spinner);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
+                getActivity(),
+                android.R.layout.simple_spinner_item,
+                Recipe.getSortableProps()
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        selectedSortIndex = 0;
+        // setting spinner events from khaled ben aissa, dec 21 2011
+        // https://stackoverflow.com/questions/8597582/get-the-position-of-a-spinner-in-android
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                // resorts the recycler view of ingredients
+                selectedSortIndex = ((Spinner) rootView.findViewById(R.id.add_recipe_toMP_sort_spinner)).getSelectedItemPosition();
+                addRecipeMealPlanAdapter.updateRecipes(ArraySortUtil.sortByStringProp(addRecipeMealPlanAdapter.getRecipes(),Recipe.getStringPropGetter(selectedSortIndex)));
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // do nothing
+            }
+        });
 
         return rootView;
     }

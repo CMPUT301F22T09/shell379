@@ -187,33 +187,21 @@ public class EditMealPlanFragment extends Fragment {
                 ((TextView) rootView.findViewById(R.id.plan_edit_comment_txt)).getText().toString()
         );
 
-        Calendar cal = Calendar.getInstance(TimeZone.getDefault());
-        DatePicker startDatePicker = rootView.findViewById(R.id.editPlanStart);
-        Date startdate = new GregorianCalendar(
-                startDatePicker.getYear(),
-                startDatePicker.getMonth(),
-                startDatePicker.getDayOfMonth()).getTime();
+        Calendar cal = Calendar.getInstance();
+        DatePicker picker = rootView.findViewById(R.id.editPlanStart);
+        cal.set(picker.getYear(), picker.getMonth(), picker.getDayOfMonth());
+        mpViewModel.getMealPlan().setStartDate(cal.getTime());
 
-        cal.set(startDatePicker.getYear(), startDatePicker.getMonth(), startDatePicker.getDayOfMonth());
-//        mpViewModel.getMealPlan().setStartDate(cal.getTime());
-        mpViewModel.getMealPlan().setStartDate(startdate);
+        picker = rootView.findViewById(R.id.editPlanEnd);
+        cal.set(picker.getYear(), picker.getMonth(), picker.getDayOfMonth());
 
-        DatePicker endDatePicker = rootView.findViewById(R.id.editPlanEnd);
-        cal.set(endDatePicker.getYear(), endDatePicker.getMonth(), endDatePicker.getDayOfMonth());
-        Date enddate = new GregorianCalendar(
-                endDatePicker.getYear(),
-                endDatePicker.getMonth(),
-                endDatePicker.getDayOfMonth()).getTime();
-
-        mpViewModel.getMealPlan().setEndDate(enddate);
-
-        // check if the enda date is smaller than the start date
-        if (enddate.compareTo(startdate) <0){
-            showError("Please choose correct start and end date");
-            return;
-        }
+        Log.d("FBK_DATE_END", cal.getTime().toString());
+        mpViewModel.getMealPlan().setEndDate(cal.getTime());
+        Log.d("FBK_DATE_END", cal.getTime().toString());
+        Log.d("FBK_DATE_END_MP", mpViewModel.getMealPlan().getEndDateFormatted());
 
         envViewModel.getMealPlans().setAtIdxOrAdd(mpViewModel.getIdx(), mpViewModel.getMealPlan());
+        Log.d("FBK_DATE_END_END", mpViewModel.getMealPlan().getEndDateFormatted());
         envViewModel.getMealPlans().commit();
 
         navController.popBackStack();

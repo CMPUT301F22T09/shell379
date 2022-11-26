@@ -94,22 +94,23 @@ public class AddIngredMealPlanAdapter extends RecyclerView.Adapter<AddIngredMeal
     }
 
 
+    /**
+     * sets the adapter's ingredients
+     * @param newIngredient ingredients to update with
+     */
+    public void updateIngredient(ArrayList<Ingredient> newIngredient){
+        IngredinMealPlan = newIngredient;
+        notifyDataSetChanged();
+    }
 
-//        /**
-//         *  Responds to an ingredient item being clicked in the recyclerView.
-//         *  Navigates to viewing the ingredient
-//         * @param i index of Ingredient in the view model
-//         */
-//        public void ingredOnClick(int i) {
-//            Ingredient a = IngredinMealPlan.get(i);
-//            ArrayList<MealPlanWrapper<Ingredient>> ingredients = mealPlanViewModel.getIngredients();
-//            int index = ingredients.indexOf(a);
-//            ingredInMealPlanListener.editIngredInMP(index);
-//        }
+    public ArrayList<Ingredient> getIngredients(){
+        return IngredinMealPlan;
+    }
 
     @Override
-        public int getItemCount() {
+    public int getItemCount() {
             return IngredinMealPlan.size();
         }
 
-    }
+}
+

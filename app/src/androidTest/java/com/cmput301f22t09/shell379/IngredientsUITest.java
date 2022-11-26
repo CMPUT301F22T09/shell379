@@ -34,6 +34,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
 import com.cmput301f22t09.shell379.adapters.IngredientAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.google.firebase.firestore.ServerTimestamp;
 
 import org.hamcrest.Description;
@@ -124,6 +125,14 @@ public class IngredientsUITest {
         }
 //        onView(withId(R.id.ingredient_list_recyclerView)).check(matches(isDisplayed()));
 
+
+        activityRule.getScenario().onActivity(activity -> {
+            // use 'activity'.
+            Environment.of(activity, new Environment());
+
+        });
+
+
         // action 2
         onView(withId(R.id.new_button)).perform(click());
         onView(withText("Name/description")).check(matches(isDisplayed()));
@@ -137,11 +146,15 @@ public class IngredientsUITest {
         // action xx
         onView(withId(R.id.editLocation)).perform(click());
         onView(withId(R.id.textInputEditText)).perform(replaceText("Pantry"));
+        onView(withId(R.id.addButton)).perform(click());
+
 
         // action xx
-        onView(withId(R.id.addButton)).perform(click());
         onView(withId(R.id.editAmount)).perform(scrollTo(),replaceText("34"));
-        onView(withId(R.id.editCategory)).perform(scrollTo(),replaceText("Cat"));
+        onView(withId(R.id.editCategory)).perform(scrollTo(), click());
+        onView(withId(R.id.textInputEditText)).perform(replaceText("Cat"));
+        onView(withId(R.id.addButton)).perform(click());
+
 
         // action 3
         onView(withId(R.id.save_button)).perform(scrollTo(), click());

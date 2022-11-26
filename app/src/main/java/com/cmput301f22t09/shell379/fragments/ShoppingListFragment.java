@@ -3,7 +3,6 @@ package com.cmput301f22t09.shell379.fragments;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -24,18 +23,15 @@ import com.cmput301f22t09.shell379.adapters.ShoppingListAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
 
 import com.cmput301f22t09.shell379.data.MealPlan;
-import com.cmput301f22t09.shell379.data.ShoppingCart;
+//import com.cmput301f22t09.shell379.data.ShoppingCart;
 import com.cmput301f22t09.shell379.data.util.ArraySortUtil;
 import com.cmput301f22t09.shell379.data.util.IngredientDiffUtil;
-
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
 import com.cmput301f22t09.shell379.data.wrapper.CartIngredient;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 
 public class ShoppingListFragment extends Fragment {
 
@@ -61,6 +57,7 @@ public class ShoppingListFragment extends Fragment {
         super.onCreate(savedInstanceState);
         env = Environment.of((AppCompatActivity) requireActivity());
         navController = NavHostFragment.findNavController(this);
+        IngredientDiffUtil.prepareCart(env);
     }
 
     @Override
@@ -109,10 +106,10 @@ public class ShoppingListFragment extends Fragment {
 //        shoppingList = new LiveCollection<CartIngredient>();
 //        ArrayList<CartIngredient> tempList = new ArrayList<>();
 
-        CartIngredient testCartIngredient = new CartIngredient("Milk", "Dairy", 2, "L");
+//        CartIngredient testCartIngredient = new CartIngredient("Milk", "Dairy", 2, "L");
 //        testCartIngredient.setIngredient(new Ingredient("Milk","Fridge", 2, "L", "Dairy"));
 //        testCartIngredient.setDetailsFilled(false);
-        env.getCart().getList().add(testCartIngredient);
+//        env.getCart().getList().add(testCartIngredient);
         shoppingList = env.getCart();
 //        shoppingList.setList(new ArrayList<>());
         shoppingList.commit();
@@ -164,10 +161,7 @@ public class ShoppingListFragment extends Fragment {
                     toBeRemoved.add(i);
                 }
                 env.getIngredients().add(neededIngredient.getIngredient());
-            } else if (neededIngredient.getPickedUp() && !neededIngredient.getDetailsFilled()) {
-                neededIngredient.setPickedUp(false);
             }
-
         }
 
         for (int i = 0; i < toBeRemoved.size(); i++) {
