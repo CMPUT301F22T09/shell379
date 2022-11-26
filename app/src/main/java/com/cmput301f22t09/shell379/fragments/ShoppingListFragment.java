@@ -23,7 +23,7 @@ import com.cmput301f22t09.shell379.adapters.ShoppingListAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
 
 import com.cmput301f22t09.shell379.data.MealPlan;
-import com.cmput301f22t09.shell379.data.ShoppingCart;
+//import com.cmput301f22t09.shell379.data.ShoppingCart;
 import com.cmput301f22t09.shell379.data.util.ArraySortUtil;
 import com.cmput301f22t09.shell379.data.util.IngredientDiffUtil;
 import com.cmput301f22t09.shell379.data.vm.Environment;

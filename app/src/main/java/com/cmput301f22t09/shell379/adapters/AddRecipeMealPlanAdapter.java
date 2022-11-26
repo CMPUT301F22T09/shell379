@@ -111,5 +111,12 @@ public class AddRecipeMealPlanAdapter extends RecyclerView.Adapter<AddRecipeMeal
     }
 
 
+    public void updateRecipes(ArrayList<Recipe> newRecipes) {
+        RecipeinMealPlan = newRecipes;
+        notifyDataSetChanged();
+    }
 
+    public ArrayList<Recipe> getRecipes(){
+        return RecipeinMealPlan;
+    }
 }
