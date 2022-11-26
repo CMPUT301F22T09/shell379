@@ -40,39 +40,15 @@ public class ArraySortUtilIngredientStubUnitTest {
     }
 
     /**
-     * Test the amount sort of ingredient stubs
-     */
-    @Test
-    void testAmountSortIngredients() {
-        clearTestIngs();
-        ArraySortUtil.sortByStringProp(testIngStubs, IngredientStub.getStringPropGetter(1));
-        assertEquals(java.util.Optional.ofNullable(testIngStubs.get(0).getAmount()),1);
-        assertEquals(java.util.Optional.ofNullable(testIngStubs.get(1).getAmount()),22);
-        assertEquals(java.util.Optional.ofNullable(testIngStubs.get(2).getAmount()),30);
-    }
-
-    /**
-     * Test the unit sort of ingredient stubs
-     */
-    @Test
-    void testUnitSortIngredients() {
-        clearTestIngs();
-        ArraySortUtil.sortByStringProp(testIngStubs, IngredientStub.getStringPropGetter(2));
-        assertEquals(testIngStubs.get(0).getUnit(),"G");
-        assertEquals(testIngStubs.get(1).getUnit(),"Kg");
-        assertEquals(testIngStubs.get(2).getUnit(),"Litres");
-    }
-
-    /**
      * Test the category sort of ingredient stubs
      */
     @Test
     void testCategorySortIngredients() {
         clearTestIngs();
-        ArraySortUtil.sortByStringProp(testIngStubs, IngredientStub.getStringPropGetter(3));
-        assertEquals(testIngStubs.get(0).getUnit(),"Junk");
-        assertEquals(testIngStubs.get(1).getUnit(),"Meat");
-        assertEquals(testIngStubs.get(2).getUnit(),"Liquid");
+        ArraySortUtil.sortByStringProp(testIngStubs, IngredientStub.getStringPropGetter(1));
+        assertEquals(testIngStubs.get(0).getCategory(),"Junk");
+        assertEquals(testIngStubs.get(1).getCategory(),"Liquid");
+        assertEquals(testIngStubs.get(2).getCategory(),"Meat");
     }
 }
 

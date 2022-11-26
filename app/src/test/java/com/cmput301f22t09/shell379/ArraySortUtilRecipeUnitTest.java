@@ -18,9 +18,9 @@ public class ArraySortUtilRecipeUnitTest {
 
     void clearTestRecipes(){
         testRecipes = new ArrayList<Recipe>();
-        Recipe milkIng =  new Recipe("Milk",new Long(20),3,"Fun","A");
-        Recipe bearIng = new Recipe("Bear",new Long(1),1,"Fast","C");
-        Recipe popIng = new Recipe("Pop",new Long(3),2,"Bad","B");
+        Recipe milkIng =  new Recipe("Milk",20L,32323,"Fun","A");
+        Recipe bearIng = new Recipe("Bear",1L,122,"Fast","C");
+        Recipe popIng = new Recipe("Pop",3L,2123,"Bad","B");
         testRecipes.add(milkIng);
         testRecipes.add(bearIng);
         testRecipes.add(popIng);
@@ -45,9 +45,9 @@ public class ArraySortUtilRecipeUnitTest {
     void testTimeSortRecipes() {
         clearTestRecipes();
         ArraySortUtil.sortByStringProp(testRecipes, Recipe.getStringPropGetter(1));
-        assertTrue(java.util.Optional.ofNullable(testRecipes.get(0).getPreparationTime()).equals( Optional.of(1)));
-        assertTrue(java.util.Optional.ofNullable(testRecipes.get(1).getPreparationTime()).equals( Optional.of(3)));
-        assertTrue(java.util.Optional.ofNullable(testRecipes.get(2).getPreparationTime()).equals(Optional.of(20)));
+        assertTrue(testRecipes.get(0).getPreparationTime().equals(1L));
+        assertTrue(testRecipes.get(1).getPreparationTime().equals(3L));
+        assertTrue(testRecipes.get(2).getPreparationTime().equals(20L));
     }
 
     /**
@@ -56,7 +56,7 @@ public class ArraySortUtilRecipeUnitTest {
     @Test
     void testCategorySortRecipes() {
         clearTestRecipes();
-        ArraySortUtil.sortByStringProp(testRecipes, Recipe.getStringPropGetter(2));
+        ArraySortUtil.sortByStringProp(testRecipes, Recipe.getStringPropGetter(3));
         assertEquals(testRecipes.get(0).getCategory(),"Bad");
         assertEquals(testRecipes.get(1).getCategory(),"Fast");
         assertEquals(testRecipes.get(2).getCategory(),"Fun");
@@ -68,10 +68,10 @@ public class ArraySortUtilRecipeUnitTest {
     @Test
     void testAmountSortRecipes() {
         clearTestRecipes();
-        ArraySortUtil.sortByStringProp(testRecipes, Recipe.getStringPropGetter(3));
-        assertEquals(java.util.Optional.ofNullable(testRecipes.get(0).getCategory()),"A");
-        assertEquals(java.util.Optional.ofNullable(testRecipes.get(1).getCategory()),"B");
-        assertEquals(java.util.Optional.ofNullable(testRecipes.get(2).getCategory()),"C");
+        ArraySortUtil.sortByStringProp(testRecipes, Recipe.getStringPropGetter(2));
+        assertTrue(testRecipes.get(0).getServings().equals(122));
+        assertTrue(testRecipes.get(1).getServings().equals(2123));
+        assertTrue(testRecipes.get(2).getServings().equals(32323));
     }
 
 }

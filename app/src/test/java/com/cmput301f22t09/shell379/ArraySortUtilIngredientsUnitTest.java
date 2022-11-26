@@ -48,9 +48,9 @@ public class ArraySortUtilIngredientsUnitTest {
     void testDateSortIngredients() {
         clearTestIngs();
         ArraySortUtil.sortByStringProp(testIngs, Ingredient.getStringPropGetter(1));
-        assertEquals(testIngs.get(0).getDescription(),"Pop");
+        assertEquals(testIngs.get(0).getDescription(),"Milk");
         assertEquals(testIngs.get(1).getDescription(),"Bear");
-        assertEquals(testIngs.get(2).getDescription(),"Milk");
+        assertEquals(testIngs.get(2).getDescription(),"Pop");
     }
 
     /**
@@ -66,39 +66,15 @@ public class ArraySortUtilIngredientsUnitTest {
     }
 
     /**
-     * Test the amount sort of ingredients
-     */
-    @Test
-    void testAmountSortIngredients() {
-        clearTestIngs();
-        ArraySortUtil.sortByStringProp(testIngs, Ingredient.getStringPropGetter(3));
-        assertEquals(java.util.Optional.ofNullable(testIngs.get(0).getAmount()),1);
-        assertEquals(java.util.Optional.ofNullable(testIngs.get(1).getAmount()),22);
-        assertEquals(java.util.Optional.ofNullable(testIngs.get(2).getAmount()),30);
-    }
-
-    /**
-     * Test the unit sort of ingredients
-     */
-    @Test
-    void testUnitSortIngredients() {
-        clearTestIngs();
-        ArraySortUtil.sortByStringProp(testIngs, Ingredient.getStringPropGetter(4));
-        assertEquals(testIngs.get(0).getUnit(),"G");
-        assertEquals(testIngs.get(1).getUnit(),"Kg");
-        assertEquals(testIngs.get(2).getUnit(),"Litres");
-    }
-
-    /**
      * Test the category sort of ingredients
      */
     @Test
     void testCategorySortIngredients() {
         clearTestIngs();
-        ArraySortUtil.sortByStringProp(testIngs, Ingredient.getStringPropGetter(5));
-        assertEquals(testIngs.get(0).getUnit(),"Junk");
-        assertEquals(testIngs.get(1).getUnit(),"Meat");
-        assertEquals(testIngs.get(2).getUnit(),"Liquid");
+        ArraySortUtil.sortByStringProp(testIngs, Ingredient.getStringPropGetter(3));
+        assertEquals(testIngs.get(0).getCategory(),"Junk");
+        assertEquals(testIngs.get(1).getCategory(),"Liquid");
+        assertEquals(testIngs.get(2).getCategory(),"Meat");
     }
 }
 
