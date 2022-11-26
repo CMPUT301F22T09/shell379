@@ -4,7 +4,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.Spinner;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
@@ -21,6 +24,7 @@ import com.cmput301f22t09.shell379.adapters.AddIngredMealPlanAdapter;
 import com.cmput301f22t09.shell379.adapters.AddRecipeMealPlanAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Recipe;
+import com.cmput301f22t09.shell379.data.util.ArraySortUtil;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 import com.cmput301f22t09.shell379.data.vm.MealPlanViewModel;
 import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
@@ -33,6 +37,7 @@ public class AddIngredientToMPFragment extends DialogFragment implements AddIngr
     private MealPlanViewModel mealPlanViewModel;
     AddIngredMealPlanAdapter addIngredMealPlanAdapter;
     ArrayList<MealPlanWrapper<Ingredient>> IngredinMealplan;
+    int selectedSortIndex;
 
     public AddIngredientToMPFragment(){
 
@@ -54,15 +59,17 @@ public class AddIngredientToMPFragment extends DialogFragment implements AddIngr
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_add_ingredient_meal_plan_18, container, false);
 
-        // Implement the button to back to previous page
-        ((ImageView)rootView.findViewById(R.id.back_button)).setOnClickListener(
-                new View.OnClickListener() {
-                    public void onClick(View v) {
-
-                        back();
-                    }
-                }
+        // Implement the spinner option to sort the ingredient list
+        Spinner spinner = (Spinner) rootView.findViewById(R.id.add_ingredient_toMP_sort_spinner);
+        ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
+                getActivity(),
+                android.R.layout.simple_spinner_item,
+                Ingredient.getSortableProps()
         );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+        spinner.setSelection(0);
+        selectedSortIndex = 0;
 
         RecyclerView ingredRecyclerView = (rootView.findViewById(R.id.add_ingredient_to_mealPlan_recyclerView));
 
@@ -73,7 +80,34 @@ public class AddIngredientToMPFragment extends DialogFragment implements AddIngr
         ingredRecyclerView.setAdapter(addIngredMealPlanAdapter);
         ingredRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        //        To-do sorting
+        // setting spinner events from khaled ben aissa, dec 21 2011
+        // https://stackoverflow.com/questions/8597582/get-the-position-of-a-spinner-in-android
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                // resorts the recycler view of ingredients
+                selectedSortIndex = ((Spinner) rootView.findViewById(R.id.add_ingredient_toMP_sort_spinner)).getSelectedItemPosition();
+                addIngredMealPlanAdapter.updateIngredient(
+                        ArraySortUtil.sortByStringProp(addIngredMealPlanAdapter.getIngredients(),
+                                Ingredient.getStringPropGetter(selectedSortIndex))
+                );
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                // do nothing
+            }
+        });
+
+        // Implement the button to back to previous page
+        ((ImageView)rootView.findViewById(R.id.back_button)).setOnClickListener(
+                new View.OnClickListener() {
+                    public void onClick(View v) {
+
+                        back();
+                    }
+                }
+        );
 
         return rootView;
     }
