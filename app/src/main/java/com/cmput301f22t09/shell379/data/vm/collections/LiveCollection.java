@@ -21,6 +21,7 @@ public class LiveCollection<T> extends Commitable {
     }
 
     public ArrayList<T> getList() {
+
         return lst.getValue();
     }
 
@@ -40,6 +41,7 @@ public class LiveCollection<T> extends Commitable {
     }
 
     public void setList(ArrayList<T> lst) {
+
         this.lst.setValue(lst);
     }
 
