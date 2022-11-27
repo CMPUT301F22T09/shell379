@@ -106,10 +106,10 @@ public class ShoppingListFragment extends Fragment {
 //        shoppingList = new LiveCollection<CartIngredient>();
 //        ArrayList<CartIngredient> tempList = new ArrayList<>();
 
-        CartIngredient testCartIngredient = new CartIngredient("Milk", "Dairy", 2, "L");
+//        CartIngredient testCartIngredient = new CartIngredient("Milk", "Dairy", 2, "L");
 //        testCartIngredient.setIngredient(new Ingredient("Milk","Fridge", 2, "L", "Dairy"));
 //        testCartIngredient.setDetailsFilled(false);
-        env.getCart().getList().add(testCartIngredient);
+//        env.getCart().getList().add(testCartIngredient);
         shoppingList = env.getCart();
 //        shoppingList.setList(new ArrayList<>());
         shoppingList.commit();
@@ -161,10 +161,7 @@ public class ShoppingListFragment extends Fragment {
                     toBeRemoved.add(i);
                 }
                 env.getIngredients().add(neededIngredient.getIngredient());
-            } else if (neededIngredient.getPickedUp() && !neededIngredient.getDetailsFilled()) {
-                neededIngredient.setPickedUp(false);
             }
-
         }
 
         for (int i = 0; i < toBeRemoved.size(); i++) {

@@ -37,7 +37,7 @@ public class MealPlanWrapper<T> implements Serializable {
 
     public String getDisplayDate() {
         if(date != null){
-            SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat simpleDate =  new SimpleDateFormat("YYYY-MM-dd");
             return simpleDate.format(date);
         }else{
             return "Date not set";
