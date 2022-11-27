@@ -153,8 +153,6 @@ public class ShoppingListFragment extends Fragment {
                     toBeRemoved.add(i);
                 }
                 env.getIngredients().add(neededIngredient.getIngredient());
-            } else if (neededIngredient.getPickedUp() && !neededIngredient.getDetailsFilled()) {
-                neededIngredient.setPickedUp(false);
             }
         }
 
