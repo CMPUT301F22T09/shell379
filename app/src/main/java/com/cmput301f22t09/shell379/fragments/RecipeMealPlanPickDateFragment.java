@@ -31,6 +31,9 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
+/**
+ * Fragment to set what day you will eat a recipe and how much of it.
+ */
 public class RecipeMealPlanPickDateFragment extends Fragment{
     protected View rootView;
     protected NavController navController;
@@ -41,7 +44,7 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
     private TextView recipeNameText;
 
     public RecipeMealPlanPickDateFragment() {
-
+        // required empty constructor
     }
 
     @Override
@@ -57,6 +60,7 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
         // Inflate the layout for this fragment
         rootView = inflater.inflate(R.layout.mealplan_recipe_date_17, container, false);
 
+        // populate constant data from recipe
         recipeIndex = getArguments().getInt("index");
         newRecipe = Environment.of((AppCompatActivity) getActivity())
                 .getRecipes().getList().get(recipeIndex);
@@ -82,7 +86,7 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
                     }
                 }
         );
-
+        // setup save button
         ((Button)rootView.findViewById(R.id.save_button)).setOnClickListener(
                 new View.OnClickListener() {
                     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -91,6 +95,8 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
                     }
                 }
         );
+
+        // Setup serving modifier buttons
         Button subServingButton = rootView.findViewById(R.id.mpar_sub_btn);
         Button addServingButton = rootView.findViewById(R.id.mpar_add_btn);
         subServingButton.setOnClickListener(new View.OnClickListener() {
@@ -114,15 +120,25 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
         return rootView;
     }
 
+    /**
+     *  navigate back
+     */
     private void back(){
         navController.popBackStack();
     }
 
-
+    /**
+     *  save to view model
+     * @param recipe recipe to add to the meal plan view model
+     */
     protected void writeToViewModel(MealPlanWrapper<Recipe> recipe) {
         mealPlanViewModel.addRecipe(recipe);
     }
 
+    /**
+     *  shows a toast with the error message
+     * @param message error message to show
+     */
     private void showError(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
@@ -161,8 +177,5 @@ public class RecipeMealPlanPickDateFragment extends Fragment{
         writeToViewModel(WrapperRecipe);
         navController.popBackStack();
         navController.popBackStack();
-
     }
-
-
 }

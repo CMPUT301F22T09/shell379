@@ -34,9 +34,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+/**
+ *  Fragment to create and edit meal plan
+ */
 public class EditMealPlanFragment extends Fragment {
-    private ArrayList<Ingredient> ingredientsList;
-    private ArrayList<Recipe> recipesList;
     private RecyclerView mpIngredientRecycler;
     private RecyclerView mpRecipeRecycler;
     private MPIngredientsEditListAdapter ingredientsAdapter;
@@ -56,16 +57,6 @@ public class EditMealPlanFragment extends Fragment {
         navController = NavHostFragment.findNavController(this);
         envViewModel = Environment.of((AppCompatActivity) requireActivity());
         mpViewModel = MealPlanViewModel.of(requireActivity());
-
-        // test data
-//        MealPlan testMp = new MealPlan();
-//        ArrayList<Ingredient> testI = new ArrayList<Ingredient>();
-//        testI.add(new Ingredient("test",new Date(), "place",10, "kg", "kg"));
-//        testMp.setIngredients(testI);
-//        ArrayList<Recipe> testR = new ArrayList<Recipe>();
-//        testR.add(new Recipe("e",new Long(1),10,"e","e"));
-//        testMp.setRecipes(testR);
-//        mpViewModel.setMealPlan(testMp);
     }
 
     @Override
@@ -102,8 +93,6 @@ public class EditMealPlanFragment extends Fragment {
                 }
         );
 
-//        layoutManager = new LinearLayoutManager(this.getActivity());
-
         mpIngredientRecycler = (RecyclerView) rootView.findViewById(R.id.plan_edit_ingredients);
         mpRecipeRecycler = (RecyclerView) rootView.findViewById(R.id.plan_edit_recipes);
 
@@ -117,7 +106,6 @@ public class EditMealPlanFragment extends Fragment {
         mpRecipeRecycler.setAdapter(recipesAdapter);
         mpRecipeRecycler.setItemAnimator(new DefaultItemAnimator());
 
-        Log.e("MP_ADAPTER", ingredientsAdapter.getIngredients().toString());
         fillFields(rootView);
 
         rootView.findViewById(R.id.mpe_save_plan).setOnClickListener(new View.OnClickListener() {
@@ -131,7 +119,6 @@ public class EditMealPlanFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 navController.popBackStack();
-//                navController.navigate(EditMealPlanFragmentDirections.actionEditMealPlanFragmentToMealPlanListFragment());
             }
         });
         return rootView;
@@ -144,28 +131,29 @@ public class EditMealPlanFragment extends Fragment {
         navController.popBackStack();
     }
 
+    /**
+     *  populates data for the meal plan if updating
+     * @param rootView root view
+     */
     private void fillFields(View rootView) {
         Calendar startDate = Calendar.getInstance();
         startDate.setTime(mpViewModel.getMealPlan().getStartDate());
-//        Date start_date = startDate.getTime();
 
         Calendar endDate = Calendar.getInstance();
         endDate.setTime(mpViewModel.getMealPlan().getEndDate());
-//        Date end_date = endDate.getTime();
 
         ((TextView) rootView.findViewById(R.id.plan_edit_comment_txt))
                 .setText(mpViewModel.getMealPlan().getComments());
 
-
-
         ((TextView) rootView.findViewById(R.id.plan_edit_name))
                 .setText(mpViewModel.getMealPlan().getMealPlanName());
-
-
     }
 
+    /**
+     * Save data from inputs to environment and navigate back
+     * @param rootView
+     */
     private void collectData(View rootView) {
-        // validate
         if ( ((TextView) rootView.findViewById(R.id.plan_edit_comment_txt)).getText().toString().isEmpty()){
             showError("Comments not filled");
             return;
@@ -174,12 +162,10 @@ public class EditMealPlanFragment extends Fragment {
             return;
         }
 
-        int amount = 0;
         if (mpViewModel.getIngredients().size() <= 0 && mpViewModel.getRecipes().size() <= 0) {
             showError("Choose some recipes or ingredients!");
             return;
         }
-
 
         mpViewModel.getMealPlan().setMealPlanName(
                 ((TextView) rootView.findViewById(R.id.plan_edit_name)).getText().toString()

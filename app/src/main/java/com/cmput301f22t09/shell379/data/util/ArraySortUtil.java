@@ -4,7 +4,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 
 /**
- *  sorting utility functions
+ *  sorting utility function
  */
 public class ArraySortUtil {
 
@@ -104,9 +104,10 @@ public class ArraySortUtil {
      */
     private static <T> boolean isSmallerString(T left,T right,StringPropGetter stringPropGetter){
         if(isNumeric(stringPropGetter.getString(left))){
+            // String represents a number
+
             Double leftValue = Double.parseDouble( stringPropGetter.getString(left));
             Double rightValue = Double.parseDouble(stringPropGetter.getString(right));
-
 
             if (left == null && right == null ||
                     left != null && right == null){
@@ -118,9 +119,10 @@ public class ArraySortUtil {
                 return  false;
             }
         }else{
+            // String represents a alphanumeric
+
             String leftValue = stringPropGetter.getString(left);
             String rightValue = stringPropGetter.getString(right);
-
 
             if (left == null && right == null ||
                     left != null && right == null){

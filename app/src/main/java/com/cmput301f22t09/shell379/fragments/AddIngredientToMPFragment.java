@@ -31,16 +31,18 @@ import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
 
 import java.util.ArrayList;
 
+/**
+ *  List of ingredients to add to a meal plan
+ */
 public class AddIngredientToMPFragment extends DialogFragment implements AddIngredMealPlanAdapter.IngredInMealPlanListener {
     private Environment env;
     private NavController navController;
     private MealPlanViewModel mealPlanViewModel;
     AddIngredMealPlanAdapter addIngredMealPlanAdapter;
-    ArrayList<MealPlanWrapper<Ingredient>> IngredinMealplan;
     int selectedSortIndex;
 
     public AddIngredientToMPFragment(){
-
+        // Required empty constructor
     }
 
     @Override

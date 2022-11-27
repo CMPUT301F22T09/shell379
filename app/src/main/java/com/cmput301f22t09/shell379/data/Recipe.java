@@ -135,7 +135,11 @@ public class Recipe implements Serializable {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void setPhotograph(Bitmap photograph) {
-        this.photograph = SerializeUtil.serializeImg(photograph);
+        if (photograph != null) {
+            this.photograph = SerializeUtil.serializeImg(photograph);
+            return;
+        }
+        this.photograph = null;
     }
 
     public ArrayList<IngredientStub> getIngredients() {
