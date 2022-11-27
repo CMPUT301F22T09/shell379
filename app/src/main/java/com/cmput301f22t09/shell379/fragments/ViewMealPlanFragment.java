@@ -30,6 +30,9 @@ import com.cmput301f22t09.shell379.data.vm.MealPlanViewModel;
 import java.util.ArrayList;
 import java.util.Date;
 
+/**
+ * Fragment to view an already created meal plan's fields.
+ */
 public class ViewMealPlanFragment extends Fragment {
     private RecyclerView mpIngredientRecycler;
     private RecyclerView mpRecipeRecycler;
@@ -38,7 +41,6 @@ public class ViewMealPlanFragment extends Fragment {
     private Environment envViewModel;
     private NavController navController;
     private MealPlanViewModel mpViewModel;
-//    private FloatingActionButton backButton;
 
 
     public ViewMealPlanFragment() {
@@ -51,7 +53,6 @@ public class ViewMealPlanFragment extends Fragment {
         navController = NavHostFragment.findNavController(this);
         envViewModel = Environment.of((AppCompatActivity) requireActivity());
         mpViewModel = MealPlanViewModel.of(testMP(), requireActivity());
-//        mpViewModel = MealPlanViewModel.of(requireActivity());
     }
 
     @Override
@@ -83,7 +84,6 @@ public class ViewMealPlanFragment extends Fragment {
         mpRecipeRecycler.setAdapter(recipesAdapter);
         mpRecipeRecycler.setItemAnimator(new DefaultItemAnimator());
 
-        Log.e("MP_ADAPTER", ingredientsAdapter.getIngredients().toString());
         navListeners(rootView);
         fillFields(rootView);
 
@@ -97,6 +97,10 @@ public class ViewMealPlanFragment extends Fragment {
         navController.popBackStack();
     }
 
+    /**
+     * Setup navigation buttons
+     * @param rootView view meal plan fragment root view.
+     */
     private void navListeners(View rootView){
         rootView.findViewById(R.id.edit_plan).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +117,10 @@ public class ViewMealPlanFragment extends Fragment {
         });
     }
 
+    /**
+     *  Populate data into the layout from the passed meal plan
+     * @param rootView view meal plan fragment root view.
+     */
     private void fillFields(View rootView) {
         ((TextView) rootView.findViewById(R.id.mpv_comments_data))
                 .setText(mpViewModel.getMealPlan().getComments());
@@ -122,27 +130,5 @@ public class ViewMealPlanFragment extends Fragment {
                 .setText(mpViewModel.getMealPlan().getEndDateFormatted());
         ((TextView) rootView.findViewById(R.id.plan_name))
                 .setText(mpViewModel.getMealPlan().getMealPlanName());
-    }
-
-    private MealPlan testMP() {
-        ArrayList<Ingredient> ingList = new ArrayList<Ingredient>();
-        Date date = new Date((new Date()).getTime()+1000000);
-        ingList.add(new Ingredient("test1", date, "yes", 1, "kg", "yes"));
-        ingList.add(new Ingredient("test2", date, "yes", 1, "kg", "yes"));
-        ingList.add(new Ingredient("test3", date, "yes", 1, "kg", "yes"));
-        ingList.add(new Ingredient("test4", date, "yes", 1, "kg", "yes"));
-        ingList.add(new Ingredient("test5", date, "yes", 1, "kg", "yes"));
-        ingList.add(new Ingredient("test6", date, "yes", 1, "kg", "yes"));
-
-        ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
-        recipeList.add(new Recipe("test1", 100L, 1, "yes", "yes"));
-        recipeList.add(new Recipe("test2", 100L, 1, "yes", "yes"));
-        recipeList.add(new Recipe("test3", 100L, 1, "yes", "yes"));
-        recipeList.add(new Recipe("test4", 100L, 1, "yes", "yes"));
-        recipeList.add(new Recipe("test5", 100L, 1, "yes", "yes"));
-        recipeList.add(new Recipe("test6", 100L, 1, "yes", "yes"));
-
-        return new MealPlan("testPlan", recipeList, ingList, date, date, "test comments test comments test comments test comments" +
-                "test comments test comments test comments test comments test comments test comments", 10);
     }
 }
