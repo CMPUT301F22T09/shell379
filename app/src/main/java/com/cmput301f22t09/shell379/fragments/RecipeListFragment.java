@@ -70,6 +70,7 @@ public class RecipeListFragment extends Fragment {
         spinner = rootView.findViewById(R.id.recipe_list_spinner);
         env = Environment.of((AppCompatActivity) requireActivity());
 
+        // Sort spinner setup
         ArrayAdapter<CharSequence> adapter = new ArrayAdapter(
                 getActivity(),
                 android.R.layout.simple_spinner_item,
@@ -132,7 +133,5 @@ public class RecipeListFragment extends Fragment {
 
         return rootView;
     }
-
-
 
 }

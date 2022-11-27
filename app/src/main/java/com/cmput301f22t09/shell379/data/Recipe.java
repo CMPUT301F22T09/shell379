@@ -207,7 +207,7 @@ public class Recipe implements Serializable {
             return new ArraySortUtil.StringPropGetter() {
                 @Override
                 public String getString(Object object) {
-                    return ((Recipe)object).getPreparationTime().toString();
+                    return Long.toString(((Recipe)object).getPreparationTime());
                 }
             };
         }

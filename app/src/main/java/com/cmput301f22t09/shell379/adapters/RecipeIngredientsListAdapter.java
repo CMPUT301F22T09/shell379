@@ -27,7 +27,6 @@ public class RecipeIngredientsListAdapter extends RecyclerView.Adapter<RecipeIng
         public void editRecipeIngredient(int index);
     }
 
-
     /**
      * Custom view holder for describing each ingredient's view
      */

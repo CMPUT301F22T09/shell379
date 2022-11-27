@@ -101,8 +101,6 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
             amount_purchased.setVisibility(View.VISIBLE);
         }
 
-        // TODO: need both an if/else and an onCheckListener
-
         if (cartIngredient.getPickedUp() && !cartIngredient.getDetailsFilled()) {
             checkbox.setChecked(true);
             detailsCompleteMsg.setVisibility(View.GONE);
@@ -140,14 +138,20 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
         });
     }
 
+    /**
+     * Sets up responses to the check box being checked.
+     * @param holder current ingredient
+     * @param position position of current ingredient
+     */
     public void setCheckBoxOnClickListener(ShoppingListViewHolder holder, int position) {
         holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 // Checkbox is clicked
                 if (b) {
-                    // TODO: set isPickedUp to true, and display the incomplete message
+                    // set isPickedUp to true, and display the incomplete message
                     shoppingList.getList().get(holder.getAdapterPosition()).setPickedUp(true);
+                    shoppingList.commit();
                     holder.fillOutDetailsMsg.setVisibility(View.VISIBLE);
                     holder.detailsCompleteMsg.setVisibility(View.GONE);
                     if (holder.fillOutDetailsMsg.getText().equals("")) {
@@ -156,9 +160,10 @@ public class ShoppingListAdapter extends RecyclerView.Adapter<ShoppingListAdapte
                 }
                 // Checkbox is un-checked
                 else {
-                    // TODO: set isPickedUp to false, and hide both messages
+                    // set isPickedUp to false, and hide both messages
                     shoppingList.getList().get(holder.getAdapterPosition()).setPickedUp(false);
                     shoppingList.getList().get(holder.getAdapterPosition()).setIngredient(null);
+                    shoppingList.commit();
                     holder.fillOutDetailsMsg.setVisibility(View.GONE);
                     holder.detailsCompleteMsg.setVisibility(View.GONE);
                     holder.amount_purchased_label.setVisibility(View.GONE);

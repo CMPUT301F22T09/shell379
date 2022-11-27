@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Adapter for recycler view in view selected ingredients page for recipes.
+ * Adapter for ingredients recycler view in view selected ingredients page for recipes.
  */
 public class MPIngredientsEditListAdapter extends MPObjectWrapperListAdapter {
 
@@ -27,6 +27,10 @@ public class MPIngredientsEditListAdapter extends MPObjectWrapperListAdapter {
         super(viewModel);
     }
 
+    /**
+     * Removes an item
+     * @param index index of the item
+     */
     @Override
     protected void removeItem(int index) {
         viewModel.getIngredients().remove(index);
@@ -57,7 +61,11 @@ public class MPIngredientsEditListAdapter extends MPObjectWrapperListAdapter {
         viewModel.forceNotify();
     }
 
-
+    /**
+     *  updates  eating date of an item
+     * @param index index of item
+     * @param newDate new date
+     */
     @Override
     protected void updateDate(int index, Date newDate) {
         MealPlanWrapper ingredient =  viewModel.getIngredientAtIdx(index);
@@ -65,11 +73,20 @@ public class MPIngredientsEditListAdapter extends MPObjectWrapperListAdapter {
         viewModel.forceNotify();
     }
 
+    /**
+     *  Gets an item at a certain index
+     * @param index index of item
+     * @return item at index
+     */
     @Override
     protected MealPlanWrapper getItemAtIndex(int index) {
         return viewModel.getIngredientAtIdx(index);
     }
 
+    /**
+     * Gets size of list inside of view model for the adapter's getSize() method
+     * @return
+     */
     @Override
     protected int getSizeInternal() {
         return  viewModel.getIngredients().size();

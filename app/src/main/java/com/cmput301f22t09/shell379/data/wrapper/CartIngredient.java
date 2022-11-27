@@ -5,6 +5,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.data.util.ArraySortUtil;
 
 import java.io.Serializable;
@@ -100,12 +101,20 @@ public class CartIngredient implements Serializable {
                 ingredient.getUnit());
     }
 
+    public static CartIngredient convertIngredientStub(IngredientStub ingredient) {
+        return new CartIngredient(
+                ingredient.getDescription(),
+                ingredient.getCategory(),
+                ingredient.getAmount(),
+                ingredient.getUnit());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof CartIngredient)) return false;
         CartIngredient that = (CartIngredient) o;
-        return isPickedUp.equals(that.isPickedUp) && detailsFilled.equals(that.detailsFilled) && description.equals(that.description);
+        return description.equals(that.description);
     }
 
     @Override

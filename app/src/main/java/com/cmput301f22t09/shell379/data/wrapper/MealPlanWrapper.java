@@ -1,6 +1,7 @@
 package com.cmput301f22t09.shell379.data.wrapper;
 
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -14,7 +15,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Ingredient that resides in the cart.
+ * Wrapper for an object that is in a meal plan.
+ * Can wrap an Ingredient or a Recipe
  */
 public class MealPlanWrapper<T> implements Serializable {
     private Date date;
@@ -35,9 +37,13 @@ public class MealPlanWrapper<T> implements Serializable {
         }
     }
 
+    /**
+     * Gets formatted eating date
+     * @return string representing the eating date
+     */
     public String getDisplayDate() {
         if(date != null){
-            SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy");
+            SimpleDateFormat simpleDate =  new SimpleDateFormat("YYYY-MM-dd");
             return simpleDate.format(date);
         }else{
             return "Date not set";
@@ -76,12 +82,18 @@ public class MealPlanWrapper<T> implements Serializable {
         this.obj = obj;
     }
 
+    /**
+     * Unwraps the wrapper and returns the internal recipe with modifications
+     * @param wrapper wrapper to convert
+     * @return recipe that the wrapper represents
+     */
     public static Recipe convertToRecipe(MealPlanWrapper<Recipe> wrapper) {
         Recipe r = wrapper.getObj();
-        r.setServings(r.getServings()* wrapper.getServings());
+        r.setServings(r.getServings()*wrapper.getServings());
         ArrayList<IngredientStub> ings = r.getIngredients();
         for (int i = 0; i < ings.size(); i++) {
             IngredientStub is = ings.get(i);
+            Log.d("FDBK_CONVERSIONS_REC", wrapper.getName()+": " +(is.getAmount() * wrapper.getServings()));
             is.setAmount(is.getAmount() * wrapper.getServings());
             ings.set(i, is);
         }
@@ -89,9 +101,15 @@ public class MealPlanWrapper<T> implements Serializable {
         return r;
     }
 
+    /**
+     * Unwraps the wrapper and returns the internal ingredient with modifications
+     * @param wrapper wrapper to convert
+     * @return ingredient that the wrapper represents
+     */
     public static Ingredient convertToIngredient(MealPlanWrapper<Ingredient> wrapper) {
         Ingredient r = wrapper.getObj();
-        r.setAmount(r.getAmount()* wrapper.getServings());
+        r.setAmount(wrapper.getServings());
+        Log.d("FDBK_CONVERSIONS_INGR", wrapper.getName()+": " + r.getAmount()+" "+wrapper.getServings()+" "+(r.getAmount() * wrapper.getServings()));
         return r;
     }
 }
