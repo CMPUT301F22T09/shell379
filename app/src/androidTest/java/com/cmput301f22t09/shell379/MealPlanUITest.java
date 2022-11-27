@@ -17,6 +17,7 @@ import android.view.View;
 
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.espresso.PerformException;
+import androidx.test.espresso.contrib.PickerActions;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
 import com.cmput301f22t09.shell379.adapters.IngredientInRecipeAdapter;
@@ -163,6 +164,93 @@ public class MealPlanUITest {
             public void describeTo(Description description) {
             }
         }));
+    }
+
+    /**
+     * Tests all actions in the following sequence:
+     *      Starting from the fragment_main_menu
+     *      29. Click on meal_plans_list_button
+     *           - App goes to fragment_meal_plan_13
+     *           - Checks if "Meal Plan" is displayed
+     *      41. Click on an existing meal plan in fragment_meal_plan_content_13
+     *           - App goes to fragment_view_meal_plan_14
+     *      42. Click on edit_plan
+     *           - App goes to fragment_edit_meal_plan_15
+     *           - Edit the meal plan details and add an ingredient
+     *      43. Click on mpe_save_plan
+     *           - App goes back to fragment_view_meal_plan_14
+     *      45. Click on delete_plan
+     *           - App goes back to fragment_meal_plan_13
+     *           - Meal plan is deleted
+     */
+    @Test
+    public void test_29_41_42_43_45() {
+
+        // Action 29
+        while (true) {
+            try {
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException f) {
+                    continue;
+                }
+
+                onView(withId(R.id.meal_plans_list_button)).perform(click());
+                break;
+            } catch (PerformException e) {
+                Log.e("MealPlanUITest", e.getMessage());
+
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException f) {
+
+                }
+            }
+        }
+
+        activityRule.getScenario().onActivity(activity -> {
+            Environment env = new Environment();
+
+            // Initialize env with one ingredient and one recipe
+            final Ingredient ingredient = new Ingredient("Chicken Thighs", "Freezer", 2, "kilograms", "Poultry");
+            env.getIngredients().add(ingredient);
+
+            // Initialize env with a meal plan
+            MealPlan mp = new MealPlan();
+            env.getMealPlans().add(mp);
+
+            Environment.of(activity, env);
+        });
+
+        onView(withText("Meal Plan")).check(matches(isDisplayed()));
+
+        // Action 41
+        final int[] pos = {0};
+        onView(withId(R.id.meal_plan_recyclerView)).perform(
+                actionOnItemAtPosition(pos[0], click()));
+
+        // Action 42
+        onView(withId(R.id.edit_plan)).perform(click());
+
+        // Edit the meal plan details
+        onView(withId(R.id.plan_edit_name)).perform(replaceText("Lunch Prep"));
+        onView(withId(R.id.plan_edit_comment_txt)).perform(replaceText("Preparing lunch for the week"));
+        onView(withId(R.id.editPlanStart)).perform(scrollTo(), PickerActions.setDate(2022, 11, 26));
+        onView(withId(R.id.editPlanEnd)).perform(scrollTo(), PickerActions.setDate(2022, 11, 30));
+
+        // Add an ingredient to the meal plan
+        onView(withId(R.id.plan_edit_add_ingr_btn)).perform(scrollTo(), click());
+        onView(withId(R.id.add_ingredient_to_mealPlan_recyclerView)).perform(
+                actionOnItemAtPosition(pos[0], click()));
+        onView(withId(R.id.serving_edittext)).perform(replaceText("2"));
+        onView(withId(R.id.save_button)).perform(scrollTo(), click());
+
+        // Action 43
+        onView(withId(R.id.mpe_save_plan)).perform(scrollTo(), click());
+
+        // Action 45
+        onView(withId(R.id.delete_plan)).perform(scrollTo(), click());
     }
 
 }
