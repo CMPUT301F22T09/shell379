@@ -61,15 +61,6 @@ public abstract class MPObjectWrapperListAdapter extends RecyclerView.Adapter<MP
         this.viewModel = viewModel;
     }
 
-    /**
-     * Updates the recycler view and re-renders it
-     * @param newIngredients the new list of ingredients for the recycler view
-     */
-    public void updateIngredients(ArrayList<MealPlanWrapper<Ingredient>> newIngredients){
-        viewModel.setIngredientsRaw(newIngredients);
-        notifyDataSetChanged();
-    }
-
     @NonNull
     @Override
     public MPEditIngredientListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
