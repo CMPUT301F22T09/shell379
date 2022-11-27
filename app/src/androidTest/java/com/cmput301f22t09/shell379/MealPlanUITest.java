@@ -10,16 +10,25 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
-import android.util.Log;
+import static org.junit.Assert.assertTrue;
 
+import android.util.Log;
+import android.view.View;
+
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.espresso.PerformException;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 
+import com.cmput301f22t09.shell379.adapters.IngredientInRecipeAdapter;
+import com.cmput301f22t09.shell379.adapters.MealPlanAdapter;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.IngredientStub;
+import com.cmput301f22t09.shell379.data.MealPlan;
 import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
+import org.hamcrest.Description;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
 
@@ -85,7 +94,7 @@ public class MealPlanUITest {
         // Action 30
         onView(withId(R.id.new_button)).perform(click());
 
-        // Set meal plan name and comments
+        // Set meal plan name and comments since we can't save the meal plan without it
         onView(withId(R.id.plan_edit_name)).perform(replaceText("Chicken with milk"));
         onView(withId(R.id.plan_edit_comment_txt)).perform(replaceText("This is a comment!"));
 
@@ -107,7 +116,7 @@ public class MealPlanUITest {
         onView(withId(R.id.add_ingredient_to_mealPlan_recyclerView)).perform(
                 actionOnItemAtPosition(pos[0], click()));
 
-        // TODO: set ingredient serving on date screen
+        // Set the ingredient servings to 2 since we can't save the screen without doing so
         onView(withId(R.id.serving_edittext)).perform(replaceText("2"));
 
         // Action 36
@@ -117,6 +126,22 @@ public class MealPlanUITest {
         onView(withId(R.id.mpe_save_plan)).perform(scrollTo(), click());
 
         // TODO: check that text looks like what its supposed to in the recycler view
+        final int[] pos2 = {0};
+        onView(withId(R.id.meal_plan_recyclerView)).check(matches(new TypeSafeMatcher<View>() {
+            @Override
+            protected boolean matchesSafely(View item) {
+                RecyclerView recyclerView = (RecyclerView) item;
+                MealPlanAdapter mealPlanAdapter = (MealPlanAdapter) recyclerView.getAdapter();
+                ArrayList<MealPlan> mealPlans = mealPlanAdapter.getMealPlans();
+
+
+                return true;
+            }
+
+            @Override
+            public void describeTo(Description description) {
+            }
+        }));
     }
 
 }

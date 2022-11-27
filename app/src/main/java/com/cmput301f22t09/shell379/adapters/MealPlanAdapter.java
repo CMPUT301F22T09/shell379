@@ -111,7 +111,9 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MealPl
         mealPlanListener.navigateToViewMealPlan(i);
     }
 
-
+    public ArrayList<MealPlan> getMealPlans() {
+        return mealPlans;
+    }
 }
 
 
