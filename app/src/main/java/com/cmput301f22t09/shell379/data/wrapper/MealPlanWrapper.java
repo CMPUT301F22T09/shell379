@@ -1,6 +1,7 @@
 package com.cmput301f22t09.shell379.data.wrapper;
 
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -78,10 +79,11 @@ public class MealPlanWrapper<T> implements Serializable {
 
     public static Recipe convertToRecipe(MealPlanWrapper<Recipe> wrapper) {
         Recipe r = wrapper.getObj();
-        r.setServings(r.getServings()* wrapper.getServings());
+        r.setServings(r.getServings()*wrapper.getServings());
         ArrayList<IngredientStub> ings = r.getIngredients();
         for (int i = 0; i < ings.size(); i++) {
             IngredientStub is = ings.get(i);
+            Log.d("FDBK_CONVERSIONS_REC", wrapper.getName()+": " +(is.getAmount() * wrapper.getServings()));
             is.setAmount(is.getAmount() * wrapper.getServings());
             ings.set(i, is);
         }
@@ -91,7 +93,8 @@ public class MealPlanWrapper<T> implements Serializable {
 
     public static Ingredient convertToIngredient(MealPlanWrapper<Ingredient> wrapper) {
         Ingredient r = wrapper.getObj();
-        r.setAmount(r.getAmount()* wrapper.getServings());
+        r.setAmount(wrapper.getServings());
+        Log.d("FDBK_CONVERSIONS_INGR", wrapper.getName()+": " + r.getAmount()+" "+wrapper.getServings()+" "+(r.getAmount() * wrapper.getServings()));
         return r;
     }
 }

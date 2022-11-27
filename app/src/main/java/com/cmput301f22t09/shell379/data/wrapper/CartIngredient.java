@@ -5,6 +5,7 @@ import android.os.Build;
 import androidx.annotation.RequiresApi;
 
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.data.util.ArraySortUtil;
 
 import java.io.Serializable;
@@ -93,6 +94,14 @@ public class CartIngredient implements Serializable {
     }
 
     public static CartIngredient convertIngredient(Ingredient ingredient) {
+        return new CartIngredient(
+                ingredient.getDescription(),
+                ingredient.getCategory(),
+                ingredient.getAmount(),
+                ingredient.getUnit());
+    }
+
+    public static CartIngredient convertIngredientStub(IngredientStub ingredient) {
         return new CartIngredient(
                 ingredient.getDescription(),
                 ingredient.getCategory(),
