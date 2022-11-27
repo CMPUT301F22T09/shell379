@@ -23,6 +23,9 @@ import com.cmput301f22t09.shell379.data.vm.Environment;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+/**
+ * Fragment that allows you to see a meal plan
+ */
 public class ViewIngredientFragment extends Fragment {
     private NavController navController;
     private Ingredient ingredient;

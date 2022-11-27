@@ -15,7 +15,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Ingredient that resides in the cart.
+ * Wrapper for an object that is in a meal plan.
+ * Can wrap an Ingredient or a Recipe
  */
 public class MealPlanWrapper<T> implements Serializable {
     private Date date;
@@ -36,6 +37,10 @@ public class MealPlanWrapper<T> implements Serializable {
         }
     }
 
+    /**
+     * Gets formatted eating date
+     * @return string representing the eating date
+     */
     public String getDisplayDate() {
         if(date != null){
             SimpleDateFormat simpleDate =  new SimpleDateFormat("YYYY-MM-dd");
@@ -77,6 +82,11 @@ public class MealPlanWrapper<T> implements Serializable {
         this.obj = obj;
     }
 
+    /**
+     * Unwraps the wrapper and returns the internal recipe with modifications
+     * @param wrapper wrapper to convert
+     * @return recipe that the wrapper represents
+     */
     public static Recipe convertToRecipe(MealPlanWrapper<Recipe> wrapper) {
         Recipe r = wrapper.getObj();
         r.setServings(r.getServings()*wrapper.getServings());
@@ -91,6 +101,11 @@ public class MealPlanWrapper<T> implements Serializable {
         return r;
     }
 
+    /**
+     * Unwraps the wrapper and returns the internal ingredient with modifications
+     * @param wrapper wrapper to convert
+     * @return ingredient that the wrapper represents
+     */
     public static Ingredient convertToIngredient(MealPlanWrapper<Ingredient> wrapper) {
         Ingredient r = wrapper.getObj();
         r.setAmount(wrapper.getServings());

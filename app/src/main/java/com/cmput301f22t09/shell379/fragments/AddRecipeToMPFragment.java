@@ -31,12 +31,14 @@ import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
 
 import java.util.ArrayList;
 
+/**
+ *  List of recipes to add to a meal plan
+ */
 public class AddRecipeToMPFragment extends DialogFragment implements AddRecipeMealPlanAdapter.RecipeInMealPlanListener  {
     private Environment env;
     private NavController navController;
     private MealPlanViewModel mealPlanViewModel;
     private AddRecipeMealPlanAdapter addRecipeMealPlanAdapter;
-    private ArrayList<MealPlanWrapper<Recipe>> RecipeinMealPlan;
     private int selectedSortIndex;
 
     public AddRecipeToMPFragment(){
@@ -106,6 +108,9 @@ public class AddRecipeToMPFragment extends DialogFragment implements AddRecipeMe
         return rootView;
     }
 
+    /**
+     * Navigate back
+     */
     private void back(){
         navController.popBackStack();
     }

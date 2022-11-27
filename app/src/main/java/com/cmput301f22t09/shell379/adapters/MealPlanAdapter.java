@@ -17,6 +17,9 @@ import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
 
 import java.util.ArrayList;
 
+/**
+ * Adapter for meal plan list
+ */
 public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MealPlanViewHolder>{
 
     private ArrayList<MealPlan> mealPlans;
@@ -24,11 +27,12 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MealPl
     private MealPlanAdapter.AdaptorListener mealPlanListener;
     private FragmentActivity activity;
 
+    /**
+     *  Observer who will handle navigating to viewing a selected fragment
+     */
     public interface AdaptorListener {
         public void navigateToViewMealPlan(int index);
-//        public void navigateToPickDate(int index);
     }
-//    private int mealPlanIndex;
 
     public class MealPlanViewHolder extends RecyclerView.ViewHolder {
         public View getItemView(){
@@ -75,12 +79,9 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MealPl
         TextView  startDate = holder.startDate;
         TextView endDate = holder.endDate;
 
-
         mealPlanName.setText(mealPlans.get(position).getMealPlanName());
-//        startDate.setText(mealPlans.get(position).getStartDate());
         startDate.setText(mealPlans.get(position).getStartDateFormatted());
         endDate.setText(mealPlans.get(position).getEndDateFormatted());
-
 
         View itemView = holder.getItemView();
         itemView.setOnClickListener(new View.OnClickListener() {
@@ -90,7 +91,6 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MealPl
             }
         });
     }
-
 
     @Override
     public int getItemCount() {
@@ -102,7 +102,10 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MealPl
         notifyDataSetChanged();
     }
 
-
+    /**
+     * click handler
+     * @param i index of selected meal plan
+     */
     public void mealPlanOnClick(int i) {
         MealPlan m = mealPlans.get(i);
         LiveCollection<MealPlan> mealPlanCollection = envViewModel.getMealPlans();
@@ -110,8 +113,6 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.MealPl
         MealPlanViewModel.of(i, activity);
         mealPlanListener.navigateToViewMealPlan(i);
     }
-
-
 }
 
 
