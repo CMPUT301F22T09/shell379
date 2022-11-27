@@ -112,6 +112,7 @@ public class ViewMealPlanFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 envViewModel.getMealPlans().removeAtIdx(mpViewModel.getIdx());
+                envViewModel.getMealPlans().commit();
                 navController.popBackStack();
             }
         });
