@@ -53,7 +53,7 @@ public class IngredientDiffUtil {
     }
 
     /**
-     * Subtracts ingredients in ingredient storage from computed shopping cart
+     * Subtracts ingredients already present in ingredient storage from computed shopping cart
      * @param ingredientMap map of ingredient names to cart items
      * @param ingredients ingredient storage
      * @return map of ingredient names to cart items
