@@ -24,7 +24,7 @@ import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 /**
- * Adapter for recycler view in view selected ingredients page for recipes.
+ * Base class Adapter for recycler view in view selected ingredients page for recipes.
  */
 public abstract class MPObjectWrapperListAdapter extends RecyclerView.Adapter<MPObjectWrapperListAdapter.MPEditIngredientListViewHolder> {
     protected MealPlanViewModel viewModel;

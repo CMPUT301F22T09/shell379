@@ -20,6 +20,9 @@ import android.widget.TextView;
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.util.DatabaseManager;
 
+/**
+ *  Home page fragment
+ */
 public class MainMenuFragment extends Fragment {
     private NavController navController;
 
@@ -76,6 +79,11 @@ public class MainMenuFragment extends Fragment {
         return rootView;
     }
 
+    /**
+     * Fetches data base data and prevents actions until the data is loaded.
+     * @param dbm database to fetch from
+     * @param rootView the main menu view
+     */
     private void blockNavUntilDownloaded(DatabaseManager dbm, View rootView) {
         TextView loadingTxt = (TextView) rootView.findViewById(R.id.loadingText);
         loadingTxt.setVisibility(View.VISIBLE);

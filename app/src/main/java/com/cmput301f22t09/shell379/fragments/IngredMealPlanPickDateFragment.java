@@ -32,20 +32,19 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
-
-
-
+/**
+ *  Fragment for choosing the day you will eat an ingredient and how much of it.
+ */
 public class IngredMealPlanPickDateFragment extends Fragment{
     protected View rootView;
     protected NavController navController;
     protected MealPlanViewModel mealPlanViewModel;
-    private MealPlanWrapper<Ingredient> ingredient;
     private int ingredIdx;
     private Ingredient newIngredient;
     private TextView ingredNameText;
 
     public IngredMealPlanPickDateFragment() {
-
+        // required empty constructor
     }
 
     @Override
@@ -101,11 +100,18 @@ public class IngredMealPlanPickDateFragment extends Fragment{
         navController.popBackStack();
     }
 
-
-
+    /**
+     *  Saves to view model
+     * @param ingredient
+     */
     protected void writeToViewModel(MealPlanWrapper<Ingredient> ingredient) {
         mealPlanViewModel.addIngredient(ingredient);
     }
+
+    /**
+     * Toasts user with error message
+     * @param message
+     */
     private void showError(String message) {
         Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
@@ -115,9 +121,7 @@ public class IngredMealPlanPickDateFragment extends Fragment{
      * and navigate back to the edit meal plan page
      */
     private void save(){
-        String obj = ((TextView) rootView.findViewById(R.id.Ingredient_name)).getText().toString();
         String serving = ((EditText) rootView.findViewById(R.id.serving_edittext)).getText().toString();
-//        String serving_check;
 
         if(serving.isEmpty() || serving == null){
             showError("Please fill all fields");
@@ -148,8 +152,5 @@ public class IngredMealPlanPickDateFragment extends Fragment{
         writeToViewModel(WrapperIngredient);
         navController.popBackStack();
         navController.popBackStack();
-
-
     }
-
 }
