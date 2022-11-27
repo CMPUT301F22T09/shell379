@@ -2,6 +2,7 @@ package com.cmput301f22t09.shell379.data;
 
 import android.os.Build;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
 import com.cmput301f22t09.shell379.data.util.ArraySortUtil;
@@ -176,4 +177,8 @@ public class IngredientStub implements Serializable {
         return sortOptions;
     }
 
+    @NonNull
+    public IngredientStub clone() {
+        return new IngredientStub(this.description, this.amount, this.unit, this.category);
+    }
 }

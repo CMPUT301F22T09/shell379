@@ -53,7 +53,6 @@ public class Environment extends ViewModel implements Serializable {
         Environment env = new ViewModelProvider(owner).get(Environment.class);
         try {
             env.ingredients.setList(envPulled.ingredients.getList());
-            env.cart.setList(envPulled.cart.getList());
             env.recipes.setList(envPulled.recipes.getList());
             env.ingredientCategories.setCategories(envPulled.ingredientCategories.getCategories());
             env.recipeCategories.setCategories(envPulled.recipeCategories.getCategories());
