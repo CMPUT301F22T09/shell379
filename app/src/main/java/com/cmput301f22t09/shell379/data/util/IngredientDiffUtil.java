@@ -23,6 +23,11 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class IngredientDiffUtil {
+    /**
+     * Flattens ingredients in meal plans, using them to compute the items needed in the shopping cart
+     * @param mealPlans list of meal plans
+     * @return map of ingredient names to cart items
+     */
     public static Map<String, CartIngredient> flattenMealPlans(ArrayList<MealPlan> mealPlans) {
         Map<String, CartIngredient> ingredientMap = mealPlans.stream()
                 .map(MealPlan::getRecipes)
@@ -40,7 +45,6 @@ public class IngredientDiffUtil {
                     if (ingredientMap.containsKey(e.getDescription())) {
                         CartIngredient cartIngredient = ingredientMap.get(e.getDescription());
                         cartIngredient.setAmount(e.getAmount()+cartIngredient.getAmount());
-//                        cartIngredient.setAmount(e.getAmount());
                     } else {
                         ingredientMap.put(e.getDescription(),e);
                     }
@@ -48,25 +52,32 @@ public class IngredientDiffUtil {
         return ingredientMap;
     }
 
-    public static Map<String, CartIngredient> subtractIngredientStorage(Map<String, CartIngredient> mealPlanComputed, ArrayList<Ingredient> ingredients) {
+    /**
+     * Subtracts ingredients in ingredient storage from computed shopping cart
+     * @param ingredientMap map of ingredient names to cart items
+     * @param ingredients ingredient storage
+     * @return map of ingredient names to cart items
+     */
+    public static Map<String, CartIngredient> subtractIngredientStorage(Map<String, CartIngredient> ingredientMap, ArrayList<Ingredient> ingredients) {
         ingredients.stream()
             .map(CartIngredient::convertIngredient)
             .forEach(e -> {
-                if (mealPlanComputed.containsKey(e.getDescription())) {
-                    CartIngredient cartIngredient = mealPlanComputed.get(e.getDescription());
+                if (ingredientMap.containsKey(e.getDescription())) {
+                    CartIngredient cartIngredient = ingredientMap.get(e.getDescription());
                     cartIngredient.setAmount(cartIngredient.getAmount()-e.getAmount());
                 } else {
-                    mealPlanComputed.put(e.getDescription(),e);
+                    ingredientMap.put(e.getDescription(),e);
                 }
             });
-        return mealPlanComputed;
+        return ingredientMap;
     }
 
-    public static CartIngredient resetIngredient(CartIngredient ingredient) {
-        ingredient.setAmount(0);
-        return ingredient;
-    }
-
+    /**
+     * Transfers pre-existing cart data to newly computed cart
+     * @param ingredientMap map of ingredient names to cart items
+     * @param cleanedCart cleaned cart
+     * @return list of cart items
+     */
     public static ArrayList<CartIngredient> transferCartData(Map<String, CartIngredient> ingredientMap, ArrayList<CartIngredient> cleanedCart) {
         cleanedCart.forEach(e -> {
             if (ingredientMap.containsKey(e.getDescription())) {
@@ -81,12 +92,21 @@ public class IngredientDiffUtil {
         return new ArrayList<>(ingredientMap.values());
     }
 
+    /**
+     * Removes ingredients which have not been picked up from the cart
+     * @param cart the list of items in the cart
+     * @return filtered list of items in cart
+     */
     public static ArrayList<CartIngredient> cleanCart(ArrayList<CartIngredient> cart) {
         return cart.stream()
             .filter(CartIngredient::getPickedUp)
             .collect(Collectors.toCollection(ArrayList::new));
     }
 
+    /**
+     * Computes items which need to be passed to the cart and updates it.
+     * @param env Environment/state of the program
+     */
     public static void prepareCart(Environment env) {
         ArrayList<CartIngredient> cleanedCart = cleanCart(env.getCart().getList());
         if (cleanedCart==null)
