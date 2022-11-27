@@ -45,7 +45,25 @@ public class MealPlanUITest {
     /**
      * Tests all actions in the following sequence:
      *      Starting from the fragment_main_menu:
-     *      1. Click on meal_plans_list_button
+     *      29. Click on meal_plans_list_button
+     *           - App goes to fragment_meal_plan_13
+     *           - Checks if "Meal Plan" is displayed
+     *      30. Click on new_button
+     *           - App goes to fragment_meal_plan_15
+     *      31. Click on plan_edit_add_recipes_btn
+     *           - App goes to fragment_add_recipe_meal_plan_16
+     *      32. Click on an existing recipe in recipe_list_item_7
+     *           - App goes to mealplan_recipe_date_17
+     *      33. Click on save_button
+     *           - App goes back to fragment_edit_meal_plan_15
+     *      34. Click on plan_edit_add_ingr_btn
+     *           - App goes to fragment_add_ingredient_meal_plan_18
+     *      35. Click on an existing ingredient in ingredient_content_2
+     *           - App goes to mealplan_ingredient_date_19
+     *      36. Click on save_button
+     *           - App goes back to fragment_edit_meal_plan_15
+     *      39. Click on mpe_save_plan
+     *           - App goes back to fragment_meal_plan_13
      */
     @Test
     public void test_29_30_31_32_33_34_35_36_39() {
@@ -73,17 +91,17 @@ public class MealPlanUITest {
             }
         }
 
+        // Initialize ingredient and recipe which will be used to populate the environment
+        final Ingredient ingredient = new Ingredient("Chicken Thighs", "Freezer", 2, "kilograms", "Poultry");
+        final IngredientStub stub = new IngredientStub("Milk", 2, "liters", "Dairy");
+        final Recipe recipe = new Recipe("Milk recipe", 2L, 3, "Dairy", "comment");
+        recipe.addIngredient(stub);
+
         activityRule.getScenario().onActivity(activity -> {
             Environment env = new Environment();
 
-            // Initialize env with one ingredient
-            Ingredient ingredient = new Ingredient("Chicken Thighs", "Freezer", 2, "kilograms", "Poultry");
+            // Initialize env with one ingredient and one recipe
             env.getIngredients().add(ingredient);
-
-            // Initialize env with one recipe
-            IngredientStub stub = new IngredientStub("Milk", 2, "liters", "Dairy");
-            Recipe recipe = new Recipe("Milk recipe", 2L, 3, "Dairy", "comment");
-            recipe.addIngredient(stub);
             env.getRecipes().add(recipe);
 
             Environment.of(activity, env);
@@ -133,7 +151,10 @@ public class MealPlanUITest {
                 RecyclerView recyclerView = (RecyclerView) item;
                 MealPlanAdapter mealPlanAdapter = (MealPlanAdapter) recyclerView.getAdapter();
                 ArrayList<MealPlan> mealPlans = mealPlanAdapter.getMealPlans();
+                pos2[0] = mealPlanAdapter.getItemCount() - 1;
+                MealPlan mp = mealPlans.get(pos2[0]);
 
+                assertTrue(mp.getMealPlanName().equals("Chicken with milk"));
 
                 return true;
             }
