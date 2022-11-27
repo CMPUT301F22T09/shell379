@@ -1,4 +1,4 @@
-### IMPORTANT: If you have run the app with a previous release, you will need to clear your local storage/ app data or the app will crash. A tutorial can be accessed here: https://www.cashify.in/how-to-clear-app-data-and-cache-on-android. If you have never installed the app before the part 4 (final checkpoint) release point disregard this message. 
+### IMPORTANT: If you have run the app with a previous release, you will need to clear your local storage/ app data or the app will crash. A tutorial can be accessed here: https://www.cashify.in/how-to-clear-app-data-and-cache-on-android. If you have never installed the app before the part 4 (final checkpoint) release, please disregard this message. 
 
 # CMPUT 301
 ### Team Name: shell379
