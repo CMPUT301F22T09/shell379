@@ -14,6 +14,9 @@ import androidx.navigation.fragment.NavHostFragment;
 
 import com.cmput301f22t09.shell379.R;
 
+/**
+ * Mostly cosmetic/UX Fragment to inform the user of a successful ingredient checkout
+ */
 public class ShoppingListSuccessFragment extends Fragment {
     private Button doneButton;
     protected View rootView;
@@ -45,5 +48,4 @@ public class ShoppingListSuccessFragment extends Fragment {
 
         return rootView;
     }
-
 }
