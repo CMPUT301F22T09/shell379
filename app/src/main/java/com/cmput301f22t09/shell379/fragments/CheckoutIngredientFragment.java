@@ -118,6 +118,9 @@ public class CheckoutIngredientFragment extends Fragment {
         navController.navigate(CheckoutIngredientFragmentDirections.actionCheckoutIngredientToShoppingListFragment());
     }
 
+    /**
+     * Saves changes to ingredient
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void save(){
         try {

@@ -40,5 +40,4 @@ public class CreateIngredientStubFragment extends SaveIngredientStubFragment{
         navController.popBackStack();
 
     };
-
 }

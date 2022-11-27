@@ -31,6 +31,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
+/**
+ * Lists meal plans for editing and viewing
+ */
 public class MealPlanListFragment extends Fragment implements MealPlanAdapter.AdaptorListener{
     private ArrayList<MealPlan> mealPlanList;
     private RecyclerView mealPlan_recyclerView;
@@ -39,8 +42,6 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
     private Environment envViewModel;
     private NavController navController;
     private MealPlanViewModel mealPlanViewModel;
-//    private FloatingActionButton backButton;
-
 
     public MealPlanListFragment() {
         // Required empty public constructor
@@ -56,8 +57,6 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
         final Observer<ArrayList<MealPlan>> mealPlanObserver = new Observer<ArrayList<MealPlan>>() {
             @Override
             public void onChanged(@Nullable final ArrayList<MealPlan> mealPlans) {
-                // Update the UI, in this case, a TextView.
-//                ingredient_recyclerView.setText(newName);
                 if (mealPlanListAdapter != null){
                     mealPlanListAdapter.updateMealPlan(envViewModel.getMealPlans().getList());
                 }
@@ -82,7 +81,6 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
                 }
         );
 
-
         ((Button)rootView.findViewById(R.id.new_button)).setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
@@ -91,7 +89,6 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
                     }
                 }
         );
-
 
         mealPlanList = envViewModel.getMealPlans().getList();
         layoutManager = new LinearLayoutManager(this.getActivity());
@@ -113,11 +110,9 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
     }
 
     public void navigateToViewMealPlan(int index){
-    //    to-do
         MealPlanListFragmentDirections.ActionMealPlanFragmentToViewMealPlanFragment action
                 = MealPlanListFragmentDirections.actionMealPlanFragmentToViewMealPlanFragment(index);
         navController.navigate(action);
 
     }
-
 }

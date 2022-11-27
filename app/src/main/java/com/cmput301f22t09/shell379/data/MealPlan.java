@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+/**
+ *  Meal plan for a certain set of days.
+ */
 public class MealPlan implements Serializable {
     private ArrayList<MealPlanWrapper<Recipe>> recipes = new ArrayList<>();
     private ArrayList<MealPlanWrapper<Ingredient>> ingredients = new ArrayList<>();
@@ -39,13 +42,6 @@ public class MealPlan implements Serializable {
         this.activeDays = 0;
     }
 
-//    public MealPlan(Date startDate, Date endDate, Integer activeDays) {
-//        this.startDate = formatter.format(startDate);
-//        this.endDate = formatter.format(endDate);
-//        this.activeDays = activeDays;
-//    }
-
-
     public ArrayList<MealPlanWrapper<Recipe>> getRecipes() {
         return recipes;
     }
@@ -54,6 +50,10 @@ public class MealPlan implements Serializable {
         this.recipes = convertRecipes(recipes);
     }
 
+    /**
+     * Sets pre wrapped recipes
+     * @param recipes array of wrapped recipes
+     */
     public void setRecipesRaw(ArrayList<MealPlanWrapper<Recipe>> recipes) {
         this.recipes = recipes;
     }
@@ -66,6 +66,10 @@ public class MealPlan implements Serializable {
         this.ingredients = convertIngredients(ingredients);
     }
 
+    /**
+     * Sets an array of preWrapped ingredients
+     * @param ingredients array of wrapped ingredients
+     */
     public void setIngredientsRaw(ArrayList<MealPlanWrapper<Ingredient>> ingredients) {
         this.ingredients = ingredients;
     }
@@ -140,6 +144,10 @@ public class MealPlan implements Serializable {
         this.recipes.remove(idx);
     }
 
+    /**
+     * Gets formatted start date
+     * @return string representing the start date
+     */
     public String getStartDateFormatted() {
         if(startDate != null){
             SimpleDateFormat simpleDate = formatter;
@@ -149,6 +157,10 @@ public class MealPlan implements Serializable {
         }
     }
 
+    /**
+     * Gets formatted end date
+     * @return string representing the end date
+     */
     public String getEndDateFormatted() {
         if(endDate != null){
             SimpleDateFormat simpleDate = formatter;
@@ -162,10 +174,20 @@ public class MealPlan implements Serializable {
         this.mealPlanName = mealPlanName;
     }
 
+    /**
+     * Converts a list of recipes to a list of wrapped recipes.
+     * @param recipes array of recipes to be wrapped
+     * @return array list of wrapped recipes.
+     */
     private ArrayList convertRecipes(ArrayList<Recipe> recipes) {
         return recipes.stream().map(o->new MealPlanWrapper(o, new Date(), 1)).collect(Collectors.toCollection(ArrayList::new));
     }
 
+    /**
+     * Converts a list of recipes to a list of wrapped ingredients.
+     * @param ingredients array of ingredients to be wrapped
+     * @return array list of wrapped ingredients.
+     */
     private ArrayList convertIngredients(ArrayList<Ingredient> ingredients) {
         return ingredients.stream().map(o->new MealPlanWrapper(o, new Date(), 1)).collect(Collectors.toCollection(ArrayList::new));
     }

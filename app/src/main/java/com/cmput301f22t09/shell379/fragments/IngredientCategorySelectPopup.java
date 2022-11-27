@@ -25,6 +25,9 @@ import com.cmput301f22t09.shell379.data.vm.collections.CategorySet;
 
 import java.util.HashSet;
 
+/**
+ *  Category popup for ingredients
+ */
 public class IngredientCategorySelectPopup extends CategorySelectPopup {
     protected CategorySet getCollection(Environment env){
         return env.getIngredientCategories();

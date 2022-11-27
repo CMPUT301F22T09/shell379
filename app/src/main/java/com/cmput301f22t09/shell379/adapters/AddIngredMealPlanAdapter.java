@@ -10,64 +10,63 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
-import com.cmput301f22t09.shell379.data.Recipe;
 import com.cmput301f22t09.shell379.data.vm.MealPlanViewModel;
-import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
 
 import java.util.ArrayList;
 
+/**
+ *  Adapter for list that shows ingredients that you can add to a meal plan
+ */
 public class AddIngredMealPlanAdapter extends RecyclerView.Adapter<AddIngredMealPlanAdapter.AddIngredMealPlanViewHolder>{
 
-        private ArrayList<Ingredient> IngredinMealPlan;
-        private AddIngredMealPlanAdapter.IngredInMealPlanListener ingredInMealPlanListener;
-        private MealPlanViewModel mealPlanViewModel;
+    private ArrayList<Ingredient> ingredients;
+    private AddIngredMealPlanAdapter.IngredInMealPlanListener ingredInMealPlanListener;
+    private MealPlanViewModel mealPlanViewModel;
 
+    /**
+     *  Observer who will handle navigating to the fragment for setting the date and amount.
+     */
+    public interface IngredInMealPlanListener{
+        public void navigateToPickDate(int index);
+    }
 
-        public interface IngredInMealPlanListener{
-            public void navigateToPickDate(int index);
+    public class AddIngredMealPlanViewHolder extends RecyclerView.ViewHolder {
+        TextView ingredientName;
+        TextView bestBefore;
+        TextView location;
+        TextView category;
+
+        /**
+         * Construct the MealPlanViewHolder class
+         * @param itemView
+         */
+        public AddIngredMealPlanViewHolder(@NonNull View itemView) {
+            super(itemView);
+            this.ingredientName = (TextView) itemView.findViewById(R.id.ingredient_name);
+            this.bestBefore = (TextView) itemView.findViewById(R.id.best_before_date_textView);
+            this.category = (TextView) itemView.findViewById(R.id.category_textView);
+            this.location = (TextView) itemView.findViewById(R.id.location_textView);
         }
 
-
-
-        public class AddIngredMealPlanViewHolder extends RecyclerView.ViewHolder {
-            TextView ingredientName;
-            TextView bestBefore;
-            TextView location;
-            TextView category;
-
-            /**
-             * Construct the MealPlanViewHolder class
-             * @param itemView
-             */
-            public AddIngredMealPlanViewHolder(@NonNull View itemView) {
-                super(itemView);
-                this.ingredientName = (TextView) itemView.findViewById(R.id.ingredient_name);
-                this.bestBefore = (TextView) itemView.findViewById(R.id.best_before_date_textView);
-                this.category = (TextView) itemView.findViewById(R.id.category_textView);
-                this.location = (TextView) itemView.findViewById(R.id.location_textView);
-            }
-
-            public View getItemView(){
-                return itemView;
-            }
+        public View getItemView(){
+            return itemView;
         }
+    }
 
-    public AddIngredMealPlanAdapter(ArrayList<Ingredient> IngredinMealPlan, AddIngredMealPlanAdapter.IngredInMealPlanListener ingredInMealPlanListener, MealPlanViewModel mealPlanViewModel){
-        this.IngredinMealPlan = IngredinMealPlan;
+    public AddIngredMealPlanAdapter(ArrayList<Ingredient> ingredients, AddIngredMealPlanAdapter.IngredInMealPlanListener ingredInMealPlanListener, MealPlanViewModel mealPlanViewModel){
+        this.ingredients = ingredients;
         this.ingredInMealPlanListener = ingredInMealPlanListener;
         this.mealPlanViewModel = mealPlanViewModel;
-        }
-
-
+    }
 
     @NonNull
-        @Override
-        public AddIngredMealPlanAdapter.AddIngredMealPlanViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.ingredient_content_2, parent, false);
-            AddIngredMealPlanAdapter.AddIngredMealPlanViewHolder ingredMealPlanViewHolder = new AddIngredMealPlanAdapter.AddIngredMealPlanViewHolder(view);
-            return ingredMealPlanViewHolder;
-        }
+    @Override
+    public AddIngredMealPlanAdapter.AddIngredMealPlanViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.ingredient_content_2, parent, false);
+        AddIngredMealPlanAdapter.AddIngredMealPlanViewHolder ingredMealPlanViewHolder = new AddIngredMealPlanAdapter.AddIngredMealPlanViewHolder(view);
+        return ingredMealPlanViewHolder;
+    }
 
     @Override
     public void onBindViewHolder(@NonNull AddIngredMealPlanViewHolder holder, int position) {
@@ -76,10 +75,10 @@ public class AddIngredMealPlanAdapter extends RecyclerView.Adapter<AddIngredMeal
         TextView location = holder.location;
         TextView category = holder.category;
 
-        ingredientName.setText(IngredinMealPlan.get(position).getDescription());
-        bestBefore.setText(IngredinMealPlan.get(position).getBestBeforeFormatted());
-        category.setText(IngredinMealPlan.get(position).getCategory());
-        location.setText(IngredinMealPlan.get(position).getLocation());
+        ingredientName.setText(ingredients.get(position).getDescription());
+        bestBefore.setText(ingredients.get(position).getBestBeforeFormatted());
+        category.setText(ingredients.get(position).getCategory());
+        location.setText(ingredients.get(position).getLocation());
 
 
         holder.getItemView().setOnClickListener(new View.OnClickListener() {
@@ -93,24 +92,22 @@ public class AddIngredMealPlanAdapter extends RecyclerView.Adapter<AddIngredMeal
         );
     }
 
-
     /**
      * sets the adapter's ingredients
      * @param newIngredient ingredients to update with
      */
     public void updateIngredient(ArrayList<Ingredient> newIngredient){
-        IngredinMealPlan = newIngredient;
+        ingredients = newIngredient;
         notifyDataSetChanged();
     }
 
     public ArrayList<Ingredient> getIngredients(){
-        return IngredinMealPlan;
+        return ingredients;
     }
 
     @Override
     public int getItemCount() {
-            return IngredinMealPlan.size();
-        }
-
+            return ingredients.size();
+    }
 }
 
