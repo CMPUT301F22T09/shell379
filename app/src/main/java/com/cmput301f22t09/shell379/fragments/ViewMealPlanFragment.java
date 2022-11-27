@@ -52,7 +52,6 @@ public class ViewMealPlanFragment extends Fragment {
         super.onCreate(savedInstanceState);
         navController = NavHostFragment.findNavController(this);
         envViewModel = Environment.of((AppCompatActivity) requireActivity());
-//        mpViewModel = MealPlanViewModel.of(testMP(), requireActivity());
         mpViewModel = MealPlanViewModel.of(requireActivity());
     }
 
@@ -72,13 +71,14 @@ public class ViewMealPlanFragment extends Fragment {
                 }
         );
 
+        // setup recycler views for viewing ingredients and recipes in meal plan
         mpIngredientRecycler = (RecyclerView) rootView.findViewById(R.id.plan_ingredients);
-        mpRecipeRecycler = (RecyclerView) rootView.findViewById(R.id.plan_recipes);
         ingredientsAdapter = new MPIngredientsViewListAdapter(mpViewModel);
         mpIngredientRecycler.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         mpIngredientRecycler.setAdapter(ingredientsAdapter);
         mpIngredientRecycler.setItemAnimator(new DefaultItemAnimator());
 
+        mpRecipeRecycler = (RecyclerView) rootView.findViewById(R.id.plan_recipes);
         recipesAdapter = new MPRecipesViewListAdapter(mpViewModel);
         mpRecipeRecycler.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         mpRecipeRecycler.setAdapter(recipesAdapter);

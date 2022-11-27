@@ -17,17 +17,21 @@ import com.cmput301f22t09.shell379.data.wrapper.MealPlanWrapper;
 
 import java.util.ArrayList;
 
+/**
+ *  Adapter for list that shows Recipes that you can add to a meal plan
+ */
 public class AddRecipeMealPlanAdapter extends RecyclerView.Adapter<AddRecipeMealPlanAdapter.AddRecipeMealPlanViewHolder>{
 
     private ArrayList<Recipe> RecipeinMealPlan;
     private RecipeInMealPlanListener recipeInMealPlanListener;
     private MealPlanViewModel mealPlanViewModel;
 
-
+    /**
+     *  Observer who will handle navigating to the fragment for setting the date and amount.
+     */
     public interface RecipeInMealPlanListener {
         public void navigateToPickDate(int index);
     }
-
 
     public class AddRecipeMealPlanViewHolder extends RecyclerView.ViewHolder {
         TextView recipeName;
@@ -91,26 +95,15 @@ public class AddRecipeMealPlanAdapter extends RecyclerView.Adapter<AddRecipeMeal
         );
     }
 
-
-//    /**
-//     *  Responds to an recipe item being clicked in the recyclerView.
-//     *  Navigates to viewing the recipe
-//     * @param i index of recipe in the view model
-//     */
-//    public void recipeOnClick(int i) {
-//        Recipe a = RecipeinMealPlan.get(i);
-//        ArrayList<MealPlanWrapper<Recipe>> recipes = mealPlanViewModel.getRecipes();
-//        int index = recipes.indexOf(a);
-//        recipeInMealPlanListener.editRecipeInMP(index);
-//    }
-
-
     @Override
     public int getItemCount() {
         return RecipeinMealPlan.size();
     }
 
-
+    /**
+     * updates recycler view and notifies any listeners
+     * @param newRecipes updated array of recipes
+     */
     public void updateRecipes(ArrayList<Recipe> newRecipes) {
         RecipeinMealPlan = newRecipes;
         notifyDataSetChanged();
