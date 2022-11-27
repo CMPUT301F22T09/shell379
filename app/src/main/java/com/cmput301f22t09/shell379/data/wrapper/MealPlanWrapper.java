@@ -1,9 +1,6 @@
 package com.cmput301f22t09.shell379.data.wrapper;
 
-import android.os.Build;
 import android.util.Log;
-
-import androidx.annotation.RequiresApi;
 
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.IngredientStub;
@@ -87,18 +84,17 @@ public class MealPlanWrapper<T> implements Serializable {
      * @param wrapper wrapper to convert
      * @return recipe that the wrapper represents
      */
-    public static Recipe convertToRecipe(MealPlanWrapper<Recipe> wrapper) {
+    public static ArrayList<IngredientStub> convertRecipeToIngredientList(MealPlanWrapper<Recipe> wrapper) {
         Recipe r = wrapper.getObj();
-        r.setServings(r.getServings()*wrapper.getServings());
         ArrayList<IngredientStub> ings = r.getIngredients();
+        ArrayList<IngredientStub> newIngrs = new ArrayList<>();
         for (int i = 0; i < ings.size(); i++) {
-            IngredientStub is = ings.get(i);
-            Log.d("FDBK_CONVERSIONS_REC", wrapper.getName()+": " +(is.getAmount() * wrapper.getServings()));
-            is.setAmount(is.getAmount() * wrapper.getServings());
-            ings.set(i, is);
+            IngredientStub is = ings.get(i).clone();
+            Log.d("FDBK_CONVERSIONS_REC", wrapper.getName()+": "+ r.getServings()+" "+wrapper.getServings()+" " +(is.getAmount() * wrapper.getServings()));
+            is.setAmount(r.getServings() * is.getAmount() * wrapper.getServings());
+            newIngrs.add(is);
         }
-        r.setIngredients(ings);
-        return r;
+        return newIngrs;
     }
 
     /**
