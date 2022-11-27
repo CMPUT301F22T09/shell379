@@ -59,7 +59,9 @@ public class IngredientDiffUtil {
      * @return map of ingredient names to cart items
      */
     public static Map<String, CartIngredient> subtractIngredientStorage(Map<String, CartIngredient> ingredientMap, ArrayList<Ingredient> ingredients) {
+        Date curr = new Date();
         ingredients.stream()
+            .filter(e->curr.before(e.getBestBefore()))
             .map(CartIngredient::convertIngredient)
             .forEach(e -> {
                 if (ingredientMap.containsKey(e.getDescription())) {
