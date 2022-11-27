@@ -79,12 +79,8 @@ public class MealPlan implements Serializable {
     }
 
     public void setStartDate(Date startDate) {
-//<<<<<<< HEAD
-//        this.startDate = formatter.format(startDate);
-////        this.startDate=startDate;
-=======
         this.startDate = startDate;
->>>>>>> dev
+
     }
 
     public Date getEndDate() {

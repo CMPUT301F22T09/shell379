@@ -188,20 +188,31 @@ public class EditMealPlanFragment extends Fragment {
         );
 
         Calendar cal = Calendar.getInstance();
-        DatePicker picker = rootView.findViewById(R.id.editPlanStart);
-        cal.set(picker.getYear(), picker.getMonth(), picker.getDayOfMonth());
+        DatePicker startDatePicker = rootView.findViewById(R.id.editPlanStart);
+        cal.set(startDatePicker.getYear(), startDatePicker.getMonth(), startDatePicker.getDayOfMonth());
+        Date startDate = new GregorianCalendar(
+                startDatePicker.getYear(),
+                startDatePicker.getMonth(),
+                startDatePicker.getDayOfMonth()).getTime();
+
         mpViewModel.getMealPlan().setStartDate(cal.getTime());
 
-        picker = rootView.findViewById(R.id.editPlanEnd);
-        cal.set(picker.getYear(), picker.getMonth(), picker.getDayOfMonth());
-
-        Log.d("FBK_DATE_END", cal.getTime().toString());
+        DatePicker endDatePicker = rootView.findViewById(R.id.editPlanEnd);
+        cal.set(endDatePicker.getYear(), endDatePicker.getMonth(), endDatePicker.getDayOfMonth());
         mpViewModel.getMealPlan().setEndDate(cal.getTime());
-        Log.d("FBK_DATE_END", cal.getTime().toString());
-        Log.d("FBK_DATE_END_MP", mpViewModel.getMealPlan().getEndDateFormatted());
+
+        Date endDate = new GregorianCalendar(
+                endDatePicker.getYear(),
+                endDatePicker.getMonth(),
+                endDatePicker.getDayOfMonth()).getTime();
+
+        // check if the enda date is smaller than the start date
+        if (endDate.compareTo(startDate) <0){
+            showError("Please choose correct start and end date");
+            return;
+        }
 
         envViewModel.getMealPlans().setAtIdxOrAdd(mpViewModel.getIdx(), mpViewModel.getMealPlan());
-        Log.d("FBK_DATE_END_END", mpViewModel.getMealPlan().getEndDateFormatted());
         envViewModel.getMealPlans().commit();
 
         navController.popBackStack();
