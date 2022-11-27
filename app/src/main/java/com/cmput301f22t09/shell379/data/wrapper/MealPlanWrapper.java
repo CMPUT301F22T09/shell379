@@ -90,7 +90,7 @@ public class MealPlanWrapper<T> implements Serializable {
         ArrayList<IngredientStub> newIngrs = new ArrayList<>();
         for (int i = 0; i < ings.size(); i++) {
             IngredientStub is = ings.get(i).clone();
-            Log.d("FDBK_CONVERSIONS_REC", wrapper.getName()+": "+ r.getServings()+" "+wrapper.getServings()+" " +(is.getAmount() * wrapper.getServings()));
+//            Log.d("FDBK_CONVERSIONS_REC", wrapper.getName()+": "+ r.getServings()+" "+wrapper.getServings()+" " +(is.getAmount() * wrapper.getServings()));
             is.setAmount(r.getServings() * is.getAmount() * wrapper.getServings());
             newIngrs.add(is);
         }
@@ -105,7 +105,7 @@ public class MealPlanWrapper<T> implements Serializable {
     public static Ingredient convertToIngredient(MealPlanWrapper<Ingredient> wrapper) {
         Ingredient r = wrapper.getObj();
         r.setAmount(wrapper.getServings());
-        Log.d("FDBK_CONVERSIONS_INGR", wrapper.getName()+": " + r.getAmount()+" "+wrapper.getServings()+" "+(r.getAmount() * wrapper.getServings()));
+//        Log.d("FDBK_CONVERSIONS_INGR", wrapper.getName()+": " + r.getAmount()+" "+wrapper.getServings()+" "+(r.getAmount() * wrapper.getServings()));
         return r;
     }
 }
