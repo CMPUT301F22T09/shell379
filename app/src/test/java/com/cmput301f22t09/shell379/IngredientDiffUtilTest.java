@@ -49,8 +49,8 @@ public class IngredientDiffUtilTest {
         mpIngs.add(new Ingredient("Celery","Pantry", 10, "kg", "shell"));
 
         HashMap<String, Integer> answers = new HashMap<String, Integer>();
-        answers.put("Celery", 522);
-        answers.put("Broccoli", 2600);
+        answers.put("Celery", 42);
+        answers.put("Broccoli", 200);
 
         Recipe r = new Recipe("Rec1", 20L, 13, "Veg", "");
         r.setIngredients(recIngs);
@@ -265,7 +265,7 @@ public class IngredientDiffUtilTest {
 
         HashMap<String, Integer> addToCartAnswers = new HashMap<String, Integer>();
         addToCartAnswers.put("celery", 1404);
-        addToCartAnswers.put("broccoli", 7600);
+        addToCartAnswers.put("broccoli", 400);
 
         // we should have 120 celery 400 broccoli in shopping cart
         IngredientDiffUtil.prepareCart(environmentMock);
