@@ -192,31 +192,31 @@ public class ShoppingCartUITest {
 
 
 
-        onView(withId(R.id.ingredients_list_button)).perform(click());
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException f) {
-        }
-        onView(withId(R.id.floatingActionButton5)).perform(click());
-
-        onView(withId(R.id.recipes_list_button)).perform(click());
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException f) {
-        }
-        onView(withId(R.id.floatingActionButton6)).perform(click());
-
-        onView(withId(R.id.meal_plans_list_button)).perform(click());
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException f) {
-        }
-        onView(withId(R.id.MP_back_button)).perform(click());
+//        onView(withId(R.id.ingredients_list_button)).perform(click());
+//        try {
+//            Thread.sleep(500);
+//        } catch (InterruptedException f) {
+//        }
+//        onView(withId(R.id.floatingActionButton5)).perform(click());
+//
+//        onView(withId(R.id.recipes_list_button)).perform(click());
+//        try {
+//            Thread.sleep(500);
+//        } catch (InterruptedException f) {
+//        }
+//        onView(withId(R.id.floatingActionButton6)).perform(click());
+//
+//        onView(withId(R.id.meal_plans_list_button)).perform(click());
+//        try {
+//            Thread.sleep(500);
+//        } catch (InterruptedException f) {
+//        }
+//        onView(withId(R.id.MP_back_button)).perform(click());
 
         onView(withId(R.id.shopping_list_button)).perform(click());
 
         try {
-            Thread.sleep(1000000);
+            Thread.sleep(500);
         } catch (InterruptedException f) {
         }
 
