@@ -5,10 +5,13 @@ import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
+import com.cmput301f22t09.shell379.data.util.ArraySortUtil;
 import com.cmput301f22t09.shell379.data.util.SerializeUtil;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * The Recipe class is a model for potential recipes used in the app.
@@ -20,7 +23,8 @@ public class Recipe implements Serializable {
     private String category;
     private String comments;
     private String photograph; //this is a serialized photo
-    private ArrayList<Ingredient> ingredients = new ArrayList<>();
+    private ArrayList<IngredientStub> ingredients = new ArrayList<>();
+    private static List<String> sortOptions = Arrays.asList("Title","Preparation Time", "Number of Servings", "Category");
 
     /**
      * Creates recipe object without image.
@@ -56,6 +60,15 @@ public class Recipe implements Serializable {
         this.category = category;
         this.comments = comments;
         this.photograph = SerializeUtil.serializeImg(photograph);
+    }
+
+    private Recipe(Recipe r) {
+        this.title = r.title;
+        this.preparationTime = r.preparationTime;
+        this.servings = r.servings;
+        this.category = r.category;
+        this.comments = r.comments;
+        this.photograph = r.photograph;
     }
 
     public String getTitle() {
@@ -98,13 +111,22 @@ public class Recipe implements Serializable {
         this.comments = comments;
     }
 
+
+//
     /**
      * Deserializes and returns the Recipe image
      * @return deserialized image
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public Bitmap getPhotograph() {
-        return SerializeUtil.deserializeImg(photograph);
+        if(photograph == null){
+            return null;
+        }
+        try{
+            return SerializeUtil.deserializeImg(photograph);
+        }catch(Exception e){
+            return null;
+        }
     }
 
     /**
@@ -113,24 +135,30 @@ public class Recipe implements Serializable {
      */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void setPhotograph(Bitmap photograph) {
-        this.photograph = SerializeUtil.serializeImg(photograph);
+        if (photograph != null) {
+            this.photograph = SerializeUtil.serializeImg(photograph);
+            return;
+        }
+        this.photograph = null;
     }
 
-    public ArrayList<Ingredient> getIngredients() {
+    public ArrayList<IngredientStub> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(ArrayList<Ingredient> ingredients) {
+    public void setIngredients(ArrayList<IngredientStub> ingredients) {
         this.ingredients = ingredients;
     }
 
-    public void addIngredient(Ingredient ingredient) {
+    public void addIngredient(IngredientStub ingredient) {
         ingredients.add(ingredient);
     }
 
-    public void addIngredients(ArrayList<Ingredient> newIngredients) {
+    public void addIngredients(ArrayList<IngredientStub> newIngredients) {
         ingredients.addAll(newIngredients);
     }
+
+
 
     /**
      * overrides Java's equals method
@@ -152,4 +180,56 @@ public class Recipe implements Serializable {
         return r.getTitle().equals(title) && r.getPreparationTime().equals(preparationTime) && r.getServings().equals(servings)
                 && r.getCategory().equals(category) && r.getComments().equals(comments);
     }
+
+    /**
+     *
+     * @return a list of sortable properties. Each index of each option corresponds
+     * to a StringPropGetter returned from the method "getStringPropGetter()"
+     */
+    public static List<String> getSortableProps(){
+        return sortOptions;
+    }
+
+    /**
+     * returns the proper way to get the property we want to sort on
+     * based on what the user has selected as the sort.
+     */
+    public static ArraySortUtil.StringPropGetter getStringPropGetter(int selectedSortIndex){
+        if( selectedSortIndex == 0){
+            return new ArraySortUtil.StringPropGetter() {
+                @Override
+                public String getString(Object object) {
+                    return ((Recipe)object).getTitle();
+                }
+            };
+        }
+        else if( selectedSortIndex == 1){
+            return new ArraySortUtil.StringPropGetter() {
+                @Override
+                public String getString(Object object) {
+                    return Long.toString(((Recipe)object).getPreparationTime());
+                }
+            };
+        }
+        else if( selectedSortIndex == 2){
+            return new ArraySortUtil.StringPropGetter() {
+                @Override
+                public String getString(Object object) {
+                    return ((Recipe)object).getServings().toString();
+                }
+            };
+        }
+        else if( selectedSortIndex == 3){
+            return new ArraySortUtil.StringPropGetter() {
+                @Override
+                public String getString(Object object) {
+                    return ((Recipe)object).getCategory();
+                }
+            };
+        }
+        else{
+            throw new IllegalArgumentException( "No property to sort on is selected");
+        }
+    }
+
 }

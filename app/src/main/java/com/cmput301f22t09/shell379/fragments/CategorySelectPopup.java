@@ -1,15 +1,12 @@
 package com.cmput301f22t09.shell379.fragments;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,13 +26,15 @@ import com.cmput301f22t09.shell379.data.vm.collections.CategorySet;
 
 import java.util.HashSet;
 
-
+/**
+ *  Dialog that allows you to add to select and create categories
+ */
 public abstract class CategorySelectPopup extends DialogFragment {
     public interface SelectListener {
         void send(String val);
     }
-    private  SelectListener csl;
-    private   String title;
+    private SelectListener csl;
+    private String title;
 
     public CategorySelectPopup() {
         // Required empty public constructor
@@ -63,6 +62,7 @@ public abstract class CategorySelectPopup extends DialogFragment {
         HashSet<String> hashset = categorySet.getCategories();
 
         ((TextView)view.findViewById(R.id.title_text)).setText(title);
+        ((EditText)(view.findViewById(R.id.textInputEditText))).setHint("Enter New " + title);
 
 
         // Create adapter passing in the sample user data
@@ -89,7 +89,6 @@ public abstract class CategorySelectPopup extends DialogFragment {
         });
 
         addCat.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 String entered = enterCat.getText().toString();
@@ -124,5 +123,4 @@ public abstract class CategorySelectPopup extends DialogFragment {
     public void onAttach(Context context) {
         super.onAttach(context);
     }
-
 }

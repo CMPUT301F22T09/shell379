@@ -18,14 +18,14 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.Ingredient;
 import com.cmput301f22t09.shell379.data.Unit;
 import com.cmput301f22t09.shell379.data.vm.Environment;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
@@ -55,7 +55,7 @@ public abstract class SaveIngredientFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView = inflater.inflate(R.layout.fragment_save_ingredient, container, false);
+        rootView = inflater.inflate(R.layout.fragment_save_ingredient_5_6, container, false);
         category = ((EditText)rootView.findViewById(R.id.editCategory));
         location = ((EditText)rootView.findViewById(R.id.editLocation));
 
@@ -125,47 +125,67 @@ public abstract class SaveIngredientFragment extends Fragment {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     private void save(){
-        try{
+        try {
+
+
             // Load data from Views
-            String description = ((EditText)rootView.findViewById(R.id.editDescription)).getText().toString();
+            String description = ((EditText) rootView.findViewById(R.id.editDescription)).getText().toString();
+            String location = ((EditText) rootView.findViewById(R.id.editLocation)).getText().toString();
+            String strAmount = ((EditText) rootView.findViewById(R.id.editAmount)).getText().toString();
+            String category = ((EditText) rootView.findViewById(R.id.editCategory)).getText().toString();
+            String unit = ((Spinner) rootView.findViewById(R.id.editUnit)).getSelectedItem().toString();
+
+            // validate
+            if (description.isEmpty() ||
+                    location.isEmpty() ||
+                    category.isEmpty() ||
+                    unit.isEmpty() ||
+                    strAmount.isEmpty()
+            ) {
+                showError("All fields not filled");
+                return;
+            }
+
+            int amount = 0;
+            if (strAmount.isEmpty()) {
+                showError("Amount not filled");
+                return;
+            } else {
+                amount = Integer.parseInt(strAmount);
+            }
+
             DatePicker bestBeforeDatePicker = rootView.findViewById(R.id.editBestBeforeDate);
             Date bestBeforeDate = new GregorianCalendar(
                     bestBeforeDatePicker.getYear(),
                     bestBeforeDatePicker.getMonth(),
                     bestBeforeDatePicker.getDayOfMonth()).getTime();
-            String location = ((EditText)rootView.findViewById(R.id.editLocation)).getText().toString();
-            String strAmount = ((EditText)rootView.findViewById(R.id.editAmount)).getText().toString();
-            String category = ((EditText)rootView.findViewById(R.id.editCategory)).getText().toString();
-            String unit = ((Spinner)rootView.findViewById(R.id.editUnit)).getSelectedItem().toString();
 
-            // validate
-            if(description.isEmpty() ||
-                location.isEmpty() ||
-                category.isEmpty() ||
-                    unit.isEmpty() ||
-                    strAmount.isEmpty()
-            ){
-                throw new IllegalArgumentException("All fields not filled");
+            Ingredient newIng = new Ingredient(description, bestBeforeDate, location, amount, unit, category);
+
+            ArrayList<Ingredient> ingredients = envViewModel.getIngredients().getList();
+            for (int i = 0; i < ingredients.size(); i++) {
+                if (ingredients.get(i).equals(newIng)) {
+                    throw new IllegalArgumentException("Ingredient Already Exists");
+                }
             }
 
-            int amount = Integer.parseInt(strAmount);
-            writeToViewModel(new Ingredient(description,bestBeforeDate,location,amount,unit,category));
+            writeToViewModel(newIng);
             navController.popBackStack();
-
-        }catch (Exception e){
-            showError(e);
+        }catch(Exception e){
+            showError(e.getMessage());
+            return;
         }
     }
 
-    private void showError(Exception e){
-        TextView error = rootView.findViewById(R.id.errorText);
-        error.setText(e.getMessage());
-        error.setVisibility(View.VISIBLE);
+
+    private void showError(String message) {
+        Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
     }
 
-    /**
-     * Implement the ingredient category dialog
-     */
+
+        /**
+         * Implement the ingredient category dialog
+         */
     private void onIngCategoryClick(){
         CategorySelectPopup.SelectListener listener = new CategorySelectPopup.SelectListener() {
             @Override

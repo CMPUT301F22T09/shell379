@@ -22,9 +22,10 @@ import com.cmput301f22t09.shell379.data.vm.Environment;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
+/**
+ * Fragment that allows you to see a meal plan
+ */
 public class ViewIngredientFragment extends Fragment {
     private NavController navController;
     private Ingredient ingredient;
@@ -51,7 +52,7 @@ public class ViewIngredientFragment extends Fragment {
         ingredient = Environment.of((AppCompatActivity) getActivity()).getIngredients().getList().get(ingredientIndex);
 
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_view_ingredient, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_view_ingredient_4, container, false);
         ((Button)rootView.findViewById(R.id.delete_ingredient_button)).setOnClickListener(
                 new View.OnClickListener() {
                     public void onClick(View v) {
@@ -96,7 +97,7 @@ public class ViewIngredientFragment extends Fragment {
 
         ((TextView)rootView.findViewById(R.id.amount).findViewById(R.id.detail_name)).setText( "Amount");
         if(ingredient.getAmount() != null && ingredient.getUnit() != null){
-            ((TextView)rootView.findViewById(R.id.amount).findViewById(R.id.detail_value)).setText( ingredient.getAmount() + ingredient.getUnit() );
+            ((TextView)rootView.findViewById(R.id.amount).findViewById(R.id.detail_value)).setText( ingredient.getAmount() +" "+ ingredient.getUnit() );
         }else{
             ((TextView)rootView.findViewById(R.id.amount).findViewById(R.id.detail_value)).setText( "Tap edit below to add");
         }

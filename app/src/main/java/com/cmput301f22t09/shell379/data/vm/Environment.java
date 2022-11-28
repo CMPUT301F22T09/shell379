@@ -5,22 +5,18 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.lifecycle.ViewModelStore;
-import androidx.lifecycle.ViewModelStoreOwner;
-import androidx.lifecycle.ViewTreeViewModelStoreOwner;
 
 import com.cmput301f22t09.shell379.data.Ingredient;
+import com.cmput301f22t09.shell379.data.MealPlan;
 import com.cmput301f22t09.shell379.data.Recipe;
-import com.cmput301f22t09.shell379.data.ShoppingCart;
 import com.cmput301f22t09.shell379.data.util.DatabaseManager;
 import com.cmput301f22t09.shell379.data.vm.collections.CategorySet;
 import com.cmput301f22t09.shell379.data.vm.collections.LiveCollection;
+import com.cmput301f22t09.shell379.data.vm.collections.ShoppingCart;
 import com.cmput301f22t09.shell379.data.vm.infrastructure.Commitable;
-import com.cmput301f22t09.shell379.data.vm.collections.PartiallyEquableLiveCollection;
 
 import java.io.Serializable;
 
@@ -30,17 +26,19 @@ import java.io.Serializable;
  * The class is accessible from all fragments and does not change between fragments.
  */
 public class Environment extends ViewModel implements Serializable {
-    private PartiallyEquableLiveCollection<Ingredient> ingredients;
+    private LiveCollection<Ingredient> ingredients;
     private LiveCollection<Recipe> recipes;
+    private LiveCollection<MealPlan> mealPlans;
     private ShoppingCart cart;
     private CategorySet ingredientCategories;
     private CategorySet recipeCategories;
     private CategorySet locationCategories;
 
     public Environment() {
-        ingredients = new PartiallyEquableLiveCollection<Ingredient>();
+        ingredients = new LiveCollection<Ingredient>();
         recipes = new LiveCollection<Recipe>();
         cart = new ShoppingCart();
+        mealPlans = new LiveCollection<MealPlan>();
         ingredientCategories = new CategorySet();
         recipeCategories = new CategorySet();
         locationCategories = new CategorySet();
@@ -55,12 +53,12 @@ public class Environment extends ViewModel implements Serializable {
         Environment env = new ViewModelProvider(owner).get(Environment.class);
         try {
             env.ingredients.setList(envPulled.ingredients.getList());
-            env.cart.setList(envPulled.cart.getList());
-            env.cart.setActiveDays(envPulled.cart.getActiveDays());
             env.recipes.setList(envPulled.recipes.getList());
             env.ingredientCategories.setCategories(envPulled.ingredientCategories.getCategories());
             env.recipeCategories.setCategories(envPulled.recipeCategories.getCategories());
             env.locationCategories.setCategories(envPulled.locationCategories.getCategories());
+            env.mealPlans.setList(envPulled.mealPlans.getList());
+            env.cart.setList(envPulled.cart.getList());
 
             setupObservers(owner, env);
         } catch (NullPointerException e) {
@@ -93,6 +91,8 @@ public class Environment extends ViewModel implements Serializable {
         observeForCommits(owner, env, env.getIngredientCategories());
         observeForCommits(owner, env, env.getRecipeCategories());
         observeForCommits(owner, env, env.getLocationCategories());
+        observeForCommits(owner, env, env.getMealPlans());
+        observeForCommits(owner, env, env.getCart());
     }
 
     /**
@@ -118,7 +118,7 @@ public class Environment extends ViewModel implements Serializable {
         });
     }
 
-    public PartiallyEquableLiveCollection<Ingredient> getIngredients() {
+    public LiveCollection<Ingredient> getIngredients() {
         return ingredients;
     }
 
@@ -140,5 +140,9 @@ public class Environment extends ViewModel implements Serializable {
 
     public CategorySet getLocationCategories() {
         return locationCategories;
+    }
+
+    public LiveCollection<MealPlan> getMealPlans() {
+        return mealPlans;
     }
 }

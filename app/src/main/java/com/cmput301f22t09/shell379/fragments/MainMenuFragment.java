@@ -3,12 +3,9 @@ package com.cmput301f22t09.shell379.fragments;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Lifecycle;
-import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
@@ -23,6 +20,9 @@ import android.widget.TextView;
 import com.cmput301f22t09.shell379.R;
 import com.cmput301f22t09.shell379.data.util.DatabaseManager;
 
+/**
+ *  Home page fragment
+ */
 public class MainMenuFragment extends Fragment {
     private NavController navController;
 
@@ -41,7 +41,7 @@ public class MainMenuFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
 
-        View rootView = inflater.inflate(R.layout.fragment_main_menu, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_main_menu_1, container, false);
 
         DatabaseManager dbm = new DatabaseManager((AppCompatActivity) requireActivity());
         dbm.pull((AppCompatActivity) requireActivity());
@@ -79,6 +79,11 @@ public class MainMenuFragment extends Fragment {
         return rootView;
     }
 
+    /**
+     * Fetches data base data and prevents actions until the data is loaded.
+     * @param dbm database to fetch from
+     * @param rootView the main menu view
+     */
     private void blockNavUntilDownloaded(DatabaseManager dbm, View rootView) {
         TextView loadingTxt = (TextView) rootView.findViewById(R.id.loadingText);
         loadingTxt.setVisibility(View.VISIBLE);

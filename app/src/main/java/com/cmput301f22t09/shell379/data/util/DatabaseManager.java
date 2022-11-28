@@ -74,6 +74,7 @@ public class DatabaseManager {
                     data.put("ingredient_categories", (String) value.get("ingredient_categories"));
                     data.put("recipes_categories", (String) value.get("recipes_categories"));
                     data.put("loc_categories", (String) value.get("loc_categories"));
+                    data.put("meal_plans", (String) value.get("meal_plans"));
                     instance = SerializeEnvUtil.deserialize(data);
                     Environment.of(owner, instance);
                     loaded.setValue(true);
