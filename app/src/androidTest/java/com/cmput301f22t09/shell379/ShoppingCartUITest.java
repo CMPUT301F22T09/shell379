@@ -41,6 +41,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -71,8 +73,17 @@ public class ShoppingCartUITest {
     }
 
 
+    /**
+     * we have Ing1 10kg expired
+     *
+     * we need Ing1 5kg
+     * we need (recIng1, 10kg,), (recIng2, 10kg)
+     *
+     * This test sets up the ingredients, recipes, and meal plans to
+     * test this scenario...
+     */
     @Test
-    public void testSetUp() {
+    public void testComputation() {
 
         while (true) {
             try {
@@ -113,8 +124,21 @@ public class ShoppingCartUITest {
             Environment env = new Environment();
             env = Environment.of(activity, env);
 
+            SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+            Date expired = new Date();
+            Date mpstart = new Date();
+            Date mpend = new Date();
+            try {
+                expired = sdf.parse("12-31-2020");
+                mpstart = sdf.parse("12-20-2022");
+                mpend = sdf.parse("12-30-2022");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+
             ArrayList<Ingredient> initIngs = new ArrayList<>();
-            initIngs.add(new Ingredient("Ing1", new Date(2020, 12, 31), "Location", 10, "kilograms", "Get"));
+            initIngs.add(new Ingredient("Ing1", expired, "Location", 10, "kilograms", "Get"));
 
             ArrayList<Recipe> initRec = new ArrayList<>();
             Recipe rec1 = new Recipe("Rec1", 20L, 3, "Good food", "This is good food");
@@ -132,7 +156,7 @@ public class ShoppingCartUITest {
             env.getIngredientCategories().setCategories(cats);
 //            env.getIngredientCategories().commit();
 
-            MealPlan mp = new MealPlan("MP1", initRec, initIngs, new Date(2022, 12, 20), new Date(2022, 12, 30), "test", 10);
+            MealPlan mp = new MealPlan("MP1", initRec, initIngs, mpstart, mpend, "test", 10);
 
             ArrayList<MealPlanWrapper<Ingredient>> ingWrappers = mp.getIngredients();
             for (int i = 0; i < ingWrappers.size(); i++) {
@@ -192,7 +216,7 @@ public class ShoppingCartUITest {
         onView(withId(R.id.shopping_list_button)).perform(click());
 
         try {
-            Thread.sleep(2000);
+            Thread.sleep(1000000);
         } catch (InterruptedException f) {
         }
 
