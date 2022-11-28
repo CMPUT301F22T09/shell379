@@ -49,8 +49,8 @@ public class IngredientDiffUtilTest {
         mpIngs.add(new Ingredient("Celery","Pantry", 10, "kg", "shell"));
 
         HashMap<String, Integer> answers = new HashMap<String, Integer>();
-        answers.put("Celery", 42);
-        answers.put("Broccoli", 200);
+        answers.put("celery", 42);
+        answers.put("broccoli", 200);
 
         Recipe r = new Recipe("Rec1", 20L, 13, "Veg", "");
         r.setIngredients(recIngs);
