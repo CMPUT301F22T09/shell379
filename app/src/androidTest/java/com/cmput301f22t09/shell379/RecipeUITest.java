@@ -47,11 +47,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-/**
- * Branches to be covered:  10  11  12  13  14  15  16
- * First test case covers:  10  11  12      14  15
- * Second test case covers: 10      12  13  14      16
- */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class RecipeUITest {
 

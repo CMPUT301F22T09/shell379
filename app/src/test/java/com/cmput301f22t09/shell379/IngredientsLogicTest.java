@@ -104,48 +104,6 @@ public class IngredientsLogicTest {
         }
     }
 
-
-    /**
-     * Tests Constructor with unit containing no numerals.
-     * unit should have numerals!
-     *
-     * Input: unit = "kg"
-     * Output: IllegalArgumentException
-     */
-    @Test
-    public void testConstructor_003() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            Ingredient ing = new Ingredient(template_desc,
-                    template_date,
-                    template_loc,
-                    template_amount,
-                    "kg",
-                    template_cat);
-        }, "Did not throw IllegalArgumentException!");
-    }
-
-
-    /**
-     * Tests Constructor with unit containing numeral values
-     * that evaluates to an float of 0. unit should not have
-     * value of 0 (doesn't make sense of having 4 fish of
-     * unit mass of 0 grams each...)
-     *
-     * Input: unit = "00g"
-     * Output: IllegalArgumentException
-     */
-    @Test
-    public void testConstructor_004() {
-        assertThrows(IllegalArgumentException.class, () -> {
-            Ingredient ing = new Ingredient(template_desc,
-                    template_date,
-                    template_loc,
-                    template_amount,
-                    "00g",
-                    template_cat);
-        }, "Did not throw IllegalArgumentException!");
-    }
-
     /**
      * Tests Constructor with unit containing numeral values
      * that evaluates to a float greater than 0.
@@ -192,34 +150,6 @@ public class IngredientsLogicTest {
         }
 
     }
-
-
-    /**
-     * Testing Constructor with Best Before dates that are
-     * Earlier than Date.now(). Should throw exception
-     *
-     * Input: bestBefore = Date object with date as 12/31/2001
-     * Output: IllegalArgumentException
-     */
-    @Test
-    public void testConstructor_007() {
-
-        assertThrows(IllegalArgumentException.class, () -> {
-            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-            Date bb = formatter.parse("12/31/2001");
-
-            Ingredient ing = new Ingredient(template_desc,
-                    bb,
-                    template_loc,
-                    template_amount,
-                    template_unit,
-                    template_cat);
-        }, "Best Before date is in the past");
-
-
-
-    }
-
 
     /**
      * Tests getDescription
