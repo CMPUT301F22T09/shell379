@@ -20,7 +20,8 @@
 
 ### Comments:
 1. Due to the usage of LiveData objects, testing was done heavily through the use of UI testing. This is primarily due to the fact that LiveData objects requires threading, which is not available in regular JUnit tests
-3. UML and CRC Cards are under the wiki
+2. UML and CRC Cards are under the wiki
+3. Intent tests will retain the state of your app from before the test was run. Feel free to run tests without worrying about the state of your app being affected.
 
 ### Known issues:
 1. If you have run the app with a previous release, you may need to clear your local storage/ app data or the app may not function properly. A tutorial can be accessed here: https://www.cashify.in/how-to-clear-app-data-and-cache-on-android 
