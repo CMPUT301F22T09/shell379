@@ -91,7 +91,7 @@ public class MealPlanWrapper<T> implements Serializable {
         for (int i = 0; i < ings.size(); i++) {
             IngredientStub is = ings.get(i).clone();
 //            Log.d("FDBK_CONVERSIONS_REC", wrapper.getName()+": "+ r.getServings()+" "+wrapper.getServings()+" " +(is.getAmount() * wrapper.getServings()));
-            is.setAmount(r.getServings() * is.getAmount() * wrapper.getServings());
+            is.setAmount((is.getAmount() * wrapper.getServings()));
             newIngrs.add(is);
         }
         return newIngrs;
