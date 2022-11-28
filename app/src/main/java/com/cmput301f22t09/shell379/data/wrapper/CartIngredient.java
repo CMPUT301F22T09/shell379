@@ -9,6 +9,7 @@ import com.cmput301f22t09.shell379.data.IngredientStub;
 import com.cmput301f22t09.shell379.data.util.ArraySortUtil;
 
 import java.io.Serializable;
+import java.util.Locale;
 import java.util.Objects;
 import java.util.Arrays;
 import java.util.List;
