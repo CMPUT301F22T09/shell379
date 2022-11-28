@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -35,7 +36,7 @@ public class IngredientDiffUtil {
                 .map(MealPlanWrapper::convertRecipeToIngredientList)
                 .flatMap(ArrayList::stream)
                 .map(CartIngredient::convertIngredientStub)
-                .collect(Collectors.toMap(e->e.getDescription().toLowerCase(), Function.identity()));
+                .collect(Collectors.toMap(e->e.getDescription().toLowerCase(), Function.identity(), (x,y) -> {x.setAmount(x.getAmount()+ y.getAmount()); return x;}));
         mealPlans.stream()
                 .map(MealPlan::getIngredients)
                 .flatMap(ArrayList::stream)
@@ -62,6 +63,7 @@ public class IngredientDiffUtil {
     public static Map<String, CartIngredient> subtractIngredientStorage(Map<String, CartIngredient> ingredientMap, ArrayList<Ingredient> ingredients) {
         Date curr = new Date();
         ingredients.stream()
+            .filter(Objects::nonNull)
             .filter(e->curr.before(e.getBestBefore()))
             .map(CartIngredient::convertIngredient)
             .forEach(e -> {
