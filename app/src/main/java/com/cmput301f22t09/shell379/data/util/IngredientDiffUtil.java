@@ -35,15 +35,16 @@ public class IngredientDiffUtil {
                 .map(MealPlanWrapper::convertRecipeToIngredientList)
                 .flatMap(ArrayList::stream)
                 .map(CartIngredient::convertIngredientStub)
-                .collect(Collectors.toMap(CartIngredient::getDescription, Function.identity()));
+                .collect(Collectors.toMap(e->e.getDescription().toLowerCase(), Function.identity()));
         mealPlans.stream()
                 .map(MealPlan::getIngredients)
                 .flatMap(ArrayList::stream)
                 .map(MealPlanWrapper::convertToIngredient)
                 .map(CartIngredient::convertIngredient)
                 .forEach(e -> {
-                    if (ingredientMap.containsKey(e.getDescription())) {
-                        CartIngredient cartIngredient = ingredientMap.get(e.getDescription());
+                    String desc = e.getDescription().toLowerCase();
+                    if (ingredientMap.containsKey(desc)) {
+                        CartIngredient cartIngredient = ingredientMap.get(desc);
                         cartIngredient.setAmount(e.getAmount()+cartIngredient.getAmount());
                     } else {
                         ingredientMap.put(e.getDescription(),e);
@@ -64,8 +65,9 @@ public class IngredientDiffUtil {
             .filter(e->curr.before(e.getBestBefore()))
             .map(CartIngredient::convertIngredient)
             .forEach(e -> {
-                if (ingredientMap.containsKey(e.getDescription())) {
-                    CartIngredient cartIngredient = ingredientMap.get(e.getDescription());
+                String desc = e.getDescription().toLowerCase();
+                if (ingredientMap.containsKey(desc)) {
+                    CartIngredient cartIngredient = ingredientMap.get(desc);
                     cartIngredient.setAmount(cartIngredient.getAmount()-e.getAmount());
                 } else {
                     ingredientMap.put(e.getDescription(),e);
@@ -82,8 +84,9 @@ public class IngredientDiffUtil {
      */
     public static ArrayList<CartIngredient> transferCartData(Map<String, CartIngredient> ingredientMap, ArrayList<CartIngredient> cleanedCart) {
         cleanedCart.forEach(e -> {
-            if (ingredientMap.containsKey(e.getDescription())) {
-                CartIngredient cartIngredient = ingredientMap.get(e.getDescription());
+            String desc = e.getDescription().toLowerCase();
+            if (ingredientMap.containsKey(desc)) {
+                CartIngredient cartIngredient = ingredientMap.get(desc);
                 cartIngredient.setIngredient(e.getIngredient());
                 cartIngredient.setCategory(e.getCategory());
                 cartIngredient.setUnit(e.getUnit());
