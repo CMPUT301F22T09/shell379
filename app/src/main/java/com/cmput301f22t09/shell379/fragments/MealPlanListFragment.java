@@ -53,6 +53,14 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
         navController = NavHostFragment.findNavController(this);
         envViewModel = Environment.of((AppCompatActivity) requireActivity());
         mealPlanViewModel =  new ViewModelProvider(requireActivity()).get(MealPlanViewModel.class);
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+
+        // Inflate the layout for this fragment
+        View rootView =  inflater.inflate(R.layout.fragment_meal_plan_13, container, false);
 
         final Observer<ArrayList<MealPlan>> mealPlanObserver = new Observer<ArrayList<MealPlan>>() {
             @Override
@@ -62,15 +70,7 @@ public class MealPlanListFragment extends Fragment implements MealPlanAdapter.Ad
                 }
             }
         };
-        envViewModel.getMealPlans().getListLive().observe(this, mealPlanObserver);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-
-        // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_meal_plan_13, container, false);
+        envViewModel.getMealPlans().getListLive().observe(getViewLifecycleOwner(), mealPlanObserver);
 
         // Implement the button to back to previous page
         ((ImageView)rootView.findViewById(R.id.MP_back_button)).setOnClickListener(
