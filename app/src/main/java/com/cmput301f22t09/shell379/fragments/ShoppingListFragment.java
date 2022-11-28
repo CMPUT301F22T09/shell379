@@ -144,15 +144,18 @@ public class ShoppingListFragment extends Fragment {
 
                 // if amount is less than needed, keep the cartIngredient in the shopping list but
                 // change the amount
+
+                env.getIngredients().add(neededIngredient.getIngredient());
+
                 if (neededAmount > amount) {
                     neededIngredient.setAmount(neededAmount-amount);
                     neededIngredient.setPickedUp(false);
                     neededIngredient.setIngredient(null);
                     neededIngredient.setDetailsFilled(false);
+                    shoppingArray.set(i,neededIngredient);
                 } else {
                     toBeRemoved.add(i);
                 }
-                env.getIngredients().add(neededIngredient.getIngredient());
             }
         }
 
