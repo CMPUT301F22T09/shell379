@@ -41,6 +41,7 @@ public class MealPlanViewModel extends ViewModel {
     public static MealPlanViewModel of(MealPlan mealPlan, FragmentActivity activity) {
         MealPlanViewModel mpViewModel = new ViewModelProvider(activity).get(MealPlanViewModel.class);
         mpViewModel.mealPlan.setValue(mealPlan);
+        mpViewModel.setIdx(-1);
         Log.e("MP_ADAPTER_MPVM", mpViewModel.getIngredients().toString());
         return mpViewModel;
     }
