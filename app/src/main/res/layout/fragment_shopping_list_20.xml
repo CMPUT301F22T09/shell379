@@ -57,11 +57,21 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Note: ingredients in your storage that are expired will not reduce the amounts required in your shopping cart."
+            android:textSize="14sp"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="15dp"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="446dp"
             android:orientation="vertical">
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/shopping_list_recyclerView"
                 android:layout_width="match_parent"
