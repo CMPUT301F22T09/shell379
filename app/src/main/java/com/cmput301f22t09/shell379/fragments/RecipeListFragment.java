@@ -86,7 +86,7 @@ public class RecipeListFragment extends Fragment {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 // resorts the recycler view of ingredients
                 selectedSortIndex = ((Spinner) rootView.findViewById(R.id.recipe_list_spinner)).getSelectedItemPosition();
-                recipeListAdapter.updateRecipes(ArraySortUtil.sortByStringProp(recipeListAdapter.getRecipes(),Recipe.getStringPropGetter(selectedSortIndex)));
+                recipeListAdapter.updateRecipes(ArraySortUtil.sortByStringProp(env.getRecipes().getList(),Recipe.getStringPropGetter(selectedSortIndex)));
             }
 
             @Override

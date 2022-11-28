@@ -96,7 +96,7 @@ public class IngredientListFragment extends Fragment implements IngredientAdapte
                 // resorts the recycler view of ingredients
                 selectedSortIndex = ((Spinner) rootView.findViewById(R.id.ingredient_sort_spinner)).getSelectedItemPosition();
                 ingredientListAdapter.updateIngredient(
-                        ArraySortUtil.sortByStringProp(ingredientListAdapter.getIngredients(),
+                        ArraySortUtil.sortByStringProp(envViewModel.getIngredients().getList(),
                         Ingredient.getStringPropGetter(selectedSortIndex))
                 );
             }
