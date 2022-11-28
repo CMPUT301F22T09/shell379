@@ -10,11 +10,14 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
+import static com.cmput301f22t09.shell379.data.vm.infrastructure.SerializeEnvUtil.deserialize;
+import static com.cmput301f22t09.shell379.data.vm.infrastructure.SerializeEnvUtil.serialize;
 import static org.junit.Assert.assertTrue;
 
 import android.util.Log;
 import android.view.View;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.test.espresso.PerformException;
 import androidx.test.espresso.contrib.PickerActions;
@@ -30,18 +33,42 @@ import com.cmput301f22t09.shell379.data.vm.Environment;
 
 import org.hamcrest.Description;
 import org.hamcrest.TypeSafeMatcher;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MealPlanUITest {
+
+    Environment original;
 
     /**
      * Starts in the main activity (home screen)
      */
     @Rule
     public ActivityScenarioRule<MainActivity> activityRule = new ActivityScenarioRule<>(MainActivity.class);
+
+    @Before
+    public void setUp() {
+        activityRule.getScenario().onActivity(activity -> {
+            // use 'activity'.
+            original = Environment.of((AppCompatActivity) activity);
+            HashMap<String, String> originalMap = serialize(original);
+            original = deserialize(originalMap);
+        });
+    }
+
+    @After
+    public void tearDown() {
+        activityRule.getScenario().onActivity(activity -> {
+            // use 'activity'.
+            Environment env = Environment.of(activity, original);
+            env.getIngredients().commit();
+        });
+    }
 
     /**
      * Tests all actions in the following sequence:
