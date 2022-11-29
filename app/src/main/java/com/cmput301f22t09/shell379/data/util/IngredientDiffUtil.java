@@ -48,7 +48,7 @@ public class IngredientDiffUtil {
                         CartIngredient cartIngredient = ingredientMap.get(desc);
                         cartIngredient.setAmount(e.getAmount()+cartIngredient.getAmount());
                     } else {
-                        ingredientMap.put(e.getDescription(),e);
+                        ingredientMap.put(e.getDescription().toLowerCase(),e);
                     }
                 });
         return ingredientMap;
@@ -71,8 +71,6 @@ public class IngredientDiffUtil {
                 if (ingredientMap.containsKey(desc)) {
                     CartIngredient cartIngredient = ingredientMap.get(desc);
                     cartIngredient.setAmount(cartIngredient.getAmount()-e.getAmount());
-                } else {
-                    ingredientMap.put(e.getDescription(),e);
                 }
             });
         return ingredientMap;
