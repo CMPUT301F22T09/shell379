@@ -148,6 +148,9 @@ public class EditMealPlanFragment extends Fragment {
 
         ((TextView) rootView.findViewById(R.id.plan_edit_name))
                 .setText(mpViewModel.getMealPlan().getMealPlanName());
+
+        ((DatePicker) rootView.findViewById(R.id.editPlanEnd)).updateDate(endDate.get(Calendar.YEAR), endDate.get(Calendar.MONTH), endDate.get(Calendar.DAY_OF_MONTH));
+        ((DatePicker) rootView.findViewById(R.id.editPlanStart)).updateDate(startDate.get(Calendar.YEAR), startDate.get(Calendar.MONTH), startDate.get(Calendar.DAY_OF_MONTH));
     }
 
     /**
