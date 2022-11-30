@@ -94,7 +94,7 @@ public class ShoppingListFragment extends Fragment {
                 // resorts the recycler view of ingredients
                 selectedSortIndex = ((Spinner) rootView.findViewById(R.id.shopping_list_sort_spinner)).getSelectedItemPosition();
                 shoppingListAdapter.updateShoppingList(
-                        ArraySortUtil.sortByStringProp(shoppingListAdapter.getShoppingList(),
+                        ArraySortUtil.sortByStringProp(env.getCart().getList(),
                                 CartIngredient.getStringPropGetter(selectedSortIndex))
                 );
             }
